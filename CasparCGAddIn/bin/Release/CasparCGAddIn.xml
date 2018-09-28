@@ -1,0 +1,149 @@
+﻿<?xml version="1.0"?>
+<doc>
+<assembly>
+<name>
+CasparCGAddIn
+</name>
+</assembly>
+<members>
+<member name="T:CasparCGAddIn.ThisRibbonCollection">
+
+</member>
+<member name="M:CasparCGAddIn.ThisRibbonCollection.#ctor(Microsoft.Office.Tools.Ribbon.RibbonFactory)">
+
+</member>
+<member name="T:CasparCGAddIn.ThisAddIn">
+
+</member>
+<member name="M:CasparCGAddIn.ThisAddIn.#ctor(Microsoft.Office.Tools.Excel.ApplicationFactory,System.IServiceProvider)">
+
+</member>
+<member name="M:CasparCGAddIn.ThisAddIn.Initialize">
+
+</member>
+<member name="M:CasparCGAddIn.ThisAddIn.FinishInitialization">
+
+</member>
+<member name="M:CasparCGAddIn.ThisAddIn.InitializeDataBindings">
+
+</member>
+<member name="M:CasparCGAddIn.ThisAddIn.InitializeCachedData">
+
+</member>
+<member name="M:CasparCGAddIn.ThisAddIn.InitializeData">
+
+</member>
+<member name="M:CasparCGAddIn.ThisAddIn.BindToData">
+
+</member>
+<member name="M:CasparCGAddIn.ThisAddIn.StartCaching(System.String)">
+
+</member>
+<member name="M:CasparCGAddIn.ThisAddIn.StopCaching(System.String)">
+
+</member>
+<member name="M:CasparCGAddIn.ThisAddIn.IsCached(System.String)">
+
+</member>
+<member name="M:CasparCGAddIn.ThisAddIn.BeginInitialization">
+
+</member>
+<member name="M:CasparCGAddIn.ThisAddIn.EndInitialization">
+
+</member>
+<member name="M:CasparCGAddIn.ThisAddIn.InitializeControls">
+
+</member>
+<member name="M:CasparCGAddIn.ThisAddIn.InitializeComponents">
+
+</member>
+<member name="M:CasparCGAddIn.ThisAddIn.NeedsFill(System.String)">
+
+</member>
+<member name="M:CasparCGAddIn.ThisAddIn.OnShutdown">
+
+</member>
+<member name="T:CasparCGAddIn.Globals">
+
+</member>
+<member name="M:CasparCGAddIn.Globals.#ctor">
+
+</member>
+<member name="T:CasparCGAddIn.My.Resources.Resources">
+<summary>
+  Eine stark typisierte Ressourcenklasse zum Suchen von lokalisierten Zeichenfolgen usw.
+</summary>
+</member>
+<member name="P:CasparCGAddIn.My.Resources.Resources.ResourceManager">
+<summary>
+  Gibt die zwischengespeicherte ResourceManager-Instanz zurück, die von dieser Klasse verwendet wird.
+</summary>
+</member>
+<member name="P:CasparCGAddIn.My.Resources.Resources.Culture">
+<summary>
+  Überschreibt die CurrentUICulture-Eigenschaft des aktuellen Threads für alle
+  Ressourcenzuordnungen, die diese stark typisierte Ressourcenklasse verwenden.
+</summary>
+</member>
+<member name="P:CasparCGAddIn.My.Resources.Resources.Base_Folder">
+<summary>
+  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:CasparCGAddIn.My.Resources.Resources.Connect">
+<summary>
+  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:CasparCGAddIn.My.Resources.Resources.Open_Image">
+<summary>
+  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:CasparCGAddIn.My.Resources.Resources.Paint_Palette">
+<summary>
+  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:CasparCGAddIn.My.Resources.Resources.Preview">
+<summary>
+  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:CasparCGAddIn.My.Resources.Resources.PreviewRefresh">
+<summary>
+  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:CasparCGAddIn.My.Resources.Resources.Refresh_Icon">
+<summary>
+  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:CasparCGAddIn.My.Resources.Resources.Save_All_Datasets">
+<summary>
+  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:CasparCGAddIn.My.Resources.Resources.Save_Dataset">
+<summary>
+  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:CasparCGAddIn.My.Resources.Resources.Save_XML">
+<summary>
+  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:CasparCGAddIn.My.Resources.Resources.Select_Range">
+<summary>
+  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:CasparCGAddIn.My.Resources.Resources.Select_Template">
+<summary>
+  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+</summary>
+</member>
+</members>
+</doc>

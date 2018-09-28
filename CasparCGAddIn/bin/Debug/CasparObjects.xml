@@ -1,0 +1,1065 @@
+﻿<?xml version="1.0"?>
+<doc>
+<assembly>
+<name>
+CasparObjects
+</name>
+</assembly>
+<members>
+<member name="T:CasparObjects.CasparCG">
+ <summary>
+ CasparCG connection object
+ </summary>
+ <remarks>Wrapper around a System.Net.Sockets.Socket object</remarks>
+</member>
+<member name="T:CasparObjects.CasparCG.MediaTypes">
+ <summary>
+ Media clip types
+ </summary>
+ <remarks>Used for GetMediaClipsNames function</remarks>
+</member>
+<member name="F:CasparObjects.CasparCG.MediaTypes.All">
+ <summary>
+ All media types
+ </summary>
+</member>
+<member name="F:CasparObjects.CasparCG.MediaTypes.Movie">
+ <summary>
+ Only videos
+ </summary>
+</member>
+<member name="F:CasparObjects.CasparCG.MediaTypes.Still">
+ <summary>
+ Only still pictures
+ </summary>
+</member>
+<member name="F:CasparObjects.CasparCG.MediaTypes.Audio">
+ <summary>
+ Only audio clips
+ </summary>
+</member>
+<member name="T:CasparObjects.CasparCG.enumConnectResult">
+ <summary>
+ Return Value of the Connect function
+ </summary>
+</member>
+<member name="F:CasparObjects.CasparCG.enumConnectResult.crSuccessfull">
+ <summary>
+ Succesfully connected to CasparCG
+ </summary>
+</member>
+<member name="F:CasparObjects.CasparCG.enumConnectResult.crMachineNotAvailable">
+ <summary>
+ The machine could not be pinged, network error or machine is not running
+ </summary>
+</member>
+<member name="F:CasparObjects.CasparCG.enumConnectResult.crCasparCGNotStarted">
+ <summary>
+ CasparCG does not respond, it is not started on the machine
+ </summary>
+</member>
+<member name="F:CasparObjects.CasparCG.enumConnectResult.crLOcalCasprCGCouldNotBeStarted">
+ <summary>
+ A local CasprCG server could not be loaded using the CasparExePath property
+ </summary>
+</member>
+<member name="F:CasparObjects.CasparCG.enumConnectResult.crIsNotLocal">
+ <summary>
+ This is not a local CasparCG and could not be started using the CasparExePath argument
+ </summary>
+</member>
+<member name="P:CasparObjects.CasparCG.Name">
+ <summary>
+ The name of the CasparCG Server instance
+ </summary>
+</member>
+<member name="P:CasparObjects.CasparCG.Port">
+ <summary>
+ The port number to connect to
+ </summary>
+ <remarks>Defaults to 5250</remarks>
+</member>
+<member name="P:CasparObjects.CasparCG.DefaultChannel">
+ <summary>
+ The default channel to output in
+ </summary>
+ <remarks>Defaults to 1</remarks>
+</member>
+<member name="P:CasparObjects.CasparCG.DefaultLayer">
+ <summary>
+ The default layer to output on
+ </summary>
+ <remarks>Defaults to 5</remarks>
+</member>
+<member name="P:CasparObjects.CasparCG.KeepQuiet">
+ <summary>
+ Inhibits exeptions on connection errors
+ </summary>
+ <remarks>Used in combination with CasparExePath</remarks>
+</member>
+<member name="P:CasparObjects.CasparCG.CasparExePath">
+ <summary>
+ Full qualified path to Caspar's exe file. Must be local to the client.
+ </summary>
+ <remarks>Used in combination with Retries</remarks>
+</member>
+<member name="P:CasparObjects.CasparCG.Retries">
+ <summary>
+ Number of retries for a connection, before giving up.
+ </summary>
+ <remarks>Used in combination with CasparExePath</remarks>
+</member>
+<member name="P:CasparObjects.CasparCG.ServerAdress">
+ <summary>
+ IP-Address or computer name to connect to Caspar
+ </summary>
+</member>
+<member name="P:CasparObjects.CasparCG.IsLocal">
+ <summary>
+ If Caspar is on the local machine
+ </summary>
+ <returns>True if local, false if remote</returns>
+</member>
+<member name="P:CasparObjects.CasparCG.LocalPictureFolder">
+ <summary>
+ Points to a folder were pictres are stored
+ </summary>
+ <remarks>The path is local to the server</remarks>
+</member>
+<member name="P:CasparObjects.CasparCG.RemotePictureFolder">
+ <summary>
+ Points to a folder were pictres are stored
+ </summary>
+ <remarks>The path is a network share seen from the client</remarks>
+</member>
+<member name="P:CasparObjects.CasparCG.TemplateChannelFieldname">
+ <summary>
+ The name of the field containing the current channel
+ </summary>
+</member>
+<member name="P:CasparObjects.CasparCG.TemplateLayerFieldname">
+ <summary>
+ The name of the field containing the current layer
+ </summary>
+</member>
+<member name="P:CasparObjects.CasparCG.Connected">
+ <summary>
+ Indicate connection status
+ </summary>
+ <remarks>True if connected, false otherwise</remarks>
+</member>
+<member name="P:CasparObjects.CasparCG.Version">
+ <summary>
+ Query the version of CasparCG server as a VersionInfo object
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:CasparObjects.CasparCG.VersionSerialized">
+ <summary>
+ Query the version of CasparCG server as a serialized integer:
+ Version.Major * 1000000 +
+ Version.Minor * 10000 +
+ Version.Revision
+ </summary>
+</member>
+<member name="T:CasparObjects.CasparCG.Paths">
+ <summary>
+ Paths object
+ </summary>
+ <remarks>Used for the ServerPaths property</remarks>
+</member>
+<member name="P:CasparObjects.CasparCG.Paths.MediaPath">
+ <summary>
+ Path to the media files (video, audio and stills)
+ </summary>
+</member>
+<member name="P:CasparObjects.CasparCG.Paths.LogPath">
+ <summary>
+ Path to the log files
+ </summary>
+</member>
+<member name="P:CasparObjects.CasparCG.Paths.DataPath">
+ <summary>
+ Path to the data files
+ </summary>
+ <remarks>Data files are managed using the DATA commands</remarks>
+</member>
+<member name="P:CasparObjects.CasparCG.Paths.TemplatePath">
+ <summary>
+ Path to the templates
+ </summary>
+</member>
+<member name="P:CasparObjects.CasparCG.Paths.ThumbnailPath">
+ <summary>
+ Path to the thumbnails
+ </summary>
+</member>
+<member name="P:CasparObjects.CasparCG.Paths.FontPath">
+ <summary>
+ Path to the fonts
+ </summary>
+</member>
+<member name="P:CasparObjects.CasparCG.Paths.InitialPath">
+ <summary>
+ Initial path
+ </summary>
+ <value></value>
+</member>
+<member name="P:CasparObjects.CasparCG.ServerPaths">
+ <summary>
+ Gets the paths settings of Caspar
+ </summary>
+ <remarks>Does not make sense for remote Caspar Servers</remarks>
+</member>
+<member name="P:CasparObjects.CasparCG.FirstClearlayer">
+ <summary>
+ Sets the first layer, that will be cleared by Clearlayers
+ </summary>
+</member>
+<member name="P:CasparObjects.CasparCG.LastClearlayer">
+ <summary>
+ Sets the last layer, that will be cleared by Clearlayers
+ </summary>
+</member>
+<member name="M:CasparObjects.CasparCG.IsPlaying">
+ <summary>
+ Check if something is playing on the default layer and channel
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CasparObjects.CasparCG.IsPlaying(System.Int32)">
+ <summary>
+ Check if something is playing on the given layer on the default channel
+ </summary>
+ <param name="Layer">The layer number</param>
+ <returns></returns>
+</member>
+<member name="M:CasparObjects.CasparCG.IsPlaying(System.Int32,System.Int32)">
+ <summary>
+ Check if something is playing on the given layer on the given channel
+ </summary>
+ <param name="Channel">The channel in Caspar</param>
+ <param name="Layer">The layer number</param>
+ <returns></returns>
+</member>
+<member name="M:CasparObjects.CasparCG.CG_Add(CasparObjects.Template)">
+ <summary>
+ Adds the template in Caspar
+ </summary>
+ <param name="TemplateData">The Template object to get fields from</param>
+ <returns>A ReturnInfo object</returns>
+ <remarks>Uses the template name inside the Template object. Defaults to DefaultChannel DefaultLayer and plays the template after loading</remarks>
+</member>
+<member name="M:CasparObjects.CasparCG.CG_Add(System.String,CasparObjects.Template)">
+ <summary>
+ Adds the template in Caspar
+ </summary>
+ <param name="TemplateName">The name of the template</param>
+ <param name="TemplateData">The Template object to get fields from</param>
+ <returns>A ReturnInfo object</returns>
+ <remarks>Defaults to DefaultChannel DefaultLayer and plays the template after loading</remarks>
+</member>
+<member name="M:CasparObjects.CasparCG.CG_Add(System.Int32,System.String,CasparObjects.Template)">
+ <summary>
+ Adds the template in Caspar
+ </summary>
+ <param name="Layer">The layer number</param>
+ <param name="TemplateName">The name of the template</param>
+ <param name="TemplateData">The Template object to get fields from</param>
+ <returns>A ReturnInfo object</returns>
+ <remarks>Defaults to DefaultChannel and plays the template after loading</remarks>
+</member>
+<member name="M:CasparObjects.CasparCG.CG_Add(System.Int32,System.String,CasparObjects.Template,System.Boolean)">
+ <summary>
+ Adds the template in Caspar
+ </summary>
+ <param name="Layer">The layer number</param>
+ <param name="TemplateName">The name of the template</param>
+ <param name="TemplateData">The Template object to get fields from</param>
+ <param name="AutoPlay">Plays the template after loading if set to true</param>
+ <returns>A ReturnInfo object</returns>
+ <remarks>Defaults to DefaultChannel</remarks>
+</member>
+<member name="M:CasparObjects.CasparCG.CG_Add(System.Int32,System.Int32,System.String,CasparObjects.Template,System.Boolean)">
+ <summary>
+ Adds the template in Caspar
+ </summary>
+ <param name="Channel">The channel in Caspar</param>
+ <param name="Layer">The layer number</param>
+ <param name="TemplateName">The name of the template</param>
+ <param name="TemplateData">The Template object to get fields from</param>
+ <param name="AutoPlay">Plays the template after loading if set to true</param>
+ <returns>A ReturnInfo object</returns>
+ <remarks>The main CG_Add Function. Adds a channel and a layer TemplateField to the Fields collection. This is usefull to call back the server via TCP/IP.</remarks>
+</member>
+<member name="M:CasparObjects.CasparCG.CG_Play">
+ <summary>
+ Plays the template in Caspar
+ </summary>
+ <returns>A ReturnInfo object</returns>
+ <remarks>Defaults to DefaultChannel DefaultLayer</remarks>
+</member>
+<member name="M:CasparObjects.CasparCG.CG_Play(System.Int32)">
+ <summary>
+ Plays the template in Caspar
+ </summary>
+ <param name="Layer">The layer number</param>
+ <returns>A ReturnInfo object</returns>
+ <remarks>Defaults to DefaultChannel</remarks>
+</member>
+<member name="M:CasparObjects.CasparCG.CG_Play(System.Int32,System.Int32)">
+ <summary>
+ Plays the template in Caspar
+ </summary>
+ <param name="Channel">The channel in Caspar</param>
+ <param name="Layer">The layer number</param>
+ <returns>A ReturnInfo object</returns>
+ <remarks>The main CG_Play function.</remarks>
+</member>
+<member name="M:CasparObjects.CasparCG.CG_Update(CasparObjects.Template)">
+ <summary>
+ Updates the datafields of a template
+ </summary>
+ <param name="TemplateData">The Template object to get fields from</param>
+ <returns>A ReturnInfo object</returns>
+ <remarks>Defaults to DefaultChannel DefaultLayer</remarks>
+</member>
+<member name="M:CasparObjects.CasparCG.CG_Update(System.Int32,CasparObjects.Template)">
+ <summary>
+ Updates the datafields of a template
+ </summary>
+ <param name="Layer">The layer number</param>
+ <param name="TemplateData">The Template object to get fields from</param>
+ <returns>A ReturnInfo object</returns>
+ <remarks>Defaults to DefaultChannel</remarks>
+</member>
+<member name="M:CasparObjects.CasparCG.CG_Update(System.Int32,System.Int32,CasparObjects.Template)">
+ <summary>
+ Updates the datafields of a template
+ </summary>
+ <param name="Channel">The channel in Caspar</param>
+ <param name="Layer">The layer number</param>
+ <param name="TemplateData">The Template object to get fields from</param>
+ <returns>A ReturnInfo object</returns>
+ <remarks>The main CG_Play function.</remarks>
+</member>
+<member name="M:CasparObjects.CasparCG.CG_Stop">
+ <summary>
+ Stops the display of a template
+ </summary>
+ <returns>A ReturnInfo object</returns>
+ <remarks>Defaults to DefaultChannel DefaultLayer</remarks>
+</member>
+<member name="M:CasparObjects.CasparCG.CG_Stop(System.Int32)">
+ <summary>
+ Stops the display of a template
+ </summary>
+ <param name="Layer">The layer number</param>
+ <returns>A ReturnInfo object</returns>
+ <remarks>Defaults to DefaultChannel</remarks>
+</member>
+<member name="M:CasparObjects.CasparCG.CG_Stop(System.Int32,System.Int32)">
+ <summary>
+ Stops the display of a template
+ </summary>
+ <param name="Channel">The channel in Caspar</param>
+ <param name="Layer">The layer number</param>
+ <returns>A ReturnInfo object</returns>
+ <remarks>The main CG_Stop function.</remarks>
+</member>
+<member name="M:CasparObjects.CasparCG.CG_Next">
+ <summary>
+ Calls the next step inside a template
+ </summary>
+ <returns>A ReturnInfo object</returns>
+ <remarks>Defaults to DefaultChannel DefaultLayer</remarks>
+</member>
+<member name="M:CasparObjects.CasparCG.CG_Next(System.Int32)">
+ <summary>
+ Calls the next step inside a template
+ </summary>
+ <param name="Layer">The layer number</param>
+ <returns>A ReturnInfo object</returns>
+ <remarks>Defaults to DefaultChannel</remarks>
+</member>
+<member name="M:CasparObjects.CasparCG.CG_Next(System.Int32,System.Int32)">
+ <summary>
+ Calls the next step inside a template
+ </summary>
+ <param name="Channel">The channel in Caspar</param>
+ <param name="Layer">The layer number</param>
+ <returns>A ReturnInfo object</returns>
+ <remarks>The main CG_Next function.</remarks>
+</member>
+<member name="M:CasparObjects.CasparCG.CG_Invoke(System.String)">
+ <summary>
+ Invokes a parameterless procedure inside the template
+ </summary>
+ <param name="Func">The function to be executed</param>
+ <returns>A ReturnInfo object</returns>
+</member>
+<member name="M:CasparObjects.CasparCG.CG_Invoke(System.Int32,System.String)">
+ <summary>
+ Invokes a parameterless procedure inside the template
+ </summary>
+ <param name="Layer">The layer number</param>
+ <param name="Func">The function to be executed</param>
+ <returns>A ReturnInfo object</returns>
+</member>
+<member name="M:CasparObjects.CasparCG.CG_Invoke(System.Int32,System.Int32,System.String)">
+ <summary>
+ Invokes a parameterless procedure inside the template
+ </summary>
+ <param name="Channel">The channel in Caspar</param>
+ <param name="Layer">The layer number</param>
+ <param name="Func">The function to be executed</param>
+ <returns>A ReturnInfo object</returns>
+ <remarks>The main CG_Invoke function.</remarks>
+</member>
+<member name="M:CasparObjects.CasparCG.Data_Store(System.String,CasparObjects.Template)">
+ <summary>
+ Stores templatedata as a dataset on the server.
+ </summary>
+ <param name="DataSetName"></param>
+ <param name="TemplateData"></param>
+ <returns>A ReturnInfo object</returns>
+ <remarks>The main Data_Store Function.</remarks>
+</member>
+<member name="M:CasparObjects.CasparCG.Data_Store(System.Int32,System.Int32,System.String,CasparObjects.Template)">
+ <summary>
+ Stores templatedata as a dataset on the server.
+ </summary>
+ <param name="Channel">The channel in Caspar</param>
+ <param name="Layer">The layer number</param>
+ <param name="DataSetName">The name of the dataset</param>
+ <param name="TemplateData">The Template object to get fields from</param>
+ <returns>A ReturnInfo object</returns>
+ <remarks>A sub Data_Store Function. Adds a channel and a layer TemplateField to the Fields collection. This is usefull to call back the server via TCP/IP.</remarks>
+</member>
+<member name="M:CasparObjects.CasparCG.LoadBG(System.String)">
+ <summary>
+ Simple LoadBG Comand
+ </summary>
+ <param name="MediaName">The name of the clip or image</param>
+ <returns></returns>
+</member>
+<member name="M:CasparObjects.CasparCG.LoadBG(System.Int32,System.String)">
+ <summary>
+ Simple LoadBG Comand
+ </summary>
+ <param name="Layer">The layer number</param>
+ <param name="MediaName">The name of the clip or image</param>
+ <returns></returns>
+</member>
+<member name="M:CasparObjects.CasparCG.LoadBG(System.Int32,System.String,System.Boolean)">
+ <summary>
+ Simple LoadBG Comand
+ </summary>
+ <param name="Layer">The layer number</param>
+ <param name="MediaName">The name of the clip or image</param>
+ <param name="LoopPlayback">Loops if true</param>
+ <returns></returns>
+</member>
+<member name="M:CasparObjects.CasparCG.LoadBG(System.Int32,System.Int32,System.String,System.Boolean)">
+ <summary>
+ Simple LoadBG Command
+ </summary>
+ <param name="Channel">The channel in Caspar</param>
+ <param name="Layer">The layer number</param>
+ <param name="MediaName">The name of the clip or image</param>
+ <param name="LoopPlayback">Loops if true</param>
+</member>
+<member name="M:CasparObjects.CasparCG.LoadBG(System.Int32,System.Int32,System.String,System.Boolean,System.String,System.Int32,System.String,System.String,System.Boolean)">
+ <summary>
+ Complex LoadBG Command
+ </summary>
+ <param name="Channel">The channel in Caspar</param>
+ <param name="Layer">The layer number</param>
+ <param name="MediaName">The name of the clip or image</param>
+ <param name="LoopPlayback">Loops if true</param>
+ <param name="EffectType">In animation effect type</param>
+ <param name="EffectDuration">Durration of the in effect in frames</param>
+ <param name="Direction">Direction of the in effect</param>
+ <param name="Tween">Tween to be used on in effect</param>
+ <param name="AutoPlay">Enable AutoPlay if true</param>
+</member>
+<member name="M:CasparObjects.CasparCG.Play">
+ <summary>
+ Play after LoadBG
+ </summary>
+</member>
+<member name="M:CasparObjects.CasparCG.Play(System.Int32)">
+ <summary>
+ Play after LoadBG
+ </summary>
+ <param name="Layer">The layer number</param>
+</member>
+<member name="M:CasparObjects.CasparCG.Play(System.Int32,System.Int32)">
+ <summary>
+ Play after LoadBG
+ </summary>
+ <param name="Channel">The channel in Caspar</param>
+ <param name="Layer">The layer number</param>
+</member>
+<member name="M:CasparObjects.CasparCG.Play(System.String)">
+ <summary>
+ Simple Play Comand
+ </summary>
+ <param name="MediaName">The name of the clip or image</param>
+ <returns></returns>
+</member>
+<member name="M:CasparObjects.CasparCG.Play(System.Int32,System.String)">
+ <summary>
+ Simple Play Comand
+ </summary>
+ <param name="Layer">The layer number</param>
+ <param name="MediaName">The name of the clip or image</param>
+ <returns></returns>
+</member>
+<member name="M:CasparObjects.CasparCG.Play(System.Int32,System.String,System.Boolean)">
+ <summary>
+ Simple Play Comand
+ </summary>
+ <param name="Layer">The layer number</param>
+ <param name="MediaName">The name of the clip or image</param>
+ <param name="LoopPlayback">Loops if true</param>
+ <returns></returns>
+</member>
+<member name="M:CasparObjects.CasparCG.Play(System.Int32,System.Int32,System.String,System.Boolean)">
+ <summary>
+ Simple Play Command
+ </summary>
+ <param name="Channel">The channel in Caspar</param>
+ <param name="Layer">The layer number</param>
+ <param name="MediaName">The name of the clip or image</param>
+ <param name="LoopPlayback">Loops if true</param>
+</member>
+<member name="M:CasparObjects.CasparCG.Play(System.Int32,System.Int32,System.String,System.Boolean,System.String,System.Int32,System.String,System.String)">
+ <summary>
+ Complex Play Command
+ </summary>
+ <param name="Channel">The channel in Caspar</param>
+ <param name="Layer">The layer number</param>
+ <param name="MediaName">The name of the clip or image</param>
+ <param name="LoopPlayback">Loops if true</param>
+ <param name="EffectType">In animation effect type</param>
+ <param name="EffectDuration">Durration of the in effect in frames</param>
+ <param name="Direction">Direction of the in effect</param>
+ <param name="Tween">Tween to be used aon in effect</param>
+</member>
+<member name="M:CasparObjects.CasparCG.Stopp">
+ <summary>
+ Stop Command
+ </summary>
+</member>
+<member name="M:CasparObjects.CasparCG.Stopp(System.Int32)">
+ <summary>
+ Stop Command
+ </summary>
+ <param name="Layer">The layer number</param>
+</member>
+<member name="M:CasparObjects.CasparCG.Stopp(System.Int32,System.Int32)">
+ <summary>
+ Stop Command
+ </summary>
+ <param name="Channel">The channel in Caspar</param>
+ <param name="Layer">The layer number</param>
+</member>
+<member name="M:CasparObjects.CasparCG.Mixer_FadeIn(System.Int32,System.Int32)">
+ <summary>
+ Fades a layer in
+ </summary>
+ <param name="Layer">The layer number</param>
+ <param name="Duration">The time to fade, in frames</param>
+ <returns>A ReturnInfo object</returns>
+ <remarks>Defaults to DefaultChannel</remarks>
+</member>
+<member name="M:CasparObjects.CasparCG.Mixer_FadeIn(System.Int32,System.Int32,System.Int32)">
+ <summary>
+ Fades a layer in
+ </summary>
+ <param name="Channel">The channel in Caspar</param>
+ <param name="Layer">The layer number</param>
+ <param name="Duration">The time to fade, in frames</param>
+ <returns>A ReturnInfo object</returns>
+ <remarks>The main Mixer_FadeIn function</remarks>
+</member>
+<member name="M:CasparObjects.CasparCG.Mixer_FadeOut(System.Int32,System.Int32)">
+ <summary>
+ Fades a layer out
+ </summary>
+ <param name="Layer">The layer number</param>
+ <param name="Duration">The time to fade, in frames</param>
+ <returns>A ReturnInfo object</returns>
+ <remarks>Defaults to DefaultChannel</remarks>
+</member>
+<member name="M:CasparObjects.CasparCG.Mixer_FadeOut(System.Int32,System.Int32,System.Int32)">
+ <summary>
+ Fades a layer out
+ </summary>
+ <param name="Channel">The channel in Caspar</param>
+ <param name="Layer">The layer number</param>
+ <param name="Duration">The time to fade, in frames</param>
+ <returns>A ReturnInfo object</returns>
+ <remarks>The main Mixer_FadeOut function</remarks>
+</member>
+<member name="M:CasparObjects.CasparCG.Clear">
+ <summary>
+ Clear Command
+ </summary>
+</member>
+<member name="M:CasparObjects.CasparCG.Clear(System.Int32)">
+ <summary>
+ Clear Command
+ </summary>
+ <param name="Layer">The layer number</param>
+</member>
+<member name="M:CasparObjects.CasparCG.Clear(System.Int32,System.Int32)">
+ <summary>
+ Clear Command
+ </summary>
+ <param name="Channel">The channel in Caspar</param>
+ <param name="Layer">The layer number</param>
+</member>
+<member name="M:CasparObjects.CasparCG.Clearlayers">
+ <summary>
+ Clears all layers defined by FirstClearlayer and LastClearlayer properties.
+ </summary>
+</member>
+<member name="M:CasparObjects.CasparCG.Clearlayers(System.Int32)">
+ <summary>
+ Clears all layers defined by FirstClearlayer and LastClearlayer properties.
+ </summary>
+ <param name="Channel">The channel in Caspar</param>
+</member>
+<member name="M:CasparObjects.CasparCG.Swap(System.Int32,System.Int32)">
+ <summary>
+ Swap Command
+ </summary>
+ <param name="FirstLayer">The fisrt layer to swap</param>
+ <param name="SecondLayer">The second layer to swap</param>
+</member>
+<member name="M:CasparObjects.CasparCG.Swap(System.Int32,System.Int32,System.Int32)">
+ <summary>
+ Swap Command
+ </summary>
+ <param name="Channel">The channel in Caspar</param>
+ <param name="FirstLayer">The fisrt layer to swap</param>
+ <param name="SecondLayer">The second layer to swap</param>
+</member>
+<member name="M:CasparObjects.CasparCG.Execute(System.String)">
+ <summary>
+ Sends a command to Caspar for execution
+ </summary>
+ <param name="Command">The command-string</param>
+ <returns>A ReturnInfo object</returns>
+ <remarks>Can be used for any command. See CasparCG's wiki for valid commands</remarks>
+</member>
+<member name="M:CasparObjects.CasparCG.Connect(System.String)">
+ <summary>
+ Connects to CasparCG
+ </summary>
+ <param name="ServerAdress">IP-Address or computer name to connect to Caspar</param>
+ <remarks>Sets the ServerAdress property</remarks>
+ <returns>A enumConnectResult denoting the result</returns>
+</member>
+<member name="M:CasparObjects.CasparCG.Connect(System.String,System.Int32)">
+ <summary>
+ Connects to CasparCG
+ </summary>
+ <param name="ServerAdress">IP-Address or computer name to connect to Caspar</param>
+ <param name="Port">The port number to connect to</param>
+ <remarks>Sets the ServerAdress and Port properties</remarks>
+ <returns>A enumConnectResult denoting the result</returns>
+</member>
+<member name="M:CasparObjects.CasparCG.Connect(System.String,System.Boolean)">
+ <summary>
+ Connects to CasparCG
+ </summary>
+ <param name="ServerAdress">IP-Address or computer name to connect to Caspar</param>
+ <param name="KeepQuiet">Inhibits exeptions on connection errors</param>
+ <remarks>Sets the ServerAdress and KeepQuiet properties</remarks>
+ <returns>A enumConnectResult denoting the result</returns>
+</member>
+<member name="M:CasparObjects.CasparCG.Connect(System.Int32,System.String)">
+ <summary>
+ Connects to CasparCG
+ </summary>
+ <param name="Retries">Number of retries for a connection, before giving up.</param>
+ <param name="CasparExePath">Full qualified path to Caspar's exe file. Must be local to the client.</param>
+ <remarks>Sets the Retries and CasparExePath properties</remarks>
+ <returns>A enumConnectResult denoting the result</returns>
+</member>
+<member name="M:CasparObjects.CasparCG.Connect">
+ <summary>
+ Connects to CasparCG
+ </summary>
+ <remarks>The main Connect function. Uses properties</remarks>
+ <returns>A enumConnectResult denoting the result</returns>
+</member>
+<member name="M:CasparObjects.CasparCG.Disconnect">
+ <summary>
+ Disconnects from Caspar
+ </summary>
+ <remarks>The object can reconnect</remarks>
+</member>
+<member name="M:CasparObjects.CasparCG.GetMediaClipsNames">
+ <summary>
+ Get all media clip names
+ </summary>
+ <returns>List of media clip names</returns>
+</member>
+<member name="M:CasparObjects.CasparCG.GetMediaClipsNames(CasparObjects.CasparCG.MediaTypes)">
+ <summary>
+ Get specified media clip names
+ </summary>
+ <param name="ShowMedia">Media clip types</param>
+ <returns>List of media clip names</returns>
+</member>
+<member name="M:CasparObjects.CasparCG.GetTemplateNames">
+ <summary>
+ Get a list of template names
+ </summary>
+ <returns>List of template names</returns>
+</member>
+<member name="M:CasparObjects.CasparCG.GetTemplate(System.String)">
+ <summary>
+ Get a Template object by providing a name
+ </summary>
+ <param name="Name">The name of the template</param>
+ <returns>A Template object parsed out of informations queried by Caspar</returns>
+ <remarks></remarks>
+</member>
+<member name="M:CasparObjects.CasparCG.GetTemplates">
+ <summary>
+ Get a list of Template objects
+ </summary>
+ <returns>List of Template objects parsed out of informations queried by Caspar</returns>
+</member>
+<member name="M:CasparObjects.CasparCG.Grab(System.Int32)">
+ <summary>
+ Grab the output to a bitmap
+ </summary>
+ <param name="channel">The channel in Caspar</param>
+ <returns>A Drawing.Bitmap object</returns>
+ <remarks>Defaults to channel 1</remarks>
+</member>
+<member name="M:CasparObjects.CasparCG.Grab(System.Int32,System.Int32)">
+ <summary>
+ Grab the output to a bitmap
+ </summary>
+ <param name="channel">The channel in Caspar</param>
+ <param name="layer">The layer number</param>
+ <returns>A Drawing.Bitmap object</returns>
+</member>
+<member name="T:CasparObjects.CasparCG.LayerStatus">
+ <summary>
+ LayerStatus object
+ </summary>
+ <remarks>Used for GetLayerStatus</remarks>
+</member>
+<member name="P:CasparObjects.CasparCG.LayerStatus.FilePlaying">
+ <summary>
+ The name of the file playing
+ </summary>
+</member>
+<member name="P:CasparObjects.CasparCG.LayerStatus.Status">
+ <summary>
+ The layer status
+ </summary>
+</member>
+<member name="P:CasparObjects.CasparCG.LayerStatus.FrameNumber">
+ <summary>
+ The current position in frames
+ </summary>
+</member>
+<member name="P:CasparObjects.CasparCG.LayerStatus.TotalFrames">
+ <summary>
+ The length of the clip in frames
+ </summary>
+</member>
+<member name="P:CasparObjects.CasparCG.LayerStatus.BackGroundIsEmpty">
+ <summary>
+ Determines if a file has been loaded for seamless playback
+ </summary>
+</member>
+<member name="M:CasparObjects.CasparCG.GetLayerStatus(System.Int32,System.Int32)">
+ <summary>
+ Get the status of a layer
+ </summary>
+ <param name="Channel">The channel in Caspar</param>
+ <param name="Layer">The layer number</param>
+ <returns>A LayerStatus object</returns>
+</member>
+<member name="M:CasparObjects.CasparCG.GetLayerStatus(System.String)">
+ <summary>
+ Get the status of a layer
+ </summary>
+ <param name="Layer">The channel and layer as a string</param>
+ <returns>Old function, use GetLayerStatus(Channel, Layer) instead</returns>
+ <remarks></remarks>
+</member>
+<member name="M:CasparObjects.CasparCG.SerializeToString">
+ <summary>
+ Serialize the whole CasparCG object to a string.
+ </summary>
+ <returns>A XML formated string</returns>
+ <remarks>Used to store the settings</remarks>
+</member>
+<member name="M:CasparObjects.CasparCG.#ctor">
+ <summary>
+ Parameter less constructor
+ </summary>
+</member>
+<member name="M:CasparObjects.CasparCG.#ctor(System.String)">
+ <summary>
+ Deserializing Constructor
+ </summary>
+ <param name="Serialized">A XML formated string of a CasprCG object</param>
+ <remarks>Used to recall the settings</remarks>
+</member>
+<member name="M:CasparObjects.CasparCG.Clone">
+ <summary>
+ ICloneable implaementation
+ </summary>
+ <returns>A clone of this object</returns>
+ <remarks>To reuse the socket connection, create a clone of the object</remarks>
+</member>
+<member name="T:CasparObjects.My.Resources.Resources">
+<summary>
+  A strongly-typed resource class, for looking up localized strings, etc.
+</summary>
+</member>
+<member name="P:CasparObjects.My.Resources.Resources.ResourceManager">
+<summary>
+  Returns the cached ResourceManager instance used by this class.
+</summary>
+</member>
+<member name="P:CasparObjects.My.Resources.Resources.Culture">
+<summary>
+  Overrides the current thread's CurrentUICulture property for all
+  resource lookups using this strongly typed resource class.
+</summary>
+</member>
+<member name="T:CasparObjects.ReturnInfo">
+ <summary>
+ ReturnInfo object
+ </summary>
+ <remarks>Gets Caspars server response</remarks>
+</member>
+<member name="P:CasparObjects.ReturnInfo.Number">
+ <summary>
+ Numeric return value 
+ </summary>
+</member>
+<member name="P:CasparObjects.ReturnInfo.Message">
+ <summary>
+ The message returned
+ </summary>
+</member>
+<member name="P:CasparObjects.ReturnInfo.Data">
+ <summary>
+ Data returned
+ </summary>
+ <remarks>Some commands return data</remarks>
+</member>
+<member name="M:CasparObjects.ReturnInfo.#ctor">
+ <summary>
+ Parameter less constructor
+ </summary>
+</member>
+<member name="M:CasparObjects.ReturnInfo.#ctor(System.Int32,System.String,System.String)">
+ <summary>
+ Parameterized constructor
+ </summary>
+ <param name="Number">Numeric return value</param>
+ <param name="Message">The message returned</param>
+ <param name="Data">Some commands return data</param>
+ <remarks></remarks>
+</member>
+<member name="T:CasparObjects.TargaFile">
+ <summary>
+ Object to save a bitmap to a 24bit or 32bit Truevision Targa file
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:CasparObjects.TargaFile.SaveAsTarga(System.String,System.Drawing.Bitmap)">
+ <summary>
+ Save the provided bitmap as a Truevision Targa file
+ </summary>
+ <param name="Filename">The filename of the Targa-file</param>
+ <param name="Picture">The Drawing.Bitmap object to save</param>
+</member>
+<member name="T:CasparObjects.Template">
+ <summary>
+ Template object
+ </summary>
+ <remarks>Used to send template commands to Caspar. Can also be used for GetTemplates</remarks>
+</member>
+<member name="P:CasparObjects.Template.Name">
+ <summary>
+ Name of the template
+ </summary>
+ <remarks>Set by the GetTemplates function</remarks>
+</member>
+<member name="P:CasparObjects.Template.Author">
+ <summary>
+ Author of the template
+ </summary>
+ <remarks>Set by the GetTemplates function</remarks>
+</member>
+<member name="P:CasparObjects.Template.AuthorEMail">
+ <summary>
+ AuthorEMail of the template
+ </summary>
+ <remarks>Set by the GetTemplates function</remarks>
+</member>
+<member name="P:CasparObjects.Template.Info">
+ <summary>
+ Info of the template
+ </summary>
+ <remarks>Set by the GetTemplates function</remarks>
+</member>
+<member name="P:CasparObjects.Template.Width">
+ <summary>
+ Width of the template
+ </summary>
+ <remarks>Set by the GetTemplates function</remarks>
+</member>
+<member name="P:CasparObjects.Template.Height">
+ <summary>
+ Height of the template
+ </summary>
+ <remarks>Set by the GetTemplates function</remarks>
+</member>
+<member name="P:CasparObjects.Template.FrameRate">
+ <summary>
+ Frame rate of the template
+ </summary>
+ <remarks>Set by the GetTemplates function</remarks>
+</member>
+<member name="P:CasparObjects.Template.UseJSON">
+ <summary>
+ Format TemplateDataText as JSON, if false use XML
+ </summary>
+</member>
+<member name="P:CasparObjects.Template.Fields">
+ <summary>
+ List of filelds
+ </summary>
+ <remarks>Used to send template fields to a template. Also set by the GetTemplates function</remarks>
+</member>
+<member name="M:CasparObjects.Template.TemplateDataText">
+ <summary>
+ Formats the Fields list as XML
+ </summary>
+ <returns>A XML formated string</returns>
+ <remarks>Uses the XML format, that the template commands need</remarks>
+</member>
+<member name="M:CasparObjects.Template.AddField(System.String,System.String)">
+ <summary>
+ Add TemplateField to this Template
+ </summary>
+ <param name="Name">Name of the field</param>
+ <param name="Value">Value of the field</param>
+ <remarks>Checks for null (Nothing) values</remarks>
+</member>
+<member name="M:CasparObjects.Template.AddField(System.String,System.Int32)">
+ <summary>
+ Add TemplateField to this Template
+ </summary>
+ <param name="Name">Name of the field</param>
+ <param name="Value">Value of the field</param>
+</member>
+<member name="M:CasparObjects.Template.AddField(System.String,System.Boolean)">
+ <summary>
+ Add TemplateField to this Template
+ </summary>
+ <param name="Name">Name of the field</param>
+ <param name="Value">Value of the field</param>
+</member>
+<member name="M:CasparObjects.Template.AddPictureField(System.String,System.String)">
+ <summary>
+ Add picture field to this Template as URI
+ </summary>
+ <param name="Name">Name of the field</param>
+ <param name="PictureFilename">Full path to the picture file</param>
+ <remarks>Formats PictureFilename as URI, checks if file exist</remarks>
+</member>
+<member name="M:CasparObjects.Template.AddPictureField(System.String,System.Drawing.Image)">
+ <summary>
+ Add picture field to this Template as Base64
+ </summary>
+ <param name="Name">Name of the field</param>
+ <param name="Picture"></param>
+ <remarks>Encode picture as Base64 string, ignores errors</remarks>
+</member>
+<member name="M:CasparObjects.Template.AddColorField(System.String,System.Drawing.Color)">
+ <summary>
+ Add color field to this Template
+ </summary>
+ <param name="Name">Name of the field</param>
+ <param name="Color">System.Drawing.Color</param>
+ <remarks>Formats the color value as hex-string</remarks>
+</member>
+<member name="M:CasparObjects.Template.ToString">
+ <summary>
+ Formated ToString function
+ </summary>
+ <returns>A String with the Template's name, dimensions and author</returns>
+</member>
+<member name="M:CasparObjects.Template.Parse(System.String)">
+ <summary>
+ Create a Template object by parsing a XML string
+ </summary>
+ <param name="XmlText">The XML string to parse</param>
+ <returns>A Template object parsed</returns>
+ <remarks>Use the XML format, that the template commands need</remarks>
+</member>
+<member name="T:CasparObjects.TemplateField">
+ <summary>
+ TemplateField object
+ </summary>
+ <remarks>Used to send fields to templates or retrieve them</remarks>
+</member>
+<member name="P:CasparObjects.TemplateField.Name">
+ <summary>
+ Field name
+ </summary>
+</member>
+<member name="P:CasparObjects.TemplateField.Value">
+ <summary>
+ Field value
+ </summary>
+</member>
+<member name="M:CasparObjects.TemplateField.ToString">
+ <summary>
+ Formated ToString function
+ </summary>
+ <returns>A string containing name and value</returns>
+</member>
+<member name="M:CasparObjects.TemplateField.CompareTo(CasparObjects.TemplateField)">
+ <summary>
+ CompareTo for sorting
+ </summary>
+ <param name="other">A TemplateField object to compare this with</param>
+ <returns>An integer indicating if bigger, smaller or equal</returns>
+ <remarks></remarks>
+</member>
+<member name="M:CasparObjects.TemplateField.#ctor(System.String)">
+ <summary>
+ Constructor
+ </summary>
+ <param name="Name">The name of the field</param>
+ <remarks></remarks>
+</member>
+<member name="M:CasparObjects.TemplateField.#ctor(System.String,System.String)">
+ <summary>
+ Constructor
+ </summary>
+ <param name="Name">The name of the field</param>
+ <param name="Value">The value of the field</param>
+ <remarks></remarks>
+</member>
+</members>
+</doc>
