@@ -1,5 +1,5 @@
 # CasparCGAddIn
-Excel plugin for CasparCG - Use Microsoft Excel as your CasparCG client.
+## Excel plugin for CasparCG - Use Microsoft Excel as your CasparCG client.
 
 This Add-In is made for Microsoft Excel for Windows only.
 You can download the setup program from [here][1] 
