@@ -187,6 +187,7 @@
   <ItemGroup>
     <AppDesigner Include="My Project\" />
     <Compile Include="CustomProperies.vb" />
+    <Compile Include="ExtractInfo.vb" />
     <Compile Include="frmDashboardSettings.Designer.vb">
       <DependentUpon>frmDashboardSettings.vb</DependentUpon>
     </Compile>
@@ -211,17 +212,28 @@
     <Compile Include="frmSettings.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmSetupWebData.Designer.vb">
-      <DependentUpon>frmSetupWebData.vb</DependentUpon>
-    </Compile>
-    <Compile Include="frmSetupWebData.vb">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="frmSheetProperties.Designer.vb">
       <DependentUpon>frmSheetProperties.vb</DependentUpon>
     </Compile>
     <Compile Include="frmSheetProperties.vb">
       <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmWait.Designer.vb">
+      <DependentUpon>frmWait.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmWait.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmWebbrowser.Designer.vb">
+      <DependentUpon>frmWebbrowser.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmWebbrowser.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="My Project\Resources1.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="ribCasparCG.Designer.vb">
       <DependentUpon>ribCasparCG.vb</DependentUpon>
@@ -239,12 +251,19 @@
     <Compile Include="ucDashboard.vb">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="ucPlaybackButtons.Designer.vb">
+      <DependentUpon>ucPlaybackButtons.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ucPlaybackButtons.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="ucPlaybackControls.Designer.vb">
       <DependentUpon>ucPlaybackControls.vb</DependentUpon>
     </Compile>
     <Compile Include="ucPlaybackControls.vb">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="XInfos.vb" />
     <EmbeddedResource Include="frmDashboardSettings.resx">
       <DependentUpon>frmDashboardSettings.vb</DependentUpon>
       <SubType>Designer</SubType>
@@ -259,17 +278,24 @@
       <DependentUpon>frmSettings.vb</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmSetupWebData.resx">
-      <DependentUpon>frmSetupWebData.vb</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="frmSheetProperties.resx">
       <DependentUpon>frmSheetProperties.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmWait.resx">
+      <DependentUpon>frmWait.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmWebbrowser.resx">
+      <DependentUpon>frmWebbrowser.vb</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="ribCasparCG.resx">
       <DependentUpon>ribCasparCG.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ucDashboard.resx">
       <DependentUpon>ucDashboard.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ucPlaybackButtons.resx">
+      <DependentUpon>ucPlaybackButtons.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ucPlaybackControls.resx">
       <DependentUpon>ucPlaybackControls.vb</DependentUpon>
@@ -286,15 +312,10 @@
     <Compile Include="My Project\AssemblyInfo.vb" />
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
       <SubType>Designer</SubType>
+      <LastGenOutput>Resources1.Designer.vb</LastGenOutput>
     </EmbeddedResource>
-    <Compile Include="My Project\Resources.Designer.vb">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
     <None Include="My Project\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
@@ -427,6 +448,45 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Playback_Controls_Load.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Live.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Live64.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Save_All_Datasets32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Save_Dataset32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\PowerQuery32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Refresh32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Playback_Controls_LoadQuery.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Playback_Controls_Query.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Refresh16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Web_Refresh_64x1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Web_Refresh_64x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\google-loading-icon.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\loader-spinner.gif" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

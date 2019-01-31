@@ -5,34 +5,60 @@ Public Class ThisAddIn
 
    Private _Settings As Settings
    Private _SettingsFName As String
+   Private _IsCasparConnected As Boolean = False
+
+   Private _CasparRibon As ribCasparCG
 
    Private _Dashboard As ucDashboard
    Private WithEvents _DashboardPane As Microsoft.Office.Tools.CustomTaskPane
 
-   Public Sub ConnectAll()
+   Private _sheetDeleteInProgress As Boolean = False
+
+   Public ReadOnly Property IsCasparConnected As Boolean
+      Get
+         Return _IsCasparConnected
+      End Get
+   End Property
+
+   Public Sub ConnectAll(useAveco As Boolean)
 
       Dim errText As String = ""
 
       For Each caspar In _Settings.Servers
 
-         Select Case caspar.Connect()
-            Case CasparCG.enumConnectResult.crMachineNotAvailable
-               errText += String.Format("The machine '{0}' - '{1}' is not available.", caspar.ServerAdress, caspar.Name) + vbNewLine
-            Case CasparCG.enumConnectResult.crCasparCGNotStarted
-               errText += String.Format("CasparCG '{0}' is not running.", caspar.Name) + vbNewLine
-            Case CasparCG.enumConnectResult.crLOcalCasprCGCouldNotBeStarted
-               errText += String.Format("CasparCG '{0}' could not be started. The path to the exe-file is probably invalid.", caspar.Name) + vbNewLine
-            Case CasparCG.enumConnectResult.crIsNotLocal
-               errText += String.Format("This CasparCG '{0}' is not local.", caspar.Name) + vbNewLine
-         End Select
+         If Not caspar.Connected Then
+
+            Select Case caspar.Connect()
+               Case CasparCG.enumConnectResult.crMachineNotAvailable
+                  errText += String.Format("The machine '{0}' - '{1}' is not available.", caspar.ServerAdress, caspar.Name) + vbNewLine
+               Case CasparCG.enumConnectResult.crCasparCGNotStarted
+                  errText += String.Format("CasparCG '{0}' is not running.", caspar.Name) + vbNewLine
+               Case CasparCG.enumConnectResult.crLOcalCasprCGCouldNotBeStarted
+                  errText += String.Format("CasparCG '{0}' could not be started. The path to the exe-file is probably invalid.", caspar.Name) + vbNewLine
+               Case CasparCG.enumConnectResult.crIsNotLocal
+                  errText += String.Format("This CasparCG '{0}' is not local.", caspar.Name) + vbNewLine
+            End Select
+
+         Else
+            caspar.AddAvecoFields = useAveco
+         End If
 
       Next
 
       If errText <> "" Then
+
          MsgBox(errText, MsgBoxStyle.Exclamation, "Connection problem")
-         _Dashboard.IsCasparConnected = False
+
+         If _CasparRibon IsNot Nothing Then _CasparRibon.IsCasparConnected = False
+         If _Dashboard IsNot Nothing Then _Dashboard.IsCasparConnected = False
+         _IsCasparConnected = False
+
       Else
-         _Dashboard.IsCasparConnected = True
+
+         If _CasparRibon IsNot Nothing Then _CasparRibon.IsCasparConnected = True
+         If _Dashboard IsNot Nothing Then _Dashboard.IsCasparConnected = True
+         _IsCasparConnected = True
+
       End If
 
    End Sub
@@ -40,10 +66,15 @@ Public Class ThisAddIn
    Public Sub DisconnectAll()
 
       For Each caspar In _Settings.Servers
+
          If caspar.Connected Then
             caspar.Disconnect()
          End If
-         _Dashboard.IsCasparConnected = False
+
+         If _CasparRibon IsNot Nothing Then _CasparRibon.IsCasparConnected = False
+         If _Dashboard IsNot Nothing Then _Dashboard.IsCasparConnected = False
+         _IsCasparConnected = False
+
       Next
 
    End Sub
@@ -60,19 +91,17 @@ Public Class ThisAddIn
          _Settings = New Settings()
       End If
 
+      _CasparRibon = Globals.Ribbons.ribCasparCG
+
       _Dashboard = New ucDashboard
       _DashboardPane = Me.CustomTaskPanes.Add(_Dashboard, "CasparCG Dashboard")
       _DashboardPane.Visible = _Settings.DashboardVisible
 
       _Dashboard.Settings = _Settings
-      _Dashboard.CasparRibon = Globals.Ribbons.ribCasparCG
+      _Dashboard.CasparRibon = _CasparRibon
 
-      Globals.Ribbons.ribCasparCG.Settings = _Settings
-      Globals.Ribbons.ribCasparCG.SetDashboardObjects(_Dashboard, _DashboardPane)
-
-      If _Settings.ConnectOnStartUp Then
-         ConnectAll()
-      End If
+      _CasparRibon.Settings = _Settings
+      _CasparRibon.SetDashboardObjects(_Dashboard, _DashboardPane)
 
    End Sub
 
@@ -85,19 +114,12 @@ Public Class ThisAddIn
          _Dashboard.DockingMode = ucDashboard.enumDockingMode.dmFloating
       ElseIf _DashboardPane.DockPosition = Microsoft.Office.Core.MsoCTPDockPosition.msoCTPDockPositionTop Or _DashboardPane.DockPosition = Microsoft.Office.Core.MsoCTPDockPosition.msoCTPDockPositionBottom Then
          _Dashboard.DockingMode = ucDashboard.enumDockingMode.dmHorizontal
-         '_Dashboard.flpFlow.FlowDirection = System.Windows.Forms.FlowDirection.LeftToRight
       Else
          _Dashboard.DockingMode = ucDashboard.enumDockingMode.dmVertical
-         '_Dashboard.flpFlow.FlowDirection = System.Windows.Forms.FlowDirection.TopDown
       End If
 
    End Sub
 
-   'Private Sub _DashboardPane_VisibleChanged(sender As Object, e As EventArgs) Handles _DashboardPane.VisibleChanged
-   '   If _DashboardPane.Visible Then
-   '      _Dashboard.BecomesVisible()
-   '   End If
-   'End Sub
 
    Private Sub ThisAddIn_Shutdown() Handles Me.Shutdown
 
@@ -108,18 +130,76 @@ Public Class ThisAddIn
 
    End Sub
 
+   Private Sub Application_AfterCalculate() Handles Application.AfterCalculate
+      If _CasparRibon IsNot Nothing Then
+         _CasparRibon.FlagAfterCalculate()
+      End If
+      If _Dashboard IsNot Nothing Then
+         _Dashboard.FlagAfterCalculate()
+      End If
+   End Sub
+
    Private Sub Application_SheetCalculate(Sh As Object) Handles Application.SheetCalculate
-      Globals.Ribbons.ribCasparCG.FlagSheetCalculated(Sh)
+      If _CasparRibon IsNot Nothing Then
+         _CasparRibon.FlagSheetCalculated(Sh)
+      End If
+   End Sub
+
+   Private Sub Application_SheetBeforeDelete(Sh As Object) Handles Application.SheetBeforeDelete
+      _sheetDeleteInProgress = True
    End Sub
 
    Private Sub Application_SheetActivate(Sh As Object) Handles Application.SheetActivate
-      Globals.Ribbons.ribCasparCG.FlagSheetActivated(Sh)
+
+      If _CasparRibon IsNot Nothing Then
+         _CasparRibon.FlagSheetActivated(Sh)
+      End If
+
+      If _sheetDeleteInProgress AndAlso _Dashboard IsNot Nothing Then
+         _Dashboard.RefreshPlaybackControls()
+      End If
+
+      _sheetDeleteInProgress = False
+
    End Sub
 
    Private Sub Application_WorkbookActivate(Wb As Workbook) Handles Application.WorkbookActivate
-      Globals.Ribbons.ribCasparCG.ActiveWorkbook = Wb
-      Globals.Ribbons.ribCasparCG.FlagSheetActivated(Wb.ActiveSheet)
-      _Dashboard.ActiveWorkbook = Wb
+
+      If _Settings.ConnectOnStartUp And Not _IsCasparConnected Then
+
+         Dim isCasparWookkbook As Boolean = False
+         For Each ws As Worksheet In Wb.Sheets
+
+            For Each name As Excel.Name In ws.Names
+
+               If name.Name.Contains("CasparOutput") Then
+                  isCasparWookkbook = True
+                  Exit For
+               End If
+
+            Next
+
+            If isCasparWookkbook Then
+               Exit For
+            End If
+
+         Next
+
+         If isCasparWookkbook Then
+            ConnectAll(_Settings.UseAveco)
+         End If
+
+      End If
+
+      If _CasparRibon IsNot Nothing Then
+         _CasparRibon.ActiveWorkbook = Wb
+         _CasparRibon.FlagSheetActivated(Wb.ActiveSheet)
+      End If
+
+      If _Dashboard IsNot Nothing Then
+         _Dashboard.ActiveWorkbook = Wb
+      End If
+
    End Sub
 
 End Class

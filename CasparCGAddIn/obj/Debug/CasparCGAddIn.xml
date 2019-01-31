@@ -6,6 +6,197 @@ CasparCGAddIn
 </name>
 </assembly>
 <members>
+<member name="T:CasparCGAddIn.My.Resources.Resources">
+<summary>
+  Eine stark typisierte Ressourcenklasse zum Suchen von lokalisierten Zeichenfolgen usw.
+</summary>
+</member>
+<member name="P:CasparCGAddIn.My.Resources.Resources.ResourceManager">
+<summary>
+  Gibt die zwischengespeicherte ResourceManager-Instanz zurück, die von dieser Klasse verwendet wird.
+</summary>
+</member>
+<member name="P:CasparCGAddIn.My.Resources.Resources.Culture">
+<summary>
+  Überschreibt die CurrentUICulture-Eigenschaft des aktuellen Threads für alle
+  Ressourcenzuordnungen, die diese stark typisierte Ressourcenklasse verwenden.
+</summary>
+</member>
+<member name="P:CasparCGAddIn.My.Resources.Resources.ASPNETWeb_64x">
+<summary>
+  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:CasparCGAddIn.My.Resources.Resources.Base_Folder">
+<summary>
+  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:CasparCGAddIn.My.Resources.Resources.Connect">
+<summary>
+  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:CasparCGAddIn.My.Resources.Resources.GaugeMeter">
+<summary>
+  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:CasparCGAddIn.My.Resources.Resources.Live">
+<summary>
+  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:CasparCGAddIn.My.Resources.Resources.loader_spinner">
+<summary>
+  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:CasparCGAddIn.My.Resources.Resources.Open_Image">
+<summary>
+  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:CasparCGAddIn.My.Resources.Resources.Paint_Palette">
+<summary>
+  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:CasparCGAddIn.My.Resources.Resources.Playback_Controls_Audio">
+<summary>
+  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:CasparCGAddIn.My.Resources.Resources.Playback_Controls_Images">
+<summary>
+  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:CasparCGAddIn.My.Resources.Resources.Playback_Controls_Load">
+<summary>
+  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:CasparCGAddIn.My.Resources.Resources.Playback_Controls_Next">
+<summary>
+  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:CasparCGAddIn.My.Resources.Resources.Playback_Controls_Play">
+<summary>
+  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:CasparCGAddIn.My.Resources.Resources.Playback_Controls_Query">
+<summary>
+  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:CasparCGAddIn.My.Resources.Resources.Playback_Controls_Settings">
+<summary>
+  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:CasparCGAddIn.My.Resources.Resources.Playback_Controls_Stop">
+<summary>
+  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:CasparCGAddIn.My.Resources.Resources.Playback_Controls_Template">
+<summary>
+  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:CasparCGAddIn.My.Resources.Resources.Playback_Controls_Update">
+<summary>
+  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:CasparCGAddIn.My.Resources.Resources.Playback_Controls_Video">
+<summary>
+  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:CasparCGAddIn.My.Resources.Resources.PowerQuery32">
+<summary>
+  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:CasparCGAddIn.My.Resources.Resources.Preview">
+<summary>
+  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:CasparCGAddIn.My.Resources.Resources.PreviewRefresh">
+<summary>
+  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:CasparCGAddIn.My.Resources.Resources.Refresh_Icon">
+<summary>
+  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:CasparCGAddIn.My.Resources.Resources.Refresh16">
+<summary>
+  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:CasparCGAddIn.My.Resources.Resources.Refresh32">
+<summary>
+  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:CasparCGAddIn.My.Resources.Resources.Save_All_Datasets">
+<summary>
+  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:CasparCGAddIn.My.Resources.Resources.Save_Dataset">
+<summary>
+  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:CasparCGAddIn.My.Resources.Resources.Save_Dataset32">
+<summary>
+  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:CasparCGAddIn.My.Resources.Resources.Save_XML">
+<summary>
+  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:CasparCGAddIn.My.Resources.Resources.Select_Range">
+<summary>
+  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:CasparCGAddIn.My.Resources.Resources.Select_Template">
+<summary>
+  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:CasparCGAddIn.My.Resources.Resources.StartTime_64x">
+<summary>
+  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:CasparCGAddIn.My.Resources.Resources.Synchronize">
+<summary>
+  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:CasparCGAddIn.My.Resources.Resources.ThreeDots">
+<summary>
+  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:CasparCGAddIn.My.Resources.Resources.Web_Refresh_64x">
+<summary>
+  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+</summary>
+</member>
 <member name="T:CasparCGAddIn.ThisRibbonCollection">
 
 </member>
@@ -63,162 +254,25 @@ CasparCGAddIn
 <member name="M:CasparCGAddIn.ThisAddIn.OnShutdown">
 
 </member>
+<member name="M:CasparCGAddIn.ucDashboard.CommandEvent(System.Object,CasparCGAddIn.ucPlaybackButtons.CommandkEventArgs)">
+ <summary>
+ Handles the worksheet based PlaybackButtons
+ </summary>
+ <param name="sender">Event source</param>
+ <param name="e">Indicates the workshhet to use and what commnad to be executed</param>
+</member>
+<member name="M:CasparCGAddIn.ucDashboard.pbPlaybackButtons_CommandEvent(System.Object,CasparCGAddIn.ucPlaybackButtons.CommandkEventArgs)">
+ <summary>
+ Handles the dashboards own PlaybackButtons
+ </summary>
+ <param name="sender">Event source</param>
+ <param name="e">Indicates what commnad to be executed</param>
+</member>
 <member name="T:CasparCGAddIn.Globals">
 
 </member>
 <member name="M:CasparCGAddIn.Globals.#ctor">
 
-</member>
-<member name="T:CasparCGAddIn.My.Resources.Resources">
-<summary>
-  Eine stark typisierte Ressourcenklasse zum Suchen von lokalisierten Zeichenfolgen usw.
-</summary>
-</member>
-<member name="P:CasparCGAddIn.My.Resources.Resources.ResourceManager">
-<summary>
-  Gibt die zwischengespeicherte ResourceManager-Instanz zurück, die von dieser Klasse verwendet wird.
-</summary>
-</member>
-<member name="P:CasparCGAddIn.My.Resources.Resources.Culture">
-<summary>
-  Überschreibt die CurrentUICulture-Eigenschaft des aktuellen Threads für alle
-  Ressourcenzuordnungen, die diese stark typisierte Ressourcenklasse verwenden.
-</summary>
-</member>
-<member name="P:CasparCGAddIn.My.Resources.Resources.ASPNETWeb_64x">
-<summary>
-  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
-</summary>
-</member>
-<member name="P:CasparCGAddIn.My.Resources.Resources.Base_Folder">
-<summary>
-  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
-</summary>
-</member>
-<member name="P:CasparCGAddIn.My.Resources.Resources.Connect">
-<summary>
-  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
-</summary>
-</member>
-<member name="P:CasparCGAddIn.My.Resources.Resources.GaugeMeter">
-<summary>
-  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
-</summary>
-</member>
-<member name="P:CasparCGAddIn.My.Resources.Resources.Open_Image">
-<summary>
-  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
-</summary>
-</member>
-<member name="P:CasparCGAddIn.My.Resources.Resources.Paint_Palette">
-<summary>
-  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
-</summary>
-</member>
-<member name="P:CasparCGAddIn.My.Resources.Resources.Playback_Controls_Audio">
-<summary>
-  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
-</summary>
-</member>
-<member name="P:CasparCGAddIn.My.Resources.Resources.Playback_Controls_Images">
-<summary>
-  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
-</summary>
-</member>
-<member name="P:CasparCGAddIn.My.Resources.Resources.Playback_Controls_Load">
-<summary>
-  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
-</summary>
-</member>
-<member name="P:CasparCGAddIn.My.Resources.Resources.Playback_Controls_Next">
-<summary>
-  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
-</summary>
-</member>
-<member name="P:CasparCGAddIn.My.Resources.Resources.Playback_Controls_Play">
-<summary>
-  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
-</summary>
-</member>
-<member name="P:CasparCGAddIn.My.Resources.Resources.Playback_Controls_Settings">
-<summary>
-  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
-</summary>
-</member>
-<member name="P:CasparCGAddIn.My.Resources.Resources.Playback_Controls_Stop">
-<summary>
-  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
-</summary>
-</member>
-<member name="P:CasparCGAddIn.My.Resources.Resources.Playback_Controls_Template">
-<summary>
-  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
-</summary>
-</member>
-<member name="P:CasparCGAddIn.My.Resources.Resources.Playback_Controls_Update">
-<summary>
-  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
-</summary>
-</member>
-<member name="P:CasparCGAddIn.My.Resources.Resources.Playback_Controls_Video">
-<summary>
-  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
-</summary>
-</member>
-<member name="P:CasparCGAddIn.My.Resources.Resources.Preview">
-<summary>
-  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
-</summary>
-</member>
-<member name="P:CasparCGAddIn.My.Resources.Resources.PreviewRefresh">
-<summary>
-  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
-</summary>
-</member>
-<member name="P:CasparCGAddIn.My.Resources.Resources.Refresh_Icon">
-<summary>
-  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
-</summary>
-</member>
-<member name="P:CasparCGAddIn.My.Resources.Resources.Save_All_Datasets">
-<summary>
-  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
-</summary>
-</member>
-<member name="P:CasparCGAddIn.My.Resources.Resources.Save_Dataset">
-<summary>
-  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
-</summary>
-</member>
-<member name="P:CasparCGAddIn.My.Resources.Resources.Save_XML">
-<summary>
-  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
-</summary>
-</member>
-<member name="P:CasparCGAddIn.My.Resources.Resources.Select_Range">
-<summary>
-  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
-</summary>
-</member>
-<member name="P:CasparCGAddIn.My.Resources.Resources.Select_Template">
-<summary>
-  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
-</summary>
-</member>
-<member name="P:CasparCGAddIn.My.Resources.Resources.StartTime_64x">
-<summary>
-  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
-</summary>
-</member>
-<member name="P:CasparCGAddIn.My.Resources.Resources.Synchronize">
-<summary>
-  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
-</summary>
-</member>
-<member name="P:CasparCGAddIn.My.Resources.Resources.ThreeDots">
-<summary>
-  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
-</summary>
 </member>
 </members>
 </doc>

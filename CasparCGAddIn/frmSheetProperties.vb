@@ -6,12 +6,11 @@ Public Class frmSheetProperties
 
    Public Enum enumDialogMode
       ModeAll
-      ModeDataSetName
-      ModeTemplate
+      ModeCommon
       ModeAutoUpdate
    End Enum
 
-   Private _DialogMode As enumDialogMode = enumDialogMode.ModeDataSetName
+   Private _DialogMode As enumDialogMode = enumDialogMode.ModeCommon
    Private _wrkSheet As Worksheet
    Private _CasparCG As CasparCG
    Private _Settings As Settings
@@ -53,25 +52,28 @@ Public Class frmSheetProperties
    Private Sub frmSheetProperties_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
       'DataSet
-      Dim dsn As String = CustomProperies.Load(_wrkSheet, "DataSetName")
+      Dim dsn As String = CustomProperties.Load(_wrkSheet, "DataSetName")
       If dsn = "" Then
          dsn = _wrkSheet.Name
       End If
 
       txtDataSetName.Text = dsn
-      tabDataSetName.Enabled = True
-      tabTab.SelectedTab = tabDataSetName
 
-      'Template
-      If _CasparCG IsNot Nothing AndAlso _CasparCG.Connected Then
-         cboPreviewTemplate.Items.Clear()
-         Dim lst As List(Of String) = _CasparCG.GetTemplateNames()
-         For Each s As String In lst
-            cboPreviewTemplate.Items.Add(s)
-         Next
-         cboPreviewTemplate.Text = CustomProperies.Load(_wrkSheet, "Template")
-         tabTemplate.Enabled = True
-      End If
+      'Delimiter Settings
+      Dim deliminter As String = CustomProperties.Load(_wrkSheet, "Delimiter")
+      Select Case deliminter
+         Case ""
+            rbTabDelimited.Checked = True
+         Case "TAB"
+            rbTabDelimited.Checked = True
+         Case "COLON"
+            rbColonDelimited.Checked = True
+         Case "SEMICOLON"
+            rbSemicolonDelimited.Checked = True
+         Case Else
+            rbCustomDelimited.Checked = True
+            txtCustomDelimiter.Text = deliminter
+      End Select
 
       'Auto-Update
       cboServers.Items.Clear()
@@ -81,35 +83,53 @@ Public Class frmSheetProperties
       Next
 
       Dim inte As Integer = 0
-      Integer.TryParse(CustomProperies.Load(_wrkSheet, "AutoUpdateDataset"), inte)
+      Integer.TryParse(CustomProperties.Load(_wrkSheet, "AutoUpdateDataset"), inte)
       If inte = 1 Then
          rbDataset.Checked = True
       Else
          rbLive.Checked = True
       End If
 
-      If Integer.TryParse(CustomProperies.Load(_wrkSheet, "ServerNumber"), inte) Then
+      If Integer.TryParse(CustomProperties.Load(_wrkSheet, "ServerNumber"), inte) Then
          cboServers.SelectedIndex = inte
       Else
          cboServers.SelectedIndex = 0
       End If
 
-      If Integer.TryParse(CustomProperies.Load(_wrkSheet, "Channel"), inte) Then
+      If Integer.TryParse(CustomProperties.Load(_wrkSheet, "Channel"), inte) Then
          nudChannel.Value = inte
       End If
 
-      If Integer.TryParse(CustomProperies.Load(_wrkSheet, "Layer"), inte) Then
+      If Integer.TryParse(CustomProperties.Load(_wrkSheet, "Layer"), inte) Then
          nudLayer.Value = inte
       End If
 
-      If Integer.TryParse(CustomProperies.Load(_wrkSheet, "ControlsSet"), inte) Then
+      'Templates
+      If _CasparCG IsNot Nothing AndAlso _CasparCG.Connected Then
+
+         cboTemplate.Items.Clear()
+         cboPreviewTemplate.Items.Clear()
+
+         Dim lst As List(Of String) = _CasparCG.GetTemplateNames()
+
+         For Each s As String In lst
+            cboTemplate.Items.Add(s)
+            cboPreviewTemplate.Items.Add(s)
+         Next
+
+         cboTemplate.Text = CustomProperties.Load(_wrkSheet, "Template")
+         cboPreviewTemplate.Text = CustomProperties.Load(_wrkSheet, "Template")
+
+      End If
+
+      If Integer.TryParse(CustomProperties.Load(_wrkSheet, "ControlsSet"), inte) Then
          cboControlSet.SelectedIndex = inte
       Else
          cboControlSet.SelectedIndex = 6     'csLoadPlayStopUpdate
       End If
 
       'Queries
-      If Integer.TryParse(CustomProperies.Load(_wrkSheet, "UpdateQueries"), inte) Then
+      If Integer.TryParse(CustomProperties.Load(_wrkSheet, "UpdateQueries"), inte) Then
          chkRefreshQueries.Checked = (inte = 1)
       Else
          chkRefreshQueries.Checked = False
@@ -120,7 +140,7 @@ Public Class frmSheetProperties
       clstQueries.Items.Clear()
       Dim hash As HashSet(Of String) = New HashSet(Of String)
 
-      Dim que As String = CustomProperies.Load(_wrkSheet, "Queries")
+      Dim que As String = CustomProperties.Load(_wrkSheet, "Queries")
       If que <> "" Then
          Dim queries() As String = que.Split("|")
          For Each s As String In queries
@@ -137,39 +157,73 @@ Public Class frmSheetProperties
          End If
       Next
 
+      Select Case _DialogMode
+         Case enumDialogMode.ModeCommon
+            tabTab.SelectedTab = tabCommon
+            tabCommon.Enabled = True
+            tabAutoUpdate.Enabled = False
+            tabQueries.Enabled = False
 
-      'Select default tab
-      If _DialogMode = enumDialogMode.ModeDataSetName Or _DialogMode = enumDialogMode.ModeAll Then
-         tabTab.SelectedTab = tabDataSetName
-      ElseIf _DialogMode = enumDialogMode.ModeTemplate Then
-         tabTab.SelectedTab = tabTemplate
-      ElseIf _DialogMode = enumDialogMode.ModeAutoUpdate Then
-         tabTab.SelectedTab = tabAutoUpdate
-      End If
+         Case enumDialogMode.ModeAutoUpdate
+            tabTab.SelectedTab = tabAutoUpdate
+            tabCommon.Enabled = False
+            tabAutoUpdate.Enabled = True
+            tabQueries.Enabled = True
+
+         Case enumDialogMode.ModeAll
+            tabTab.SelectedTab = tabCommon
+            tabCommon.Enabled = True
+            tabAutoUpdate.Enabled = True
+            tabQueries.Enabled = True
+
+      End Select
 
    End Sub
 
    Private Sub btnOk_Click(sender As Object, e As EventArgs) Handles btnOk.Click
 
       'Dataset
-      CustomProperies.Save(_wrkSheet, "DataSetName", txtDataSetName.Text)
+      CustomProperties.Save(_wrkSheet, "DataSetName", txtDataSetName.Text)
+
+      'Delimiter Settings
+      If rbTabDelimited.Checked Then
+         CustomProperties.Save(_wrkSheet, "Delimiter", "TAB")
+      ElseIf rbColonDelimited.Checked Then
+         CustomProperties.Save(_wrkSheet, "Delimiter", "COLON")
+      ElseIf rbSemicolonDelimited.Checked Then
+         CustomProperties.Save(_wrkSheet, "Delimiter", "SEMICOLON")
+      Else
+         If txtCustomDelimiter.Text.Trim <> "" Then
+            CustomProperties.Save(_wrkSheet, "Delimiter", txtCustomDelimiter.Text.Trim.Substring(0, 1))
+         Else
+            CustomProperties.Save(_wrkSheet, "Delimiter", "TAB")
+         End If
+      End If
 
       'Update template
-      CustomProperies.Save(_wrkSheet, "Template", cboPreviewTemplate.Text)
+      If _CasparCG IsNot Nothing AndAlso _CasparCG.Connected Then
+
+         If _DialogMode = enumDialogMode.ModeCommon Then
+            CustomProperties.Save(_wrkSheet, "Template", cboPreviewTemplate.Text)
+         Else
+            CustomProperties.Save(_wrkSheet, "Template", cboTemplate.Text)
+         End If
+
+      End If
 
       'Autoupdate
       If rbDataset.Checked Then
-         CustomProperies.Save(_wrkSheet, "AutoUpdateDataset", "1")
+         CustomProperties.Save(_wrkSheet, "AutoUpdateDataset", "1")
       Else
-         CustomProperies.Save(_wrkSheet, "AutoUpdateDataset", "0")
-         CustomProperies.Save(_wrkSheet, "ServerNumber", cboServers.SelectedIndex.ToString)
-         CustomProperies.Save(_wrkSheet, "Channel", nudChannel.Value.ToString)
-         CustomProperies.Save(_wrkSheet, "Layer", nudLayer.Value.ToString)
-         CustomProperies.Save(_wrkSheet, "ControlsSet", cboControlSet.SelectedIndex.ToString)
+         CustomProperties.Save(_wrkSheet, "AutoUpdateDataset", "0")
+         CustomProperties.Save(_wrkSheet, "ServerNumber", cboServers.SelectedIndex.ToString)
+         CustomProperties.Save(_wrkSheet, "Channel", nudChannel.Value.ToString)
+         CustomProperties.Save(_wrkSheet, "Layer", nudLayer.Value.ToString)
+         CustomProperties.Save(_wrkSheet, "ControlsSet", cboControlSet.SelectedIndex.ToString)
       End If
 
       'Queries
-      CustomProperies.Save(_wrkSheet, "UpdateQueries", IIf(chkRefreshQueries.Checked, "1", "0"))
+      CustomProperties.Save(_wrkSheet, "UpdateQueries", IIf(chkRefreshQueries.Checked, "1", "0"))
 
       Dim que As String = ""
       For Each i As Integer In clstQueries.CheckedIndices
@@ -177,7 +231,7 @@ Public Class frmSheetProperties
       Next
 
       If que <> "" Then
-         CustomProperies.Save(_wrkSheet, "Queries", que.Substring(0, que.Length - 1))
+         CustomProperties.Save(_wrkSheet, "Queries", que.Substring(0, que.Length - 1))
       End If
 
    End Sub
@@ -185,4 +239,5 @@ Public Class frmSheetProperties
    Private Sub chkRefreshQueries_CheckedChanged(sender As Object, e As EventArgs) Handles chkRefreshQueries.CheckedChanged
       tabQueries.Enabled = chkRefreshQueries.Checked
    End Sub
+
 End Class

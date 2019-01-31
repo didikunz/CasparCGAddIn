@@ -103,6 +103,26 @@ Namespace My.Resources
         '''<summary>
         '''  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
         '''</summary>
+        Friend ReadOnly Property Live() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("Live", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        '''</summary>
+        Friend ReadOnly Property loader_spinner() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("loader_spinner", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        '''</summary>
         Friend ReadOnly Property Open_Image() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("Open_Image", resourceCulture)
@@ -173,6 +193,16 @@ Namespace My.Resources
         '''<summary>
         '''  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
         '''</summary>
+        Friend ReadOnly Property Playback_Controls_Query() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("Playback_Controls_Query", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        '''</summary>
         Friend ReadOnly Property Playback_Controls_Settings() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("Playback_Controls_Settings", resourceCulture)
@@ -223,6 +253,16 @@ Namespace My.Resources
         '''<summary>
         '''  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
         '''</summary>
+        Friend ReadOnly Property PowerQuery32() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("PowerQuery32", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        '''</summary>
         Friend ReadOnly Property Preview() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("Preview", resourceCulture)
@@ -253,6 +293,26 @@ Namespace My.Resources
         '''<summary>
         '''  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
         '''</summary>
+        Friend ReadOnly Property Refresh16() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("Refresh16", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        '''</summary>
+        Friend ReadOnly Property Refresh32() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("Refresh32", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        '''</summary>
         Friend ReadOnly Property Save_All_Datasets() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("Save_All_Datasets", resourceCulture)
@@ -266,6 +326,16 @@ Namespace My.Resources
         Friend ReadOnly Property Save_Dataset() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("Save_Dataset", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        '''</summary>
+        Friend ReadOnly Property Save_Dataset32() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("Save_Dataset32", resourceCulture)
                 Return CType(obj,System.Drawing.Bitmap)
             End Get
         End Property
@@ -326,6 +396,16 @@ Namespace My.Resources
         Friend ReadOnly Property ThreeDots() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("ThreeDots", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        '''</summary>
+        Friend ReadOnly Property Web_Refresh_64x() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("Web_Refresh_64x", resourceCulture)
                 Return CType(obj,System.Drawing.Bitmap)
             End Get
         End Property

@@ -26,12 +26,7 @@ Partial Class ucDashboard
       Me.flpFlow = New System.Windows.Forms.FlowLayoutPanel()
       Me.lblHeader = New System.Windows.Forms.Label()
       Me.panList = New System.Windows.Forms.Panel()
-      Me.panBottom = New System.Windows.Forms.Panel()
-      Me.btnLoad = New System.Windows.Forms.Button()
-      Me.btnPlay = New System.Windows.Forms.Button()
-      Me.btnNext = New System.Windows.Forms.Button()
-      Me.btnStop = New System.Windows.Forms.Button()
-      Me.btnUpdate = New System.Windows.Forms.Button()
+      Me.pbPlaybackButtons = New CasparCGAddIn.ucPlaybackButtons()
       Me.panMiddle = New System.Windows.Forms.Panel()
       Me.lnkLabelRefreshLists = New System.Windows.Forms.LinkLabel()
       Me.lnklblQueries = New System.Windows.Forms.LinkLabel()
@@ -48,7 +43,6 @@ Partial Class ucDashboard
       Me.btnSettings = New System.Windows.Forms.Button()
       Me.ttTips = New System.Windows.Forms.ToolTip(Me.components)
       Me.panList.SuspendLayout()
-      Me.panBottom.SuspendLayout()
       Me.panMiddle.SuspendLayout()
       Me.panTop.SuspendLayout()
       Me.SuspendLayout()
@@ -70,16 +64,16 @@ Partial Class ucDashboard
       Me.lblHeader.BackColor = System.Drawing.SystemColors.ButtonShadow
       Me.lblHeader.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
       Me.lblHeader.ForeColor = System.Drawing.SystemColors.ButtonHighlight
-      Me.lblHeader.Location = New System.Drawing.Point(0, 0)
+      Me.lblHeader.Location = New System.Drawing.Point(0, 1)
       Me.lblHeader.Name = "lblHeader"
-      Me.lblHeader.Size = New System.Drawing.Size(192, 23)
+      Me.lblHeader.Size = New System.Drawing.Size(192, 21)
       Me.lblHeader.TabIndex = 10
       Me.lblHeader.Text = "List"
       Me.lblHeader.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
       '
       'panList
       '
-      Me.panList.Controls.Add(Me.panBottom)
+      Me.panList.Controls.Add(Me.pbPlaybackButtons)
       Me.panList.Controls.Add(Me.panMiddle)
       Me.panList.Controls.Add(Me.panTop)
       Me.panList.Controls.Add(Me.btnSettings)
@@ -90,67 +84,15 @@ Partial Class ucDashboard
       Me.panList.Size = New System.Drawing.Size(205, 190)
       Me.panList.TabIndex = 11
       '
-      'panBottom
+      'pbPlaybackButtons
       '
-      Me.panBottom.Controls.Add(Me.btnLoad)
-      Me.panBottom.Controls.Add(Me.btnPlay)
-      Me.panBottom.Controls.Add(Me.btnNext)
-      Me.panBottom.Controls.Add(Me.btnStop)
-      Me.panBottom.Controls.Add(Me.btnUpdate)
-      Me.panBottom.Location = New System.Drawing.Point(9, 134)
-      Me.panBottom.Name = "panBottom"
-      Me.panBottom.Size = New System.Drawing.Size(186, 46)
-      Me.panBottom.TabIndex = 21
-      '
-      'btnLoad
-      '
-      Me.btnLoad.Image = Global.CasparCGAddIn.My.Resources.Resources.Playback_Controls_Load
-      Me.btnLoad.Location = New System.Drawing.Point(23, 0)
-      Me.btnLoad.Name = "btnLoad"
-      Me.btnLoad.Size = New System.Drawing.Size(42, 46)
-      Me.btnLoad.TabIndex = 9
-      Me.ttTips.SetToolTip(Me.btnLoad, "Load")
-      Me.btnLoad.UseVisualStyleBackColor = True
-      '
-      'btnPlay
-      '
-      Me.btnPlay.Image = Global.CasparCGAddIn.My.Resources.Resources.Playback_Controls_Play
-      Me.btnPlay.Location = New System.Drawing.Point(0, 0)
-      Me.btnPlay.Name = "btnPlay"
-      Me.btnPlay.Size = New System.Drawing.Size(42, 46)
-      Me.btnPlay.TabIndex = 5
-      Me.ttTips.SetToolTip(Me.btnPlay, "Play")
-      Me.btnPlay.UseVisualStyleBackColor = True
-      '
-      'btnNext
-      '
-      Me.btnNext.Image = Global.CasparCGAddIn.My.Resources.Resources.Playback_Controls_Next
-      Me.btnNext.Location = New System.Drawing.Point(48, 0)
-      Me.btnNext.Name = "btnNext"
-      Me.btnNext.Size = New System.Drawing.Size(42, 46)
-      Me.btnNext.TabIndex = 6
-      Me.ttTips.SetToolTip(Me.btnNext, "Next")
-      Me.btnNext.UseVisualStyleBackColor = True
-      '
-      'btnStop
-      '
-      Me.btnStop.Image = Global.CasparCGAddIn.My.Resources.Resources.Playback_Controls_Stop
-      Me.btnStop.Location = New System.Drawing.Point(96, 0)
-      Me.btnStop.Name = "btnStop"
-      Me.btnStop.Size = New System.Drawing.Size(42, 46)
-      Me.btnStop.TabIndex = 7
-      Me.ttTips.SetToolTip(Me.btnStop, "Stop")
-      Me.btnStop.UseVisualStyleBackColor = True
-      '
-      'btnUpdate
-      '
-      Me.btnUpdate.Image = Global.CasparCGAddIn.My.Resources.Resources.Playback_Controls_Update
-      Me.btnUpdate.Location = New System.Drawing.Point(144, 0)
-      Me.btnUpdate.Name = "btnUpdate"
-      Me.btnUpdate.Size = New System.Drawing.Size(42, 46)
-      Me.btnUpdate.TabIndex = 8
-      Me.ttTips.SetToolTip(Me.btnUpdate, "Update")
-      Me.btnUpdate.UseVisualStyleBackColor = True
+      Me.pbPlaybackButtons.BackColor = System.Drawing.Color.Transparent
+      Me.pbPlaybackButtons.ControlsSet = CasparCGAddIn.ucPlaybackButtons.enumControlSets.csPlayStop
+      Me.pbPlaybackButtons.Location = New System.Drawing.Point(0, 134)
+      Me.pbPlaybackButtons.Name = "pbPlaybackButtons"
+      Me.pbPlaybackButtons.Size = New System.Drawing.Size(204, 56)
+      Me.pbPlaybackButtons.State = CasparCGAddIn.ucPlaybackButtons.enumState.stIdle
+      Me.pbPlaybackButtons.TabIndex = 21
       '
       'panMiddle
       '
@@ -161,9 +103,9 @@ Partial Class ucDashboard
       Me.panMiddle.Controls.Add(Me.cboAudio)
       Me.panMiddle.Controls.Add(Me.cboTemplates)
       Me.panMiddle.Controls.Add(Me.btnCreate)
-      Me.panMiddle.Location = New System.Drawing.Point(9, 82)
+      Me.panMiddle.Location = New System.Drawing.Point(0, 82)
       Me.panMiddle.Name = "panMiddle"
-      Me.panMiddle.Size = New System.Drawing.Size(186, 46)
+      Me.panMiddle.Size = New System.Drawing.Size(203, 46)
       Me.panMiddle.TabIndex = 20
       '
       'lnkLabelRefreshLists
@@ -181,7 +123,7 @@ Partial Class ucDashboard
       '
       Me.lnklblQueries.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
       Me.lnklblQueries.AutoSize = True
-      Me.lnklblQueries.Location = New System.Drawing.Point(139, 28)
+      Me.lnklblQueries.Location = New System.Drawing.Point(160, 30)
       Me.lnklblQueries.Name = "lnklblQueries"
       Me.lnklblQueries.Size = New System.Drawing.Size(44, 13)
       Me.lnklblQueries.TabIndex = 19
@@ -195,7 +137,7 @@ Partial Class ucDashboard
       Me.cboVideo.FormattingEnabled = True
       Me.cboVideo.Location = New System.Drawing.Point(143, 6)
       Me.cboVideo.Name = "cboVideo"
-      Me.cboVideo.Size = New System.Drawing.Size(186, 21)
+      Me.cboVideo.Size = New System.Drawing.Size(202, 21)
       Me.cboVideo.TabIndex = 18
       '
       'cboImages
@@ -205,7 +147,7 @@ Partial Class ucDashboard
       Me.cboImages.FormattingEnabled = True
       Me.cboImages.Location = New System.Drawing.Point(95, 6)
       Me.cboImages.Name = "cboImages"
-      Me.cboImages.Size = New System.Drawing.Size(186, 21)
+      Me.cboImages.Size = New System.Drawing.Size(202, 21)
       Me.cboImages.TabIndex = 17
       '
       'cboAudio
@@ -215,7 +157,7 @@ Partial Class ucDashboard
       Me.cboAudio.FormattingEnabled = True
       Me.cboAudio.Location = New System.Drawing.Point(46, 6)
       Me.cboAudio.Name = "cboAudio"
-      Me.cboAudio.Size = New System.Drawing.Size(186, 21)
+      Me.cboAudio.Size = New System.Drawing.Size(202, 21)
       Me.cboAudio.TabIndex = 16
       '
       'cboTemplates
@@ -223,16 +165,16 @@ Partial Class ucDashboard
       Me.cboTemplates.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
       Me.cboTemplates.DropDownWidth = 200
       Me.cboTemplates.FormattingEnabled = True
-      Me.cboTemplates.Location = New System.Drawing.Point(0, 6)
+      Me.cboTemplates.Location = New System.Drawing.Point(1, 6)
       Me.cboTemplates.Name = "cboTemplates"
-      Me.cboTemplates.Size = New System.Drawing.Size(186, 21)
+      Me.cboTemplates.Size = New System.Drawing.Size(202, 21)
       Me.cboTemplates.TabIndex = 15
       '
       'btnCreate
       '
       Me.btnCreate.Location = New System.Drawing.Point(0, 0)
       Me.btnCreate.Name = "btnCreate"
-      Me.btnCreate.Size = New System.Drawing.Size(186, 46)
+      Me.btnCreate.Size = New System.Drawing.Size(202, 46)
       Me.btnCreate.TabIndex = 19
       Me.btnCreate.Text = "Create list in document"
       Me.btnCreate.UseVisualStyleBackColor = True
@@ -243,9 +185,9 @@ Partial Class ucDashboard
       Me.panTop.Controls.Add(Me.rbAudio)
       Me.panTop.Controls.Add(Me.rbImage)
       Me.panTop.Controls.Add(Me.rbVideo)
-      Me.panTop.Location = New System.Drawing.Point(9, 30)
+      Me.panTop.Location = New System.Drawing.Point(0, 30)
       Me.panTop.Name = "panTop"
-      Me.panTop.Size = New System.Drawing.Size(186, 46)
+      Me.panTop.Size = New System.Drawing.Size(203, 46)
       Me.panTop.TabIndex = 19
       '
       'rbTemplate
@@ -253,9 +195,9 @@ Partial Class ucDashboard
       Me.rbTemplate.Appearance = System.Windows.Forms.Appearance.Button
       Me.rbTemplate.Checked = True
       Me.rbTemplate.Image = Global.CasparCGAddIn.My.Resources.Resources.Playback_Controls_Template
-      Me.rbTemplate.Location = New System.Drawing.Point(0, 0)
+      Me.rbTemplate.Location = New System.Drawing.Point(1, 0)
       Me.rbTemplate.Name = "rbTemplate"
-      Me.rbTemplate.Size = New System.Drawing.Size(42, 46)
+      Me.rbTemplate.Size = New System.Drawing.Size(46, 46)
       Me.rbTemplate.TabIndex = 11
       Me.rbTemplate.TabStop = True
       Me.ttTips.SetToolTip(Me.rbTemplate, "Graphic Template")
@@ -265,9 +207,9 @@ Partial Class ucDashboard
       '
       Me.rbAudio.Appearance = System.Windows.Forms.Appearance.Button
       Me.rbAudio.Image = Global.CasparCGAddIn.My.Resources.Resources.Playback_Controls_Audio
-      Me.rbAudio.Location = New System.Drawing.Point(48, 0)
+      Me.rbAudio.Location = New System.Drawing.Point(53, 0)
       Me.rbAudio.Name = "rbAudio"
-      Me.rbAudio.Size = New System.Drawing.Size(42, 46)
+      Me.rbAudio.Size = New System.Drawing.Size(46, 46)
       Me.rbAudio.TabIndex = 12
       Me.ttTips.SetToolTip(Me.rbAudio, "Audio Clip")
       Me.rbAudio.UseVisualStyleBackColor = True
@@ -276,9 +218,9 @@ Partial Class ucDashboard
       '
       Me.rbImage.Appearance = System.Windows.Forms.Appearance.Button
       Me.rbImage.Image = Global.CasparCGAddIn.My.Resources.Resources.Playback_Controls_Images
-      Me.rbImage.Location = New System.Drawing.Point(96, 0)
+      Me.rbImage.Location = New System.Drawing.Point(106, 0)
       Me.rbImage.Name = "rbImage"
-      Me.rbImage.Size = New System.Drawing.Size(42, 46)
+      Me.rbImage.Size = New System.Drawing.Size(46, 46)
       Me.rbImage.TabIndex = 13
       Me.ttTips.SetToolTip(Me.rbImage, "Image")
       Me.rbImage.UseVisualStyleBackColor = True
@@ -287,9 +229,9 @@ Partial Class ucDashboard
       '
       Me.rbVideo.Appearance = System.Windows.Forms.Appearance.Button
       Me.rbVideo.Image = Global.CasparCGAddIn.My.Resources.Resources.Playback_Controls_Video
-      Me.rbVideo.Location = New System.Drawing.Point(144, 0)
+      Me.rbVideo.Location = New System.Drawing.Point(158, 0)
       Me.rbVideo.Name = "rbVideo"
-      Me.rbVideo.Size = New System.Drawing.Size(42, 46)
+      Me.rbVideo.Size = New System.Drawing.Size(46, 46)
       Me.rbVideo.TabIndex = 14
       Me.ttTips.SetToolTip(Me.rbVideo, "Video Clip")
       Me.rbVideo.UseVisualStyleBackColor = True
@@ -315,7 +257,6 @@ Partial Class ucDashboard
       Me.Name = "ucDashboard"
       Me.Size = New System.Drawing.Size(205, 623)
       Me.panList.ResumeLayout(False)
-      Me.panBottom.ResumeLayout(False)
       Me.panMiddle.ResumeLayout(False)
       Me.panMiddle.PerformLayout()
       Me.panTop.ResumeLayout(False)
@@ -324,10 +265,6 @@ Partial Class ucDashboard
    End Sub
 
    Friend WithEvents flpFlow As System.Windows.Forms.FlowLayoutPanel
-   Friend WithEvents btnUpdate As System.Windows.Forms.Button
-   Friend WithEvents btnStop As System.Windows.Forms.Button
-   Friend WithEvents btnNext As System.Windows.Forms.Button
-   Friend WithEvents btnPlay As System.Windows.Forms.Button
    Friend WithEvents btnSettings As System.Windows.Forms.Button
    Friend WithEvents lblHeader As System.Windows.Forms.Label
    Friend WithEvents ttTips As System.Windows.Forms.ToolTip
@@ -342,9 +279,8 @@ Partial Class ucDashboard
    Friend WithEvents rbTemplate As System.Windows.Forms.RadioButton
    Friend WithEvents panMiddle As System.Windows.Forms.Panel
    Friend WithEvents panTop As System.Windows.Forms.Panel
-   Friend WithEvents panBottom As System.Windows.Forms.Panel
    Friend WithEvents btnCreate As System.Windows.Forms.Button
-   Friend WithEvents btnLoad As System.Windows.Forms.Button
    Friend WithEvents lnklblQueries As System.Windows.Forms.LinkLabel
    Friend WithEvents lnkLabelRefreshLists As System.Windows.Forms.LinkLabel
+   Friend WithEvents pbPlaybackButtons As ucPlaybackButtons
 End Class

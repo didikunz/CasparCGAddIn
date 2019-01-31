@@ -32,6 +32,9 @@ Public Class frmSettings
       cboPreviewServer.Text = _Settings.PreviewServer
       nudPreviewChannel.Value = _Settings.PreviewChannel
 
+      chkUseAveco.Checked = _Settings.UseAveco
+      chkShowDashboard.Checked = _Settings.ShowDashboard
+
    End Sub
 
    Private Sub btnNew_Click(sender As Object, e As EventArgs) Handles btnNew.Click
@@ -72,6 +75,9 @@ Public Class frmSettings
 
       _Settings.PreviewServer = cboPreviewServer.Text
       _Settings.PreviewChannel = nudPreviewChannel.Value
+
+      _Settings.UseAveco = chkUseAveco.Checked
+      _Settings.ShowDashboard = chkShowDashboard.Checked
 
    End Sub
 

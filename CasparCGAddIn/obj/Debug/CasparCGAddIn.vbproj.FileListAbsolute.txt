@@ -28,7 +28,6 @@ D:\Projects\CasparCGAddIn\CasparCGAddIn\bin\Debug\CasparObjects.pdb
 D:\Projects\CasparCGAddIn\CasparCGAddIn\bin\Debug\CasparObjects.xml
 D:\Projects\CasparCGAddIn\CasparCGAddIn\obj\Debug\CasparCGAddIn.frmSettings.resources
 D:\Projects\CasparCGAddIn\CasparCGAddIn\obj\Debug\CasparCGAddIn.frmSheetProperties.resources
-D:\Projects\CasparCGAddIn\CasparCGAddIn\obj\Debug\CasparCGAddIn.frmSetupWebData.resources
 D:\Projects\CasparCGAddIn\CasparCGAddIn\bin\Debug\Newtonsoft.Json.dll
 D:\Projects\CasparCGAddIn\CasparCGAddIn\bin\Debug\Newtonsoft.Json.pdb
 D:\Projects\CasparCGAddIn\CasparCGAddIn\bin\Debug\Newtonsoft.Json.xml
@@ -37,3 +36,6 @@ D:\Projects\CasparCGAddIn\CasparCGAddIn\obj\Debug\CasparCGAddIn.ucPlaybackContro
 D:\Projects\CasparCGAddIn\CasparCGAddIn\obj\Debug\CasparCGAddIn.frmDashboardSettings.resources
 D:\Projects\CasparCGAddIn\CasparCGAddIn\obj\Debug\CasparCGAddIn.frmSelectQuery.resources
 D:\Projects\CasparCGAddIn\CasparCGAddIn\obj\Debug\CasparCGAddIn.frmPlaybackControlsCaptions.resources
+D:\Projects\CasparCGAddIn\CasparCGAddIn\obj\Debug\CasparCGAddIn.ucPlaybackButtons.resources
+D:\Projects\CasparCGAddIn\CasparCGAddIn\obj\Debug\CasparCGAddIn.frmWebbrowser.resources
+D:\Projects\CasparCGAddIn\CasparCGAddIn\obj\Debug\CasparCGAddIn.frmWait.resources

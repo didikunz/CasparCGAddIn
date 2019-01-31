@@ -1,5 +1,5 @@
 ﻿Imports Microsoft.Office.Interop.Excel
-Public Class CustomProperies
+Public Class CustomProperties
 
    Public Shared Function Save(wrkSheet As Worksheet, Key As String, Value As String) As Boolean
 
@@ -25,7 +25,6 @@ Public Class CustomProperies
          For i As Integer = 1 To wrkSheet.CustomProperties.Count
             If wrkSheet.CustomProperties.Item(i).Name = Key Then
                Return wrkSheet.CustomProperties.Item(i).Value.ToString
-               Exit For
             End If
          Next
          Return ""
@@ -64,7 +63,6 @@ Public Class CustomProperies
          For i As Integer = 1 To wrkSheet.CustomProperties.Count
             If wrkSheet.CustomProperties.Item(i).Name = Key Then
                Return True
-               Exit For
             End If
          Next
          Return False

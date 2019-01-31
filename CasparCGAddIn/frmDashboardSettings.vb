@@ -15,7 +15,7 @@ Public Class frmDashboardSettings
    Public Property Channel As Integer = 1
    Public Property Layer As Integer = 20
    Public Property DataFields As String = ""
-   Public Property ControlsSet As ucPlaybackControls.enumControlSets = ucPlaybackControls.enumControlSets.csLoadPlayStopUpdate
+   Public Property ControlsSet As ucPlaybackButtons.enumControlSets = ucPlaybackButtons.enumControlSets.csLoadPlayStopUpdate
 
    Private Sub frmDashboardSettings_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 

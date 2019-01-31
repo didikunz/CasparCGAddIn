@@ -1,6 +1,7 @@
 ﻿Imports System.IO
 Imports CasparObjects
 Imports System.Xml.Serialization
+Imports System.Windows.Forms
 
 Public Class Settings
 
@@ -25,6 +26,13 @@ Public Class Settings
    Public Property ConnectOnStartUp As Boolean = False
    Public Property DashboardVisible As Boolean = False
    Public Property DefaultDataFields As String = "f0|f1|f2|f3|f4|f5"
+   Public Property UseAveco As Boolean = False
+   Public Property ShowDashboard As Boolean = True
+
+   Public Property BrowserLocation As System.Drawing.Point = New System.Drawing.Point(10, 10)
+   Public Property BrowserSize As System.Drawing.Size = New System.Drawing.Size(1072, 645)
+   Public Property BrowserWindowstate As System.Windows.Forms.FormWindowState = FormWindowState.Normal
+
 
    <XmlIgnore()>
    Public ReadOnly Property Preview As CasparCG
@@ -32,7 +40,6 @@ Public Class Settings
          For Each caspar As CasparCG In _Servers
             If caspar.Name = PreviewServer Then
                Return caspar
-               Exit For
             End If
          Next
          Return Nothing
@@ -99,6 +106,12 @@ Public Class Settings
       Me.ConnectOnStartUp = sets.ConnectOnStartUp
       Me.DashboardVisible = sets.DashboardVisible
       Me.DefaultDataFields = sets.DefaultDataFields
+      Me.UseAveco = sets.UseAveco
+      Me.ShowDashboard = sets.ShowDashboard
+
+      Me.BrowserLocation = sets.BrowserLocation
+      Me.BrowserSize = sets.BrowserSize
+      Me.BrowserWindowstate = sets.BrowserWindowstate
 
    End Sub
 

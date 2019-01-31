@@ -132,21 +132,12 @@ CasparObjects
  </summary>
  <remarks>The path is a network share seen from the client</remarks>
 </member>
-<member name="P:CasparObjects.CasparCG.TemplateChannelFieldname">
- <summary>
- The name of the field containing the current channel
- </summary>
-</member>
-<member name="P:CasparObjects.CasparCG.TemplateLayerFieldname">
- <summary>
- The name of the field containing the current layer
- </summary>
-</member>
 <member name="P:CasparObjects.CasparCG.Connected">
  <summary>
  Indicate connection status
  </summary>
  <remarks>True if connected, false otherwise</remarks>
+ 
 </member>
 <member name="P:CasparObjects.CasparCG.Version">
  <summary>
@@ -292,6 +283,18 @@ CasparObjects
  <returns>A ReturnInfo object</returns>
  <remarks>The main CG_Add Function. Adds a channel and a layer TemplateField to the Fields collection. This is usefull to call back the server via TCP/IP.</remarks>
 </member>
+<member name="M:CasparObjects.CasparCG.CG_Add(System.Int32,System.Int32,System.String,System.String,System.Boolean)">
+ <summary>
+ Adds the template in Caspar, using a Dataset
+ </summary>
+ <param name="Channel">The channel in Caspar</param>
+ <param name="Layer">The layer number</param>
+ <param name="TemplateName">The name of the template</param>
+ <param name="DataSetName">The name of the DataSet already stored on the server</param>
+ <param name="AutoPlay">Plays the template after loading if set to true</param>
+ <returns>A ReturnInfo object</returns>
+ <remarks>The CG_Add Function witch uses a DataSet insted on a Template object.</remarks>
+</member>
 <member name="M:CasparObjects.CasparCG.CG_Play">
  <summary>
  Plays the template in Caspar
@@ -342,6 +345,15 @@ CasparObjects
  <param name="TemplateData">The Template object to get fields from</param>
  <returns>A ReturnInfo object</returns>
  <remarks>The main CG_Play function.</remarks>
+</member>
+<member name="M:CasparObjects.CasparCG.CG_Update(System.Int32,System.Int32,System.String)">
+ <summary>
+ Updates the datafields of a template from a Dataset
+ </summary>
+ <param name="Channel">The channel in Caspar</param>
+ <param name="Layer">The layer number</param>
+ <param name="DataSetName">The name of the DataSet already stored on the server</param>
+ <returns>A ReturnInfo object</returns>
 </member>
 <member name="M:CasparObjects.CasparCG.CG_Stop">
  <summary>
@@ -436,6 +448,50 @@ CasparObjects
  <returns>A ReturnInfo object</returns>
  <remarks>A sub Data_Store Function. Adds a channel and a layer TemplateField to the Fields collection. This is usefull to call back the server via TCP/IP.</remarks>
 </member>
+<member name="M:CasparObjects.CasparCG.GetDataSets">
+ <summary>
+ Get a list of DataSets
+ </summary>
+ <returns>Names of the DataSets</returns>
+</member>
+<member name="M:CasparObjects.CasparCG.GetDataSets(System.Boolean)">
+ <summary>
+ Get a list of DataSets
+ </summary>
+ <param name="AddEmptyEntry">Add an empty entry in the list. Makes it easier to fill Comboboxes.</param>
+ <returns>Names of the DataSets</returns>
+</member>
+<member name="M:CasparObjects.CasparCG.GetDataSets(System.String,System.Boolean)">
+ <summary>
+ Get a list of DataSets
+ </summary>
+ <param name="FolderName">Subfolder to list</param>
+ <param name="AddEmptyEntry">Add an empty entry in the list. Makes it easier to fill Comboboxes.</param>
+ <returns>Names of the DataSets</returns>
+</member>
+<member name="M:CasparObjects.CasparCG.Load(System.String)">
+ <summary>
+ Simple Load Command
+ </summary>
+ <param name="MediaName">The name of the clip or image</param>
+ <returns></returns>
+</member>
+<member name="M:CasparObjects.CasparCG.Load(System.Int32,System.String)">
+ <summary>
+ Simple Load Command
+ </summary>
+ <param name="Layer">The layer number</param>
+ <param name="MediaName">The name of the clip or image</param>
+ <returns></returns>
+</member>
+<member name="M:CasparObjects.CasparCG.Load(System.Int32,System.Int32,System.String)">
+ <summary>
+ Simple Load Command
+ </summary>
+ <param name="Channel">The channel in Caspar</param>
+ <param name="Layer">The layer number</param>
+ <param name="MediaName">The name of the clip or image</param>
+</member>
 <member name="M:CasparObjects.CasparCG.LoadBG(System.String)">
  <summary>
  Simple LoadBG Comand
@@ -445,7 +501,7 @@ CasparObjects
 </member>
 <member name="M:CasparObjects.CasparCG.LoadBG(System.Int32,System.String)">
  <summary>
- Simple LoadBG Comand
+ Simple LoadBG Command
  </summary>
  <param name="Layer">The layer number</param>
  <param name="MediaName">The name of the clip or image</param>
@@ -453,7 +509,7 @@ CasparObjects
 </member>
 <member name="M:CasparObjects.CasparCG.LoadBG(System.Int32,System.String,System.Boolean)">
  <summary>
- Simple LoadBG Comand
+ Simple LoadBG Command
  </summary>
  <param name="Layer">The layer number</param>
  <param name="MediaName">The name of the clip or image</param>
@@ -485,18 +541,18 @@ CasparObjects
 </member>
 <member name="M:CasparObjects.CasparCG.Play">
  <summary>
- Play after LoadBG
+ Play after Load / LoadBG
  </summary>
 </member>
 <member name="M:CasparObjects.CasparCG.Play(System.Int32)">
  <summary>
- Play after LoadBG
+ Play after Load / LoadBG
  </summary>
  <param name="Layer">The layer number</param>
 </member>
 <member name="M:CasparObjects.CasparCG.Play(System.Int32,System.Int32)">
  <summary>
- Play after LoadBG
+ Play after Load / LoadBG
  </summary>
  <param name="Channel">The channel in Caspar</param>
  <param name="Layer">The layer number</param>
@@ -647,7 +703,7 @@ CasparObjects
  <param name="FirstLayer">The fisrt layer to swap</param>
  <param name="SecondLayer">The second layer to swap</param>
 </member>
-<member name="M:CasparObjects.CasparCG.Execute(System.String)">
+<member name="M:CasparObjects.CasparCG.Execute(System.String,System.Boolean)">
  <summary>
  Sends a command to Caspar for execution
  </summary>
@@ -659,7 +715,7 @@ CasparObjects
  <summary>
  Connects to CasparCG
  </summary>
- <param name="ServerAdress">IP-Address or computer name to connect to Caspar</param>
+ <param name="serverAdress">IP-Address or computer name to connect to Caspar</param>
  <remarks>Sets the ServerAdress property</remarks>
  <returns>A enumConnectResult denoting the result</returns>
 </member>
@@ -667,7 +723,7 @@ CasparObjects
  <summary>
  Connects to CasparCG
  </summary>
- <param name="ServerAdress">IP-Address or computer name to connect to Caspar</param>
+ <param name="serverAdress">IP-Address or computer name to connect to Caspar</param>
  <param name="Port">The port number to connect to</param>
  <remarks>Sets the ServerAdress and Port properties</remarks>
  <returns>A enumConnectResult denoting the result</returns>
@@ -716,11 +772,84 @@ CasparObjects
  <param name="ShowMedia">Media clip types</param>
  <returns>List of media clip names</returns>
 </member>
+<member name="M:CasparObjects.CasparCG.GetMediaClipsNames(CasparObjects.CasparCG.MediaTypes,System.Boolean)">
+ <summary>
+ Get specified media clip names
+ </summary>
+ <param name="ShowMedia">Media clip types</param>
+ <param name="AddEmptyEntry">True if the first entry is empty. Usefull to be able to set a selection (combobox) to nothing.</param>
+ <returns>List of media clip names</returns>
+</member>
+<member name="M:CasparObjects.CasparCG.GetMediaClipsNames(System.String,CasparObjects.CasparCG.MediaTypes)">
+ <summary>
+ Get specified media clip names
+ </summary>
+ <param name="FolderName">The name of the subfolder, that is used to list the entries</param>
+ <param name="ShowMedia">Media clip types</param>
+ <returns>List of media clip names</returns>
+</member>
+<member name="M:CasparObjects.CasparCG.GetMediaClipsNames(System.String,CasparObjects.CasparCG.MediaTypes,System.Boolean)">
+ <summary>
+ Get specified media clip names
+ </summary>
+ <param name="FolderName">The name of the subfolder, that is used to list the entries</param>
+ <param name="ShowMedia">Media clip types</param>
+ <param name="AddEmptyEntry">True if the first entry is empty. Usefull to be able to set a selection (combobox) to nothing.</param>
+ <returns>List of media clip names</returns>
+</member>
+<member name="M:CasparObjects.CasparCG.GetMediaFolderNames">
+ <summary>
+ Get a list of media folder names
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CasparObjects.CasparCG.GetMediaFolderNames(System.Boolean)">
+ <summary>
+ Get a list of media folder names
+ </summary>
+ <param name="AddEmptyEntry">True if the first entry is empty. Usefull to be able to set a selection (combobox) to nothing.</param>
+ <returns></returns>
+</member>
 <member name="M:CasparObjects.CasparCG.GetTemplateNames">
  <summary>
  Get a list of template names
  </summary>
  <returns>List of template names</returns>
+</member>
+<member name="M:CasparObjects.CasparCG.GetTemplateNames(System.Boolean)">
+ <summary>
+ Get a list of template names
+ </summary>
+ <param name="AddEmptyEntry">True if the first entry is empty. Usefull to be able to set a selection (combobox) to nothing.</param>
+ <returns>List of template names</returns>
+</member>
+<member name="M:CasparObjects.CasparCG.GetTemplateNames(System.String)">
+ <summary>
+ Get a list of template names
+ </summary>
+ <param name="FolderName">The name of the subfolder, that is used to list the entries</param>
+ <returns>List of template names</returns>
+</member>
+<member name="M:CasparObjects.CasparCG.GetTemplateNames(System.String,System.Boolean)">
+ <summary>
+ Get a list of template names
+ </summary>
+ <param name="FolderName">The name of the subfolder, that is used to list the entries</param>
+ <param name="AddEmptyEntry">True if the first entry is empty. Usefull to be able to set a selection (combobox) to nothing.</param>
+ <returns>List of template names</returns>
+</member>
+<member name="M:CasparObjects.CasparCG.GetTemplateFolderNames">
+ <summary>
+ Get a list of template folder names
+ </summary>
+ <returns>List of folder names</returns>
+</member>
+<member name="M:CasparObjects.CasparCG.GetTemplateFolderNames(System.Boolean)">
+ <summary>
+ Get a list of template folder names
+ </summary>
+ <param name="AddEmptyEntry">True if the first entry is empty. Usefull to be able to set a selection (combobox) to nothing.</param>
+ <returns>List of folder names</returns>
 </member>
 <member name="M:CasparObjects.CasparCG.GetTemplate(System.String)">
  <summary>

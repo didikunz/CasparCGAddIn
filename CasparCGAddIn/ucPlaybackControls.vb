@@ -1,50 +1,19 @@
 ﻿Imports Microsoft.Office.Interop
 Imports System.Windows.Forms
+Imports CasparCGAddIn
+
 Public Class ucPlaybackControls
 
-   Public Enum enumCommandType
-      ctLoad
-      ctPlay
-      ctLoadAndPlay
-      ctPlayDirect
-      ctNext
-      ctStop
-      ctUpdate
-   End Enum
-
-   Public Enum enumControlSets
-      csPlayStop
-      csLoadPlayStop
-      csPlayNextStop
-      csPlayStopUpdate
-      csLoadPlayNextStop
-      csPlayNextStopUpdate
-      csLoadPlayStopUpdate
-   End Enum
-
-   Public Class CommandkEventArgs
-      Inherits EventArgs
-
-      Public Property Command As enumCommandType
-
-      Public Property Sheet As Excel.Worksheet
-
-      Public Sub New(command As enumCommandType, sheet As Excel.Worksheet)
-         MyBase.New()
-         Me.Command = command
-         Me.Sheet = sheet
-      End Sub
-
-   End Class
-
-   Public Delegate Sub CommandEventHandler(ByVal sender As Object, ByVal e As CommandkEventArgs)
-
-   Public Event CommandEvent As CommandEventHandler
-
-
    Private _sheet As Excel.Worksheet
-   Private _ControlsSet As enumControlSets
-   Private _isLoaded As Boolean = False
+
+   Public Property State As ucPlaybackButtons.enumState
+      Get
+         Return pbPlaybackButtons.State
+      End Get
+      Set(value As ucPlaybackButtons.enumState)
+         pbPlaybackButtons.State = value
+      End Set
+   End Property
 
    Public WriteOnly Property Sheet As Excel.Worksheet
       Set(value As Excel.Worksheet)
@@ -53,132 +22,31 @@ Public Class ucPlaybackControls
 
          If _sheet IsNot Nothing Then
 
-            Dim nam As String = CustomProperies.Load(_sheet, "DashboardCaption")
+            Dim nam As String = CustomProperties.Load(_sheet, "DashboardCaption")
             If nam = "" Then
                nam = _sheet.Name
             End If
             Me.lblHeader.Text = nam
+
+            pbPlaybackButtons.Sheet = _sheet
 
          End If
 
       End Set
    End Property
 
-   Public WriteOnly Property ControlsSet As enumControlSets
-      Set(value As enumControlSets)
-
-         _ControlsSet = value
-
-         btnLoad.Visible = False
-         btnPlay.Visible = False
-         btnNext.Visible = False
-         btnStop.Visible = False
-         btnUpdate.Visible = False
-
-         Select Case _ControlsSet
-            Case enumControlSets.csPlayStop
-               btnPlay.Left = 10
-               btnPlay.Width = 90
-               btnPlay.Visible = True
-
-               btnStop.Left = 106
-               btnStop.Width = 90
-               btnStop.Visible = True
-
-            Case enumControlSets.csLoadPlayStop
-               btnLoad.Left = 10
-               btnLoad.Width = 58
-               btnLoad.Visible = True
-
-               btnPlay.Left = 74
-               btnPlay.Width = 58
-               btnPlay.Visible = True
-
-               btnStop.Left = 138
-               btnStop.Width = 58
-               btnStop.Visible = True
-
-            Case enumControlSets.csPlayNextStop
-               btnPlay.Left = 10
-               btnPlay.Width = 58
-               btnPlay.Visible = True
-
-               btnNext.Left = 74
-               btnNext.Width = 58
-               btnNext.Visible = True
-
-               btnStop.Left = 138
-               btnStop.Width = 58
-               btnStop.Visible = True
-
-            Case enumControlSets.csPlayStopUpdate
-               btnPlay.Left = 10
-               btnPlay.Width = 58
-               btnPlay.Visible = True
-
-               btnStop.Left = 74
-               btnStop.Width = 58
-               btnStop.Visible = True
-
-               btnUpdate.Left = 138
-               btnUpdate.Width = 58
-               btnUpdate.Visible = True
-
-            Case enumControlSets.csLoadPlayNextStop
-               btnLoad.Left = 10
-               btnLoad.Width = 46
-               btnLoad.Visible = True
-
-               btnPlay.Left = 58
-               btnPlay.Width = 46
-               btnPlay.Visible = True
-
-               btnNext.Left = 106
-               btnNext.Width = 46
-               btnNext.Visible = True
-
-               btnStop.Left = 154
-               btnStop.Width = 46
-               btnStop.Visible = True
-
-            Case enumControlSets.csPlayNextStopUpdate
-               btnPlay.Left = 10
-               btnPlay.Width = 46
-               btnPlay.Visible = True
-
-               btnNext.Left = 58
-               btnNext.Width = 46
-               btnNext.Visible = True
-
-               btnStop.Left = 106
-               btnStop.Width = 46
-               btnStop.Visible = True
-
-               btnUpdate.Left = 154
-               btnUpdate.Width = 46
-               btnUpdate.Visible = True
-
-            Case enumControlSets.csLoadPlayStopUpdate
-               btnLoad.Left = 10
-               btnLoad.Width = 46
-               btnLoad.Visible = True
-
-               btnPlay.Left = 58
-               btnPlay.Width = 46
-               btnPlay.Visible = True
-
-               btnStop.Left = 106
-               btnStop.Width = 46
-               btnStop.Visible = True
-
-               btnUpdate.Left = 154
-               btnUpdate.Width = 46
-               btnUpdate.Visible = True
-
-         End Select
-
+   Public WriteOnly Property ControlsSet As ucPlaybackButtons.enumControlSets
+      Set(value As ucPlaybackButtons.enumControlSets)
+         pbPlaybackButtons.ControlsSet = value
       End Set
    End Property
+
+
+   'Events
+   Public Delegate Sub CommandEventHandler(ByVal sender As Object, ByVal e As ucPlaybackButtons.CommandkEventArgs)
+
+   Public Event CommandEvent As CommandEventHandler
+
 
    Private Function ContrastingColor(col As System.Drawing.Color) As System.Drawing.Color
 
@@ -206,19 +74,23 @@ Public Class ucPlaybackControls
 
       If _sheet IsNot Nothing Then
 
-         Dim nam As String = CustomProperies.Load(_sheet, "DashboardCaption")
+         Dim nam As String = CustomProperties.Load(_sheet, "DashboardCaption")
          If nam = "" Then
             nam = _sheet.Name
          End If
          Me.lblHeader.Text = nam
 
          Dim inte As Integer = 0
-         If Integer.TryParse(CustomProperies.Load(_sheet, "DashboardCaptionColor"), inte) Then
+         If Integer.TryParse(CustomProperties.Load(_sheet, "DashboardCaptionColor"), inte) Then
             Me.lblHeader.BackColor = System.Drawing.Color.FromArgb(inte)
             Me.lblHeader.ForeColor = ContrastingColor(Me.lblHeader.BackColor)
+            Me.btnPreview.BackColor = System.Drawing.Color.FromArgb(inte)
+            Me.btnPreview.ForeColor = ContrastingColor(Me.lblHeader.BackColor)
          Else
             Me.lblHeader.BackColor = System.Drawing.Color.FromArgb(160, 160, 160)
             Me.lblHeader.ForeColor = System.Drawing.Color.White
+            Me.btnPreview.BackColor = System.Drawing.Color.FromKnownColor(System.Drawing.KnownColor.Control)
+            Me.btnPreview.ForeColor = System.Drawing.Color.FromKnownColor(System.Drawing.KnownColor.ControlText)
          End If
 
       End If
@@ -233,10 +105,10 @@ Public Class ucPlaybackControls
 
       If fpcc.ShowDialog = DialogResult.OK Then
 
-         CustomProperies.Save(_sheet, "DashboardCaption", fpcc.CaptionText)
+         CustomProperties.Save(_sheet, "DashboardCaption", fpcc.CaptionText)
          Me.lblHeader.Text = fpcc.CaptionText
 
-         CustomProperies.Save(_sheet, "DashboardCaptionColor", fpcc.CaptionColor.ToArgb.ToString)
+         CustomProperties.Save(_sheet, "DashboardCaptionColor", fpcc.CaptionColor.ToArgb.ToString)
          Me.lblHeader.BackColor = fpcc.CaptionColor
          Me.lblHeader.ForeColor = ContrastingColor(fpcc.CaptionColor)
 
@@ -244,77 +116,20 @@ Public Class ucPlaybackControls
 
    End Sub
 
-   Private Sub btnLoad_Click(sender As Object, e As EventArgs) Handles btnLoad.Click
+   Private Sub btnPreview_Click(sender As Object, e As EventArgs) Handles btnPreview.Click
 
-      btnLoad.Enabled = False
-      btnPlay.Enabled = False
+      btnPreview.Enabled = False
 
       If _sheet IsNot Nothing Then
-         RaiseEvent CommandEvent(Me, New CommandkEventArgs(enumCommandType.ctLoad, _sheet))
-         _isLoaded = True
+         RaiseEvent CommandEvent(Me, New ucPlaybackButtons.CommandkEventArgs(ucPlaybackButtons.enumCommandType.ctPreview, _sheet))
       End If
 
-      btnLoad.Enabled = True
-      btnPlay.Enabled = True
+      btnPreview.Enabled = True
 
    End Sub
 
-   Private Sub btnPlay_Click(sender As Object, e As EventArgs) Handles btnPlay.Click
-
-      btnPlay.Enabled = False
-
-      If _sheet IsNot Nothing Then
-         If _isLoaded Then
-            RaiseEvent CommandEvent(Me, New CommandkEventArgs(enumCommandType.ctPlay, _sheet))
-         Else
-            If _ControlsSet = enumControlSets.csLoadPlayStop Or _ControlsSet = enumControlSets.csLoadPlayNextStop Or _ControlsSet = enumControlSets.csLoadPlayStopUpdate Then
-               RaiseEvent CommandEvent(Me, New CommandkEventArgs(enumCommandType.ctPlayDirect, _sheet))
-            Else
-               RaiseEvent CommandEvent(Me, New CommandkEventArgs(enumCommandType.ctLoadAndPlay, _sheet))
-            End If
-
-         End If
-         _isLoaded = False
-      End If
-
-      btnPlay.Enabled = True
-
-   End Sub
-
-   Private Sub btnNext_Click(sender As Object, e As EventArgs) Handles btnNext.Click
-
-      btnNext.Enabled = False
-
-      If _sheet IsNot Nothing Then
-         RaiseEvent CommandEvent(Me, New CommandkEventArgs(enumCommandType.ctNext, _sheet))
-      End If
-
-      btnNext.Enabled = True
-
-   End Sub
-
-   Private Sub btnStop_Click(sender As Object, e As EventArgs) Handles btnStop.Click
-
-      btnStop.Enabled = False
-
-      If _sheet IsNot Nothing Then
-         RaiseEvent CommandEvent(Me, New CommandkEventArgs(enumCommandType.ctStop, _sheet))
-      End If
-
-      btnStop.Enabled = True
-
-   End Sub
-
-   Private Sub btnUpdate_Click(sender As Object, e As EventArgs) Handles btnUpdate.Click
-
-      btnUpdate.Enabled = False
-
-      If _sheet IsNot Nothing Then
-         RaiseEvent CommandEvent(Me, New CommandkEventArgs(enumCommandType.ctUpdate, _sheet))
-      End If
-
-      btnUpdate.Enabled = True
-
+   Private Sub pbPlaybackButtons_CommandEvent(sender As Object, e As ucPlaybackButtons.CommandkEventArgs) Handles pbPlaybackButtons.CommandEvent
+      RaiseEvent CommandEvent(Me, e)
    End Sub
 
 End Class

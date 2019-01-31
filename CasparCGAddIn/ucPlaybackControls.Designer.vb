@@ -24,13 +24,10 @@ Partial Class ucPlaybackControls
    Private Sub InitializeComponent()
       Me.components = New System.ComponentModel.Container()
       Me.lblHeader = New System.Windows.Forms.Label()
-      Me.btnLoad = New System.Windows.Forms.Button()
-      Me.btnChangeCaption = New System.Windows.Forms.Button()
-      Me.btnUpdate = New System.Windows.Forms.Button()
-      Me.btnStop = New System.Windows.Forms.Button()
-      Me.btnNext = New System.Windows.Forms.Button()
-      Me.btnPlay = New System.Windows.Forms.Button()
       Me.ttTips = New System.Windows.Forms.ToolTip(Me.components)
+      Me.btnChangeCaption = New System.Windows.Forms.Button()
+      Me.btnPreview = New System.Windows.Forms.Button()
+      Me.pbPlaybackButtons = New CasparCGAddIn.ucPlaybackButtons()
       Me.SuspendLayout()
       '
       'lblHeader
@@ -40,22 +37,12 @@ Partial Class ucPlaybackControls
       Me.lblHeader.BackColor = System.Drawing.SystemColors.ButtonShadow
       Me.lblHeader.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
       Me.lblHeader.ForeColor = System.Drawing.SystemColors.ButtonHighlight
-      Me.lblHeader.Location = New System.Drawing.Point(0, 0)
+      Me.lblHeader.Location = New System.Drawing.Point(30, 1)
       Me.lblHeader.Name = "lblHeader"
-      Me.lblHeader.Size = New System.Drawing.Size(196, 23)
+      Me.lblHeader.Size = New System.Drawing.Size(160, 21)
       Me.lblHeader.TabIndex = 0
       Me.lblHeader.Text = "Header"
       Me.lblHeader.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
-      '
-      'btnLoad
-      '
-      Me.btnLoad.Image = Global.CasparCGAddIn.My.Resources.Resources.Playback_Controls_Load
-      Me.btnLoad.Location = New System.Drawing.Point(37, 34)
-      Me.btnLoad.Name = "btnLoad"
-      Me.btnLoad.Size = New System.Drawing.Size(42, 46)
-      Me.btnLoad.TabIndex = 6
-      Me.ttTips.SetToolTip(Me.btnLoad, "Load")
-      Me.btnLoad.UseVisualStyleBackColor = True
       '
       'btnChangeCaption
       '
@@ -68,56 +55,33 @@ Partial Class ucPlaybackControls
       Me.ttTips.SetToolTip(Me.btnChangeCaption, "Change the Caption")
       Me.btnChangeCaption.UseVisualStyleBackColor = True
       '
-      'btnUpdate
+      'btnPreview
       '
-      Me.btnUpdate.Image = Global.CasparCGAddIn.My.Resources.Resources.Playback_Controls_Update
-      Me.btnUpdate.Location = New System.Drawing.Point(154, 34)
-      Me.btnUpdate.Name = "btnUpdate"
-      Me.btnUpdate.Size = New System.Drawing.Size(42, 46)
-      Me.btnUpdate.TabIndex = 4
-      Me.ttTips.SetToolTip(Me.btnUpdate, "Update")
-      Me.btnUpdate.UseVisualStyleBackColor = True
+      Me.btnPreview.Location = New System.Drawing.Point(0, 0)
+      Me.btnPreview.Name = "btnPreview"
+      Me.btnPreview.Size = New System.Drawing.Size(40, 23)
+      Me.btnPreview.TabIndex = 7
+      Me.btnPreview.Text = "PVW"
+      Me.btnPreview.UseVisualStyleBackColor = True
       '
-      'btnStop
+      'pbPlaybackButtons
       '
-      Me.btnStop.Image = Global.CasparCGAddIn.My.Resources.Resources.Playback_Controls_Stop
-      Me.btnStop.Location = New System.Drawing.Point(106, 34)
-      Me.btnStop.Name = "btnStop"
-      Me.btnStop.Size = New System.Drawing.Size(42, 46)
-      Me.btnStop.TabIndex = 3
-      Me.ttTips.SetToolTip(Me.btnStop, "Stop")
-      Me.btnStop.UseVisualStyleBackColor = True
-      '
-      'btnNext
-      '
-      Me.btnNext.Image = Global.CasparCGAddIn.My.Resources.Resources.Playback_Controls_Next
-      Me.btnNext.Location = New System.Drawing.Point(58, 34)
-      Me.btnNext.Name = "btnNext"
-      Me.btnNext.Size = New System.Drawing.Size(42, 46)
-      Me.btnNext.TabIndex = 2
-      Me.ttTips.SetToolTip(Me.btnNext, "Next")
-      Me.btnNext.UseVisualStyleBackColor = True
-      '
-      'btnPlay
-      '
-      Me.btnPlay.Image = Global.CasparCGAddIn.My.Resources.Resources.Playback_Controls_Play
-      Me.btnPlay.Location = New System.Drawing.Point(10, 34)
-      Me.btnPlay.Name = "btnPlay"
-      Me.btnPlay.Size = New System.Drawing.Size(42, 46)
-      Me.btnPlay.TabIndex = 1
-      Me.ttTips.SetToolTip(Me.btnPlay, "Play")
-      Me.btnPlay.UseVisualStyleBackColor = True
+      Me.pbPlaybackButtons.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+      Me.pbPlaybackButtons.BackColor = System.Drawing.Color.Transparent
+      Me.pbPlaybackButtons.ControlsSet = CasparCGAddIn.ucPlaybackButtons.enumControlSets.csPlayStop
+      Me.pbPlaybackButtons.Location = New System.Drawing.Point(0, 30)
+      Me.pbPlaybackButtons.Name = "pbPlaybackButtons"
+      Me.pbPlaybackButtons.Size = New System.Drawing.Size(205, 48)
+      Me.pbPlaybackButtons.TabIndex = 8
       '
       'ucPlaybackControls
       '
       Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
       Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-      Me.Controls.Add(Me.btnLoad)
+      Me.Controls.Add(Me.pbPlaybackButtons)
+      Me.Controls.Add(Me.btnPreview)
       Me.Controls.Add(Me.btnChangeCaption)
-      Me.Controls.Add(Me.btnUpdate)
-      Me.Controls.Add(Me.btnStop)
-      Me.Controls.Add(Me.btnNext)
-      Me.Controls.Add(Me.btnPlay)
       Me.Controls.Add(Me.lblHeader)
       Me.Name = "ucPlaybackControls"
       Me.Size = New System.Drawing.Size(205, 89)
@@ -126,11 +90,8 @@ Partial Class ucPlaybackControls
    End Sub
 
    Friend WithEvents lblHeader As System.Windows.Forms.Label
-   Friend WithEvents btnPlay As System.Windows.Forms.Button
-   Friend WithEvents btnNext As System.Windows.Forms.Button
-   Friend WithEvents btnStop As System.Windows.Forms.Button
-   Friend WithEvents btnUpdate As System.Windows.Forms.Button
    Friend WithEvents btnChangeCaption As System.Windows.Forms.Button
-   Friend WithEvents btnLoad As System.Windows.Forms.Button
    Friend WithEvents ttTips As System.Windows.Forms.ToolTip
+   Friend WithEvents btnPreview As System.Windows.Forms.Button
+   Friend WithEvents pbPlaybackButtons As ucPlaybackButtons
 End Class

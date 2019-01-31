@@ -32,6 +32,7 @@ Partial Class frmSettings
       Me.Port = New System.Windows.Forms.DataGridViewTextBoxColumn()
       Me.tabTab = New System.Windows.Forms.TabControl()
       Me.tabServers = New System.Windows.Forms.TabPage()
+      Me.chkAutoConnect = New System.Windows.Forms.CheckBox()
       Me.btnDelete = New System.Windows.Forms.Button()
       Me.btnNew = New System.Windows.Forms.Button()
       Me.txtPort = New System.Windows.Forms.TextBox()
@@ -49,7 +50,9 @@ Partial Class frmSettings
       Me.cboPreviewServer = New System.Windows.Forms.ComboBox()
       Me.bsServersClone = New System.Windows.Forms.BindingSource(Me.components)
       Me.Label2 = New System.Windows.Forms.Label()
-      Me.chkAutoConnect = New System.Windows.Forms.CheckBox()
+      Me.tabSettings = New System.Windows.Forms.TabPage()
+      Me.chkShowDashboard = New System.Windows.Forms.CheckBox()
+      Me.chkUseAveco = New System.Windows.Forms.CheckBox()
       CType(Me.bsServers, System.ComponentModel.ISupportInitialize).BeginInit()
       CType(Me.dgvServers, System.ComponentModel.ISupportInitialize).BeginInit()
       Me.tabTab.SuspendLayout()
@@ -57,6 +60,7 @@ Partial Class frmSettings
       Me.tabPreview.SuspendLayout()
       CType(Me.nudPreviewChannel, System.ComponentModel.ISupportInitialize).BeginInit()
       CType(Me.bsServersClone, System.ComponentModel.ISupportInitialize).BeginInit()
+      Me.tabSettings.SuspendLayout()
       Me.SuspendLayout()
       '
       'ftbCasparExe
@@ -145,6 +149,7 @@ Partial Class frmSettings
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
       Me.tabTab.Controls.Add(Me.tabServers)
       Me.tabTab.Controls.Add(Me.tabPreview)
+      Me.tabTab.Controls.Add(Me.tabSettings)
       Me.tabTab.Location = New System.Drawing.Point(12, 10)
       Me.tabTab.Name = "tabTab"
       Me.tabTab.SelectedIndex = 0
@@ -174,6 +179,16 @@ Partial Class frmSettings
       Me.tabServers.TabIndex = 0
       Me.tabServers.Text = "Servers"
       Me.tabServers.UseVisualStyleBackColor = True
+      '
+      'chkAutoConnect
+      '
+      Me.chkAutoConnect.AutoSize = True
+      Me.chkAutoConnect.Location = New System.Drawing.Point(9, 288)
+      Me.chkAutoConnect.Name = "chkAutoConnect"
+      Me.chkAutoConnect.Size = New System.Drawing.Size(293, 17)
+      Me.chkAutoConnect.TabIndex = 20
+      Me.chkAutoConnect.Text = "Always connect on opening a Caspar enabled workbook"
+      Me.chkAutoConnect.UseVisualStyleBackColor = True
       '
       'btnDelete
       '
@@ -342,15 +357,37 @@ Partial Class frmSettings
       Me.Label2.TabIndex = 0
       Me.Label2.Text = "Preview-Server:"
       '
-      'chkAutoConnect
+      'tabSettings
       '
-      Me.chkAutoConnect.AutoSize = True
-      Me.chkAutoConnect.Location = New System.Drawing.Point(9, 290)
-      Me.chkAutoConnect.Name = "chkAutoConnect"
-      Me.chkAutoConnect.Size = New System.Drawing.Size(192, 17)
-      Me.chkAutoConnect.TabIndex = 20
-      Me.chkAutoConnect.Text = "Always connect on startup of Excel"
-      Me.chkAutoConnect.UseVisualStyleBackColor = True
+      Me.tabSettings.Controls.Add(Me.chkShowDashboard)
+      Me.tabSettings.Controls.Add(Me.chkUseAveco)
+      Me.tabSettings.Location = New System.Drawing.Point(4, 22)
+      Me.tabSettings.Name = "tabSettings"
+      Me.tabSettings.Padding = New System.Windows.Forms.Padding(3)
+      Me.tabSettings.Size = New System.Drawing.Size(472, 313)
+      Me.tabSettings.TabIndex = 2
+      Me.tabSettings.Text = "Settings"
+      Me.tabSettings.UseVisualStyleBackColor = True
+      '
+      'chkShowDashboard
+      '
+      Me.chkShowDashboard.AutoSize = True
+      Me.chkShowDashboard.Location = New System.Drawing.Point(18, 48)
+      Me.chkShowDashboard.Name = "chkShowDashboard"
+      Me.chkShowDashboard.Size = New System.Drawing.Size(141, 17)
+      Me.chkShowDashboard.TabIndex = 1
+      Me.chkShowDashboard.Text = "Show Dashboard button"
+      Me.chkShowDashboard.UseVisualStyleBackColor = True
+      '
+      'chkUseAveco
+      '
+      Me.chkUseAveco.AutoSize = True
+      Me.chkUseAveco.Location = New System.Drawing.Point(18, 25)
+      Me.chkUseAveco.Name = "chkUseAveco"
+      Me.chkUseAveco.Size = New System.Drawing.Size(203, 17)
+      Me.chkUseAveco.TabIndex = 0
+      Me.chkUseAveco.Text = "Use with Aveco compatible templates"
+      Me.chkUseAveco.UseVisualStyleBackColor = True
       '
       'frmSettings
       '
@@ -375,6 +412,8 @@ Partial Class frmSettings
       Me.tabPreview.PerformLayout()
       CType(Me.nudPreviewChannel, System.ComponentModel.ISupportInitialize).EndInit()
       CType(Me.bsServersClone, System.ComponentModel.ISupportInitialize).EndInit()
+      Me.tabSettings.ResumeLayout(False)
+      Me.tabSettings.PerformLayout()
       Me.ResumeLayout(False)
 
    End Sub
@@ -405,4 +444,7 @@ Partial Class frmSettings
    Friend WithEvents nudPreviewChannel As System.Windows.Forms.NumericUpDown
    Friend WithEvents bsServersClone As System.Windows.Forms.BindingSource
    Friend WithEvents chkAutoConnect As System.Windows.Forms.CheckBox
+   Friend WithEvents tabSettings As System.Windows.Forms.TabPage
+   Friend WithEvents chkShowDashboard As System.Windows.Forms.CheckBox
+   Friend WithEvents chkUseAveco As System.Windows.Forms.CheckBox
 End Class
