@@ -33,7 +33,7 @@ Public Class ThisAddIn
                   errText += String.Format("The machine '{0}' - '{1}' is not available.", caspar.ServerAdress, caspar.Name) + vbNewLine
                Case CasparCG.enumConnectResult.crCasparCGNotStarted
                   errText += String.Format("CasparCG '{0}' is not running.", caspar.Name) + vbNewLine
-               Case CasparCG.enumConnectResult.crLOcalCasprCGCouldNotBeStarted
+               Case CasparCG.enumConnectResult.crLocalCasparCGCouldNotBeStarted
                   errText += String.Format("CasparCG '{0}' could not be started. The path to the exe-file is probably invalid.", caspar.Name) + vbNewLine
                Case CasparCG.enumConnectResult.crIsNotLocal
                   errText += String.Format("This CasparCG '{0}' is not local.", caspar.Name) + vbNewLine

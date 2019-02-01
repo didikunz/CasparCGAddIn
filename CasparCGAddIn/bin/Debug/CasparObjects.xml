@@ -58,7 +58,7 @@ CasparObjects
  CasparCG does not respond, it is not started on the machine
  </summary>
 </member>
-<member name="F:CasparObjects.CasparCG.enumConnectResult.crLOcalCasprCGCouldNotBeStarted">
+<member name="F:CasparObjects.CasparCG.enumConnectResult.crLocalCasparCGCouldNotBeStarted">
  <summary>
  A local CasprCG server could not be loaded using the CasparExePath property
  </summary>

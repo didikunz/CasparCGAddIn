@@ -28,6 +28,10 @@ Partial Class frmSheetProperties
       Me.tabTab = New System.Windows.Forms.TabControl()
       Me.tabCommon = New System.Windows.Forms.TabPage()
       Me.GroupBox3 = New System.Windows.Forms.GroupBox()
+      Me.rbCustomDelimited = New System.Windows.Forms.RadioButton()
+      Me.rbSemicolonDelimited = New System.Windows.Forms.RadioButton()
+      Me.rbColonDelimited = New System.Windows.Forms.RadioButton()
+      Me.rbTabDelimited = New System.Windows.Forms.RadioButton()
       Me.txtCustomDelimiter = New System.Windows.Forms.TextBox()
       Me.GroupBox2 = New System.Windows.Forms.GroupBox()
       Me.cboPreviewTemplate = New System.Windows.Forms.ComboBox()
@@ -52,10 +56,6 @@ Partial Class frmSheetProperties
       Me.Label7 = New System.Windows.Forms.Label()
       Me.clstQueries = New System.Windows.Forms.CheckedListBox()
       Me.ttToolTip = New System.Windows.Forms.ToolTip(Me.components)
-      Me.rbTabDelimited = New System.Windows.Forms.RadioButton()
-      Me.rbColonDelimited = New System.Windows.Forms.RadioButton()
-      Me.rbSemicolonDelimited = New System.Windows.Forms.RadioButton()
-      Me.rbCustomDelimited = New System.Windows.Forms.RadioButton()
       Me.tabTab.SuspendLayout()
       Me.tabCommon.SuspendLayout()
       Me.GroupBox3.SuspendLayout()
@@ -133,6 +133,50 @@ Partial Class frmSheetProperties
       Me.GroupBox3.TabIndex = 4
       Me.GroupBox3.TabStop = False
       Me.GroupBox3.Text = "Output-Delimiter Settings"
+      '
+      'rbCustomDelimited
+      '
+      Me.rbCustomDelimited.AutoSize = True
+      Me.rbCustomDelimited.Location = New System.Drawing.Point(222, 21)
+      Me.rbCustomDelimited.Name = "rbCustomDelimited"
+      Me.rbCustomDelimited.Size = New System.Drawing.Size(63, 17)
+      Me.rbCustomDelimited.TabIndex = 7
+      Me.rbCustomDelimited.TabStop = True
+      Me.rbCustomDelimited.Text = "Custom:"
+      Me.rbCustomDelimited.UseVisualStyleBackColor = True
+      '
+      'rbSemicolonDelimited
+      '
+      Me.rbSemicolonDelimited.AutoSize = True
+      Me.rbSemicolonDelimited.Location = New System.Drawing.Point(130, 21)
+      Me.rbSemicolonDelimited.Name = "rbSemicolonDelimited"
+      Me.rbSemicolonDelimited.Size = New System.Drawing.Size(86, 17)
+      Me.rbSemicolonDelimited.TabIndex = 6
+      Me.rbSemicolonDelimited.TabStop = True
+      Me.rbSemicolonDelimited.Text = "Semicolon (;)"
+      Me.rbSemicolonDelimited.UseVisualStyleBackColor = True
+      '
+      'rbColonDelimited
+      '
+      Me.rbColonDelimited.AutoSize = True
+      Me.rbColonDelimited.Location = New System.Drawing.Point(58, 21)
+      Me.rbColonDelimited.Name = "rbColonDelimited"
+      Me.rbColonDelimited.Size = New System.Drawing.Size(64, 17)
+      Me.rbColonDelimited.TabIndex = 5
+      Me.rbColonDelimited.TabStop = True
+      Me.rbColonDelimited.Text = "Colon (,)"
+      Me.rbColonDelimited.UseVisualStyleBackColor = True
+      '
+      'rbTabDelimited
+      '
+      Me.rbTabDelimited.AutoSize = True
+      Me.rbTabDelimited.Location = New System.Drawing.Point(8, 21)
+      Me.rbTabDelimited.Name = "rbTabDelimited"
+      Me.rbTabDelimited.Size = New System.Drawing.Size(44, 17)
+      Me.rbTabDelimited.TabIndex = 4
+      Me.rbTabDelimited.TabStop = True
+      Me.rbTabDelimited.Text = "Tab"
+      Me.rbTabDelimited.UseVisualStyleBackColor = True
       '
       'txtCustomDelimiter
       '
@@ -374,9 +418,9 @@ Partial Class frmSheetProperties
       Me.Label7.AutoSize = True
       Me.Label7.Location = New System.Drawing.Point(6, 4)
       Me.Label7.Name = "Label7"
-      Me.Label7.Size = New System.Drawing.Size(307, 13)
+      Me.Label7.Size = New System.Drawing.Size(312, 13)
       Me.Label7.TabIndex = 1
-      Me.Label7.Text = "Select all queries, which need to be updated before the update."
+      Me.Label7.Text = "Select all queries, which need to be refreshed before the update."
       '
       'clstQueries
       '
@@ -390,50 +434,6 @@ Partial Class frmSheetProperties
       Me.clstQueries.TabIndex = 0
       Me.ttToolTip.SetToolTip(Me.clstQueries, "Select the Power-Queries that must be frefreshed before an auto-update is perform" &
         "ed.")
-      '
-      'rbTabDelimited
-      '
-      Me.rbTabDelimited.AutoSize = True
-      Me.rbTabDelimited.Location = New System.Drawing.Point(8, 21)
-      Me.rbTabDelimited.Name = "rbTabDelimited"
-      Me.rbTabDelimited.Size = New System.Drawing.Size(44, 17)
-      Me.rbTabDelimited.TabIndex = 4
-      Me.rbTabDelimited.TabStop = True
-      Me.rbTabDelimited.Text = "Tab"
-      Me.rbTabDelimited.UseVisualStyleBackColor = True
-      '
-      'rbColonDelimited
-      '
-      Me.rbColonDelimited.AutoSize = True
-      Me.rbColonDelimited.Location = New System.Drawing.Point(58, 21)
-      Me.rbColonDelimited.Name = "rbColonDelimited"
-      Me.rbColonDelimited.Size = New System.Drawing.Size(64, 17)
-      Me.rbColonDelimited.TabIndex = 5
-      Me.rbColonDelimited.TabStop = True
-      Me.rbColonDelimited.Text = "Colon (,)"
-      Me.rbColonDelimited.UseVisualStyleBackColor = True
-      '
-      'rbSemicolonDelimited
-      '
-      Me.rbSemicolonDelimited.AutoSize = True
-      Me.rbSemicolonDelimited.Location = New System.Drawing.Point(130, 21)
-      Me.rbSemicolonDelimited.Name = "rbSemicolonDelimited"
-      Me.rbSemicolonDelimited.Size = New System.Drawing.Size(86, 17)
-      Me.rbSemicolonDelimited.TabIndex = 6
-      Me.rbSemicolonDelimited.TabStop = True
-      Me.rbSemicolonDelimited.Text = "Semicolon (;)"
-      Me.rbSemicolonDelimited.UseVisualStyleBackColor = True
-      '
-      'rbCustomDelimited
-      '
-      Me.rbCustomDelimited.AutoSize = True
-      Me.rbCustomDelimited.Location = New System.Drawing.Point(222, 21)
-      Me.rbCustomDelimited.Name = "rbCustomDelimited"
-      Me.rbCustomDelimited.Size = New System.Drawing.Size(63, 17)
-      Me.rbCustomDelimited.TabIndex = 7
-      Me.rbCustomDelimited.TabStop = True
-      Me.rbCustomDelimited.Text = "Custom:"
-      Me.rbCustomDelimited.UseVisualStyleBackColor = True
       '
       'frmSheetProperties
       '
