@@ -819,19 +819,20 @@ Public Class ucDashboard
 
             If CustomProperties.Load(sheet, "Template") <> "" Then
 
-               Dim upc As ucPlaybackControls = New ucPlaybackControls
-               upc.Sheet = sheet
+               Dim upCntr As ucPlaybackControls = New ucPlaybackControls
+               upCntr.Sheet = sheet
+
+               'Add to flpFlow 
+               flpFlow.Controls.Add(upCntr)
 
                Dim inte As Integer = 0
                If Integer.TryParse(CustomProperties.Load(sheet, "ControlsSet"), inte) Then
-                  upc.ControlsSet = inte
+                  upCntr.ControlsSet = inte
                Else
-                  upc.ControlsSet = ucPlaybackButtons.enumControlSets.csLoadPlayStopUpdate
+                  upCntr.ControlsSet = ucPlaybackButtons.enumControlSets.csLoadPlayStopUpdate
                End If
 
-               AddHandler upc.CommandEvent, AddressOf CommandEvent
-
-               flpFlow.Controls.Add(upc)
+               AddHandler upCntr.CommandEvent, AddressOf CommandEvent
 
             End If
 
@@ -1261,27 +1262,31 @@ Public Class ucDashboard
 
          'Cue/Query
          Dim cell As Excel.Range = range(_currentRow, 1)
-         If cell.Text = "" Then
+         If cell.Text = "" And cell.HasFormula = False Then
             cell.Value = _currentRow - 1
          End If
 
          'Template/Clip
          cell = range(_currentRow, 2)
-         cell.Value = templateOrClipName
+         If cell.HasFormula = False Then
+            cell.Value = templateOrClipName
+         End If
 
          'Type/Kind
          cell = range(_currentRow, 3)
-         cell.Value = Kind
+         If cell.HasFormula = False Then
+            cell.Value = Kind
+         End If
 
          'Channel
          cell = range(_currentRow, 4)
-         If cell.Text = "" Then
+         If cell.Text = "" And cell.HasFormula = False Then
             cell.Value = _Channel
          End If
 
          'Layer
          cell = range(_currentRow, 5)
-         If cell.Text = "" Then
+         If cell.Text = "" And cell.HasFormula = False Then
             cell.Value = _Layer
          End If
 
@@ -1314,6 +1319,7 @@ Public Class ucDashboard
       Dim cell As Excel.Range = range(_currentRow, 1)
 
    End Sub
+
 
 #End Region
 

@@ -17,11 +17,6 @@ D:\Projects\CasparCGAddIn\CasparCGAddIn\bin\Release\CasparObjects.pdb
 D:\Projects\CasparCGAddIn\CasparCGAddIn\bin\Release\CasparObjects.xml
 D:\Projects\CasparCGAddIn\CasparCGAddIn\bin\Release\Newtonsoft.Json.pdb
 D:\Projects\CasparCGAddIn\CasparCGAddIn\bin\Release\Newtonsoft.Json.xml
-D:\Projects\CasparCGAddIn\CasparCGAddIn\bin\Release\Microsoft.Office.Tools.v4.0.Framework.xml
-D:\Projects\CasparCGAddIn\CasparCGAddIn\bin\Release\Microsoft.VisualStudio.Tools.Applications.Runtime.xml
-D:\Projects\CasparCGAddIn\CasparCGAddIn\bin\Release\Microsoft.Office.Tools.Common.xml
-D:\Projects\CasparCGAddIn\CasparCGAddIn\bin\Release\Microsoft.Office.Tools.Excel.xml
-D:\Projects\CasparCGAddIn\CasparCGAddIn\bin\Release\Microsoft.Office.Tools.Common.v4.0.Utilities.xml
 D:\Projects\CasparCGAddIn\CasparCGAddIn\obj\Release\CasparCGAddIn.vbprojResolveAssemblyReference.cache
 D:\Projects\CasparCGAddIn\CasparCGAddIn\obj\Release\CasparCGAddIn.frmDashboardSettings.resources
 D:\Projects\CasparCGAddIn\CasparCGAddIn\obj\Release\CasparCGAddIn.frmPlaybackControlsCaptions.resources
@@ -39,3 +34,8 @@ D:\Projects\CasparCGAddIn\CasparCGAddIn\obj\Release\CasparCGAddIn.vbproj.Generat
 D:\Projects\CasparCGAddIn\CasparCGAddIn\obj\Release\CasparCGAddIn.dll
 D:\Projects\CasparCGAddIn\CasparCGAddIn\obj\Release\CasparCGAddIn.xml
 D:\Projects\CasparCGAddIn\CasparCGAddIn\obj\Release\CasparCGAddIn.pdb
+D:\Projects\CasparCGAddIn\CasparCGAddIn\bin\Release\Microsoft.Office.Tools.v4.0.Framework.xml
+D:\Projects\CasparCGAddIn\CasparCGAddIn\bin\Release\Microsoft.VisualStudio.Tools.Applications.Runtime.xml
+D:\Projects\CasparCGAddIn\CasparCGAddIn\bin\Release\Microsoft.Office.Tools.Common.xml
+D:\Projects\CasparCGAddIn\CasparCGAddIn\bin\Release\Microsoft.Office.Tools.Excel.xml
+D:\Projects\CasparCGAddIn\CasparCGAddIn\bin\Release\Microsoft.Office.Tools.Common.v4.0.Utilities.xml

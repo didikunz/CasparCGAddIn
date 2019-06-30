@@ -89,8 +89,9 @@ Partial Class ucDashboard
       Me.pbPlaybackButtons.BackColor = System.Drawing.Color.Transparent
       Me.pbPlaybackButtons.ControlsSet = CasparCGAddIn.ucPlaybackButtons.enumControlSets.csPlayStop
       Me.pbPlaybackButtons.Location = New System.Drawing.Point(0, 134)
+      Me.pbPlaybackButtons.Margin = New System.Windows.Forms.Padding(0)
       Me.pbPlaybackButtons.Name = "pbPlaybackButtons"
-      Me.pbPlaybackButtons.Size = New System.Drawing.Size(204, 56)
+      Me.pbPlaybackButtons.Size = New System.Drawing.Size(203, 56)
       Me.pbPlaybackButtons.State = CasparCGAddIn.ucPlaybackButtons.enumState.stIdle
       Me.pbPlaybackButtons.TabIndex = 21
       '

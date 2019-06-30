@@ -39,8 +39,12 @@ Public Class ThisAddIn
                   errText += String.Format("This CasparCG '{0}' is not local.", caspar.Name) + vbNewLine
             End Select
 
+         End If
+
+         If useAveco Then
+            caspar.AddInfoFields = CasparCG.enumAddInfoFieldsType.itAveco
          Else
-            caspar.AddAvecoFields = useAveco
+            caspar.AddInfoFields = CasparCG.enumAddInfoFieldsType.itStandard
          End If
 
       Next
@@ -86,7 +90,11 @@ Public Class ThisAddIn
       _SettingsFName = IO.Path.Combine(cap.ApplicationFolderPath, "Settings.xml")
 
       If IO.File.Exists(_SettingsFName) Then
-         _Settings = New Settings(_SettingsFName)
+         Try
+            _Settings = New Settings(_SettingsFName)
+         Catch ex As Exception
+            _Settings = New Settings()
+         End Try
       Else
          _Settings = New Settings()
       End If
@@ -95,7 +103,7 @@ Public Class ThisAddIn
 
       _Dashboard = New ucDashboard
       _DashboardPane = Me.CustomTaskPanes.Add(_Dashboard, "CasparCG Dashboard")
-      _DashboardPane.Visible = _Settings.DashboardVisible
+      _DashboardPane.Visible = _Settings.DashboardVisible And _Settings.ShowDashboard
 
       _Dashboard.Settings = _Settings
       _Dashboard.CasparRibon = _CasparRibon
@@ -170,14 +178,21 @@ Public Class ThisAddIn
          Dim isCasparWookkbook As Boolean = False
          For Each ws As Worksheet In Wb.Sheets
 
-            For Each name As Excel.Name In ws.Names
+            If CustomProperties.Load(ws, "IsDashboardList") = "1" Then
 
-               If name.Name.Contains("CasparOutput") Then
-                  isCasparWookkbook = True
-                  Exit For
-               End If
+               isCasparWookkbook = True
 
-            Next
+            Else
+
+               For Each name As Excel.Name In ws.Names
+
+                  If name.Name.Contains("CasparOutput") Then
+                     isCasparWookkbook = True
+                     Exit For
+                  End If
+
+               Next
+            End If
 
             If isCasparWookkbook Then
                Exit For

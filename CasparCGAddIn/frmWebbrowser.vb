@@ -127,6 +127,14 @@ Public Class frmWebbrowser
 
    End Function
 
+   Private Function GetColumnName(col As Integer) As String
+      If col < 26 Then
+         Return Chr(col + 65)
+      Else
+         Return Chr((col \ 26 - 1) + 65) + Chr(col Mod 26 + 65)
+      End If
+   End Function
+
    Private Function CreateAndFillTable(ByVal RootElement As HtmlElement) As DataTable
 
       Dim dt As DataTable = New DataTable("HTMLTable")
@@ -144,7 +152,7 @@ Public Class frmWebbrowser
                col = 0
             ElseIf he.TagName = "TD" Then
                If dt.Columns.Count <= col Then
-                  Dim dc As DataColumn = New DataColumn(Chr(col + 65), Type.GetType("System.String"))
+                  Dim dc As DataColumn = New DataColumn(GetColumnName(col), Type.GetType("System.String"))
                   dt.Columns.Add(dc)
                End If
                If dr Is Nothing Then
@@ -183,7 +191,7 @@ Public Class frmWebbrowser
                   If che.InnerText IsNot Nothing AndAlso che.InnerText <> "" Then
 
                      If dt.Columns.Count <= col Then
-                        Dim dc As DataColumn = New DataColumn(Chr(col + 65), Type.GetType("System.String"))
+                        Dim dc As DataColumn = New DataColumn(GetColumnName(col), Type.GetType("System.String"))
                         dt.Columns.Add(dc)
                      End If
                      If dr Is Nothing Then
@@ -204,8 +212,13 @@ Public Class frmWebbrowser
 
          Next
 
-      End If
+         If dt.Rows.Count > 1 Then
+            If Not dr.Equals(dt.Rows(dt.Rows.Count - 1)) Then
+               dt.Rows.Add(dr)
+            End If
+         End If
 
+      End If
 
       Return dt
 
@@ -261,11 +274,14 @@ Public Class frmWebbrowser
 
       txtUrl.Text = WebAddress
 
-      If Mode = enumMode.modeTable Then
-         rbModeTable.Checked = True
-      Else
-         rbModeDiv.Checked = True
-      End If
+      Select Case Mode
+         Case enumMode.modeTable
+            rbModeTable.Checked = True
+         Case enumMode.modeDiv
+            rbModeDiv.Checked = True
+         Case Else
+            rbModeTable.Checked = True
+      End Select
       _currentMode = Mode
       _currentDomLocation = DomLocation
 
@@ -396,7 +412,7 @@ Public Class frmWebbrowser
 
          If _currentMode = enumMode.modeTable Then
             TraverseTree(he, "0", "Table", node, xInfos)
-         ElseIf _currentMode = enumMode.modeDiv Then
+         Else
             TraverseTree(he, "0", "div", node, xInfos)
          End If
 
@@ -507,12 +523,7 @@ Public Class frmWebbrowser
       WebAddress = txtUrl.Text
       DomLocation = _currentDomLocation
 
-      If rbModeTable.Checked Then
-         Mode = enumMode.modeTable
-      Else
-         Mode = enumMode.modeDiv
-      End If
-
+      Mode = _currentMode
       _Data = _currentData
 
       _Result = enumResult.resStore

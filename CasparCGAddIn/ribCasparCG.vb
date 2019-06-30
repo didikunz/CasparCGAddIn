@@ -11,6 +11,7 @@ Imports Newtonsoft.Json.Linq
 Imports System.Net
 Imports Microsoft.Office.Core
 Imports System.Diagnostics
+Imports System.Web.UI
 
 Public Class ribCasparCG
 
@@ -29,7 +30,9 @@ Public Class ribCasparCG
    Private _PendingRefreshUpdate As Boolean = False
    Private _PendingRefreshPreview As Boolean = False
 
-   Private _PendingRefreshAll As Boolean = False
+   Private _PendingRefreshAllStep As Integer = 0
+   Private _RefreshAllWebConnections As List(Of Object)
+   Private _RefreshAllTableConnections As List(Of Object)
 
    Private WithEvents _timAutoUpdate As Timer = New Timer
 
@@ -131,9 +134,26 @@ Public Class ribCasparCG
 
    Public Sub FlagAfterCalculate()
 
-      If _PendingRefreshAll Then
+      If _PendingRefreshAllStep = 1 Then
 
-         _PendingRefreshAll = False
+         If _RefreshAllTableConnections.Count > 0 Then
+
+            For Each con In _RefreshAllTableConnections
+               con.Refresh
+            Next
+            _PendingRefreshAllStep = 2
+
+         Else
+
+            'Skip
+            _PendingRefreshAllStep = 2
+            FlagAfterCalculate()
+
+         End If
+
+      ElseIf _PendingRefreshAllStep = 2 Then
+
+         _PendingRefreshAllStep = 0
 
          btnRefreshData.Enabled = True
          MsgBox("All data successfully refreshed", MsgBoxStyle.OkOnly Or MsgBoxStyle.Information, "Refresh All")
@@ -167,6 +187,118 @@ Public Class ribCasparCG
       If _Settings.PreviewServer <> "" Then
          btnPreview.Enabled = togConnect.Checked
       End If
+
+   End Sub
+
+   Private Function FormatBorder(border As Border) As String
+
+      Dim s As String = ""
+      Dim inte As Integer = 0
+
+      If Integer.TryParse(border.Weight.ToString, inte) Then
+         s = XLBorderWeightToString(inte) + " "
+      Else
+         s = "thin "
+      End If
+
+      If Integer.TryParse(border.LineStyle.ToString, inte) Then
+         s += XLLineStyleToString(inte) + " "
+      Else
+         s += "solid "
+      End If
+
+      s += XLColorToString(border.Color, False)
+
+      Return s
+
+   End Function
+
+   Private Function LegalizeClassName(name As String) As String
+
+      Dim sb As StringBuilder = New StringBuilder
+      Dim chars() As Char = name.ToLower.Normalize(NormalizationForm.FormD).ToCharArray
+      Dim lastIsValid As Boolean = False
+
+      For i As Integer = 0 To chars.Count - 1
+
+         If IsNumeric(chars(i)) Then
+
+            If i > 0 Then
+               sb.Append(chars(i))
+               lastIsValid = True
+            Else
+               sb.Append("_")
+               lastIsValid = False
+            End If
+
+         ElseIf Asc(chars(i)) >= 97 And Asc(chars(i)) <= 122 Then
+
+            sb.Append(chars(i))
+            lastIsValid = True
+
+         ElseIf Asc(chars(i)) = 45 Then
+
+            sb.Append(chars(i))
+            lastIsValid = True
+
+         ElseIf Asc(chars(i)) = 168 Then
+
+         Else
+
+            If lastIsValid Then
+               sb.Append("_")
+            End If
+
+            lastIsValid = False
+
+         End If
+
+      Next
+
+      Return sb.ToString
+
+   End Function
+
+   Public Sub ExportStyles(filename As String)
+
+      Dim sb As StringBuilder = New StringBuilder
+      Dim classNames As HashSet(Of String) = New HashSet(Of String)
+
+
+      For Each style As Style In _ActiveWorkbook.Styles
+
+         Dim name As String = LegalizeClassName(style.Name.ToString)
+
+         If Not classNames.Contains(name) Then
+
+            classNames.Add(name)
+
+            sb.AppendLine(name + " {")
+
+            sb.AppendLine("   font-family: " + style.Font.Name.ToString + ";")
+            sb.AppendLine("   font-size: " + style.Font.Size.ToString + "px;")
+            sb.AppendLine("   font-style: " + IIf(style.Font.Italic, "italic", "normal") + ";")
+            sb.AppendLine("   font-weight: " + IIf(style.Font.Bold, "bold", "normal") + ";")
+
+            sb.AppendLine("   color: " + XLColorToString(style.Font.Color, False) + ";")
+            sb.AppendLine("   background-color: " + InteriorColor(style.Interior) + ";")
+
+            sb.AppendLine("   text-align: " + XLHorAlignToString(Integer.Parse(style.HorizontalAlignment)) + ";")
+            sb.AppendLine("   vertical-align: " + XLVertAlignToString(Integer.Parse(style.VerticalAlignment)) + ";")
+
+            sb.AppendLine("   border-left: " + FormatBorder(style.Borders(XlBordersIndex.xlEdgeLeft)) + ";")
+            sb.AppendLine("   border-top: " + FormatBorder(style.Borders(XlBordersIndex.xlEdgeTop)) + ";")
+            sb.AppendLine("   border-right: " + FormatBorder(style.Borders(XlBordersIndex.xlEdgeRight)) + ";")
+            sb.AppendLine("   border-bottom: " + FormatBorder(style.Borders(XlBordersIndex.xlEdgeBottom)) + ";")
+
+            sb.AppendLine("}")
+            sb.AppendLine()
+
+         End If
+
+      Next
+
+      IO.File.WriteAllText(filename, sb.ToString)
 
    End Sub
 
@@ -266,11 +398,14 @@ Public Class ribCasparCG
             _SheetWithPendingRefreshes = sheet
             _PlaybackControlWithPendingRefreshes = PlaybackCtrl
 
-            que = queries(0)
-            For Each con In _ActiveWorkbook.Connections
-               If con.Name = que Then
-                  con.Refresh
-               End If
+            For c As Integer = 0 To queries.Count - 1
+               que = queries(c)
+               For Each con In _ActiveWorkbook.Connections
+                  If con.Name = que Then
+                     con.Refresh
+                     Exit For
+                  End If
+               Next
             Next
 
             PlaybackCtrl.State = ucPlaybackButtons.enumState.stQueryRunning
@@ -502,15 +637,19 @@ Public Class ribCasparCG
 
                If name.Name.Contains("CasparOutput") Then
 
-                  Dim TemplateName As String = CustomProperties.Load(sheet, "Template")
-                  If TemplateName <> "" Then
+                  Dim previewTemplateName As String = CustomProperties.Load(sheet, "PreviewTemplate")
+                  If previewTemplateName = "" Then
+                     previewTemplateName = CustomProperties.Load(sheet, "Template")
+                  End If
+
+                  If previewTemplateName <> "" Then
 
                      Dim tmpl As Template = FillTemplate(name, sheet)
                      If tmpl Is Nothing Then
                         Exit For
                      End If
 
-                     pvw.CG_Add(_Settings.PreviewChannel, 20, TemplateName, tmpl, True)
+                     pvw.CG_Add(_Settings.PreviewChannel, 20, previewTemplateName, tmpl, True)
 
                   End If
 
@@ -526,120 +665,406 @@ Public Class ribCasparCG
 
    End Sub
 
+#Region "HTML Helper Functions"
+
+   Private Function ToRangeAddress(col As Integer, row As Integer) As String
+
+      Dim smallCol As Integer = (col - 1) Mod 25
+      Dim bigCol As Integer = (col - 1) / 25
+
+      If bigCol > 0 Then
+         Return ChrW(bigCol + 65) & ChrW(smallCol + 65) & row.ToString
+      Else
+         Return ChrW(smallCol + 65) & row.ToString
+      End If
+
+   End Function
+
+   Private Function XLHorAlignToString(align As Integer) As String
+
+      Select Case align
+         Case -4131
+            Return "left"
+         Case -4108
+            Return "center"
+         Case -4152
+            Return "right"
+         Case -4130
+            Return "justify"
+         Case Else
+            Return "left"
+      End Select
+
+   End Function
+
+   Private Function XLVertAlignToString(align As Integer) As String
+
+      Select Case align
+         Case -4160
+            Return "top"
+         Case -4108
+            Return "middle"
+         Case -4107
+            Return "bottom"
+         Case Else
+            Return "baseline"
+      End Select
+
+   End Function
+
+   Private Function XLColorToString(xlcolor As Object, blackAsWhite As Boolean) As String
+
+      Dim color As System.Drawing.Color = ColorTranslator.FromOle(xlcolor)
+      If color = Color.Black Then
+         color = Color.White
+      End If
+
+      Return String.Format("#{0:X2}{1:X2}{2:X2}", color.R, color.G, color.B)
+
+   End Function
+
+   Private Function InteriorColor(interiour As Interior) As String
+
+      If interiour.ColorIndex = -4142 Then
+         Return "transparent"
+      Else
+         Return XLColorToString(interiour.Color, False)
+      End If
+
+   End Function
+
+   Private Function XLLineStyleToString(lineStyle As Integer) As String
+
+      Select Case lineStyle
+         Case -4115
+            Return "dashed"
+         Case -4118
+            Return "dotted"
+         Case -4119
+            Return "double"
+         Case -4142
+            Return "none"
+         Case Else
+            Return "solid"
+      End Select
+
+   End Function
+
+   Private Function XLBorderWeightToString(borderWeight As Integer) As String
+
+      Select Case borderWeight
+         Case -4138
+            Return "medium"
+         Case 4
+            Return "thick"
+         Case Else
+            Return "thin"
+      End Select
+
+   End Function
+
+#End Region
+
    Private Function FillTemplate(name As Excel.Name, wrkSheet As Worksheet) As Template
+      Dim tmpl As Template = New Template
+      Return FillTemplate(name, wrkSheet, tmpl)
+   End Function
+
+   Private Function FillTemplate(name As Excel.Name, wrkSheet As Worksheet, tmpl As Template) As Template
 
       Dim range As Excel.Range = name.RefersToRange
-      Dim tmpl As Template = New Template
       Dim cell As Excel.Range
 
       Dim varName As Object = Nothing
       Dim varValue As Object = Nothing
 
+      Dim inte As Integer = 0
+
       'Dim objClipboard As Object = My.Computer.Clipboard.GetDataObject
       'Dim imgClipboard As System.Drawing.Image
       'Dim blnClipboardUsed As Boolean = False
 
-      Dim deliminter As String = CustomProperties.Load(wrkSheet, "Delimiter")
-      Select Case deliminter
-         Case "TAB"
-            deliminter = vbTab
-         Case "COLON"
-            deliminter = ","
-         Case "SEMICOLON"
-            deliminter = ";"
-      End Select
+      'Output-Mode
+      Dim mode As String = CustomProperties.Load(wrkSheet, "OutputMode")
+      Select Case mode
+         Case "TABLE"
 
-      If range.Cells.Count > 0 Then
+            Integer.TryParse(CustomProperties.Load(wrkSheet, "TableTextAsWhite"), inte)
+            Dim blnTextAsWhite As Boolean = (inte = 1)
 
-         For row As Integer = 1 To range.Rows.Count
+            Integer.TryParse(CustomProperties.Load(wrkSheet, "TableAddBorders"), inte)
+            Dim blnAddBorders As Boolean = (inte = 1)
 
-            cell = range(row, 1)
-            varName = cell.Text
+            'Table Mode
+            If range.Columns.Count > 0 And range.Rows.Count > 0 Then
 
-            'Old code to send cell pictures. Remove?
-            'cell = range(row, 2)
-            'Dim pic As Excel.Shape = GetImage(wrkSheet, row, 2)
-            'If pic IsNot Nothing Then
+               Dim fld As TemplateField = Nothing
 
-            '   If varName IsNot Nothing Then
+               For row As Integer = 1 To range.Rows.Count
 
-            '      blnClipboardUsed = True
+                  For col As Integer = 1 To range.Columns.Count
 
-            '      pic.CopyPicture(XlPictureAppearance.xlScreen, XlCopyPictureFormat.xlBitmap)
-            '      imgClipboard = My.Computer.Clipboard.GetData(System.Windows.Forms.DataFormats.Bitmap)
+                     cell = range(row, col)
+                     If cell IsNot Nothing Then
 
-            '      If imgClipboard IsNot Nothing Then
-            '         tmpl.AddPictureField(varName.ToString, imgClipboard)
-            '      End If
+                        varName = ToRangeAddress(col, row)
+                        varValue = cell.Text
 
+                        fld = New TemplateField(varName.ToString, varValue.ToString, True)
 
-            '   End If
+                        fld.AddAttachement("FontName", cell.Font.Name.ToString)
+                        fld.AddAttachement("FontSize", cell.Font.Size.ToString)
+                        fld.AddAttachement("FontStyle", IIf(cell.Font.Italic, "italic", "normal"))
+                        fld.AddAttachement("FontWeight", IIf(cell.Font.Bold, "bold", "normal"))
+                        fld.AddAttachement("FontColor", XLColorToString(cell.Font.Color, blnTextAsWhite))
 
-            If range.Columns.Count > 2 Then
+                        fld.AddAttachement("Background", InteriorColor(cell.Interior))
 
-               If varName IsNot Nothing AndAlso varName <> "" Then
+                        fld.AddAttachement("HorizontalAlignment", XLHorAlignToString(Integer.Parse(cell.HorizontalAlignment.ToString)))
+                        fld.AddAttachement("VerticalAlignment", XLVertAlignToString(Integer.Parse(cell.VerticalAlignment.ToString)))
 
-                  Dim out As String = ""
-                  For c As Integer = 2 To range.Columns.Count
+                        If blnAddBorders Then
 
-                     cell = range(row, c)
-                     varValue = cell.Text
+                           fld.AddAttachement("BorderWidth", String.Format("{0} {1} {2} {3}", XLBorderWeightToString(Integer.Parse(cell.Borders(XlBordersIndex.xlEdgeTop).Weight)),
+                                                                                              XLBorderWeightToString(Integer.Parse(cell.Borders(XlBordersIndex.xlEdgeRight).Weight)),
+                                                                                              XLBorderWeightToString(Integer.Parse(cell.Borders(XlBordersIndex.xlEdgeBottom).Weight)),
+                                                                                              XLBorderWeightToString(Integer.Parse(cell.Borders(XlBordersIndex.xlEdgeLeft).Weight))))
 
-                     If varValue Is Nothing Then
-                        varValue = ""
-                     End If
+                           fld.AddAttachement("BorderStyle", String.Format("{0} {1} {2} {3}", XLLineStyleToString(Integer.Parse(cell.Borders(XlBordersIndex.xlEdgeTop).LineStyle)),
+                                                                                              XLLineStyleToString(Integer.Parse(cell.Borders(XlBordersIndex.xlEdgeRight).LineStyle)),
+                                                                                              XLLineStyleToString(Integer.Parse(cell.Borders(XlBordersIndex.xlEdgeBottom).LineStyle)),
+                                                                                              XLLineStyleToString(Integer.Parse(cell.Borders(XlBordersIndex.xlEdgeLeft).LineStyle))))
 
-                     If varValue = "%ignore%" Then
-                        Exit For
-                     End If
+                           fld.AddAttachement("BorderColor", String.Format("{0} {1} {2} {3}", XLColorToString(cell.Borders(XlBordersIndex.xlEdgeTop).Color, blnTextAsWhite),
+                                                                                              XLColorToString(cell.Borders(XlBordersIndex.xlEdgeRight).Color, blnTextAsWhite),
+                                                                                              XLColorToString(cell.Borders(XlBordersIndex.xlEdgeBottom).Color, blnTextAsWhite),
+                                                                                              XLColorToString(cell.Borders(XlBordersIndex.xlEdgeLeft).Color, blnTextAsWhite)))
+                        End If
 
-                     If varValue <> "%skip%" Then
-                        out += varValue + deliminter
+                        fld.AddAttachement("Width", cell.Width.ToString)
+                        fld.AddAttachement("Height", cell.Height.ToString)
+
+                        tmpl.Fields.Add(fld)
+
                      End If
 
                   Next
 
-                  If out <> "" Then
-                     tmpl.AddField(varName.ToString, out.Substring(0, out.Length - 1))
-                  Else
-                     tmpl.AddField(varName.ToString, "")
-                  End If
-               End If
+               Next
+
+               Return tmpl
 
             Else
-
-               cell = range(row, 2)
-               varValue = cell.Text
-
-               If varName IsNot Nothing Then
-                  If varValue IsNot Nothing Then
-                     If varName <> "" Then
-                        tmpl.AddField(varName.ToString, varValue.ToString)
-                     End If
-                  Else
-                     If varName <> "" Then
-                        tmpl.AddField(varName.ToString, "")
-                     End If
-                  End If
-               End If
-
+               MsgBox("Invalid range defined, please set the range correctly", MsgBoxStyle.Exclamation, "Invalid Selection")
+               Return Nothing
             End If
 
-         Next
+         Case "HTML"
 
-         Return tmpl
+            If range.Columns.Count > 0 And range.Rows.Count > 0 Then
 
-      Else
-         MsgBox("Invalid range defined, please set the range correctly", MsgBoxStyle.Exclamation, "Invalid Selection")
-         Return Nothing
-      End If
+               Integer.TryParse(CustomProperties.Load(wrkSheet, "HTMLFirstIsHeader"), inte)
+               Dim firstIsHeader As Boolean = (inte = 1)
 
-      'If blnClipboardUsed Then
-      '   My.Computer.Clipboard.SetDataObject(objClipboard)
-      '   If imgClipboard IsNot Nothing Then
-      '      imgClipboard.Dispose()
-      '   End If
-      'End If
+               Dim fieldname As String = CustomProperties.Load(wrkSheet, "HTMLFieldname")
+               If fieldname = "" Then
+                  fieldname = "Table"
+               End If
+
+               Dim stringwriter As StringWriter = New StringWriter
+
+               Using writer As HtmlTextWriter = New HtmlTextWriter(stringwriter)
+
+                  writer.RenderBeginTag(HtmlTextWriterTag.Table) 'Table
+
+                  For row As Integer = 1 To range.Rows.Count
+
+                     writer.RenderBeginTag(HtmlTextWriterTag.Tr) 'TR
+
+                     For col As Integer = 1 To range.Columns.Count
+
+                        cell = range(row, col)
+                        If cell IsNot Nothing Then
+
+                           If row = 1 And firstIsHeader Then
+
+                              writer.AddAttribute(HtmlTextWriterAttribute.Class, LegalizeClassName(cell.Style.Name.ToString))
+
+                              writer.RenderBeginTag(HtmlTextWriterTag.Th)  'TH
+                              writer.Write(TemplateField.EncodeText(cell.Text, True))
+                              writer.RenderEndTag()  'TH
+
+                           Else
+
+                              writer.AddAttribute(HtmlTextWriterAttribute.Class, LegalizeClassName(cell.Style.Name.ToString))
+
+                              writer.RenderBeginTag(HtmlTextWriterTag.Td)  'TD
+                              writer.Write(TemplateField.EncodeText(cell.Text, True))
+                              writer.RenderEndTag()  'TD
+
+                           End If
+
+                        End If
+
+                     Next
+
+                     writer.RenderEndTag() 'TR
+
+                  Next
+
+                  writer.RenderEndTag() 'Table
+
+               End Using
+
+               Dim sb As StringBuilder = New StringBuilder()
+
+               sb.Append("<![CDATA[")
+               sb.Append(stringwriter.ToString)
+               sb.Append("]]>")
+
+               sb.Replace(vbCrLf, "")
+               sb.Replace(vbTab, "")
+               'sb.Replace("<", "&lt;")
+               'sb.Replace(">", "&gt;")
+
+               tmpl.AddField(fieldname, sb.ToString, False, True)
+
+               Dim sheetToAppend As String = CustomProperties.Load(wrkSheet, "SheetToAppend")
+               If sheetToAppend <> "" Then
+
+                  Dim subSheet As Worksheet = Nothing
+                  For Each wrk As Worksheet In wrkSheet.Application.Sheets
+                     If wrk.Name.ToString.Trim() = sheetToAppend Then
+                        subSheet = wrk
+                        Exit For
+                     End If
+                  Next
+
+                  If subSheet IsNot Nothing Then
+                     For Each subName As Excel.Name In subSheet.Names
+                        If subName.Name.Contains("CasparOutput") Then
+                           tmpl = FillTemplate(subName, subSheet, tmpl)
+                           Exit For
+                        End If
+                     Next
+                  End If
+
+               End If
+
+               Return tmpl
+
+            Else
+               MsgBox("Invalid range defined, please set the range correctly", MsgBoxStyle.Exclamation, "Invalid Selection")
+               Return Nothing
+            End If
+
+         Case Else
+
+            'Standard/Delimited Mode
+            Dim deliminter As String = CustomProperties.Load(wrkSheet, "Delimiter")
+            Select Case deliminter
+               Case "TAB"
+                  deliminter = vbTab
+               Case "COLON"
+                  deliminter = ","
+               Case "SEMICOLON"
+                  deliminter = ";"
+            End Select
+
+            If range.Cells.Count > 0 Then
+
+               For row As Integer = 1 To range.Rows.Count
+
+                  cell = range(row, 1)
+                  varName = cell.Text
+
+                  'Old code to send cell pictures. Remove?
+                  'cell = range(row, 2)
+                  'Dim pic As Excel.Shape = GetImage(wrkSheet, row, 2)
+                  'If pic IsNot Nothing Then
+
+                  '   If varName IsNot Nothing Then
+
+                  '      blnClipboardUsed = True
+
+                  '      pic.CopyPicture(XlPictureAppearance.xlScreen, XlCopyPictureFormat.xlBitmap)
+                  '      imgClipboard = My.Computer.Clipboard.GetData(System.Windows.Forms.DataFormats.Bitmap)
+
+                  '      If imgClipboard IsNot Nothing Then
+                  '         tmpl.AddPictureField(varName.ToString, imgClipboard)
+                  '      End If
+
+
+                  '   End If
+
+                  If range.Columns.Count > 2 Then
+
+                     If varName IsNot Nothing AndAlso varName <> "" Then
+
+                        Dim out As String = ""
+                        For c As Integer = 2 To range.Columns.Count
+
+                           cell = range(row, c)
+                           varValue = cell.Text
+
+                           If varValue Is Nothing Then
+                              varValue = ""
+                           End If
+
+                           If varValue = "%ignore%" Then
+                              Exit For
+                           End If
+
+                           If varValue <> "%skip%" Then
+                              out += varValue + deliminter
+                           End If
+
+                        Next
+
+                        If out <> "" Then
+                           tmpl.AddField(varName.ToString, out.Substring(0, out.Length - 1), True)
+                        Else
+                           tmpl.AddField(varName.ToString, "")
+                        End If
+                     End If
+
+                  Else
+
+                     cell = range(row, 2)
+                     varValue = cell.Text
+
+                     If varName IsNot Nothing Then
+                        If varValue IsNot Nothing Then
+                           If varName <> "" Then
+                              tmpl.AddField(varName.ToString, varValue.ToString, True)
+                           End If
+                        Else
+                           If varName <> "" Then
+                              tmpl.AddField(varName.ToString, "")
+                           End If
+                        End If
+                     End If
+
+                  End If
+
+               Next
+
+               Return tmpl
+
+            Else
+               MsgBox("Invalid range defined, please set the range correctly", MsgBoxStyle.Exclamation, "Invalid Selection")
+               Return Nothing
+            End If
+
+            'If blnClipboardUsed Then
+            '   My.Computer.Clipboard.SetDataObject(objClipboard)
+            '   If imgClipboard IsNot Nothing Then
+            '      imgClipboard.Dispose()
+            '   End If
+            'End If
+
+      End Select
+
 
    End Function
 
@@ -712,6 +1137,8 @@ Public Class ribCasparCG
                   Dim fsp As frmSheetProperties = New frmSheetProperties
                   fsp.wrkSheet = currWorksheet
                   fsp.Settings = _Settings
+                  fsp.Ribbon = Me
+
                   If fsp.ShowDialog() = System.Windows.Forms.DialogResult.Cancel Then
                      Exit For
                   End If
@@ -772,6 +1199,7 @@ Public Class ribCasparCG
          fsp.DialogMode = frmSheetProperties.enumDialogMode.ModeCommon
          fsp.wrkSheet = AppObject.ActiveSheet
          fsp.Settings = _Settings
+         fsp.Ribbon = Me
 
          If fsp.ShowDialog() = System.Windows.Forms.DialogResult.OK Then
             AppObject.Saved = False
@@ -828,17 +1256,25 @@ Public Class ribCasparCG
 
       Else
 
+         Dim previewTemplateName As String = CustomProperties.Load(sheet, "PreviewTemplate")
          Dim TemplateName As String = CustomProperties.Load(sheet, "Template")
+
+         If previewTemplateName = "" Then
+            previewTemplateName = TemplateName
+         End If
+
          If TemplateName = "" Then
             Dim fsp As frmSheetProperties = New frmSheetProperties
-            fsp.DialogMode = frmSheetProperties.enumDialogMode.ModeAutoUpdate
+            fsp.DialogMode = frmSheetProperties.enumDialogMode.ModeCommon
             fsp.Settings = _Settings
             fsp.wrkSheet = sheet
+            fsp.Ribbon = Me
+
             If fsp.ShowDialog() = System.Windows.Forms.DialogResult.Cancel Then
                Exit Sub
             Else
-               TemplateName = CustomProperties.Load(sheet, "Template")
-               If TemplateName = "" Then
+               previewTemplateName = CustomProperties.Load(sheet, "PreviewTemplate")
+               If previewTemplateName = "" Then
                   Exit Sub
                Else
                   AppObject.Saved = False
@@ -861,6 +1297,7 @@ Public Class ribCasparCG
          fsp.DialogMode = frmSheetProperties.enumDialogMode.ModeCommon
          fsp.wrkSheet = AppObject.ActiveSheet
          fsp.Settings = _Settings
+         fsp.Ribbon = Me
 
          If fsp.ShowDialog() = System.Windows.Forms.DialogResult.OK Then
             AppObject.Saved = False
@@ -1193,11 +1630,43 @@ Public Class ribCasparCG
 
       Else
 
-         _PendingRefreshAll = True
+         _PendingRefreshAllStep = 1
 
-         If _ActiveWorkbook.Connections.Count > 0 Then
+         _RefreshAllWebConnections = New List(Of Object)
+         _RefreshAllTableConnections = New List(Of Object)
+
+         If _ActiveWorkbook.Connections.Count > 0 AndAlso _ActiveWorkbook.Queries.Count > 0 Then
 
             For Each con In _ActiveWorkbook.Connections
+
+               Dim query As Object = Nothing
+
+               For Each que In _ActiveWorkbook.Queries
+                  If con.Name.ToString.Contains(que.Name.ToString) Then
+                     query = que
+                     Exit For
+                  End If
+               Next
+
+               If query IsNot Nothing Then
+
+                  If query.Formula.ToString.Contains("Web.Contents") Then
+                     _RefreshAllWebConnections.Add(con)
+                  Else
+                     _RefreshAllTableConnections.Add(con)
+                  End If
+
+               Else
+                  _RefreshAllTableConnections.Add(con)
+               End If
+
+            Next
+
+         End If
+
+         If _RefreshAllWebConnections.Count > 0 Then
+
+            For Each con In _RefreshAllWebConnections
                con.Refresh
             Next
 
@@ -1218,6 +1687,7 @@ Public Class ribCasparCG
          fsp.DialogMode = frmSheetProperties.enumDialogMode.ModeAutoUpdate
          fsp.wrkSheet = AppObject.ActiveSheet
          fsp.Settings = _Settings
+         fsp.Ribbon = Me
 
          If fsp.ShowDialog() = DialogResult.OK Then
             _Dashboard.RefreshPlaybackControls()

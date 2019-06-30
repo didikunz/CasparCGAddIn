@@ -9,11 +9,6 @@ D:\Projects\CasparCGAddIn\CasparCGAddIn\bin\Debug\Microsoft.Office.Tools.dll
 D:\Projects\CasparCGAddIn\CasparCGAddIn\bin\Debug\Microsoft.Office.Tools.Excel.dll
 D:\Projects\CasparCGAddIn\CasparCGAddIn\bin\Debug\Microsoft.Office.Tools.v4.0.Framework.dll
 D:\Projects\CasparCGAddIn\CasparCGAddIn\bin\Debug\Microsoft.VisualStudio.Tools.Applications.Runtime.dll
-D:\Projects\CasparCGAddIn\CasparCGAddIn\bin\Debug\Microsoft.Office.Tools.v4.0.Framework.xml
-D:\Projects\CasparCGAddIn\CasparCGAddIn\bin\Debug\Microsoft.VisualStudio.Tools.Applications.Runtime.xml
-D:\Projects\CasparCGAddIn\CasparCGAddIn\bin\Debug\Microsoft.Office.Tools.Common.xml
-D:\Projects\CasparCGAddIn\CasparCGAddIn\bin\Debug\Microsoft.Office.Tools.Excel.xml
-D:\Projects\CasparCGAddIn\CasparCGAddIn\bin\Debug\Microsoft.Office.Tools.Common.v4.0.Utilities.xml
 D:\Projects\CasparCGAddIn\CasparCGAddIn\obj\Debug\CasparCGAddIn.vbprojResolveAssemblyReference.cache
 D:\Projects\CasparCGAddIn\CasparCGAddIn\obj\Debug\CasparCGAddIn.ribCasparCG.resources
 D:\Projects\CasparCGAddIn\CasparCGAddIn\obj\Debug\CasparCGAddIn.Resources.resources
@@ -39,3 +34,8 @@ D:\Projects\CasparCGAddIn\CasparCGAddIn\obj\Debug\CasparCGAddIn.frmPlaybackContr
 D:\Projects\CasparCGAddIn\CasparCGAddIn\obj\Debug\CasparCGAddIn.ucPlaybackButtons.resources
 D:\Projects\CasparCGAddIn\CasparCGAddIn\obj\Debug\CasparCGAddIn.frmWebbrowser.resources
 D:\Projects\CasparCGAddIn\CasparCGAddIn\obj\Debug\CasparCGAddIn.frmWait.resources
+D:\Projects\CasparCGAddIn\CasparCGAddIn\bin\Debug\Microsoft.Office.Tools.v4.0.Framework.xml
+D:\Projects\CasparCGAddIn\CasparCGAddIn\bin\Debug\Microsoft.VisualStudio.Tools.Applications.Runtime.xml
+D:\Projects\CasparCGAddIn\CasparCGAddIn\bin\Debug\Microsoft.Office.Tools.Common.xml
+D:\Projects\CasparCGAddIn\CasparCGAddIn\bin\Debug\Microsoft.Office.Tools.Excel.xml
+D:\Projects\CasparCGAddIn\CasparCGAddIn\bin\Debug\Microsoft.Office.Tools.Common.v4.0.Utilities.xml

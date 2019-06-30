@@ -14,6 +14,7 @@ Public Class frmSheetProperties
    Private _wrkSheet As Worksheet
    Private _CasparCG As CasparCG
    Private _Settings As Settings
+   Private _Ribbon As ribCasparCG
 
    Public WriteOnly Property DialogMode As enumDialogMode
       Set(value As enumDialogMode)
@@ -49,7 +50,15 @@ Public Class frmSheetProperties
       End Set
    End Property
 
+   Public WriteOnly Property Ribbon As ribCasparCG
+      Set(value As ribCasparCG)
+         _Ribbon = value
+      End Set
+   End Property
+
    Private Sub frmSheetProperties_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+
+      Dim inte As Integer = 0
 
       'DataSet
       Dim dsn As String = CustomProperties.Load(_wrkSheet, "DataSetName")
@@ -58,6 +67,19 @@ Public Class frmSheetProperties
       End If
 
       txtDataSetName.Text = dsn
+
+      'Output-Mode
+      Dim mode As String = CustomProperties.Load(_wrkSheet, "OutputMode")
+      Select Case mode
+         Case ""
+            rbStandardMode.Checked = True
+         Case "DELIMITED"
+            rbStandardMode.Checked = True
+         Case "TABLE"
+            rbTableMode.Checked = True
+         Case "HTML"
+            rbHTMLMode.Checked = True
+      End Select
 
       'Delimiter Settings
       Dim deliminter As String = CustomProperties.Load(_wrkSheet, "Delimiter")
@@ -75,6 +97,35 @@ Public Class frmSheetProperties
             txtCustomDelimiter.Text = deliminter
       End Select
 
+      'Table-Settings
+      Integer.TryParse(CustomProperties.Load(_wrkSheet, "TableTextAsWhite"), inte)
+      chkTextAsWhite.Checked = (inte = 1)
+
+      Integer.TryParse(CustomProperties.Load(_wrkSheet, "TableAddBorders"), inte)
+      chkAddBorders.Checked = (inte = 1)
+
+      'HTML-Settings
+      Integer.TryParse(CustomProperties.Load(_wrkSheet, "HTMLFirstIsHeader"), inte)
+      chkFirstIsHeader.Checked = (inte = 1)
+
+      Dim fieldname As String = CustomProperties.Load(_wrkSheet, "HTMLFieldname")
+      If fieldname <> "" Then
+         txtHTMLFieldname.Text = fieldname
+      End If
+
+      cboSheetToAppend.Items.Add("(None)")
+      For Each wrk As Worksheet In _wrkSheet.Application.Sheets
+         cboSheetToAppend.Items.Add(wrk.Name.ToString.Trim)
+      Next
+
+      Dim sheetToAppend As String = CustomProperties.Load(_wrkSheet, "SheetToAppend")
+      For c As Integer = 0 To cboSheetToAppend.Items.Count - 1
+         If cboSheetToAppend.Items(c) = sheetToAppend Then
+            cboSheetToAppend.SelectedIndex = c
+            Exit For
+         End If
+      Next
+
       'Auto-Update
       cboServers.Items.Clear()
       cboServers.Items.Add("All")
@@ -82,7 +133,7 @@ Public Class frmSheetProperties
          cboServers.Items.Add(casp.Name)
       Next
 
-      Dim inte As Integer = 0
+      inte = 0
       Integer.TryParse(CustomProperties.Load(_wrkSheet, "AutoUpdateDataset"), inte)
       If inte = 1 Then
          rbDataset.Checked = True
@@ -118,7 +169,13 @@ Public Class frmSheetProperties
          Next
 
          cboTemplate.Text = CustomProperties.Load(_wrkSheet, "Template")
-         cboPreviewTemplate.Text = CustomProperties.Load(_wrkSheet, "Template")
+
+         Dim previewTemplateName As String = CustomProperties.Load(_wrkSheet, "PreviewTemplate")
+         If previewTemplateName = "" Then
+            cboPreviewTemplate.Text = cboTemplate.Text
+         Else
+            cboPreviewTemplate.Text = previewTemplateName
+         End If
 
       End If
 
@@ -160,23 +217,34 @@ Public Class frmSheetProperties
       Select Case _DialogMode
          Case enumDialogMode.ModeCommon
             tabTab.SelectedTab = tabCommon
-            tabCommon.Enabled = True
-            tabAutoUpdate.Enabled = False
-            tabQueries.Enabled = False
 
          Case enumDialogMode.ModeAutoUpdate
             tabTab.SelectedTab = tabAutoUpdate
-            tabCommon.Enabled = False
-            tabAutoUpdate.Enabled = True
-            tabQueries.Enabled = True
 
          Case enumDialogMode.ModeAll
             tabTab.SelectedTab = tabCommon
-            tabCommon.Enabled = True
-            tabAutoUpdate.Enabled = True
-            tabQueries.Enabled = True
 
       End Select
+
+   End Sub
+
+   Private Sub btnExportStyles_Click(sender As Object, e As EventArgs) Handles btnExportStyles.Click
+
+      If _Ribbon IsNot Nothing Then
+
+         Dim dlg As SaveFileDialog = New SaveFileDialog
+         dlg.AddExtension = True
+         dlg.DefaultExt = ".css"
+         dlg.Filter = "Cascading Style Sheets (*.css)|*.css|All Files (*.*)|*.*||"
+         dlg.FilterIndex = 0
+
+         If dlg.ShowDialog(Me) = DialogResult.OK Then
+
+            _Ribbon.ExportStyles(dlg.FileName)
+
+         End If
+
+      End If
 
    End Sub
 
@@ -184,6 +252,15 @@ Public Class frmSheetProperties
 
       'Dataset
       CustomProperties.Save(_wrkSheet, "DataSetName", txtDataSetName.Text)
+
+      'Output-Mode
+      If rbTableMode.Checked Then
+         CustomProperties.Save(_wrkSheet, "OutputMode", "TABLE")
+      ElseIf rbHTMLMode.Checked Then
+         CustomProperties.Save(_wrkSheet, "OutputMode", "HTML")
+      Else
+         CustomProperties.Save(_wrkSheet, "OutputMode", "DELIMITED")
+      End If
 
       'Delimiter Settings
       If rbTabDelimited.Checked Then
@@ -200,15 +277,21 @@ Public Class frmSheetProperties
          End If
       End If
 
+      'Table-Settings
+      CustomProperties.Save(_wrkSheet, "TableTextAsWhite", IIf(chkTextAsWhite.Checked, "1", "0"))
+      CustomProperties.Save(_wrkSheet, "TableAddBorders", IIf(chkAddBorders.Checked, "1", "0"))
+
+      'HTML-Settings
+      CustomProperties.Save(_wrkSheet, "HTMLFirstIsHeader", IIf(chkFirstIsHeader.Checked, "1", "0"))
+      CustomProperties.Save(_wrkSheet, "HTMLFieldname", txtHTMLFieldname.Text)
+      If cboSheetToAppend.SelectedIndex > -1 Then
+         CustomProperties.Save(_wrkSheet, "SheetToAppend", cboSheetToAppend.Items(cboSheetToAppend.SelectedIndex))
+      End If
+
       'Update template
       If _CasparCG IsNot Nothing AndAlso _CasparCG.Connected Then
-
-         If _DialogMode = enumDialogMode.ModeCommon Then
-            CustomProperties.Save(_wrkSheet, "Template", cboPreviewTemplate.Text)
-         Else
-            CustomProperties.Save(_wrkSheet, "Template", cboTemplate.Text)
-         End If
-
+         CustomProperties.Save(_wrkSheet, "Template", cboTemplate.Text)
+         CustomProperties.Save(_wrkSheet, "PreviewTemplate", cboPreviewTemplate.Text)
       End If
 
       'Autoupdate
