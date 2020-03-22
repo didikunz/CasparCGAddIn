@@ -93,7 +93,7 @@ Partial Class ucPlaybackControls
       '
       Me.upcPlaybackButtons.BackColor = System.Drawing.Color.Transparent
       Me.tlpMain.SetColumnSpan(Me.upcPlaybackButtons, 3)
-      Me.upcPlaybackButtons.ControlsSet = CasparCGAddIn.ucPlaybackButtons.enumControlSets.csPlayStop
+      Me.upcPlaybackButtons.ControlsSet = CasparCGAddIn.ucPlaybackButtons.enumControlSets.csNone
       Me.upcPlaybackButtons.Dock = System.Windows.Forms.DockStyle.Fill
       Me.upcPlaybackButtons.Location = New System.Drawing.Point(0, 24)
       Me.upcPlaybackButtons.Margin = New System.Windows.Forms.Padding(0)

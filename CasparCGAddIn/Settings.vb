@@ -5,6 +5,14 @@ Imports System.Windows.Forms
 
 Public Class Settings
 
+   Public Enum enumVideoResolution
+      vrPAL
+      vrNTSC
+      vrHD720
+      vrHD1080
+      vr4K
+   End Enum
+
    Private _ServerList As List(Of String) = New List(Of String)
    Private _Servers As List(Of CasparCG) = New List(Of CasparCG)
 
@@ -28,6 +36,11 @@ Public Class Settings
    Public Property DefaultDataFields As String = "f0|f1|f2|f3|f4|f5"
    Public Property UseAveco As Boolean = False
    Public Property ShowDashboard As Boolean = True
+   Public Property UseImageAttributes As Boolean = False
+   Public Property InhibitPlayback4Slave As Boolean = True
+   Public Property UseFlashLayers As Boolean = False
+
+   Public Property VideoResolution As enumVideoResolution = enumVideoResolution.vrHD1080
 
    Public Property BrowserLocation As System.Drawing.Point = New System.Drawing.Point(10, 10)
    Public Property BrowserSize As System.Drawing.Size = New System.Drawing.Size(1072, 645)
@@ -108,6 +121,11 @@ Public Class Settings
       Me.DefaultDataFields = sets.DefaultDataFields
       Me.UseAveco = sets.UseAveco
       Me.ShowDashboard = sets.ShowDashboard
+      Me.UseImageAttributes = sets.UseImageAttributes
+      Me.InhibitPlayback4Slave = sets.InhibitPlayback4Slave
+      Me.UseFlashLayers = sets.UseFlashLayers
+
+      Me.VideoResolution = sets.VideoResolution
 
       Me.BrowserLocation = sets.BrowserLocation
       Me.BrowserSize = sets.BrowserSize

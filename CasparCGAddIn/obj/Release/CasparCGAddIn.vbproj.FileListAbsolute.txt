@@ -34,6 +34,12 @@ D:\Projects\CasparCGAddIn\CasparCGAddIn\obj\Release\CasparCGAddIn.vbproj.Generat
 D:\Projects\CasparCGAddIn\CasparCGAddIn\obj\Release\CasparCGAddIn.dll
 D:\Projects\CasparCGAddIn\CasparCGAddIn\obj\Release\CasparCGAddIn.xml
 D:\Projects\CasparCGAddIn\CasparCGAddIn\obj\Release\CasparCGAddIn.pdb
+D:\Projects\CasparCGAddIn\CasparCGAddIn\bin\Release\Microsoft.Office.Tools.Excel.v4.0.Utilities.dll
+D:\Projects\CasparCGAddIn\CasparCGAddIn\obj\Release\CasparCGAddIn.frmChangeTemplatePath.resources
+D:\Projects\CasparCGAddIn\CasparCGAddIn\obj\Release\CasparCGAddIn.frmTimerLaps.resources
+D:\Projects\CasparCGAddIn\CasparCGAddIn\obj\Release\CasparCGAddIn.frmTimerSettings.resources
+D:\Projects\CasparCGAddIn\CasparCGAddIn\obj\Release\CasparCGAddIn.ucTimeSpanEditor.resources
+D:\Projects\CasparCGAddIn\CasparCGAddIn\bin\Release\Microsoft.Office.Tools.Excel.v4.0.Utilities.xml
 D:\Projects\CasparCGAddIn\CasparCGAddIn\bin\Release\Microsoft.Office.Tools.v4.0.Framework.xml
 D:\Projects\CasparCGAddIn\CasparCGAddIn\bin\Release\Microsoft.VisualStudio.Tools.Applications.Runtime.xml
 D:\Projects\CasparCGAddIn\CasparCGAddIn\bin\Release\Microsoft.Office.Tools.Common.xml

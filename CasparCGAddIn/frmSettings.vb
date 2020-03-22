@@ -27,13 +27,29 @@ Public Class frmSettings
       bsServers.DataSource = _Settings.Servers
       bsServersClone.DataSource = _Settings.Servers
 
-      chkAutoConnect.Checked = _Settings.ConnectOnStartUp
-
       cboPreviewServer.Text = _Settings.PreviewServer
       nudPreviewChannel.Value = _Settings.PreviewChannel
 
       chkUseAveco.Checked = _Settings.UseAveco
       chkShowDashboard.Checked = _Settings.ShowDashboard
+      chkUseImageAttr.Checked = _Settings.UseImageAttributes
+      chkInhibitPlaybackSlave.Checked = _Settings.InhibitPlayback4Slave
+      chkUseFlashLayers.Checked = _Settings.UseFlashLayers
+
+      chkAutoConnect.Checked = _Settings.ConnectOnStartUp
+
+      Select Case _Settings.VideoResolution
+         Case CasparCGAddIn.Settings.enumVideoResolution.vrPAL
+            cboVideoResolution.SelectedIndex = 0
+         Case CasparCGAddIn.Settings.enumVideoResolution.vrNTSC
+            cboVideoResolution.SelectedIndex = 1
+         Case CasparCGAddIn.Settings.enumVideoResolution.vrHD720
+            cboVideoResolution.SelectedIndex = 2
+         Case CasparCGAddIn.Settings.enumVideoResolution.vrHD1080
+            cboVideoResolution.SelectedIndex = 3
+         Case CasparCGAddIn.Settings.enumVideoResolution.vr4K
+            cboVideoResolution.SelectedIndex = 4
+      End Select
 
    End Sub
 
@@ -78,6 +94,22 @@ Public Class frmSettings
 
       _Settings.UseAveco = chkUseAveco.Checked
       _Settings.ShowDashboard = chkShowDashboard.Checked
+      _Settings.UseImageAttributes = chkUseImageAttr.Checked
+      _Settings.InhibitPlayback4Slave = chkInhibitPlaybackSlave.Checked
+      _Settings.UseFlashLayers = chkUseFlashLayers.Checked
+
+      Select Case cboVideoResolution.SelectedIndex
+         Case 0
+            _Settings.VideoResolution = CasparCGAddIn.Settings.enumVideoResolution.vrPAL
+         Case 1
+            _Settings.VideoResolution = CasparCGAddIn.Settings.enumVideoResolution.vrNTSC
+         Case 2
+            _Settings.VideoResolution = CasparCGAddIn.Settings.enumVideoResolution.vrHD720
+         Case 3
+            _Settings.VideoResolution = CasparCGAddIn.Settings.enumVideoResolution.vrHD1080
+         Case 4
+            _Settings.VideoResolution = CasparCGAddIn.Settings.enumVideoResolution.vr4K
+      End Select
 
    End Sub
 

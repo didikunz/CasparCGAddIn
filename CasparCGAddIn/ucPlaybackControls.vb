@@ -25,12 +25,7 @@ Public Class ucPlaybackControls
 
          If _sheet IsNot Nothing Then
 
-            Dim nam As String = CustomProperties.Load(_sheet, "DashboardCaption")
-            If nam = "" Then
-               nam = _sheet.Name
-            End If
-            Me.lblHeader.Text = nam
-
+            Me.lblHeader.Text = CustomProperties.Load(_sheet, "DashboardCaption", _sheet.Name)
             upcPlaybackButtons.Sheet = _sheet
 
          End If
@@ -66,14 +61,10 @@ Public Class ucPlaybackControls
 
       If _sheet IsNot Nothing Then
 
-         Dim nam As String = CustomProperties.Load(_sheet, "DashboardCaption")
-         If nam = "" Then
-            nam = _sheet.Name
-         End If
-         Me.lblHeader.Text = nam
+         Me.lblHeader.Text = CustomProperties.Load(_sheet, "DashboardCaption", _sheet.Name)
 
          Dim inte As Integer = 0
-         If Integer.TryParse(CustomProperties.Load(_sheet, "DashboardCaptionColor"), inte) Then
+         If Integer.TryParse(CustomProperties.Load(_sheet, "DashboardCaptionColor", ""), inte) Then
             Me.lblHeader.BackColor = System.Drawing.Color.FromArgb(inte)
             Me.lblHeader.ForeColor = ContrastingColor(Me.lblHeader.BackColor)
             Me.btnPreview.BackColor = System.Drawing.Color.FromArgb(inte)
@@ -139,4 +130,5 @@ Public Class ucPlaybackControls
       _timResetRelaod.Stop()
       _DoReload = False
    End Sub
+
 End Class

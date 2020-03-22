@@ -1,10 +1,11 @@
 ﻿Imports Microsoft.Office.Interop.Excel
 Imports CasparObjects
+Imports System.Windows.Forms
 
 Public Class ThisAddIn
 
    Private _Settings As Settings
-   Private _SettingsFName As String
+   Private _SettingsFilename As String
    Private _IsCasparConnected As Boolean = False
 
    Private _CasparRibon As ribCasparCG
@@ -17,6 +18,12 @@ Public Class ThisAddIn
    Public ReadOnly Property IsCasparConnected As Boolean
       Get
          Return _IsCasparConnected
+      End Get
+   End Property
+
+   Public ReadOnly Property CasparRibon As ribCasparCG
+      Get
+         Return _CasparRibon
       End Get
    End Property
 
@@ -87,11 +94,11 @@ Public Class ThisAddIn
    Private Sub ThisAddIn_Startup() Handles Me.Startup
 
       Dim cap As CommonAppData.CommonApplicationData = New CommonAppData.CommonApplicationData("MediaSupport", "CasparCGAddIn", True)
-      _SettingsFName = IO.Path.Combine(cap.ApplicationFolderPath, "Settings.xml")
+      _SettingsFilename = IO.Path.Combine(cap.ApplicationFolderPath, "Settings.xml")
 
-      If IO.File.Exists(_SettingsFName) Then
+      If IO.File.Exists(_SettingsFilename) Then
          Try
-            _Settings = New Settings(_SettingsFName)
+            _Settings = New Settings(_SettingsFilename)
          Catch ex As Exception
             _Settings = New Settings()
          End Try
@@ -103,12 +110,15 @@ Public Class ThisAddIn
 
       _Dashboard = New ucDashboard
       _DashboardPane = Me.CustomTaskPanes.Add(_Dashboard, "CasparCG Dashboard")
+      _DashboardPane.DockPosition = Microsoft.Office.Core.MsoCTPDockPosition.msoCTPDockPositionRight
+      _DashboardPane.Width = 230
       _DashboardPane.Visible = _Settings.DashboardVisible And _Settings.ShowDashboard
 
       _Dashboard.Settings = _Settings
       _Dashboard.CasparRibon = _CasparRibon
 
       _CasparRibon.Settings = _Settings
+      _CasparRibon.SettingsFilename = _SettingsFilename
       _CasparRibon.SetDashboardObjects(_Dashboard, _DashboardPane)
 
    End Sub
@@ -132,9 +142,18 @@ Public Class ThisAddIn
    Private Sub ThisAddIn_Shutdown() Handles Me.Shutdown
 
       If _Settings IsNot Nothing Then
-         _Settings.Save(_SettingsFName)
+         _Settings.Save(_SettingsFilename)
          DisconnectAll()
       End If
+
+      _CasparRibon.SetDashboardObjects(Nothing, Nothing)
+      _Dashboard.CasparRibon = Nothing
+
+      _CasparRibon.Dispose()
+      _DashboardPane.Dispose()
+      _Dashboard.Dispose()
+      '_TimerDashboardPane.Dispose()
+      '_TimerDashboard.Dispose()
 
    End Sub
 
@@ -178,7 +197,7 @@ Public Class ThisAddIn
          Dim isCasparWookkbook As Boolean = False
          For Each ws As Worksheet In Wb.Sheets
 
-            If CustomProperties.Load(ws, "IsDashboardList") = "1" Then
+            If CustomProperties.Load(ws, "IsDashboardList", False) Then
 
                isCasparWookkbook = True
 
@@ -207,6 +226,8 @@ Public Class ThisAddIn
       End If
 
       If _CasparRibon IsNot Nothing Then
+         _CasparRibon.grpTimer.Visible = CustomDocumentProperties.Load(Wb, "IsTimerGroupVisible", False)
+         _CasparRibon.grpLap.Visible = _CasparRibon.grpTimer.Visible
          _CasparRibon.ActiveWorkbook = Wb
          _CasparRibon.FlagSheetActivated(Wb.ActiveSheet)
       End If
@@ -215,6 +236,21 @@ Public Class ThisAddIn
          _Dashboard.ActiveWorkbook = Wb
       End If
 
+   End Sub
+
+   Private Sub Application_WorkbookBeforeSave(Wb As Workbook, SaveAsUI As Boolean, ByRef Cancel As Boolean) Handles Application.WorkbookBeforeSave
+
+      If _CasparRibon IsNot Nothing Then
+         CustomDocumentProperties.Save(Wb, "IsTimerGroupVisible", IIf(_CasparRibon.grpTimer.Visible, "1", "0"))
+         _CasparRibon.SaveTimerSettings()
+      End If
+
+   End Sub
+
+   Private Sub Application_WorkbookBeforeClose(Wb As Workbook, ByRef Cancel As Boolean) Handles Application.WorkbookBeforeClose
+      If _CasparRibon IsNot Nothing Then
+         _CasparRibon.ReleaseTimerSettingsEvents()
+      End If
    End Sub
 
 End Class

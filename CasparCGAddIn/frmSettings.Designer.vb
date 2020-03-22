@@ -1,9 +1,9 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class frmSettings
    Inherits System.Windows.Forms.Form
 
    'Das Formular überschreibt den Löschvorgang, um die Komponentenliste zu bereinigen.
-   <System.Diagnostics.DebuggerNonUserCode()> _
+   <System.Diagnostics.DebuggerNonUserCode()>
    Protected Overrides Sub Dispose(ByVal disposing As Boolean)
       Try
          If disposing AndAlso components IsNot Nothing Then
@@ -20,7 +20,7 @@ Partial Class frmSettings
    'Hinweis: Die folgende Prozedur ist für den Windows Form-Designer erforderlich.
    'Das Bearbeiten ist mit dem Windows Form-Designer möglich.  
    'Das Bearbeiten mit dem Code-Editor ist nicht möglich.
-   <System.Diagnostics.DebuggerStepThrough()> _
+   <System.Diagnostics.DebuggerStepThrough()>
    Private Sub InitializeComponent()
       Me.components = New System.ComponentModel.Container()
       Me.ftbCasparExe = New CommonControls.ctrFileTextBox()
@@ -50,9 +50,14 @@ Partial Class frmSettings
       Me.bsServersClone = New System.Windows.Forms.BindingSource(Me.components)
       Me.Label2 = New System.Windows.Forms.Label()
       Me.tabSettings = New System.Windows.Forms.TabPage()
+      Me.chkUseFlashLayers = New System.Windows.Forms.CheckBox()
+      Me.chkInhibitPlaybackSlave = New System.Windows.Forms.CheckBox()
+      Me.chkUseImageAttr = New System.Windows.Forms.CheckBox()
+      Me.chkAutoConnect = New System.Windows.Forms.CheckBox()
       Me.chkShowDashboard = New System.Windows.Forms.CheckBox()
       Me.chkUseAveco = New System.Windows.Forms.CheckBox()
-      Me.chkAutoConnect = New System.Windows.Forms.CheckBox()
+      Me.cboVideoResolution = New System.Windows.Forms.ComboBox()
+      Me.Label4 = New System.Windows.Forms.Label()
       CType(Me.bsServers, System.ComponentModel.ISupportInitialize).BeginInit()
       CType(Me.dgvServers, System.ComponentModel.ISupportInitialize).BeginInit()
       Me.tabTab.SuspendLayout()
@@ -348,6 +353,11 @@ Partial Class frmSettings
       '
       'tabSettings
       '
+      Me.tabSettings.Controls.Add(Me.Label4)
+      Me.tabSettings.Controls.Add(Me.cboVideoResolution)
+      Me.tabSettings.Controls.Add(Me.chkUseFlashLayers)
+      Me.tabSettings.Controls.Add(Me.chkInhibitPlaybackSlave)
+      Me.tabSettings.Controls.Add(Me.chkUseImageAttr)
       Me.tabSettings.Controls.Add(Me.chkAutoConnect)
       Me.tabSettings.Controls.Add(Me.chkShowDashboard)
       Me.tabSettings.Controls.Add(Me.chkUseAveco)
@@ -358,6 +368,46 @@ Partial Class frmSettings
       Me.tabSettings.TabIndex = 2
       Me.tabSettings.Text = "Settings"
       Me.tabSettings.UseVisualStyleBackColor = True
+      '
+      'chkUseFlashLayers
+      '
+      Me.chkUseFlashLayers.AutoSize = True
+      Me.chkUseFlashLayers.Location = New System.Drawing.Point(18, 117)
+      Me.chkUseFlashLayers.Name = "chkUseFlashLayers"
+      Me.chkUseFlashLayers.Size = New System.Drawing.Size(260, 17)
+      Me.chkUseFlashLayers.TabIndex = 24
+      Me.chkUseFlashLayers.Text = "Use Flash-layers (use only if absolutely necessary)"
+      Me.chkUseFlashLayers.UseVisualStyleBackColor = True
+      '
+      'chkInhibitPlaybackSlave
+      '
+      Me.chkInhibitPlaybackSlave.AutoSize = True
+      Me.chkInhibitPlaybackSlave.Location = New System.Drawing.Point(18, 94)
+      Me.chkInhibitPlaybackSlave.Name = "chkInhibitPlaybackSlave"
+      Me.chkInhibitPlaybackSlave.Size = New System.Drawing.Size(277, 17)
+      Me.chkInhibitPlaybackSlave.TabIndex = 23
+      Me.chkInhibitPlaybackSlave.Text = "Do not display playback buttons for slave worksheets"
+      Me.chkInhibitPlaybackSlave.UseVisualStyleBackColor = True
+      '
+      'chkUseImageAttr
+      '
+      Me.chkUseImageAttr.AutoSize = True
+      Me.chkUseImageAttr.Location = New System.Drawing.Point(18, 71)
+      Me.chkUseImageAttr.Name = "chkUseImageAttr"
+      Me.chkUseImageAttr.Size = New System.Drawing.Size(243, 17)
+      Me.chkUseImageAttr.TabIndex = 22
+      Me.chkUseImageAttr.Text = "Send Image-files as image attribute (XML only)"
+      Me.chkUseImageAttr.UseVisualStyleBackColor = True
+      '
+      'chkAutoConnect
+      '
+      Me.chkAutoConnect.AutoSize = True
+      Me.chkAutoConnect.Location = New System.Drawing.Point(18, 163)
+      Me.chkAutoConnect.Name = "chkAutoConnect"
+      Me.chkAutoConnect.Size = New System.Drawing.Size(289, 17)
+      Me.chkAutoConnect.TabIndex = 21
+      Me.chkAutoConnect.Text = "Always connect on opening Caspar enabled workbooks"
+      Me.chkAutoConnect.UseVisualStyleBackColor = True
       '
       'chkShowDashboard
       '
@@ -379,15 +429,24 @@ Partial Class frmSettings
       Me.chkUseAveco.Text = "Use with Aveco compatible templates"
       Me.chkUseAveco.UseVisualStyleBackColor = True
       '
-      'chkAutoConnect
+      'cboVideoResolution
       '
-      Me.chkAutoConnect.AutoSize = True
-      Me.chkAutoConnect.Location = New System.Drawing.Point(18, 92)
-      Me.chkAutoConnect.Name = "chkAutoConnect"
-      Me.chkAutoConnect.Size = New System.Drawing.Size(289, 17)
-      Me.chkAutoConnect.TabIndex = 21
-      Me.chkAutoConnect.Text = "Always connect on opening Caspar enabled workbooks"
-      Me.chkAutoConnect.UseVisualStyleBackColor = True
+      Me.cboVideoResolution.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+      Me.cboVideoResolution.FormattingEnabled = True
+      Me.cboVideoResolution.Items.AddRange(New Object() {"PAL", "NTSC", "HD 720", "HD 1080", "4K"})
+      Me.cboVideoResolution.Location = New System.Drawing.Point(18, 221)
+      Me.cboVideoResolution.Name = "cboVideoResolution"
+      Me.cboVideoResolution.Size = New System.Drawing.Size(214, 21)
+      Me.cboVideoResolution.TabIndex = 25
+      '
+      'Label4
+      '
+      Me.Label4.AutoSize = True
+      Me.Label4.Location = New System.Drawing.Point(15, 203)
+      Me.Label4.Name = "Label4"
+      Me.Label4.Size = New System.Drawing.Size(125, 13)
+      Me.Label4.TabIndex = 26
+      Me.Label4.Text = "Video-resolution for DVE:"
       '
       'frmSettings
       '
@@ -447,4 +506,9 @@ Partial Class frmSettings
    Friend WithEvents chkShowDashboard As System.Windows.Forms.CheckBox
    Friend WithEvents chkUseAveco As System.Windows.Forms.CheckBox
    Friend WithEvents chkAutoConnect As System.Windows.Forms.CheckBox
+   Friend WithEvents chkUseImageAttr As System.Windows.Forms.CheckBox
+   Friend WithEvents chkInhibitPlaybackSlave As System.Windows.Forms.CheckBox
+   Friend WithEvents chkUseFlashLayers As System.Windows.Forms.CheckBox
+   Friend WithEvents Label4 As System.Windows.Forms.Label
+   Friend WithEvents cboVideoResolution As System.Windows.Forms.ComboBox
 End Class

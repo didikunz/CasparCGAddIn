@@ -214,13 +214,106 @@
   <data name="Playback_Controls_Update" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Playback_Controls_Update.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="StartTime_64x" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\StartTime_64x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="Web_Refresh_64x" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Web_Refresh_64x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="loader_spinner" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\loader-spinner.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="FlatList_16x" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\FlatList_16x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="GlyphDown" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\GlyphDown.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="GlyphLeft" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\GlyphLeft.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="GlyphRight" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\GlyphRight.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="GlyphUp" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\GlyphUp.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="GlyphCenter" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\GlyphCenter.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="GlyphFastDown" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\GlyphFastDown.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="GlyphFastLeft" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\GlyphFastLeft.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="GlyphFastRight" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\GlyphFastRight.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="GlyphFastUp" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\GlyphFastUp.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TimerPane" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\TimerPane.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Timer_Pause" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Timer_Pause.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Timer_Start" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Timer_Start.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Timer_Stop" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Timer_Stop.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Timer_Minus" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Timer_Minus.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Timer_Plus" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Timer_Plus.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Timer_Reset" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Timer_Reset.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Add_Button" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Add_Button.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Cancel_16x" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Cancel_16x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Timer_Lap" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Timer_Lap.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Timer_Resume" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Timer_Resume.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Timer_Load" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Timer_Load.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="F1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\F1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="F2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\F2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="F3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\F3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="F4" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\F4.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="F5" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\F5.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="F6" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\F6.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="F7" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\F7.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="F8" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\F8.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="F9" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\F9.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Dublicate" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Dublicate.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

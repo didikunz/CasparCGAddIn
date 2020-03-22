@@ -40,6 +40,18 @@ Public Class ucDashboard
 
    Private WithEvents _ResizeTimer As Timer = New Timer
 
+   Public Property ListPaneVisible As Boolean
+      Get
+         Return panList.Visible
+      End Get
+      Set(value As Boolean)
+         panList.Visible = value
+         _ResizeTimer.Interval = 100
+         _ResizeTimer.Start()
+      End Set
+   End Property
+
+
    Public WriteOnly Property Settings As Settings
       Set(value As Settings)
 
@@ -83,15 +95,7 @@ Public Class ucDashboard
 
    Public WriteOnly Property DockingMode As enumDockingMode
       Set(value As enumDockingMode)
-
          _DockingMode = value
-
-         If _DockingMode = enumDockingMode.dmHorizontal Then
-            flpFlow.FlowDirection = System.Windows.Forms.FlowDirection.LeftToRight
-         ElseIf _DockingMode = enumDockingMode.dmVertical Then
-            flpFlow.FlowDirection = System.Windows.Forms.FlowDirection.TopDown
-         End If
-
       End Set
    End Property
 
@@ -155,11 +159,7 @@ Public Class ucDashboard
 
       If _listSheet IsNot Nothing AndAlso _IsCasparConnected Then
 
-         Dim srv As Integer = 0
-         If Not Integer.TryParse(CustomProperties.Load(_listSheet, "ServerNumber"), srv) Then
-            srv = 1
-         End If
-
+         Dim srv As Integer = CustomProperties.Load(_listSheet, "ServerNumber", 1)
          If srv <= _Settings.Servers.Count Then
 
             Dim caspar As CasparCG = _Settings.Servers(srv - 1)
@@ -222,7 +222,7 @@ Public Class ucDashboard
 
 #End Region
 
-#Region "Caspar Functions"
+#Region "Caspar Functions for List-sheet"
 
    Private Sub RunQuery(Autoplay As Boolean, Preview As Boolean)
 
@@ -231,7 +231,7 @@ Public Class ucDashboard
          Dim range As Excel.Range = _listSheet.Cells
          Dim cell As Excel.Range = Nothing
 
-         If CustomProperties.Load(_listSheet, "AutoUpdate") = "1" Then
+         If CustomProperties.Load(_listSheet, "AutoUpdate", False) Then
 
             cell = range(_currentRow, 1)
             If cell.Value IsNot Nothing AndAlso cell.Text.ToString.StartsWith("{") Then
@@ -815,57 +815,61 @@ Public Class ucDashboard
          Next
          flpFlow.Controls.Clear()
 
+         Dim slaveSheets As HashSet(Of String) = New HashSet(Of String)
+         If _Settings.InhibitPlayback4Slave Then
+            Dim slaveSheet As String = ""
+            For Each sh As Worksheet In _ActiveWorkbook.Worksheets
+               slaveSheet = CustomProperties.Load(sh, "SlaveWorksheet", "")
+               If slaveSheet <> "" Then
+                  slaveSheets.Add(slaveSheet)
+               End If
+            Next
+         End If
+
          For Each sheet As Worksheet In _ActiveWorkbook.Worksheets
 
-            If CustomProperties.Load(sheet, "Template") <> "" Then
+            If Not slaveSheets.Contains(sheet.Name.Trim) Then
 
-               Dim upCntr As ucPlaybackControls = New ucPlaybackControls
-               upCntr.Sheet = sheet
+               If CustomProperties.Load(sheet, "Template", "") <> "" Then
 
-               'Add to flpFlow 
-               flpFlow.Controls.Add(upCntr)
+                  Dim upCntr As ucPlaybackControls = New ucPlaybackControls
+                  upCntr.Sheet = sheet
 
-               Dim inte As Integer = 0
-               If Integer.TryParse(CustomProperties.Load(sheet, "ControlsSet"), inte) Then
-                  upCntr.ControlsSet = inte
-               Else
-                  upCntr.ControlsSet = ucPlaybackButtons.enumControlSets.csLoadPlayStopUpdate
+                  'Add to flpFlow 
+                  flpFlow.Controls.Add(upCntr)
+                  upCntr.ControlsSet = CustomProperties.Load(sheet, "ControlsSet", CInt(ucPlaybackButtons.enumControlSets.csLoadPlayStopUpdate))
+                  AddHandler upCntr.CommandEvent, AddressOf CommandEvent
+
                End If
 
-               AddHandler upCntr.CommandEvent, AddressOf CommandEvent
+               If _listSheet Is Nothing AndAlso CustomProperties.Load(sheet, "IsDashboardList", False) Then
 
-            End If
+                  _listSheet = sheet
 
-            If _listSheet Is Nothing AndAlso CustomProperties.Load(sheet, "IsDashboardList") = "1" Then
+                  cboTemplates.Visible = True
+                  btnCreate.Visible = False
 
-               _listSheet = sheet
+                  panTop.Enabled = True
+                  pbPlaybackButtons.Enabled = True
+                  pbPlaybackButtons.Sheet = _listSheet
 
-               cboTemplates.Visible = True
-               btnCreate.Visible = False
+                  lnkLabelRefreshLists.Visible = True
+                  lnklblQueries.Visible = True
 
-               panTop.Enabled = True
-               pbPlaybackButtons.Enabled = True
-               pbPlaybackButtons.Sheet = _listSheet
+                  RefreshComboboxes()
 
-               lnkLabelRefreshLists.Visible = True
-               lnklblQueries.Visible = True
+                  'Load ControlsSet from the _listSheet
+                  Me.ControlsSet = CustomProperties.Load(_listSheet, "ControlsSet", CInt(ucPlaybackButtons.enumControlSets.csLoadPlayStopUpdate))
+                  _currentRow = 0
+                  panList.Enabled = False
 
-               RefreshComboboxes()
-
-               'Load ControlsSet from the _listSheet
-               Dim inte As Integer = 0
-               If Integer.TryParse(CustomProperties.Load(_listSheet, "ControlsSet"), inte) Then
-                  Me.ControlsSet = inte
-               Else
-                  Me.ControlsSet = ucPlaybackButtons.enumControlSets.csLoadPlayStopUpdate
                End If
-
-               _currentRow = 0
-               panList.Enabled = False
 
             End If
 
          Next
+
+         ListPaneVisible = (_listSheet IsNot Nothing)
 
       End If
 
@@ -879,30 +883,17 @@ Public Class ucDashboard
 
       If _listSheet IsNot Nothing Then
 
-         Dim inte As Integer = 0
-         If Integer.TryParse(CustomProperties.Load(_listSheet, "ServerNumber"), inte) Then
-            _ServerNumber = inte
-         Else
-            _ServerNumber = 1
-         End If
+         _ServerNumber = CustomProperties.Load(_listSheet, "ServerNumber", 1)
+         _Channel = CustomProperties.Load(_listSheet, "Channel", 1)
+         _Layer = CustomProperties.Load(_listSheet, "Layer", 20)
 
-         If Integer.TryParse(CustomProperties.Load(_listSheet, "Channel"), inte) Then
-            _Channel = inte
-         End If
-
-         If Integer.TryParse(CustomProperties.Load(_listSheet, "Layer"), inte) Then
-            _Layer = inte
-         End If
-
-         Dim flds As String = CustomProperties.Load(_listSheet, "DataFields")
+         Dim flds As String = CustomProperties.Load(_listSheet, "DataFields", "")
          If flds = "" Then
             flds = "f0|f1|f2|f3|f4|f5"
          End If
          _DataFields = flds
 
-         If Integer.TryParse(CustomProperties.Load(_listSheet, "ControlsSet"), inte) Then
-            Me.ControlsSet = inte
-         End If
+         Me.ControlsSet = CustomProperties.Load(_listSheet, "ControlsSet", 0)
 
       End If
 
@@ -1150,26 +1141,13 @@ Public Class ucDashboard
 
       If _listSheet IsNot Nothing Then
 
-         Dim inte As Integer = 0
-         If Integer.TryParse(CustomProperties.Load(_listSheet, "ServerNumber"), inte) Then
-            _ServerNumber = inte
-         Else
-            _ServerNumber = 1
-         End If
+         _ServerNumber = CustomProperties.Load(_listSheet, "ServerNumber", 1)
+         _Channel = CustomProperties.Load(_listSheet, "Channel", 1)
+         _Layer = CustomProperties.Load(_listSheet, "Layer", 20)
 
-         If Integer.TryParse(CustomProperties.Load(_listSheet, "Channel"), inte) Then
-            _Channel = inte
-         End If
+         _DataFields = CustomProperties.Load(_listSheet, "DataFields", "")
 
-         If Integer.TryParse(CustomProperties.Load(_listSheet, "Layer"), inte) Then
-            _Layer = inte
-         End If
-
-         _DataFields = CustomProperties.Load(_listSheet, "DataFields")
-
-         If Integer.TryParse(CustomProperties.Load(_listSheet, "ControlsSet"), inte) Then
-            Me.ControlsSet = inte
-         End If
+         Me.ControlsSet = CustomProperties.Load(_listSheet, "ControlsSet", CInt(ucPlaybackButtons.enumControlSets.csLoadPlayStopUpdate))
 
       Else
          Me.ControlsSet = ucPlaybackButtons.enumControlSets.csLoadPlayStopUpdate
@@ -1200,48 +1178,50 @@ Public Class ucDashboard
 
       _ResizeTimer.Stop()
 
-      If panList.Visible Then
+      If _DockingMode = enumDockingMode.dmFloating Then
 
-         If _DockingMode = enumDockingMode.dmFloating Then
+         panList.Size = New System.Drawing.Size(627, 89)
+         panList.Location = New System.Drawing.Point(0, Me.Height - panList.Height)
 
-            panList.Size = New System.Drawing.Size(205, 190)
-            panList.Location = New System.Drawing.Point(0, 0)
+         panTop.Location = New System.Drawing.Point(0, 30)
+         panMiddle.Location = New System.Drawing.Point(211, 30)
+         pbPlaybackButtons.Location = New System.Drawing.Point(420, 30)
 
-            panTop.Location = New System.Drawing.Point(0, 30)
-            panMiddle.Location = New System.Drawing.Point(0, 82)
-            pbPlaybackButtons.Location = New System.Drawing.Point(0, 134)
-
-            flpFlow.Visible = False
-
-         ElseIf _DockingMode = enumDockingMode.dmHorizontal Then
-
-            panList.Size = New System.Drawing.Size(627, 89)
-            panList.Location = New System.Drawing.Point(Me.Width - panList.Width, 0)
-
-            panTop.Location = New System.Drawing.Point(0, 30)
-            panMiddle.Location = New System.Drawing.Point(211, 30)
-            pbPlaybackButtons.Location = New System.Drawing.Point(420, 30)
-
-            flpFlow.Size = New System.Drawing.Size(Me.Width - panList.Width, Me.Height)
-            flpFlow.Visible = True
-
-         Else     'enumDockingMode.dmVertical
-
-            panList.Size = New System.Drawing.Size(205, 190)
-            panList.Location = New System.Drawing.Point(0, Me.Height - panList.Height)
-
-            panTop.Location = New System.Drawing.Point(0, 30)
-            panMiddle.Location = New System.Drawing.Point(0, 82)
-            pbPlaybackButtons.Location = New System.Drawing.Point(0, 134)
-
+         If panList.Visible Then
             flpFlow.Size = New System.Drawing.Size(Me.Width, Me.Height - panList.Height)
-            flpFlow.Visible = True
-
+         Else
+            flpFlow.Size = New System.Drawing.Size(Me.Width, Me.Height)
          End If
 
-      Else
+      ElseIf _DockingMode = enumDockingMode.dmHorizontal Then
 
-         flpFlow.Size = New System.Drawing.Size(Me.Width, Me.Height)
+         panList.Size = New System.Drawing.Size(627, 89)
+         panList.Location = New System.Drawing.Point(Me.Width - panList.Width, 0)
+
+         panTop.Location = New System.Drawing.Point(0, 30)
+         panMiddle.Location = New System.Drawing.Point(211, 30)
+         pbPlaybackButtons.Location = New System.Drawing.Point(420, 30)
+
+         If panList.Visible Then
+            flpFlow.Size = New System.Drawing.Size(Me.Width - panList.Width, Me.Height)
+         Else
+            flpFlow.Size = New System.Drawing.Size(Me.Width, Me.Height)
+         End If
+
+      Else     'enumDockingMode.dmVertical
+
+         panList.Size = New System.Drawing.Size(205, 190)
+         panList.Location = New System.Drawing.Point(0, Me.Height - panList.Height)
+
+         panTop.Location = New System.Drawing.Point(0, 30)
+         panMiddle.Location = New System.Drawing.Point(0, 82)
+         pbPlaybackButtons.Location = New System.Drawing.Point(0, 134)
+
+         If panList.Visible Then
+            flpFlow.Size = New System.Drawing.Size(Me.Width, Me.Height - panList.Height)
+         Else
+            flpFlow.Size = New System.Drawing.Size(Me.Width, Me.Height)
+         End If
 
       End If
 

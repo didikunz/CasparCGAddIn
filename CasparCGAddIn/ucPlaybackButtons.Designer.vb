@@ -103,6 +103,7 @@ Partial Class ucPlaybackButtons
       '
       'tlpPlayStop
       '
+      Me.tlpPlayStop.BackColor = System.Drawing.Color.Transparent
       Me.tlpPlayStop.ColumnCount = 2
       Me.tlpPlayStop.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
       Me.tlpPlayStop.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
@@ -113,7 +114,7 @@ Partial Class ucPlaybackButtons
       Me.tlpPlayStop.Name = "tlpPlayStop"
       Me.tlpPlayStop.RowCount = 1
       Me.tlpPlayStop.RowStyles.Add(New System.Windows.Forms.RowStyle())
-      Me.tlpPlayStop.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 48.0!))
+      Me.tlpPlayStop.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 53.0!))
       Me.tlpPlayStop.Size = New System.Drawing.Size(209, 53)
       Me.tlpPlayStop.TabIndex = 14
       '
@@ -151,7 +152,7 @@ Partial Class ucPlaybackButtons
       Me.tlpLoadPlayStop.Name = "tlpLoadPlayStop"
       Me.tlpLoadPlayStop.RowCount = 1
       Me.tlpLoadPlayStop.RowStyles.Add(New System.Windows.Forms.RowStyle())
-      Me.tlpLoadPlayStop.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 52.0!))
+      Me.tlpLoadPlayStop.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 53.0!))
       Me.tlpLoadPlayStop.Size = New System.Drawing.Size(209, 53)
       Me.tlpLoadPlayStop.TabIndex = 15
       '
@@ -199,7 +200,7 @@ Partial Class ucPlaybackButtons
       Me.tlpPlayNextStop.Name = "tlpPlayNextStop"
       Me.tlpPlayNextStop.RowCount = 1
       Me.tlpPlayNextStop.RowStyles.Add(New System.Windows.Forms.RowStyle())
-      Me.tlpPlayNextStop.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 52.0!))
+      Me.tlpPlayNextStop.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 53.0!))
       Me.tlpPlayNextStop.Size = New System.Drawing.Size(209, 53)
       Me.tlpPlayNextStop.TabIndex = 16
       '

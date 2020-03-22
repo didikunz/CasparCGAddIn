@@ -125,6 +125,7 @@
     <Reference Include="CommonControls">
       <HintPath>..\..\ZZZ_Extrenals\CommonControls.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Office.Tools.Excel.v4.0.Utilities, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\..\SchwingMaster\ExternalDlls\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -187,8 +188,29 @@
   -->
   <ItemGroup>
     <AppDesigner Include="My Project\" />
+    <Compile Include="CustomXML.vb" />
+    <Compile Include="frmTimerLaps.Designer.vb">
+      <DependentUpon>frmTimerLaps.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmTimerLaps.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmTimerSettings.Designer.vb">
+      <DependentUpon>frmTimerSettings.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmTimerSettings.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TimerField.vb" />
+    <Compile Include="CustomDocumentProperties.vb" />
     <Compile Include="CustomProperies.vb" />
     <Compile Include="ExtractInfo.vb" />
+    <Compile Include="frmChangeTemplatePath.Designer.vb">
+      <DependentUpon>frmChangeTemplatePath.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmChangeTemplatePath.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="frmDashboardSettings.Designer.vb">
       <DependentUpon>frmDashboardSettings.vb</DependentUpon>
     </Compile>
@@ -246,6 +268,10 @@
     <Compile Include="ThisAddIn.vb">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="TimerItem.vb" />
+    <Compile Include="TimerLap.vb" />
+    <Compile Include="TimerSettings.vb" />
+    <Compile Include="TimerSheet.vb" />
     <Compile Include="ucDashboard.Designer.vb">
       <DependentUpon>ucDashboard.vb</DependentUpon>
     </Compile>
@@ -264,7 +290,16 @@
     <Compile Include="ucPlaybackControls.vb">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="ucTimeSpanEditor.Designer.vb">
+      <DependentUpon>ucTimeSpanEditor.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ucTimeSpanEditor.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="XInfos.vb" />
+    <EmbeddedResource Include="frmChangeTemplatePath.resx">
+      <DependentUpon>frmChangeTemplatePath.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmDashboardSettings.resx">
       <DependentUpon>frmDashboardSettings.vb</DependentUpon>
       <SubType>Designer</SubType>
@@ -281,6 +316,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmSheetProperties.resx">
       <DependentUpon>frmSheetProperties.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmTimerLaps.resx">
+      <DependentUpon>frmTimerLaps.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmTimerSettings.resx">
+      <DependentUpon>frmTimerSettings.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmWait.resx">
       <DependentUpon>frmWait.vb</DependentUpon>
@@ -301,9 +342,15 @@
     <EmbeddedResource Include="ucPlaybackControls.resx">
       <DependentUpon>ucPlaybackControls.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="ucTimeSpanEditor.resx">
+      <DependentUpon>ucTimeSpanEditor.vb</DependentUpon>
+    </EmbeddedResource>
     <None Include="CasparCGAddIn_TemporaryKey.pfx" />
     <None Include="My Project\DataSources\CasparObjects.CasparCG.datasource" />
+    <None Include="My Project\DataSources\ClockItem.datasource" />
     <None Include="My Project\DataSources\frmSetupWebData.WebData.datasource" />
+    <None Include="My Project\DataSources\TimerItem.datasource" />
+    <None Include="My Project\DataSources\TimerSettings.datasource" />
     <None Include="ThisAddIn.Designer.xml">
       <DependentUpon>ThisAddIn.vb</DependentUpon>
     </None>
@@ -489,12 +536,111 @@
   <ItemGroup>
     <None Include="Resources\loader-spinner.gif" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\FlatList_16x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GlyphLeft.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GlyphRight.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GlyphDown.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GlyphUp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GlyphFastLeft.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GlyphFastUp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GlyphFastDown.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GlyphFastRight.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GlyphCenter.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\TimerPane.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Timer_Plus.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Timer_Minus.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Timer_Reset.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Add_Button.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Cancel_16x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Timer.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Timer_Stop.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Timer_Pause.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Timer_Start.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Timer_Resume.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Timer_Lap.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Timer_Load.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\F9.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\F8.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\F7.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\F6.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\F5.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\F4.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\F3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\F2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\F1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Dublicate.png" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
   </PropertyGroup>
   <PropertyGroup>
-    <OptionExplicit>On</OptionExplicit>
+    <OptionExplicit>Off</OptionExplicit>
   </PropertyGroup>
   <PropertyGroup>
     <OptionCompare>Binary</OptionCompare>

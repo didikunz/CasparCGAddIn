@@ -1,30 +1,31 @@
 ﻿Imports Microsoft.Office.Interop
 Imports Microsoft.Office.Interop.Excel
 Imports Microsoft.Office.Tools
+Imports Microsoft.Office.Tools.Excel
+Imports Microsoft.Office.Tools.Excel.Extensions
 Imports Microsoft.Office.Tools.Ribbon
 Imports CasparObjects
 Imports System.Drawing
 Imports System.Windows.Forms
 Imports System.IO
-Imports Newtonsoft.Json
-Imports Newtonsoft.Json.Linq
 Imports System.Net
 Imports Microsoft.Office.Core
 Imports System.Diagnostics
 Imports System.Web.UI
+Imports CasparCGAddIn
 
 Public Class ribCasparCG
 
 #Region "Module vars and Properties"
 
    Private _Settings As Settings
-   Private _ActiveWorkbook As Workbook
+   Private _ActiveWorkbook As Microsoft.Office.Interop.Excel.Workbook
    Private _IsCasparConnected As Boolean = False
 
    Private _Dashboard As ucDashboard
    Private _DashboardPane As Microsoft.Office.Tools.CustomTaskPane
 
-   Private _SheetWithPendingRefreshes As Worksheet = Nothing
+   Private _SheetWithPendingRefreshes As Microsoft.Office.Interop.Excel.Worksheet = Nothing
    Private _PlaybackControlWithPendingRefreshes As ucPlaybackControls = Nothing
    Private _PendingRefreshAutoplay As Boolean = False
    Private _PendingRefreshUpdate As Boolean = False
@@ -34,10 +35,12 @@ Public Class ribCasparCG
    Private _RefreshAllWebConnections As List(Of Object)
    Private _RefreshAllTableConnections As List(Of Object)
 
-   Private WithEvents _timAutoUpdate As Timer = New Timer
+   Private _SlaveSheet As Microsoft.Office.Interop.Excel.Worksheet = Nothing
 
-   'Private _CurrentServerNumber As Integer = -1
-   'Private _CurrentServer As CasparCG = Nothing
+   Private WithEvents _TimerSettings As TimerSettings
+   Private _xmlId As String = ""
+   Private _TimerSettingsFilename As String
+
 
    Public WriteOnly Property Settings As Settings
       Set(value As Settings)
@@ -53,6 +56,12 @@ Public Class ribCasparCG
       End Set
    End Property
 
+   Public WriteOnly Property SettingsFilename As String
+      Set(value As String)
+         _TimerSettingsFilename = IO.Path.GetDirectoryName(value) + "\TimerSettings.xml"
+      End Set
+   End Property
+
    Public WriteOnly Property IsCasparConnected As Boolean
       Set(value As Boolean)
 
@@ -64,11 +73,21 @@ Public Class ribCasparCG
       End Set
    End Property
 
-   Public WriteOnly Property ActiveWorkbook As Workbook
-      Set(value As Workbook)
+   Public WriteOnly Property ActiveWorkbook As Microsoft.Office.Interop.Excel.Workbook
+      Set(value As Microsoft.Office.Interop.Excel.Workbook)
          _ActiveWorkbook = value
+         'RefreshAllButtons()
+         LoadTimerSettings()
+         'Restore running timer
       End Set
    End Property
+
+   Public ReadOnly Property TimerSettings As TimerSettings
+      Get
+         Return _TimerSettings
+      End Get
+   End Property
+
 #End Region
 
 #Region "Methods and Helper Functions"
@@ -81,16 +100,19 @@ Public Class ribCasparCG
 
    Public Sub FlagSheetCalculated(sheet As Object)
 
-      'If togLiveUpdate.Checked Then
-      '   UpdatePreview(sheet)
-      'End If
+      If Not CustomProperties.Load(sheet, "IsDashboardList", False) Then
 
-      If CustomProperties.Load(sheet, "IsDashboardList") = "1" Then
-         'If _Dashboard IsNot Nothing AndAlso _Dashboard.pendingRefresh Then
-         '   _Dashboard.AutoUpdate()
-         'End If
-      Else
-         'AutoUpdate(sheet)
+         If CustomProperties.Load(sheet, "AutoUpdate", False) Then
+
+            'AutoUpdate only when not DataSet and no queries to run before.
+            If Not CustomProperties.Load(sheet, "AutoUpdateDataset", False) Then
+               If Not CustomProperties.Load(sheet, "UpdateQueries", False) Then
+                  UpdateTemplate(sheet, Nothing)
+               End If
+            End If
+
+         End If
+
       End If
 
    End Sub
@@ -99,7 +121,7 @@ Public Class ribCasparCG
 
       If sheet IsNot Nothing Then
 
-         Dim sm As String = CustomProperties.Load(sheet, "SelectionMode")
+         Dim sm As String = CustomProperties.Load(sheet, "SelectionMode", "")
          If sm = "" Then
 
             Dim range As Excel.Range = Nothing
@@ -122,10 +144,10 @@ Public Class ribCasparCG
          End If
 
          'AutoUpdate
-         togAutoUpdate.Checked = (CustomProperties.Load(sheet, "AutoUpdate") = "1")
+         togAutoUpdate.Checked = CustomProperties.Load(sheet, "AutoUpdate", False)
 
          'BrowserRefresh
-         btnBrowserRefresh.Enabled = (CustomProperties.Load(sheet, "WebURL") <> "")
+         btnBrowserRefresh.Enabled = (CustomProperties.Load(sheet, "WebURL", "") <> "")
 
       End If
 
@@ -302,11 +324,103 @@ Public Class ribCasparCG
 
    End Sub
 
+   Private Sub ReferenceToNumbers(Referece As String, ByRef Col As Integer, ByRef Row As Integer)
+
+      Dim chars() As Char = Referece.ToCharArray()
+      Dim alpha As String = ""
+      Dim number As String = ""
+
+      For c As Integer = 0 To chars.Length - 1
+         If IsNumeric(chars(c).ToString) Then
+            number += chars(c).ToString
+         Else
+            alpha += chars(c).ToString
+         End If
+      Next
+
+      chars = alpha.ToUpper().ToCharArray()
+
+      Col = 0
+      Dim exponent As Integer = 0
+      For c As Integer = chars.Length - 1 To 0 Step -1
+
+         Dim wert As Integer = 0
+
+         Select Case alpha(c)
+            Case "A"
+               wert = 1
+            Case "B"
+               wert = 2
+            Case "C"
+               wert = 3
+            Case "D"
+               wert = 4
+            Case "E"
+               wert = 5
+            Case "F"
+               wert = 6
+            Case "G"
+               wert = 7
+            Case "H"
+               wert = 8
+            Case "I"
+               wert = 9
+            Case "J"
+               wert = 10
+            Case "K"
+               wert = 11
+            Case "L"
+               wert = 12
+            Case "M"
+               wert = 13
+            Case "N"
+               wert = 14
+            Case "O"
+               wert = 15
+            Case "P"
+               wert = 16
+            Case "Q"
+               wert = 17
+            Case "R"
+               wert = 18
+            Case "S"
+               wert = 19
+            Case "T"
+               wert = 20
+            Case "U"
+               wert = 21
+            Case "V"
+               wert = 22
+            Case "W"
+               wert = 23
+            Case "X"
+               wert = 24
+            Case "Y"
+               wert = 25
+            Case "Z"
+               wert = 26
+         End Select
+
+         Col += wert * 26 ^ exponent
+         exponent += 1
+
+      Next
+
+      Dim inte As Integer = 0
+      If Integer.TryParse(number, inte) Then
+         Row = inte
+      Else
+         Row = 1
+      End If
+
+
+   End Sub
+
 #End Region
 
 #Region "Caspar-Playback Methods"
 
-   Public Sub LoadTemplate(sheet As Worksheet, Autoplay As Boolean, PlaybackCtrl As ucPlaybackControls)
+   Public Sub LoadTemplate(sheet As Microsoft.Office.Interop.Excel.Worksheet, Autoplay As Boolean, PlaybackCtrl As ucPlaybackControls)
 
       If Not PlaybackCtrl.State = ucPlaybackButtons.enumState.stQueryFinished Then
          _PendingRefreshAutoplay = Autoplay
@@ -333,31 +447,34 @@ Public Class ribCasparCG
 
          Next
 
-         Dim TemplateName As String = CustomProperties.Load(sheet, "Template")
+         Dim TemplateName As String = CustomProperties.Load(sheet, "Template", "")
          If TemplateName <> "" Then
 
-            Dim dataset As Integer = 0
-            Integer.TryParse(CustomProperties.Load(sheet, "AutoUpdateDataset"), dataset)
-            If dataset = 0 Then
+            If Not CustomProperties.Load(sheet, "AutoUpdateDataset", False) Then
 
-               Dim srv As Integer = 0
-               Integer.TryParse(CustomProperties.Load(sheet, "ServerNumber"), srv)
+               Dim srv As Integer = CustomProperties.Load(sheet, "ServerNumber", 0)
 
-               Dim channel As Integer = 0
-               If Not Integer.TryParse(CustomProperties.Load(sheet, "Channel"), channel) Then
-                  channel = 1
+               Dim channel As Integer = CustomProperties.Load(sheet, "Channel", 1)
+               Dim layer As Integer = CustomProperties.Load(sheet, "Layer", 20)
+
+               Dim flashLayer As Integer = 1
+               If _Settings.UseFlashLayers Then
+                  flashLayer = CustomProperties.Load(sheet, "FlashLayer", 1)
                End If
 
-               Dim layer As Integer = 0
-               If Not Integer.TryParse(CustomProperties.Load(sheet, "Layer"), layer) Then
-                  layer = 20
+               Dim useDVE As Boolean = CustomProperties.Load(sheet, "UseDVE", False)
+
+               Dim dveffect As String = ""
+               If useDVE Then
+                  dveffect = CustomProperties.Load(sheet, "DVEffect", "0 0 1 1")
                End If
 
                If srv = 0 Then
 
                   For Each caspar As CasparCG In _Settings.Servers
                      If caspar.Connected Then
-                        caspar.CG_Add(channel, layer, TemplateName, tmpl, Autoplay)
+                        If useDVE Then caspar.Mixer_Fill(channel, layer, dveffect)
+                        caspar.CG_Add(channel, layer, TemplateName, tmpl, Autoplay, flashLayer)
                      End If
                   Next
 
@@ -366,8 +483,83 @@ Public Class ribCasparCG
                   If srv <= _Settings.Servers.Count Then
                      Dim caspar As CasparCG = _Settings.Servers(srv - 1)
                      If caspar.Connected Then
-                        caspar.CG_Add(channel, layer, TemplateName, tmpl, Autoplay)
+                        If useDVE Then caspar.Mixer_Fill(channel, layer, dveffect)
+                        caspar.CG_Add(channel, layer, TemplateName, tmpl, Autoplay, flashLayer)
                      End If
+                  End If
+
+               End If
+
+               'SlaveSheet processing
+               Dim slaveSheet As String = CustomProperties.Load(sheet, "SlaveWorksheet", "")
+               If slaveSheet <> "" Then
+                  For Each wrk As Microsoft.Office.Interop.Excel.Worksheet In sheet.Application.Sheets
+                     If wrk.Name.Trim = slaveSheet Then
+                        _SlaveSheet = wrk
+                        Exit For
+                     End If
+                  Next
+               End If
+
+               If _SlaveSheet IsNot Nothing Then
+
+                  tmpl = Nothing
+
+                  For Each name As Excel.Name In _SlaveSheet.Names
+
+                     If name.Name.Contains("CasparOutput") Then
+
+                        tmpl = FillTemplate(name, _SlaveSheet)
+                        If tmpl Is Nothing Then
+                           Exit Sub
+                        End If
+                        Exit For
+
+                     End If
+
+                  Next
+
+                  TemplateName = CustomProperties.Load(_SlaveSheet, "Template", "")
+                  If TemplateName <> "" Then
+
+                     srv = CustomProperties.Load(_SlaveSheet, "ServerNumber", 0)
+
+                     channel = CustomProperties.Load(_SlaveSheet, "Channel", 1)
+                     layer = CustomProperties.Load(_SlaveSheet, "Layer", 20)
+
+                     flashLayer = 1
+                     If _Settings.UseFlashLayers Then
+                        flashLayer = CustomProperties.Load(sheet, "FlashLayer", 1)
+                     End If
+
+                     useDVE = CustomProperties.Load(sheet, "UseDVE", False)
+
+                     dveffect = ""
+                     If useDVE Then
+                        dveffect = CustomProperties.Load(sheet, "DVEffect", "0 0 1 1")
+                     End If
+
+                     If srv = 0 Then
+
+                        For Each caspar As CasparCG In _Settings.Servers
+                           If caspar.Connected Then
+                              If useDVE Then caspar.Mixer_Fill(channel, layer, dveffect)
+                              caspar.CG_Add(channel, layer, TemplateName, tmpl, Autoplay, flashLayer)
+                           End If
+                        Next
+
+                     Else
+
+                        If srv <= _Settings.Servers.Count Then
+                           Dim caspar As CasparCG = _Settings.Servers(srv - 1)
+                           If caspar.Connected Then
+                              If useDVE Then caspar.Mixer_Fill(channel, layer, dveffect)
+                              caspar.CG_Add(channel, layer, TemplateName, tmpl, Autoplay, flashLayer)
+                           End If
+                        End If
+
+                     End If
+
                   End If
 
                End If
@@ -386,11 +578,11 @@ Public Class ribCasparCG
 
    End Sub
 
-   Public Sub RefreshQueries(sheet As Worksheet, PlaybackCtrl As ucPlaybackControls)
+   Public Sub RefreshQueries(sheet As Microsoft.Office.Interop.Excel.Worksheet, PlaybackCtrl As ucPlaybackControls)
 
-      If CustomProperties.Load(sheet, "AutoUpdate") = "1" Then
+      If CustomProperties.Load(sheet, "AutoUpdate", False) Then
 
-         Dim que As String = CustomProperties.Load(sheet, "Queries")
+         Dim que As String = CustomProperties.Load(sheet, "Queries", "")
          If que <> "" Then
 
             Dim queries() As String = que.Split("|")
@@ -416,30 +608,25 @@ Public Class ribCasparCG
 
    End Sub
 
-   Public Sub PlayTemplate(sheet As Worksheet, PlaybackCtrl As ucPlaybackControls)
+   Public Sub PlayTemplate(sheet As Microsoft.Office.Interop.Excel.Worksheet, PlaybackCtrl As ucPlaybackControls)
 
-      Dim dataset As Integer = 0
-      Integer.TryParse(CustomProperties.Load(sheet, "AutoUpdateDataset"), dataset)
-      If dataset = 0 Then
+      If Not CustomProperties.Load(sheet, "AutoUpdateDataset", False) Then
 
-         Dim srv As Integer = 0
-         Integer.TryParse(CustomProperties.Load(sheet, "ServerNumber"), srv)
+         Dim srv As Integer = CustomProperties.Load(sheet, "ServerNumber", 0)
 
-         Dim channel As Integer = 0
-         If Not Integer.TryParse(CustomProperties.Load(sheet, "Channel"), channel) Then
-            channel = 1
-         End If
+         Dim channel As Integer = CustomProperties.Load(sheet, "Channel", 1)
+         Dim layer As Integer = CustomProperties.Load(sheet, "Layer", 20)
 
-         Dim layer As Integer = 0
-         If Not Integer.TryParse(CustomProperties.Load(sheet, "Layer"), layer) Then
-            layer = 20
+         Dim flashLayer As Integer = 1
+         If _Settings.UseFlashLayers Then
+            flashLayer = CustomProperties.Load(sheet, "FlashLayer", 1)
          End If
 
          If srv = 0 Then
 
             For Each caspar As CasparCG In _Settings.Servers
                If caspar.Connected Then
-                  caspar.CG_Play(channel, layer)
+                  caspar.CG_Play(channel, layer, flashLayer)
                End If
             Next
 
@@ -448,8 +635,42 @@ Public Class ribCasparCG
             If srv <= _Settings.Servers.Count Then
                Dim caspar As CasparCG = _Settings.Servers(srv - 1)
                If caspar.Connected Then
-                  caspar.CG_Play(channel, layer)
+                  caspar.CG_Play(channel, layer, flashLayer)
                End If
+            End If
+
+         End If
+
+         'SlaveSheet processing
+         If _SlaveSheet IsNot Nothing Then
+
+            srv = CustomProperties.Load(_SlaveSheet, "ServerNumber", 0)
+
+            channel = CustomProperties.Load(_SlaveSheet, "Channel", 1)
+            layer = CustomProperties.Load(_SlaveSheet, "Layer", 20)
+
+            flashLayer = 1
+            If _Settings.UseFlashLayers Then
+               flashLayer = CustomProperties.Load(sheet, "FlashLayer", 1)
+            End If
+
+            If srv = 0 Then
+
+               For Each caspar As CasparCG In _Settings.Servers
+                  If caspar.Connected Then
+                     caspar.CG_Play(channel, layer, flashLayer)
+                  End If
+               Next
+
+            Else
+
+               If srv <= _Settings.Servers.Count Then
+                  Dim caspar As CasparCG = _Settings.Servers(srv - 1)
+                  If caspar.Connected Then
+                     caspar.CG_Play(channel, layer, flashLayer)
+                  End If
+               End If
+
             End If
 
          End If
@@ -460,30 +681,25 @@ Public Class ribCasparCG
 
    End Sub
 
-   Public Sub PlayNext(sheet As Worksheet, PlaybackCtrl As ucPlaybackControls)
+   Public Sub PlayNext(sheet As Microsoft.Office.Interop.Excel.Worksheet, PlaybackCtrl As ucPlaybackControls)
 
-      Dim dataset As Integer = 0
-      Integer.TryParse(CustomProperties.Load(sheet, "AutoUpdateDataset"), dataset)
-      If dataset = 0 Then
+      If Not CustomProperties.Load(sheet, "AutoUpdateDataset", False) Then
 
-         Dim srv As Integer = 0
-         Integer.TryParse(CustomProperties.Load(sheet, "ServerNumber"), srv)
+         Dim srv As Integer = CustomProperties.Load(sheet, "ServerNumber", 0)
 
-         Dim channel As Integer = 0
-         If Not Integer.TryParse(CustomProperties.Load(sheet, "Channel"), channel) Then
-            channel = 1
-         End If
+         Dim channel As Integer = CustomProperties.Load(sheet, "Channel", 1)
+         Dim layer As Integer = CustomProperties.Load(sheet, "Layer", 20)
 
-         Dim layer As Integer = 0
-         If Not Integer.TryParse(CustomProperties.Load(sheet, "Layer"), layer) Then
-            layer = 20
+         Dim flashLayer As Integer = 1
+         If _Settings.UseFlashLayers Then
+            flashLayer = CustomProperties.Load(sheet, "FlashLayer", 1)
          End If
 
          If srv = 0 Then
 
             For Each caspar As CasparCG In _Settings.Servers
                If caspar.Connected Then
-                  caspar.CG_Next(channel, layer)
+                  caspar.CG_Next(channel, layer, flashLayer)
                End If
             Next
 
@@ -492,8 +708,42 @@ Public Class ribCasparCG
             If srv <= _Settings.Servers.Count Then
                Dim caspar As CasparCG = _Settings.Servers(srv - 1)
                If caspar.Connected Then
-                  caspar.CG_Next(channel, layer)
+                  caspar.CG_Next(channel, layer, flashLayer)
                End If
+            End If
+
+         End If
+
+         'SlaveSheet processing
+         If _SlaveSheet IsNot Nothing Then
+
+            srv = CustomProperties.Load(_SlaveSheet, "ServerNumber", 0)
+
+            channel = CustomProperties.Load(_SlaveSheet, "Channel", 1)
+            layer = CustomProperties.Load(_SlaveSheet, "Layer", 20)
+
+            flashLayer = 1
+            If _Settings.UseFlashLayers Then
+               flashLayer = CustomProperties.Load(sheet, "FlashLayer", 1)
+            End If
+
+            If srv = 0 Then
+
+               For Each caspar As CasparCG In _Settings.Servers
+                  If caspar.Connected Then
+                     caspar.CG_Next(channel, layer, flashLayer)
+                  End If
+               Next
+
+            Else
+
+               If srv <= _Settings.Servers.Count Then
+                  Dim caspar As CasparCG = _Settings.Servers(srv - 1)
+                  If caspar.Connected Then
+                     caspar.CG_Next(channel, layer, flashLayer)
+                  End If
+               End If
+
             End If
 
          End If
@@ -502,30 +752,25 @@ Public Class ribCasparCG
 
    End Sub
 
-   Public Sub StoppTemplate(sheet As Worksheet, PlaybackCtrl As ucPlaybackControls)
+   Public Sub StoppTemplate(sheet As Microsoft.Office.Interop.Excel.Worksheet, PlaybackCtrl As ucPlaybackControls)
 
-      Dim dataset As Integer = 0
-      Integer.TryParse(CustomProperties.Load(sheet, "AutoUpdateDataset"), dataset)
-      If dataset = 0 Then
+      If Not CustomProperties.Load(sheet, "AutoUpdateDataset", False) Then
 
-         Dim srv As Integer = 0
-         Integer.TryParse(CustomProperties.Load(sheet, "ServerNumber"), srv)
+         Dim srv As Integer = CustomProperties.Load(sheet, "ServerNumber", 0)
 
-         Dim channel As Integer = 0
-         If Not Integer.TryParse(CustomProperties.Load(sheet, "Channel"), channel) Then
-            channel = 1
-         End If
+         Dim channel As Integer = CustomProperties.Load(sheet, "Channel", 1)
+         Dim layer As Integer = CustomProperties.Load(sheet, "Layer", 20)
 
-         Dim layer As Integer = 0
-         If Not Integer.TryParse(CustomProperties.Load(sheet, "Layer"), layer) Then
-            layer = 20
+         Dim flashLayer As Integer = 1
+         If _Settings.UseFlashLayers Then
+            flashLayer = CustomProperties.Load(sheet, "FlashLayer", 1)
          End If
 
          If srv = 0 Then
 
             For Each caspar As CasparCG In _Settings.Servers
                If caspar.Connected Then
-                  caspar.CG_Stop(channel, layer)
+                  caspar.CG_Stop(channel, layer, flashLayer)
                End If
             Next
 
@@ -534,7 +779,7 @@ Public Class ribCasparCG
             If srv <= _Settings.Servers.Count Then
                Dim caspar As CasparCG = _Settings.Servers(srv - 1)
                If caspar.Connected Then
-                  caspar.CG_Stop(channel, layer)
+                  caspar.CG_Stop(channel, layer, flashLayer)
                End If
             End If
 
@@ -542,18 +787,52 @@ Public Class ribCasparCG
 
          PlaybackCtrl.State = ucPlaybackButtons.enumState.stIdle
 
+         'SlaveSheet processing
+         If _SlaveSheet IsNot Nothing Then
+
+            srv = CustomProperties.Load(_SlaveSheet, "ServerNumber", 0)
+
+            channel = CustomProperties.Load(_SlaveSheet, "Channel", 1)
+            layer = CustomProperties.Load(_SlaveSheet, "Layer", 20)
+
+            flashLayer = 1
+            If _Settings.UseFlashLayers Then
+               flashLayer = CustomProperties.Load(sheet, "FlashLayer", 1)
+            End If
+
+            If srv = 0 Then
+
+               For Each caspar As CasparCG In _Settings.Servers
+                  If caspar.Connected Then
+                     caspar.CG_Stop(channel, layer, flashLayer)
+                  End If
+               Next
+
+            Else
+
+               If srv <= _Settings.Servers.Count Then
+                  Dim caspar As CasparCG = _Settings.Servers(srv - 1)
+                  If caspar.Connected Then
+                     caspar.CG_Stop(channel, layer, flashLayer)
+                  End If
+               End If
+
+            End If
+
+         End If
+
       End If
 
    End Sub
 
-   Public Sub UpdateTemplate(sheet As Worksheet, PlaybackCtrl As ucPlaybackControls)
+   Public Sub UpdateTemplate(sheet As Microsoft.Office.Interop.Excel.Worksheet, PlaybackCtrl As ucPlaybackControls)
 
-      If Not PlaybackCtrl.State = ucPlaybackButtons.enumState.stQueryFinished Then
+      If PlaybackCtrl IsNot Nothing AndAlso Not PlaybackCtrl.State = ucPlaybackButtons.enumState.stQueryFinished Then
          _PendingRefreshUpdate = True
          RefreshQueries(sheet, PlaybackCtrl)
       End If
 
-      If Not PlaybackCtrl.State = ucPlaybackButtons.enumState.stQueryRunning Then
+      If PlaybackCtrl Is Nothing OrElse Not PlaybackCtrl.State = ucPlaybackButtons.enumState.stQueryRunning Then
 
          _PendingRefreshUpdate = False
 
@@ -573,28 +852,23 @@ Public Class ribCasparCG
 
          Next
 
-         Dim dataset As Integer = 0
-         Integer.TryParse(CustomProperties.Load(sheet, "AutoUpdateDataset"), dataset)
-         If dataset = 0 Then
+         If Not CustomProperties.Load(sheet, "AutoUpdateDataset", False) Then
 
-            Dim srv As Integer = 0
-            Integer.TryParse(CustomProperties.Load(sheet, "ServerNumber"), srv)
+            Dim srv As Integer = CustomProperties.Load(sheet, "ServerNumber", 0)
 
-            Dim channel As Integer = 0
-            If Not Integer.TryParse(CustomProperties.Load(sheet, "Channel"), channel) Then
-               channel = 1
-            End If
+            Dim channel As Integer = CustomProperties.Load(sheet, "Channel", 1)
+            Dim layer As Integer = CustomProperties.Load(sheet, "Layer", 20)
 
-            Dim layer As Integer = 0
-            If Not Integer.TryParse(CustomProperties.Load(sheet, "Layer"), layer) Then
-               layer = 20
+            Dim flashLayer As Integer = 1
+            If _Settings.UseFlashLayers Then
+               flashLayer = CustomProperties.Load(sheet, "FlashLayer", 1)
             End If
 
             If srv = 0 Then
 
                For Each caspar As CasparCG In _Settings.Servers
                   If caspar.Connected Then
-                     caspar.CG_Update(channel, layer, tmpl)
+                     caspar.CG_Update(channel, layer, tmpl, flashLayer)
                   End If
                Next
 
@@ -603,23 +877,77 @@ Public Class ribCasparCG
                If srv <= _Settings.Servers.Count Then
                   Dim caspar As CasparCG = _Settings.Servers(srv - 1)
                   If caspar.Connected Then
-                     caspar.CG_Update(channel, layer, tmpl)
+                     caspar.CG_Update(channel, layer, tmpl, flashLayer)
                   End If
                End If
 
             End If
 
-            PlaybackCtrl.State = ucPlaybackButtons.enumState.stOldState
+            'SlaveSheet processing
+            If _SlaveSheet IsNot Nothing Then
+
+               tmpl = Nothing
+
+               For Each name As Excel.Name In _SlaveSheet.Names
+
+                  If name.Name.Contains("CasparOutput") Then
+
+                     tmpl = FillTemplate(name, _SlaveSheet)
+                     If tmpl Is Nothing Then
+                        Exit Sub
+                     End If
+                     Exit For
+
+                  End If
+
+               Next
+
+               srv = CustomProperties.Load(_SlaveSheet, "ServerNumber", 0)
+
+               channel = CustomProperties.Load(_SlaveSheet, "Channel", 1)
+               layer = CustomProperties.Load(_SlaveSheet, "Layer", 20)
+
+               flashLayer = 1
+               If _Settings.UseFlashLayers Then
+                  flashLayer = CustomProperties.Load(sheet, "FlashLayer", 1)
+               End If
+
+               If srv = 0 Then
+
+                  For Each caspar As CasparCG In _Settings.Servers
+                     If caspar.Connected Then
+                        caspar.CG_Update(channel, layer, tmpl, flashLayer)
+                     End If
+                  Next
+
+               Else
+
+                  If srv <= _Settings.Servers.Count Then
+                     Dim caspar As CasparCG = _Settings.Servers(srv - 1)
+                     If caspar.Connected Then
+                        caspar.CG_Update(channel, layer, tmpl, flashLayer)
+                     End If
+                  End If
+
+               End If
+
+            End If
+
+            If PlaybackCtrl IsNot Nothing Then
+               PlaybackCtrl.State = ucPlaybackButtons.enumState.stOldState
+            End If
 
          End If
 
       Else
-         PlaybackCtrl.State = ucPlaybackButtons.enumState.stUpdating
+         If PlaybackCtrl IsNot Nothing Then
+            PlaybackCtrl.State = ucPlaybackButtons.enumState.stUpdating
+         End If
       End If
 
    End Sub
 
-   Public Sub PreviewTemplate(sheet As Worksheet, PlaybackCtrl As ucPlaybackControls)
+   Public Sub PreviewTemplate(sheet As Microsoft.Office.Interop.Excel.Worksheet, PlaybackCtrl As ucPlaybackControls)
 
       If PlaybackCtrl IsNot Nothing AndAlso Not PlaybackCtrl.State = ucPlaybackButtons.enumState.stQueryFinished Then
          _PendingRefreshPreview = True
@@ -637,9 +965,9 @@ Public Class ribCasparCG
 
                If name.Name.Contains("CasparOutput") Then
 
-                  Dim previewTemplateName As String = CustomProperties.Load(sheet, "PreviewTemplate")
+                  Dim previewTemplateName As String = CustomProperties.Load(sheet, "PreviewTemplate", "")
                   If previewTemplateName = "" Then
-                     previewTemplateName = CustomProperties.Load(sheet, "Template")
+                     previewTemplateName = CustomProperties.Load(sheet, "Template", "")
                   End If
 
                   If previewTemplateName <> "" Then
@@ -649,6 +977,14 @@ Public Class ribCasparCG
                         Exit For
                      End If
 
+                     Dim useDVE As Boolean = CustomProperties.Load(sheet, "UseDVE", False)
+
+                     Dim dveffect As String = ""
+                     If useDVE Then
+                        dveffect = CustomProperties.Load(sheet, "DVEffect", "0 0 1 1")
+                     End If
+
+                     If useDVE Then pvw.Mixer_Fill(_Settings.PreviewChannel, 20, dveffect)
                      pvw.CG_Add(_Settings.PreviewChannel, 20, previewTemplateName, tmpl, True)
 
                   End If
@@ -765,12 +1101,12 @@ Public Class ribCasparCG
 
 #End Region
 
-   Private Function FillTemplate(name As Excel.Name, wrkSheet As Worksheet) As Template
+   Private Function FillTemplate(name As Excel.Name, wrkSheet As Microsoft.Office.Interop.Excel.Worksheet) As Template
       Dim tmpl As Template = New Template
       Return FillTemplate(name, wrkSheet, tmpl)
    End Function
 
-   Private Function FillTemplate(name As Excel.Name, wrkSheet As Worksheet, tmpl As Template) As Template
+   Private Function FillTemplate(name As Excel.Name, wrkSheet As Microsoft.Office.Interop.Excel.Worksheet, tmpl As Template) As Template
 
       Dim range As Excel.Range = name.RefersToRange
       Dim cell As Excel.Range
@@ -778,22 +1114,17 @@ Public Class ribCasparCG
       Dim varName As Object = Nothing
       Dim varValue As Object = Nothing
 
-      Dim inte As Integer = 0
-
       'Dim objClipboard As Object = My.Computer.Clipboard.GetDataObject
       'Dim imgClipboard As System.Drawing.Image
       'Dim blnClipboardUsed As Boolean = False
 
       'Output-Mode
-      Dim mode As String = CustomProperties.Load(wrkSheet, "OutputMode")
+      Dim mode As String = CustomProperties.Load(wrkSheet, "OutputMode", "")
       Select Case mode
          Case "TABLE"
 
-            Integer.TryParse(CustomProperties.Load(wrkSheet, "TableTextAsWhite"), inte)
-            Dim blnTextAsWhite As Boolean = (inte = 1)
-
-            Integer.TryParse(CustomProperties.Load(wrkSheet, "TableAddBorders"), inte)
-            Dim blnAddBorders As Boolean = (inte = 1)
+            Dim blnTextAsWhite As Boolean = CustomProperties.Load(wrkSheet, "TableTextAsWhite", False)
+            Dim blnAddBorders As Boolean = CustomProperties.Load(wrkSheet, "TableAddBorders", False)
 
             'Table Mode
             If range.Columns.Count > 0 And range.Rows.Count > 0 Then
@@ -810,7 +1141,15 @@ Public Class ribCasparCG
                         varName = ToRangeAddress(col, row)
                         varValue = cell.Text
 
-                        fld = New TemplateField(varName.ToString, varValue.ToString, True)
+                        If _Settings.UseImageAttributes Then
+                           If varValue.ToString.ToLower.StartsWith("file:///") Then
+                              fld = New TemplateField(varName.ToString, varValue.ToString, True, TemplateField.enumAttributeType.Image)
+                           Else
+                              fld = New TemplateField(varName.ToString, varValue.ToString, True)
+                           End If
+                        Else
+                           fld = New TemplateField(varName.ToString, varValue.ToString, True)
+                        End If
 
                         fld.AddAttachement("FontName", cell.Font.Name.ToString)
                         fld.AddAttachement("FontSize", cell.Font.Size.ToString)
@@ -863,13 +1202,8 @@ Public Class ribCasparCG
 
             If range.Columns.Count > 0 And range.Rows.Count > 0 Then
 
-               Integer.TryParse(CustomProperties.Load(wrkSheet, "HTMLFirstIsHeader"), inte)
-               Dim firstIsHeader As Boolean = (inte = 1)
-
-               Dim fieldname As String = CustomProperties.Load(wrkSheet, "HTMLFieldname")
-               If fieldname = "" Then
-                  fieldname = "Table"
-               End If
+               Dim firstIsHeader As Boolean = CustomProperties.Load(wrkSheet, "HTMLFirstIsHeader", False)
+               Dim fieldname As String = CustomProperties.Load(wrkSheet, "HTMLFieldname", "Table")
 
                Dim stringwriter As StringWriter = New StringWriter
 
@@ -929,11 +1263,11 @@ Public Class ribCasparCG
 
                tmpl.AddField(fieldname, sb.ToString, False, True)
 
-               Dim sheetToAppend As String = CustomProperties.Load(wrkSheet, "SheetToAppend")
+               Dim sheetToAppend As String = CustomProperties.Load(wrkSheet, "SheetToAppend", "")
                If sheetToAppend <> "" Then
 
-                  Dim subSheet As Worksheet = Nothing
-                  For Each wrk As Worksheet In wrkSheet.Application.Sheets
+                  Dim subSheet As Microsoft.Office.Interop.Excel.Worksheet = Nothing
+                  For Each wrk As Microsoft.Office.Interop.Excel.Worksheet In wrkSheet.Application.Sheets
                      If wrk.Name.ToString.Trim() = sheetToAppend Then
                         subSheet = wrk
                         Exit For
@@ -961,7 +1295,7 @@ Public Class ribCasparCG
          Case Else
 
             'Standard/Delimited Mode
-            Dim deliminter As String = CustomProperties.Load(wrkSheet, "Delimiter")
+            Dim deliminter As String = CustomProperties.Load(wrkSheet, "Delimiter", "")
             Select Case deliminter
                Case "TAB"
                   deliminter = vbTab
@@ -1036,7 +1370,15 @@ Public Class ribCasparCG
                      If varName IsNot Nothing Then
                         If varValue IsNot Nothing Then
                            If varName <> "" Then
-                              tmpl.AddField(varName.ToString, varValue.ToString, True)
+                              If _Settings.UseImageAttributes Then
+                                 If varValue.ToString.ToLower.StartsWith("file:///") Then
+                                    tmpl.AddField(varName.ToString, varValue.ToString, True, False, TemplateField.enumAttributeType.Image)
+                                 Else
+                                    tmpl.AddField(varName.ToString, varValue.ToString, True)
+                                 End If
+                              Else
+                                 tmpl.AddField(varName.ToString, varValue.ToString, True)
+                              End If
                            End If
                         Else
                            If varName <> "" Then
@@ -1119,13 +1461,13 @@ Public Class ribCasparCG
 
 #Region "grpDataset"
 
-   Private Sub DoSaveDataSet(AppObject As Workbook, currWorksheet As Worksheet, Silent As Boolean)
+   Private Sub DoSaveDataSet(AppObject As Microsoft.Office.Interop.Excel.Workbook, currWorksheet As Microsoft.Office.Interop.Excel.Worksheet, Silent As Boolean)
 
       For Each name As Excel.Name In currWorksheet.Names
 
          If name.Name.Contains("CasparOutput") Then
 
-            Dim DatasetName As String = CustomProperties.Load(currWorksheet, "DataSetName")
+            Dim DatasetName As String = CustomProperties.Load(currWorksheet, "DataSetName", "")
             If DatasetName = "" Then
 
                If Silent Then
@@ -1147,7 +1489,7 @@ Public Class ribCasparCG
 
             End If
 
-            DatasetName = CustomProperties.Load(currWorksheet, "DataSetName")
+            DatasetName = CustomProperties.Load(currWorksheet, "DataSetName", "")
             If DatasetName = "" Then
                Exit For
             Else
@@ -1175,16 +1517,16 @@ Public Class ribCasparCG
 
    Private Sub btnSaveDataSet_Click(sender As Object, e As RibbonControlEventArgs) Handles btnSaveDataSet.Click
 
-      Dim AppObject As Workbook = Globals.ThisAddIn.Application.ActiveWorkbook
+      Dim AppObject As Microsoft.Office.Interop.Excel.Workbook = Globals.ThisAddIn.Application.ActiveWorkbook
       DoSaveDataSet(AppObject, AppObject.ActiveSheet, False)
 
    End Sub
 
    Private Sub btnSaveAllDataSets_Click(sender As Object, e As RibbonControlEventArgs) Handles btnSaveAllDataSets.Click
 
-      Dim AppObject As Workbook = Globals.ThisAddIn.Application.ActiveWorkbook
+      Dim AppObject As Microsoft.Office.Interop.Excel.Workbook = Globals.ThisAddIn.Application.ActiveWorkbook
 
-      For Each wrk As Worksheet In AppObject.Sheets
+      For Each wrk As Microsoft.Office.Interop.Excel.Worksheet In AppObject.Sheets
          DoSaveDataSet(AppObject, wrk, True)
       Next
 
@@ -1192,7 +1534,7 @@ Public Class ribCasparCG
 
    Private Sub grpDataset_DialogLauncherClick(sender As Object, e As RibbonControlEventArgs) Handles grpDataset.DialogLauncherClick
 
-      Dim AppObject As Workbook = Globals.ThisAddIn.Application.ActiveWorkbook
+      Dim AppObject As Microsoft.Office.Interop.Excel.Workbook = Globals.ThisAddIn.Application.ActiveWorkbook
 
       Using fsp As frmSheetProperties = New frmSheetProperties
 
@@ -1203,6 +1545,10 @@ Public Class ribCasparCG
 
          If fsp.ShowDialog() = System.Windows.Forms.DialogResult.OK Then
             AppObject.Saved = False
+            If _Dashboard.Visible Then
+               _Dashboard.RefreshPlaybackControls()
+            End If
+            UpdateTimerSheets()
          End If
 
       End Using
@@ -1213,7 +1559,7 @@ Public Class ribCasparCG
 
 #Region "grpPreview"
 
-   Private Sub UpdatePreview(sheet As Worksheet)
+   Private Sub UpdatePreview(sheet As Microsoft.Office.Interop.Excel.Worksheet)
 
       'Dim AppObject As Workbook = Globals.ThisAddIn.Application.ActiveWorkbook
       'Dim currWorksheet As Worksheet = AppObject.ActiveSheet
@@ -1247,17 +1593,17 @@ Public Class ribCasparCG
 
    Private Sub btnPreview_Click(sender As Object, e As RibbonControlEventArgs) Handles btnPreview.Click
 
-      Dim AppObject As Workbook = Globals.ThisAddIn.Application.ActiveWorkbook
-      Dim sheet As Worksheet = AppObject.ActiveSheet
+      Dim AppObject As Microsoft.Office.Interop.Excel.Workbook = Globals.ThisAddIn.Application.ActiveWorkbook
+      Dim sheet As Microsoft.Office.Interop.Excel.Worksheet = AppObject.ActiveSheet
 
-      If CustomProperties.Load(sheet, "IsDashboardList") = "1" Then
+      If CustomProperties.Load(sheet, "IsDashboardList", False) Then
 
          _Dashboard.PlayPreview()
 
       Else
 
-         Dim previewTemplateName As String = CustomProperties.Load(sheet, "PreviewTemplate")
-         Dim TemplateName As String = CustomProperties.Load(sheet, "Template")
+         Dim previewTemplateName As String = CustomProperties.Load(sheet, "PreviewTemplate", "")
+         Dim TemplateName As String = CustomProperties.Load(sheet, "Template", "")
 
          If previewTemplateName = "" Then
             previewTemplateName = TemplateName
@@ -1273,7 +1619,7 @@ Public Class ribCasparCG
             If fsp.ShowDialog() = System.Windows.Forms.DialogResult.Cancel Then
                Exit Sub
             Else
-               previewTemplateName = CustomProperties.Load(sheet, "PreviewTemplate")
+               previewTemplateName = CustomProperties.Load(sheet, "PreviewTemplate", "")
                If previewTemplateName = "" Then
                   Exit Sub
                Else
@@ -1290,7 +1636,7 @@ Public Class ribCasparCG
 
    Private Sub grpPreview_DialogLauncherClick(sender As Object, e As RibbonControlEventArgs) Handles grpPreview.DialogLauncherClick
 
-      Dim AppObject As Workbook = Globals.ThisAddIn.Application.ActiveWorkbook
+      Dim AppObject As Microsoft.Office.Interop.Excel.Workbook = Globals.ThisAddIn.Application.ActiveWorkbook
 
       Using fsp As frmSheetProperties = New frmSheetProperties
 
@@ -1301,6 +1647,10 @@ Public Class ribCasparCG
 
          If fsp.ShowDialog() = System.Windows.Forms.DialogResult.OK Then
             AppObject.Saved = False
+            If _Dashboard.Visible Then
+               _Dashboard.RefreshPlaybackControls()
+            End If
+            UpdateTimerSheets()
          End If
 
       End Using
@@ -1311,7 +1661,7 @@ Public Class ribCasparCG
 
 #Region "grpInsert"
 
-   Private Function GetImage(wrkSheet As Worksheet, row As Integer, col As Integer) As Excel.Shape
+   Private Function GetImage(wrkSheet As Microsoft.Office.Interop.Excel.Worksheet, row As Integer, col As Integer) As Excel.Shape
 
       Dim sh As Excel.Shape = Nothing
 
@@ -1331,11 +1681,11 @@ Public Class ribCasparCG
 
    Private Sub btnImageFile_Click(sender As Object, e As RibbonControlEventArgs) Handles btnImageFile.Click
 
-      Dim AppObject As Workbook = Globals.ThisAddIn.Application.ActiveWorkbook
+      Dim AppObject As Microsoft.Office.Interop.Excel.Workbook = Globals.ThisAddIn.Application.ActiveWorkbook
 
       Dim ofd As OpenFileDialog = New OpenFileDialog
 
-      Dim basePath As String = CustomProperties.Load(AppObject.ActiveSheet, "ImageBaseFolder")
+      Dim basePath As String = CustomProperties.Load(AppObject.ActiveSheet, "ImageBaseFolder", "")
 
       If basePath <> "" Then
          ofd.InitialDirectory = basePath
@@ -1363,11 +1713,11 @@ Public Class ribCasparCG
 
    Private Sub btnBaseFolder_Click(sender As Object, e As RibbonControlEventArgs) Handles btnBaseFolder.Click
 
-      Dim AppObject As Workbook = Globals.ThisAddIn.Application.ActiveWorkbook
+      Dim AppObject As Microsoft.Office.Interop.Excel.Workbook = Globals.ThisAddIn.Application.ActiveWorkbook
 
       Dim fbd As FolderBrowserDialog = New FolderBrowserDialog
 
-      Dim basePath As String = CustomProperties.Load(AppObject.ActiveSheet, "ImageBaseFolder")
+      Dim basePath As String = CustomProperties.Load(AppObject.ActiveSheet, "ImageBaseFolder", "")
       If basePath = "" Then
          basePath = My.Computer.FileSystem.SpecialDirectories.MyPictures
       End If
@@ -1396,7 +1746,7 @@ Public Class ribCasparCG
 
    Private Sub btnColor_Click(sender As Object, e As RibbonControlEventArgs) Handles btnColor.Click
 
-      Dim AppObject As Workbook = Globals.ThisAddIn.Application.ActiveWorkbook
+      Dim AppObject As Microsoft.Office.Interop.Excel.Workbook = Globals.ThisAddIn.Application.ActiveWorkbook
       Dim currRange As Excel.Range = CType(Globals.ThisAddIn.Application.Selection, Excel.Range)
 
       Dim cdg As ColorDialog = New ColorDialog
@@ -1460,9 +1810,9 @@ Public Class ribCasparCG
 
    'End Sub
 
-   Private Sub DoBrowserRefresh(ByVal AppObject As Workbook, ByVal currWorksheet As Worksheet, ByRef ErrorText As String)
+   Private Sub DoBrowserRefresh(ByVal AppObject As Microsoft.Office.Interop.Excel.Workbook, ByVal currWorksheet As Microsoft.Office.Interop.Excel.Worksheet, ByRef ErrorText As String)
 
-      Dim webAddress As String = CustomProperties.Load(currWorksheet, "WebURL")
+      Dim webAddress As String = CustomProperties.Load(currWorksheet, "WebURL", "")
 
       If webAddress <> "" Then
 
@@ -1471,8 +1821,8 @@ Public Class ribCasparCG
 
          fwb.Settings = _Settings
          fwb.WebAddress = webAddress
-         fwb.DomLocation = CustomProperties.Load(currWorksheet, "WebDomLocation")
-         Dim mode As String = CustomProperties.Load(currWorksheet, "WebMode")
+         fwb.DomLocation = CustomProperties.Load(currWorksheet, "WebDomLocation", "")
+         Dim mode As String = CustomProperties.Load(currWorksheet, "WebMode", "")
 
          If mode = "Table" Then
             fwb.Mode = frmWebbrowser.enumMode.modeTable
@@ -1520,8 +1870,8 @@ Public Class ribCasparCG
 
    Private Sub togAutoUpdate_Click(sender As Object, e As RibbonControlEventArgs) Handles togAutoUpdate.Click
 
-      Dim AppObject As Workbook = Globals.ThisAddIn.Application.ActiveWorkbook
-      Dim currWorksheet As Worksheet = AppObject.ActiveSheet
+      Dim AppObject As Microsoft.Office.Interop.Excel.Workbook = Globals.ThisAddIn.Application.ActiveWorkbook
+      Dim currWorksheet As Microsoft.Office.Interop.Excel.Worksheet = AppObject.ActiveSheet
 
       If togAutoUpdate.Checked Then
          CustomProperties.Save(currWorksheet, "AutoUpdate", "1")
@@ -1533,16 +1883,16 @@ Public Class ribCasparCG
 
    Private Sub btnBrowser_Click(sender As Object, e As RibbonControlEventArgs) Handles btnBrowser.Click
 
-      Dim AppObject As Workbook = Globals.ThisAddIn.Application.ActiveWorkbook
-      Dim currWorksheet As Worksheet = AppObject.ActiveSheet
+      Dim AppObject As Microsoft.Office.Interop.Excel.Workbook = Globals.ThisAddIn.Application.ActiveWorkbook
+      Dim currWorksheet As Microsoft.Office.Interop.Excel.Worksheet = AppObject.ActiveSheet
 
       Dim fwb As frmWebbrowser = New frmWebbrowser
       fwb.ShowUI = True
 
       fwb.Settings = _Settings
-      fwb.WebAddress = CustomProperties.Load(currWorksheet, "WebURL")
-      fwb.DomLocation = CustomProperties.Load(currWorksheet, "WebDomLocation")
-      Dim mode As String = CustomProperties.Load(currWorksheet, "WebMode")
+      fwb.WebAddress = CustomProperties.Load(currWorksheet, "WebURL", "")
+      fwb.DomLocation = CustomProperties.Load(currWorksheet, "WebDomLocation", "")
+      Dim mode As String = CustomProperties.Load(currWorksheet, "WebMode", "")
 
       If mode = "Table" Then
          fwb.Mode = frmWebbrowser.enumMode.modeTable
@@ -1599,8 +1949,8 @@ Public Class ribCasparCG
 
    Private Sub btnBrowserRefresh_Click(sender As Object, e As RibbonControlEventArgs) Handles btnBrowserRefresh.Click
 
-      Dim AppObject As Workbook = Globals.ThisAddIn.Application.ActiveWorkbook
-      Dim currWorksheet As Worksheet = AppObject.ActiveSheet
+      Dim AppObject As Microsoft.Office.Interop.Excel.Workbook = Globals.ThisAddIn.Application.ActiveWorkbook
+      Dim currWorksheet As Microsoft.Office.Interop.Excel.Worksheet = AppObject.ActiveSheet
 
       Dim errorText As String = ""
       DoBrowserRefresh(AppObject, currWorksheet, errorText)
@@ -1616,10 +1966,10 @@ Public Class ribCasparCG
       btnRefreshData.Enabled = False
       btnRefreshData.PerformLayout()
 
-      Dim AppObject As Workbook = Globals.ThisAddIn.Application.ActiveWorkbook
+      Dim AppObject As Microsoft.Office.Interop.Excel.Workbook = Globals.ThisAddIn.Application.ActiveWorkbook
 
       Dim errorText As String = ""
-      For Each wrk As Worksheet In AppObject.Sheets
+      For Each wrk As Microsoft.Office.Interop.Excel.Worksheet In AppObject.Sheets
          DoBrowserRefresh(AppObject, wrk, errorText)
       Next
 
@@ -1680,7 +2030,7 @@ Public Class ribCasparCG
 
    Private Sub grpAutoUpdate_DialogLauncherClick(sender As Object, e As RibbonControlEventArgs) Handles grpAutoUpdate.DialogLauncherClick
 
-      Dim AppObject As Workbook = Globals.ThisAddIn.Application.ActiveWorkbook
+      Dim AppObject As Microsoft.Office.Interop.Excel.Workbook = Globals.ThisAddIn.Application.ActiveWorkbook
 
       Using fsp As frmSheetProperties = New frmSheetProperties
 
@@ -1690,8 +2040,11 @@ Public Class ribCasparCG
          fsp.Ribbon = Me
 
          If fsp.ShowDialog() = DialogResult.OK Then
-            _Dashboard.RefreshPlaybackControls()
             AppObject.Saved = False
+            If _Dashboard.Visible Then
+               _Dashboard.RefreshPlaybackControls()
+            End If
+            UpdateTimerSheets()
          End If
 
       End Using
@@ -1711,6 +2064,26 @@ Public Class ribCasparCG
       End Try
    End Sub
 
+   Private Sub btnListPane_Click(sender As Object, e As RibbonControlEventArgs) Handles btnListPane.Click
+      If _Dashboard IsNot Nothing Then
+         _Dashboard.ListPaneVisible = Not _Dashboard.ListPaneVisible
+      End If
+   End Sub
+
+   Private Sub btnListSettings_Click(sender As Object, e As RibbonControlEventArgs) Handles btnTimerPane.Click
+
+      grpTimer.Visible = Not grpTimer.Visible
+
+      If _TimerSettings IsNot Nothing AndAlso _TimerSettings.SelectedItem IsNot Nothing Then
+         grpLap.Visible = grpTimer.Visible And _TimerSettings.SelectedItem.UseLaps
+      Else
+         grpLap.Visible = False
+      End If
+
+      Globals.ThisAddIn.Application.ActiveWorkbook.Saved = False
+
+   End Sub
+
    'Private Sub _timAutoUpdate_Tick(sender As Object, e As EventArgs) Handles _timAutoUpdate.Tick
    '   _timAutoUpdate.Stop()
    '   AutoUpdate(_SheetWithPendingRefreshes)
@@ -1719,6 +2092,365 @@ Public Class ribCasparCG
 
 #End Region
 
+#Region "grpTimer"
+
+   Public Sub LoadTimerSettings()
+
+      If _ActiveWorkbook IsNot Nothing Then
+
+         _xmlId = CustomDocumentProperties.Load(_ActiveWorkbook, "XML_ID", "")
+         If _xmlId <> "" Then
+
+            Dim xml As String = CustomXML.Load(_ActiveWorkbook, _xmlId)
+            _TimerSettings = New TimerSettings(xml)
+
+         End If
+
+         If _TimerSettings IsNot Nothing Then
+
+            _TimerSettings.TempID = _xmlId
+
+            'Restore Timer if necessary
+            Dim ts As TimerSettings = New TimerSettings(_TimerSettingsFilename)
+            If ts IsNot Nothing AndAlso ts.TempID = _xmlId Then
+               If MsgBox("Load the backup-data?", vbQuestion Or vbYesNo Or MsgBoxStyle.DefaultButton1, "Backup-data") = MsgBoxResult.Yes Then
+                  _TimerSettings = ts
+               End If
+            End If
+
+            If _TimerSettings.Items.Count = 0 Then
+               Dim item As TimerItem = New TimerItem("Default")
+               _TimerSettings.Items.Add(item)
+               _TimerSettings.SelectedItem = item
+            End If
+
+            'Run timer if necessary
+            _TimerSettings.RunTimer()
+
+            Set_ItemControls()
+            UpdateTimerSheets()
+
+         End If
+
+      End If
+
+   End Sub
+
+   Private Sub Set_ItemControls()
+
+      cboItems.Items.Clear()
+      Dim rddi As RibbonDropDownItem = Me.Factory.CreateRibbonDropDownItem
+
+      If _TimerSettings.Items.Count = 0 Then
+         rddi.Label = "(None)"
+         cboItems.Items.Add(rddi)
+         cboItems.Text = "(None)"
+      End If
+
+      If _TimerSettings IsNot Nothing Then
+
+         For Each item As TimerItem In _TimerSettings.Items
+            rddi = Me.Factory.CreateRibbonDropDownItem
+            rddi.Label = item.Name
+            cboItems.Items.Add(rddi)
+         Next
+
+         If _TimerSettings.SelectedItem IsNot Nothing Then
+            cboItems.Text = _TimerSettings.SelectedItem.Name
+         End If
+
+         If _TimerSettings.SelectedItem IsNot Nothing Then
+            btnPauseTimer.Visible = _TimerSettings.SelectedItem.CanPause
+         End If
+
+      End If
+
+      Set_LapControls()
+
+   End Sub
+
+   Public Sub UpdateTimerSheets()
+
+      If _TimerSettings IsNot Nothing Then
+
+         Dim dic As Dictionary(Of String, Microsoft.Office.Interop.Excel.Worksheet) = New Dictionary(Of String, Microsoft.Office.Interop.Excel.Worksheet)
+         For Each ws As Microsoft.Office.Interop.Excel.Worksheet In _ActiveWorkbook.Sheets
+            dic.Add(ws.Name.ToString.Trim, ws)
+         Next
+
+         Dim cnt As Integer = 0
+         Dim ts As TimerSheet = Nothing
+         Dim sheet As Microsoft.Office.Interop.Excel.Worksheet = Nothing
+
+         Do While _TimerSettings.Sheets.Count > cnt
+
+            ts = _TimerSettings.Sheets(cnt)
+
+            If dic.ContainsKey(ts.WorksheetName) Then
+
+               sheet = dic(ts.WorksheetName)
+
+               ts.Server = CustomProperties.Load(sheet, "ServerNumber", 0)
+               ts.Channel = CustomProperties.Load(sheet, "Channel", 1)
+               ts.Layer = CustomProperties.Load(sheet, "Layer", 20)
+
+               ts.FlashLayer = 1
+               If _Settings.UseFlashLayers Then
+                  ts.FlashLayer = CustomProperties.Load(sheet, "FlashLayer", 1)
+               End If
+
+               cnt += 1
+
+            Else
+               _TimerSettings.Sheets.Remove(ts)
+               _ActiveWorkbook.Saved = False
+            End If
+
+         Loop
+
+         _TimerSettings.SaveBackupData()
+
+      End If
+
+   End Sub
+
+   Public Sub SaveTimerSettings()
+      If _TimerSettings IsNot Nothing AndAlso _ActiveWorkbook IsNot Nothing Then
+         _xmlId = CustomXML.Save(_ActiveWorkbook, _xmlId, _TimerSettings.toXmlString)
+         CustomDocumentProperties.Save(_ActiveWorkbook, "XML_ID", _xmlId)
+      End If
+   End Sub
+
+   Public Sub ReleaseTimerSettingsEvents()
+      If _TimerSettings IsNot Nothing Then
+         _TimerSettings.ReleaseEvents()
+      End If
+   End Sub
+
+   Private Sub grpTimer_DialogLauncherClick(sender As Object, e As RibbonControlEventArgs) Handles grpTimer.DialogLauncherClick
+
+      If _TimerSettings Is Nothing Then
+         _TimerSettings = New TimerSettings()
+      End If
+
+      If _TimerSettings IsNot Nothing Then
+
+         Using fts As frmTimerSettings = New frmTimerSettings
+
+            fts.TimerSettings = _TimerSettings
+
+            If fts.ShowDialog() = DialogResult.OK Then
+
+               _ActiveWorkbook.Saved = False
+               Set_ItemControls()
+               _TimerSettings.SaveBackupData()
+
+            End If
+
+         End Using
+
+      End If
+
+   End Sub
+
+   Private Sub _TimerSettings_TimerRefresh(sender As Object, e As TimerSettings.TimerRefreshEventArgs) Handles _TimerSettings.TimerRefresh
+
+      If _TimerSettings IsNot Nothing AndAlso e.Item IsNot Nothing Then
+
+         If _TimerSettings.SelectedItem.Name = e.Item.Name Then
+            txtTimerPreview.Text = e.Item.GetFormatedTime(e.Time)
+         End If
+
+         For Each ts As TimerSheet In _TimerSettings.Sheets
+
+            Dim tmpl As Template = New Template
+            For Each tf As TimerField In ts.Fields
+
+               If tf.ItemName = e.Item.Name Then
+                  tmpl.AddField(tf.FieldName, e.Item.QueryValue(tf.QueryValue))
+               End If
+
+            Next
+
+            If tmpl.Fields.Count > 0 Then
+
+               If ts.Server = 0 Then
+
+                  For Each caspar As CasparCG In _Settings.Servers
+                     If caspar.Connected Then
+                        caspar.CG_Update(ts.Channel, ts.Layer, tmpl, ts.FlashLayer)
+                     End If
+                  Next
+
+               Else
+
+                  If ts.Server <= _Settings.Servers.Count Then
+                     Dim caspar As CasparCG = _Settings.Servers(ts.Server - 1)
+                     If caspar.Connected Then
+                        caspar.CG_Update(ts.Channel, ts.Layer, tmpl, ts.FlashLayer)
+                     End If
+                  End If
+
+               End If
+
+            End If
+
+         Next
+
+      End If
+
+   End Sub
+
+   Private Sub _TimerSettings_SaveTimerData(sender As Object, e As EventArgs) Handles _TimerSettings.SaveTimerData
+      If _TimerSettings IsNot Nothing Then
+         _TimerSettings.Save(_TimerSettingsFilename)
+         Try
+            _ActiveWorkbook.Saved = False
+         Catch ex As Exception
+         End Try
+      End If
+   End Sub
+
+
+   Private Sub btnTimerPlus_Click(sender As Object, e As RibbonControlEventArgs) Handles btnTimerPlus.Click
+      If _TimerSettings IsNot Nothing AndAlso _TimerSettings.SelectedItem IsNot Nothing Then
+         _TimerSettings.SelectedItem.Plus()
+      End If
+   End Sub
+
+   Private Sub btnTimerMinus_Click(sender As Object, e As RibbonControlEventArgs) Handles btnTimerMinus.Click
+      If _TimerSettings IsNot Nothing AndAlso _TimerSettings.SelectedItem IsNot Nothing Then
+         _TimerSettings.SelectedItem.Minus()
+      End If
+   End Sub
+
+   Private Sub btnStartTimer_Click(sender As Object, e As RibbonControlEventArgs) Handles btnStartTimer.Click
+      If _TimerSettings IsNot Nothing AndAlso _TimerSettings.SelectedItem IsNot Nothing Then
+         _TimerSettings.SelectedItem.StartTimer()
+      End If
+   End Sub
+
+   Private Sub btnPauseTimer_Click(sender As Object, e As RibbonControlEventArgs) Handles btnPauseTimer.Click
+      If _TimerSettings IsNot Nothing AndAlso _TimerSettings.SelectedItem IsNot Nothing Then
+         _TimerSettings.SelectedItem.PauseTimer()
+      End If
+   End Sub
+
+   Private Sub btnStopTimer_Click(sender As Object, e As RibbonControlEventArgs) Handles btnStopTimer.Click
+      If _TimerSettings IsNot Nothing AndAlso _TimerSettings.SelectedItem IsNot Nothing Then
+         If MsgBox("Do you really want to stop the timer?", MsgBoxStyle.Question Or MsgBoxStyle.YesNo Or MsgBoxStyle.DefaultButton1, "Stop Timer") = MsgBoxResult.Yes Then
+            _TimerSettings.SelectedItem.StopTimer()
+         End If
+      End If
+   End Sub
+
+   Private Sub cboItems_TextChanged(sender As Object, e As RibbonControlEventArgs) Handles cboItems.TextChanged
+
+      If _TimerSettings IsNot Nothing Then
+
+         _TimerSettings.SelectedItem = Nothing
+
+         For Each item As TimerItem In _TimerSettings.Items
+            If item.Name = cboItems.Text Then
+               _TimerSettings.SelectedItem = item
+               Exit For
+            End If
+         Next
+
+         If _TimerSettings.SelectedItem IsNot Nothing Then
+            btnPauseTimer.Visible = _TimerSettings.SelectedItem.CanPause
+         End If
+
+         Set_LapControls()
+
+      End If
+
+   End Sub
+
+
+#End Region
+
+#Region "grpLap"
+
+   Private Sub Set_LapControls()
+
+      cboLap.Items.Clear()
+      Dim rddi As RibbonDropDownItem = Me.Factory.CreateRibbonDropDownItem
+      rddi.Label = "(None)"
+      cboLap.Items.Add(rddi)
+      cboLap.Text = "(None)"
+
+      If _TimerSettings IsNot Nothing AndAlso _TimerSettings.SelectedItem IsNot Nothing Then
+
+         For Each lap As TimerLap In _TimerSettings.SelectedItem.Laps
+            rddi = Me.Factory.CreateRibbonDropDownItem
+            rddi.Label = lap.Name
+            cboLap.Items.Add(rddi)
+         Next
+
+         If _TimerSettings.SelectedItem.SelectedLap IsNot Nothing Then
+            cboLap.Text = _TimerSettings.SelectedItem.SelectedLap.Name
+         End If
+
+         grpLap.Visible = grpTimer.Visible And _TimerSettings.SelectedItem.UseLaps
+
+      End If
+
+   End Sub
+
+   Private Sub cboLap_TextChanged(sender As Object, e As RibbonControlEventArgs) Handles cboLap.TextChanged
+
+      If _TimerSettings IsNot Nothing AndAlso _TimerSettings.SelectedItem IsNot Nothing Then
+
+         _TimerSettings.SelectedItem.SelectedLap = Nothing
+
+         For Each lap As TimerLap In _TimerSettings.SelectedItem.Laps
+            If lap.Name = cboLap.Text Then
+               _TimerSettings.SelectedItem.SelectedLap = lap
+               Exit For
+            End If
+         Next
+
+      End If
+
+   End Sub
+
+   Private Sub btnLapPause_Click(sender As Object, e As RibbonControlEventArgs) Handles btnLapPause.Click
+      If _TimerSettings IsNot Nothing AndAlso _TimerSettings.SelectedItem IsNot Nothing Then
+         _TimerSettings.SelectedItem.LapTimer()
+      End If
+   End Sub
+
+   Private Sub btnLapResume_Click(sender As Object, e As RibbonControlEventArgs) Handles btnLapResume.Click
+      If _TimerSettings IsNot Nothing AndAlso _TimerSettings.SelectedItem IsNot Nothing Then
+         _TimerSettings.SelectedItem.ResumeTimer()
+      End If
+   End Sub
+
+   Private Sub grpLap_DialogLauncherClick(sender As Object, e As RibbonControlEventArgs) Handles grpLap.DialogLauncherClick
+
+      If _TimerSettings IsNot Nothing Then
+
+         Using ftl As frmTimerLaps = New frmTimerLaps
+
+            ftl.TimerSettings = _TimerSettings
+
+            If ftl.ShowDialog() = DialogResult.OK Then
+
+               _ActiveWorkbook.Saved = False
+
+               Set_LapControls()
+               _TimerSettings.SaveBackupData()
+
+            End If
+
+         End Using
+
+      End If
+
+   End Sub
+
+#End Region
 
 End Class
 

@@ -26,7 +26,6 @@ Partial Class ucDashboard
       Me.flpFlow = New System.Windows.Forms.FlowLayoutPanel()
       Me.lblHeader = New System.Windows.Forms.Label()
       Me.panList = New System.Windows.Forms.Panel()
-      Me.pbPlaybackButtons = New CasparCGAddIn.ucPlaybackButtons()
       Me.panMiddle = New System.Windows.Forms.Panel()
       Me.lnkLabelRefreshLists = New System.Windows.Forms.LinkLabel()
       Me.lnklblQueries = New System.Windows.Forms.LinkLabel()
@@ -42,6 +41,7 @@ Partial Class ucDashboard
       Me.rbVideo = New System.Windows.Forms.RadioButton()
       Me.btnSettings = New System.Windows.Forms.Button()
       Me.ttTips = New System.Windows.Forms.ToolTip(Me.components)
+      Me.pbPlaybackButtons = New CasparCGAddIn.ucPlaybackButtons()
       Me.panList.SuspendLayout()
       Me.panMiddle.SuspendLayout()
       Me.panTop.SuspendLayout()
@@ -50,12 +50,11 @@ Partial Class ucDashboard
       'flpFlow
       '
       Me.flpFlow.AutoScroll = True
-      Me.flpFlow.FlowDirection = System.Windows.Forms.FlowDirection.TopDown
+      Me.flpFlow.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
       Me.flpFlow.Location = New System.Drawing.Point(0, 0)
       Me.flpFlow.Name = "flpFlow"
       Me.flpFlow.Size = New System.Drawing.Size(205, 414)
       Me.flpFlow.TabIndex = 0
-      Me.flpFlow.WrapContents = False
       '
       'lblHeader
       '
@@ -83,17 +82,6 @@ Partial Class ucDashboard
       Me.panList.Name = "panList"
       Me.panList.Size = New System.Drawing.Size(205, 190)
       Me.panList.TabIndex = 11
-      '
-      'pbPlaybackButtons
-      '
-      Me.pbPlaybackButtons.BackColor = System.Drawing.Color.Transparent
-      Me.pbPlaybackButtons.ControlsSet = CasparCGAddIn.ucPlaybackButtons.enumControlSets.csPlayStop
-      Me.pbPlaybackButtons.Location = New System.Drawing.Point(0, 134)
-      Me.pbPlaybackButtons.Margin = New System.Windows.Forms.Padding(0)
-      Me.pbPlaybackButtons.Name = "pbPlaybackButtons"
-      Me.pbPlaybackButtons.Size = New System.Drawing.Size(203, 56)
-      Me.pbPlaybackButtons.State = CasparCGAddIn.ucPlaybackButtons.enumState.stIdle
-      Me.pbPlaybackButtons.TabIndex = 21
       '
       'panMiddle
       '
@@ -248,13 +236,24 @@ Partial Class ucDashboard
       Me.ttTips.SetToolTip(Me.btnSettings, "Settings")
       Me.btnSettings.UseVisualStyleBackColor = True
       '
+      'pbPlaybackButtons
+      '
+      Me.pbPlaybackButtons.BackColor = System.Drawing.Color.Transparent
+      Me.pbPlaybackButtons.ControlsSet = CasparCGAddIn.ucPlaybackButtons.enumControlSets.csPlayStop
+      Me.pbPlaybackButtons.Location = New System.Drawing.Point(0, 134)
+      Me.pbPlaybackButtons.Margin = New System.Windows.Forms.Padding(0)
+      Me.pbPlaybackButtons.Name = "pbPlaybackButtons"
+      Me.pbPlaybackButtons.Size = New System.Drawing.Size(203, 56)
+      Me.pbPlaybackButtons.State = CasparCGAddIn.ucPlaybackButtons.enumState.stIdle
+      Me.pbPlaybackButtons.TabIndex = 21
+      '
       'ucDashboard
       '
       Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
       Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-      Me.BackColor = System.Drawing.SystemColors.Control
-      Me.Controls.Add(Me.panList)
+      'Me.BackColor = System.Drawing.SystemColors.Control
       Me.Controls.Add(Me.flpFlow)
+      Me.Controls.Add(Me.panList)
       Me.Name = "ucDashboard"
       Me.Size = New System.Drawing.Size(205, 623)
       Me.panList.ResumeLayout(False)

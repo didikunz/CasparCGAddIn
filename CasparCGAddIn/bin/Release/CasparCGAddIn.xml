@@ -6,6 +6,23 @@ CasparCGAddIn
 </name>
 </assembly>
 <members>
+<member name="M:CasparCGAddIn.CustomXML.Save(Microsoft.Office.Interop.Excel.Workbook,System.String,System.String)">
+ <summary>
+ Saves an XML, that is serialized into a string
+ </summary>
+ <param name="wrkBook">The workbook to save in</param>
+ <param name="id">The Guid as string</param>
+ <param name="XML">The serialized xml</param>
+ <returns>The id. Always when you save a new id is returned</returns>
+</member>
+<member name="M:CasparCGAddIn.CustomXML.Load(Microsoft.Office.Interop.Excel.Workbook,System.String)">
+ <summary>
+ Loads a XML string from a workbook
+ </summary>
+ <param name="wrkBook">The workbook to load from</param>
+ <param name="id">The Guid as string</param>
+ <returns>The serialized xml</returns>
+</member>
 <member name="T:CasparCGAddIn.My.Resources.Resources">
 <summary>
   Eine stark typisierte Ressourcenklasse zum Suchen von lokalisierten Zeichenfolgen usw.
@@ -22,6 +39,11 @@ CasparCGAddIn
   Ressourcenzuordnungen, die diese stark typisierte Ressourcenklasse verwenden.
 </summary>
 </member>
+<member name="P:CasparCGAddIn.My.Resources.Resources.Add_Button">
+<summary>
+  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+</summary>
+</member>
 <member name="P:CasparCGAddIn.My.Resources.Resources.ASPNETWeb_64x">
 <summary>
   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
@@ -32,12 +54,117 @@ CasparCGAddIn
   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
 </summary>
 </member>
+<member name="P:CasparCGAddIn.My.Resources.Resources.Cancel_16x">
+<summary>
+  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+</summary>
+</member>
 <member name="P:CasparCGAddIn.My.Resources.Resources.Connect">
 <summary>
   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
 </summary>
 </member>
+<member name="P:CasparCGAddIn.My.Resources.Resources.Dublicate">
+<summary>
+  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:CasparCGAddIn.My.Resources.Resources.F1">
+<summary>
+  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:CasparCGAddIn.My.Resources.Resources.F2">
+<summary>
+  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:CasparCGAddIn.My.Resources.Resources.F3">
+<summary>
+  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:CasparCGAddIn.My.Resources.Resources.F4">
+<summary>
+  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:CasparCGAddIn.My.Resources.Resources.F5">
+<summary>
+  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:CasparCGAddIn.My.Resources.Resources.F6">
+<summary>
+  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:CasparCGAddIn.My.Resources.Resources.F7">
+<summary>
+  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:CasparCGAddIn.My.Resources.Resources.F8">
+<summary>
+  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:CasparCGAddIn.My.Resources.Resources.F9">
+<summary>
+  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:CasparCGAddIn.My.Resources.Resources.FlatList_16x">
+<summary>
+  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+</summary>
+</member>
 <member name="P:CasparCGAddIn.My.Resources.Resources.GaugeMeter">
+<summary>
+  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:CasparCGAddIn.My.Resources.Resources.GlyphCenter">
+<summary>
+  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:CasparCGAddIn.My.Resources.Resources.GlyphDown">
+<summary>
+  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:CasparCGAddIn.My.Resources.Resources.GlyphFastDown">
+<summary>
+  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:CasparCGAddIn.My.Resources.Resources.GlyphFastLeft">
+<summary>
+  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:CasparCGAddIn.My.Resources.Resources.GlyphFastRight">
+<summary>
+  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:CasparCGAddIn.My.Resources.Resources.GlyphFastUp">
+<summary>
+  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:CasparCGAddIn.My.Resources.Resources.GlyphLeft">
+<summary>
+  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:CasparCGAddIn.My.Resources.Resources.GlyphRight">
+<summary>
+  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:CasparCGAddIn.My.Resources.Resources.GlyphUp">
 <summary>
   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
 </summary>
@@ -177,17 +304,62 @@ CasparCGAddIn
   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
 </summary>
 </member>
-<member name="P:CasparCGAddIn.My.Resources.Resources.StartTime_64x">
-<summary>
-  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
-</summary>
-</member>
 <member name="P:CasparCGAddIn.My.Resources.Resources.Synchronize">
 <summary>
   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
 </summary>
 </member>
 <member name="P:CasparCGAddIn.My.Resources.Resources.ThreeDots">
+<summary>
+  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:CasparCGAddIn.My.Resources.Resources.Timer_Lap">
+<summary>
+  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:CasparCGAddIn.My.Resources.Resources.Timer_Load">
+<summary>
+  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:CasparCGAddIn.My.Resources.Resources.Timer_Minus">
+<summary>
+  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:CasparCGAddIn.My.Resources.Resources.Timer_Pause">
+<summary>
+  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:CasparCGAddIn.My.Resources.Resources.Timer_Plus">
+<summary>
+  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:CasparCGAddIn.My.Resources.Resources.Timer_Reset">
+<summary>
+  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:CasparCGAddIn.My.Resources.Resources.Timer_Resume">
+<summary>
+  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:CasparCGAddIn.My.Resources.Resources.Timer_Start">
+<summary>
+  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:CasparCGAddIn.My.Resources.Resources.Timer_Stop">
+<summary>
+  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:CasparCGAddIn.My.Resources.Resources.TimerPane">
 <summary>
   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
 </summary>
@@ -253,6 +425,46 @@ CasparCGAddIn
 </member>
 <member name="M:CasparCGAddIn.ThisAddIn.OnShutdown">
 
+</member>
+<member name="E:CasparCGAddIn.TimerItem.TimerRefresh">
+ <summary>
+ Fires every second. Used to update the graphics.
+ </summary>
+</member>
+<member name="E:CasparCGAddIn.TimerItem.SaveTimerData">
+ <summary>
+ Used to save data
+ </summary>
+</member>
+<member name="M:CasparCGAddIn.TimerItem.StartTimer">
+ <summary>
+ Initialize all variables, start the timer and save the data.
+ </summary>
+</member>
+<member name="M:CasparCGAddIn.TimerItem.RunTimer">
+ <summary>
+ Runs the timer whitout setting any variables.
+ </summary>
+</member>
+<member name="M:CasparCGAddIn.TimerItem.PauseTimer">
+ <summary>
+ Pause the Timer
+ </summary>
+</member>
+<member name="M:CasparCGAddIn.TimerItem.StopTimer">
+ <summary>
+ Stop the timer and save data.
+ </summary>
+</member>
+<member name="E:CasparCGAddIn.TimerSettings.TimerRefresh">
+ <summary>
+ Fires every second. Used to update the graphics.
+ </summary>
+</member>
+<member name="E:CasparCGAddIn.TimerSettings.SaveTimerData">
+ <summary>
+ Used to save data
+ </summary>
 </member>
 <member name="M:CasparCGAddIn.ucDashboard.CommandEvent(System.Object,CasparCGAddIn.ucPlaybackButtons.CommandkEventArgs)">
  <summary>

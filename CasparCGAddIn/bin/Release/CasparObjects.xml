@@ -88,6 +88,11 @@ CasparObjects
  The Aveco automation specific variable names "astra_output" and "astra_layer" are used.
  </summary>
 </member>
+<member name="T:CasparObjects.CasparCG.Retard">
+ <summary>
+ Class for use with delayed execution.
+ </summary>
+</member>
 <member name="P:CasparObjects.CasparCG.Name">
  <summary>
  The name of the CasparCG Server instance
@@ -261,12 +266,31 @@ CasparObjects
  <returns>A ReturnInfo object</returns>
  <remarks>Uses the template name inside the Template object. Defaults to DefaultChannel DefaultLayer and plays the template after loading</remarks>
 </member>
+<member name="M:CasparObjects.CasparCG.CG_Add(CasparObjects.Template,CasparObjects.CasparCG.Retard)">
+ <summary>
+ Adds the template in Caspar
+ </summary>
+ <param name="TemplateData">The Template object to get fields from</param>
+ <param name="Retard">Delay the execution for this amount of milliseconds</param>
+ <returns>A ReturnInfo object</returns>
+ <remarks>Uses the template name inside the Template object. Defaults to DefaultChannel DefaultLayer and plays the template after loading</remarks>
+</member>
 <member name="M:CasparObjects.CasparCG.CG_Add(System.String,CasparObjects.Template)">
  <summary>
  Adds the template in Caspar
  </summary>
  <param name="TemplateName">The name of the template</param>
  <param name="TemplateData">The Template object to get fields from</param>
+ <returns>A ReturnInfo object</returns>
+ <remarks>Defaults to DefaultChannel DefaultLayer and plays the template after loading</remarks>
+</member>
+<member name="M:CasparObjects.CasparCG.CG_Add(System.String,CasparObjects.Template,CasparObjects.CasparCG.Retard)">
+ <summary>
+ Adds the template in Caspar
+ </summary>
+ <param name="TemplateName">The name of the template</param>
+ <param name="TemplateData">The Template object to get fields from</param>
+ <param name="Retard">Delay the execution for this amount of milliseconds</param>
  <returns>A ReturnInfo object</returns>
  <remarks>Defaults to DefaultChannel DefaultLayer and plays the template after loading</remarks>
 </member>
@@ -277,6 +301,17 @@ CasparObjects
  <param name="Layer">The layer number</param>
  <param name="TemplateName">The name of the template</param>
  <param name="TemplateData">The Template object to get fields from</param>
+ <returns>A ReturnInfo object</returns>
+ <remarks>Defaults to DefaultChannel and plays the template after loading</remarks>
+</member>
+<member name="M:CasparObjects.CasparCG.CG_Add(System.Int32,System.String,CasparObjects.Template,CasparObjects.CasparCG.Retard)">
+ <summary>
+ Adds the template in Caspar
+ </summary>
+ <param name="Layer">The layer number</param>
+ <param name="TemplateName">The name of the template</param>
+ <param name="TemplateData">The Template object to get fields from</param>
+ <param name="Retard">Delay the execution for this amount of milliseconds</param>
  <returns>A ReturnInfo object</returns>
  <remarks>Defaults to DefaultChannel and plays the template after loading</remarks>
 </member>
@@ -291,7 +326,19 @@ CasparObjects
  <returns>A ReturnInfo object</returns>
  <remarks>Defaults to DefaultChannel</remarks>
 </member>
-<member name="M:CasparObjects.CasparCG.CG_Add(System.Int32,System.Int32,System.String,CasparObjects.Template,System.Boolean)">
+<member name="M:CasparObjects.CasparCG.CG_Add(System.Int32,System.String,CasparObjects.Template,System.Boolean,CasparObjects.CasparCG.Retard)">
+ <summary>
+ Adds the template in Caspar
+ </summary>
+ <param name="Layer">The layer number</param>
+ <param name="TemplateName">The name of the template</param>
+ <param name="TemplateData">The Template object to get fields from</param>
+ <param name="AutoPlay">Plays the template after loading if set to true</param>
+ <param name="Retard">Delay the execution for this amount of milliseconds</param>
+ <returns>A ReturnInfo object</returns>
+ <remarks>Defaults to DefaultChannel</remarks>
+</member>
+<member name="M:CasparObjects.CasparCG.CG_Add(System.Int32,System.Int32,System.String,CasparObjects.Template,System.Boolean,System.Int32)">
  <summary>
  Adds the template in Caspar
  </summary>
@@ -300,10 +347,25 @@ CasparObjects
  <param name="TemplateName">The name of the template</param>
  <param name="TemplateData">The Template object to get fields from</param>
  <param name="AutoPlay">Plays the template after loading if set to true</param>
+ <param name="FlashLayer">Optional, use only when absolutely needed</param>
+ <returns>A ReturnInfo object</returns>
+ <remarks>Defaults to DefaultChannel</remarks>
+</member>
+<member name="M:CasparObjects.CasparCG.CG_Add(System.Int32,System.Int32,System.String,CasparObjects.Template,System.Boolean,CasparObjects.CasparCG.Retard,System.Int32)">
+ <summary>
+ Adds the template in Caspar
+ </summary>
+ <param name="Channel">The channel in Caspar</param>
+ <param name="Layer">The layer number</param>
+ <param name="TemplateName">The name of the template</param>
+ <param name="TemplateData">The Template object to get fields from</param>
+ <param name="AutoPlay">Plays the template after loading if set to true</param>
+ <param name="Retard">Delay the execution for this amount of milliseconds</param>
+ <param name="FlashLayer">Optional, use only when absolutely needed</param>
  <returns>A ReturnInfo object</returns>
  <remarks>The main CG_Add Function. Adds a channel and a layer TemplateField to the Fields collection. This is usefull to call back the server via TCP/IP.</remarks>
 </member>
-<member name="M:CasparObjects.CasparCG.CG_Add(System.Int32,System.Int32,System.String,System.String,System.Boolean)">
+<member name="M:CasparObjects.CasparCG.CG_Add(System.Int32,System.Int32,System.String,System.String,System.Boolean,System.Int32)">
  <summary>
  Adds the template in Caspar, using a Dataset
  </summary>
@@ -312,6 +374,21 @@ CasparObjects
  <param name="TemplateName">The name of the template</param>
  <param name="DataSetName">The name of the DataSet already stored on the server</param>
  <param name="AutoPlay">Plays the template after loading if set to true</param>
+ <param name="FlashLayer">Optional, use only when absolutely needed</param>
+ <returns>A ReturnInfo object</returns>
+ <remarks>The CG_Add Function witch uses a DataSet insted on a Template object.</remarks>
+</member>
+<member name="M:CasparObjects.CasparCG.CG_Add(System.Int32,System.Int32,System.String,System.String,System.Boolean,CasparObjects.CasparCG.Retard,System.Int32)">
+ <summary>
+ Adds the template in Caspar, using a Dataset
+ </summary>
+ <param name="Channel">The channel in Caspar</param>
+ <param name="Layer">The layer number</param>
+ <param name="TemplateName">The name of the template</param>
+ <param name="DataSetName">The name of the DataSet already stored on the server</param>
+ <param name="AutoPlay">Plays the template after loading if set to true</param>
+ <param name="Retard">Delay the execution for this amount of milliseconds</param>
+ <param name="FlashLayer">Optional, use only when absolutely needed</param>
  <returns>A ReturnInfo object</returns>
  <remarks>The CG_Add Function witch uses a DataSet insted on a Template object.</remarks>
 </member>
@@ -319,6 +396,14 @@ CasparObjects
  <summary>
  Plays the template in Caspar
  </summary>
+ <returns>A ReturnInfo object</returns>
+ <remarks>Defaults to DefaultChannel DefaultLayer</remarks>
+</member>
+<member name="M:CasparObjects.CasparCG.CG_Play(CasparObjects.CasparCG.Retard)">
+ <summary>
+ Plays the template in Caspar
+ </summary>
+ <param name="Retard">Delay the execution for this amount of milliseconds</param>
  <returns>A ReturnInfo object</returns>
  <remarks>Defaults to DefaultChannel DefaultLayer</remarks>
 </member>
@@ -330,12 +415,33 @@ CasparObjects
  <returns>A ReturnInfo object</returns>
  <remarks>Defaults to DefaultChannel</remarks>
 </member>
-<member name="M:CasparObjects.CasparCG.CG_Play(System.Int32,System.Int32)">
+<member name="M:CasparObjects.CasparCG.CG_Play(System.Int32,CasparObjects.CasparCG.Retard)">
+ <summary>
+ Plays the template in Caspar
+ </summary>
+ <param name="Layer">The layer number</param>
+ <param name="Retard">Delay the execution for this amount of milliseconds</param>
+ <returns>A ReturnInfo object</returns>
+ <remarks>Defaults to DefaultChannel</remarks>
+</member>
+<member name="M:CasparObjects.CasparCG.CG_Play(System.Int32,System.Int32,System.Int32)">
  <summary>
  Plays the template in Caspar
  </summary>
  <param name="Channel">The channel in Caspar</param>
  <param name="Layer">The layer number</param>
+ <param name="FlashLayer">Optional, use only when absolutely needed</param>
+ <returns>A ReturnInfo object</returns>
+ <remarks>The main CG_Play function.</remarks>
+</member>
+<member name="M:CasparObjects.CasparCG.CG_Play(System.Int32,System.Int32,CasparObjects.CasparCG.Retard,System.Int32)">
+ <summary>
+ Plays the template in Caspar
+ </summary>
+ <param name="Channel">The channel in Caspar</param>
+ <param name="Layer">The layer number</param>
+ <param name="Retard">Delay the execution for this amount of milliseconds</param>
+ <param name="FlashLayer">Optional, use only when absolutely needed</param>
  <returns>A ReturnInfo object</returns>
  <remarks>The main CG_Play function.</remarks>
 </member>
@@ -344,6 +450,15 @@ CasparObjects
  Updates the datafields of a template
  </summary>
  <param name="TemplateData">The Template object to get fields from</param>
+ <returns>A ReturnInfo object</returns>
+ <remarks>Defaults to DefaultChannel DefaultLayer</remarks>
+</member>
+<member name="M:CasparObjects.CasparCG.CG_Update(CasparObjects.Template,CasparObjects.CasparCG.Retard)">
+ <summary>
+ Updates the datafields of a template
+ </summary>
+ <param name="TemplateData">The Template object to get fields from</param>
+ <param name="Retard">Delay the execution for this amount of milliseconds</param>
  <returns>A ReturnInfo object</returns>
  <remarks>Defaults to DefaultChannel DefaultLayer</remarks>
 </member>
@@ -356,29 +471,72 @@ CasparObjects
  <returns>A ReturnInfo object</returns>
  <remarks>Defaults to DefaultChannel</remarks>
 </member>
-<member name="M:CasparObjects.CasparCG.CG_Update(System.Int32,System.Int32,CasparObjects.Template)">
+<member name="M:CasparObjects.CasparCG.CG_Update(System.Int32,CasparObjects.Template,CasparObjects.CasparCG.Retard)">
+ <summary>
+ Updates the datafields of a template
+ </summary>
+ <param name="Layer">The layer number</param>
+ <param name="TemplateData">The Template object to get fields from</param>
+ <param name="Retard">Delay the execution for this amount of milliseconds</param>
+ <returns>A ReturnInfo object</returns>
+ <remarks>Defaults to DefaultChannel</remarks>
+</member>
+<member name="M:CasparObjects.CasparCG.CG_Update(System.Int32,System.Int32,CasparObjects.Template,System.Int32)">
  <summary>
  Updates the datafields of a template
  </summary>
  <param name="Channel">The channel in Caspar</param>
  <param name="Layer">The layer number</param>
  <param name="TemplateData">The Template object to get fields from</param>
+ <param name="FlashLayer">Optional, use only when absolutely needed</param>
  <returns>A ReturnInfo object</returns>
  <remarks>The main CG_Play function.</remarks>
 </member>
-<member name="M:CasparObjects.CasparCG.CG_Update(System.Int32,System.Int32,System.String)">
+<member name="M:CasparObjects.CasparCG.CG_Update(System.Int32,System.Int32,CasparObjects.Template,CasparObjects.CasparCG.Retard,System.Int32)">
+ <summary>
+ Updates the datafields of a template
+ </summary>
+ <param name="Channel">The channel in Caspar</param>
+ <param name="Layer">The layer number</param>
+ <param name="TemplateData">The Template object to get fields from</param>
+ <param name="Retard">Delay the execution for this amount of milliseconds</param>
+ <param name="FlashLayer">Optional, use only when absolutely needed</param>
+ <returns>A ReturnInfo object</returns>
+ <remarks>The main CG_Play function.</remarks>
+</member>
+<member name="M:CasparObjects.CasparCG.CG_Update(System.Int32,System.Int32,System.String,System.Int32)">
  <summary>
  Updates the datafields of a template from a Dataset
  </summary>
  <param name="Channel">The channel in Caspar</param>
  <param name="Layer">The layer number</param>
  <param name="DataSetName">The name of the DataSet already stored on the server</param>
+ <param name="FlashLayer">Optional, use only when absolutely needed</param>
+ <returns>A ReturnInfo object</returns>
+</member>
+<member name="M:CasparObjects.CasparCG.CG_Update(System.Int32,System.Int32,System.String,CasparObjects.CasparCG.Retard,System.Int32)">
+ <summary>
+ Updates the datafields of a template from a Dataset
+ </summary>
+ <param name="Channel">The channel in Caspar</param>
+ <param name="Layer">The layer number</param>
+ <param name="DataSetName">The name of the DataSet already stored on the server</param>
+ <param name="Retard">Delay the execution for this amount of milliseconds</param>
+ <param name="FlashLayer">Optional, use only when absolutely needed</param>
  <returns>A ReturnInfo object</returns>
 </member>
 <member name="M:CasparObjects.CasparCG.CG_Stop">
  <summary>
  Stops the display of a template
  </summary>
+ <returns>A ReturnInfo object</returns>
+ <remarks>Defaults to DefaultChannel DefaultLayer</remarks>
+</member>
+<member name="M:CasparObjects.CasparCG.CG_Stop(CasparObjects.CasparCG.Retard)">
+ <summary>
+ Stops the display of a template
+ </summary>
+ <param name="Retard">Delay the execution for this amount of milliseconds</param>
  <returns>A ReturnInfo object</returns>
  <remarks>Defaults to DefaultChannel DefaultLayer</remarks>
 </member>
@@ -390,12 +548,33 @@ CasparObjects
  <returns>A ReturnInfo object</returns>
  <remarks>Defaults to DefaultChannel</remarks>
 </member>
-<member name="M:CasparObjects.CasparCG.CG_Stop(System.Int32,System.Int32)">
+<member name="M:CasparObjects.CasparCG.CG_Stop(System.Int32,CasparObjects.CasparCG.Retard)">
+ <summary>
+ Stops the display of a template
+ </summary>
+ <param name="Layer">The layer number</param>
+ <param name="Retard">Delay the execution for this amount of milliseconds</param>
+ <returns>A ReturnInfo object</returns>
+ <remarks>Defaults to DefaultChannel</remarks>
+</member>
+<member name="M:CasparObjects.CasparCG.CG_Stop(System.Int32,System.Int32,System.Int32)">
  <summary>
  Stops the display of a template
  </summary>
  <param name="Channel">The channel in Caspar</param>
  <param name="Layer">The layer number</param>
+ <param name="FlashLayer">Optional, use only when absolutely needed</param>
+ <returns>A ReturnInfo object</returns>
+ <remarks>The main CG_Stop function.</remarks>
+</member>
+<member name="M:CasparObjects.CasparCG.CG_Stop(System.Int32,System.Int32,CasparObjects.CasparCG.Retard,System.Int32)">
+ <summary>
+ Stops the display of a template
+ </summary>
+ <param name="Channel">The channel in Caspar</param>
+ <param name="Layer">The layer number</param>
+ <param name="Retard">Delay the execution for this amount of milliseconds</param>
+ <param name="FlashLayer">Optional, use only when absolutely needed</param>
  <returns>A ReturnInfo object</returns>
  <remarks>The main CG_Stop function.</remarks>
 </member>
@@ -403,6 +582,14 @@ CasparObjects
  <summary>
  Calls the next step inside a template
  </summary>
+ <returns>A ReturnInfo object</returns>
+ <remarks>Defaults to DefaultChannel DefaultLayer</remarks>
+</member>
+<member name="M:CasparObjects.CasparCG.CG_Next(CasparObjects.CasparCG.Retard)">
+ <summary>
+ Calls the next step inside a template
+ </summary>
+ <param name="Retard">Delay the execution for this amount of milliseconds</param>
  <returns>A ReturnInfo object</returns>
  <remarks>Defaults to DefaultChannel DefaultLayer</remarks>
 </member>
@@ -414,12 +601,33 @@ CasparObjects
  <returns>A ReturnInfo object</returns>
  <remarks>Defaults to DefaultChannel</remarks>
 </member>
-<member name="M:CasparObjects.CasparCG.CG_Next(System.Int32,System.Int32)">
+<member name="M:CasparObjects.CasparCG.CG_Next(System.Int32,CasparObjects.CasparCG.Retard)">
+ <summary>
+ Calls the next step inside a template
+ </summary>
+ <param name="Layer">The layer number</param>
+ <param name="Retard">Delay the execution for this amount of milliseconds</param>
+ <returns>A ReturnInfo object</returns>
+ <remarks>Defaults to DefaultChannel</remarks>
+</member>
+<member name="M:CasparObjects.CasparCG.CG_Next(System.Int32,System.Int32,System.Int32)">
  <summary>
  Calls the next step inside a template
  </summary>
  <param name="Channel">The channel in Caspar</param>
  <param name="Layer">The layer number</param>
+ <param name="FlashLayer">Optional, use only when absolutely needed</param>
+ <returns>A ReturnInfo object</returns>
+ <remarks>The main CG_Next function.</remarks>
+</member>
+<member name="M:CasparObjects.CasparCG.CG_Next(System.Int32,System.Int32,CasparObjects.CasparCG.Retard,System.Int32)">
+ <summary>
+ Calls the next step inside a template
+ </summary>
+ <param name="Channel">The channel in Caspar</param>
+ <param name="Layer">The layer number</param>
+ <param name="Retard">Delay the execution for this amount of milliseconds</param>
+ <param name="FlashLayer">Optional, use only when absolutely needed</param>
  <returns>A ReturnInfo object</returns>
  <remarks>The main CG_Next function.</remarks>
 </member>
@@ -430,6 +638,14 @@ CasparObjects
  <param name="Func">The function to be executed</param>
  <returns>A ReturnInfo object</returns>
 </member>
+<member name="M:CasparObjects.CasparCG.CG_Invoke(System.String,CasparObjects.CasparCG.Retard)">
+ <summary>
+ Invokes a parameterless procedure inside the template
+ </summary>
+ <param name="Func">The function to be executed</param>
+ <param name="Retard">Delay the execution for this amount of milliseconds</param>
+ <returns>A ReturnInfo object</returns>
+</member>
 <member name="M:CasparObjects.CasparCG.CG_Invoke(System.Int32,System.String)">
  <summary>
  Invokes a parameterless procedure inside the template
@@ -438,13 +654,35 @@ CasparObjects
  <param name="Func">The function to be executed</param>
  <returns>A ReturnInfo object</returns>
 </member>
-<member name="M:CasparObjects.CasparCG.CG_Invoke(System.Int32,System.Int32,System.String)">
+<member name="M:CasparObjects.CasparCG.CG_Invoke(System.Int32,System.String,CasparObjects.CasparCG.Retard)">
+ <summary>
+ Invokes a parameterless procedure inside the template
+ </summary>
+ <param name="Layer">The layer number</param>
+ <param name="Func">The function to be executed</param>
+ <param name="Retard">Delay the execution for this amount of milliseconds</param>
+ <returns>A ReturnInfo object</returns>
+</member>
+<member name="M:CasparObjects.CasparCG.CG_Invoke(System.Int32,System.Int32,System.String,System.Int32)">
  <summary>
  Invokes a parameterless procedure inside the template
  </summary>
  <param name="Channel">The channel in Caspar</param>
  <param name="Layer">The layer number</param>
  <param name="Func">The function to be executed</param>
+ <param name="FlashLayer">Optional, use only when absolutely needed</param>
+ <returns>A ReturnInfo object</returns>
+ <remarks>The main CG_Invoke function.</remarks>
+</member>
+<member name="M:CasparObjects.CasparCG.CG_Invoke(System.Int32,System.Int32,System.String,CasparObjects.CasparCG.Retard,System.Int32)">
+ <summary>
+ Invokes a parameterless procedure inside the template
+ </summary>
+ <param name="Channel">The channel in Caspar</param>
+ <param name="Layer">The layer number</param>
+ <param name="Func">The function to be executed</param>
+ <param name="Retard">Delay the execution for this amount of milliseconds</param>
+ <param name="FlashLayer">Optional, use only when absolutely needed</param>
  <returns>A ReturnInfo object</returns>
  <remarks>The main CG_Invoke function.</remarks>
 </member>
@@ -467,6 +705,13 @@ CasparObjects
  <param name="TemplateData">The Template object to get fields from</param>
  <returns>A ReturnInfo object</returns>
  <remarks>A sub Data_Store Function. Adds a channel and a layer TemplateField to the Fields collection. This is usefull to call back the server via TCP/IP.</remarks>
+</member>
+<member name="M:CasparObjects.CasparCG.Data_Retrieve(System.String)">
+ <summary>
+ Get the data contained in a named dataset
+ </summary>
+ <param name="DataSetName">Name of the dataset to retrieve</param>
+ <returns></returns>
 </member>
 <member name="M:CasparObjects.CasparCG.GetDataSets">
  <summary>
@@ -723,11 +968,36 @@ CasparObjects
  <param name="FirstLayer">The fisrt layer to swap</param>
  <param name="SecondLayer">The second layer to swap</param>
 </member>
+<member name="M:CasparObjects.CasparCG.Execute(System.String)">
+ <summary>
+ Sends a command to Caspar for execution
+ </summary>
+ <param name="Command">The command-string</param>
+ <returns>A ReturnInfo object</returns>
+</member>
 <member name="M:CasparObjects.CasparCG.Execute(System.String,System.Boolean)">
  <summary>
  Sends a command to Caspar for execution
  </summary>
  <param name="Command">The command-string</param>
+ <param name="useDelay">Use a delay while waiting for a server response (list commands)</param>
+ <returns>A ReturnInfo object</returns>
+</member>
+<member name="M:CasparObjects.CasparCG.Execute(System.String,CasparObjects.CasparCG.Retard)">
+ <summary>
+ Sends a command to Caspar for execution
+ </summary>
+ <param name="Command">The command-string</param>
+ <param name="Retard">Delay the execution for this amount of milliseconds</param>
+ <returns>A ReturnInfo object</returns>
+</member>
+<member name="M:CasparObjects.CasparCG.Execute(System.String,CasparObjects.CasparCG.Retard,System.Boolean)">
+ <summary>
+ Sends a command to Caspar for execution
+ </summary>
+ <param name="Command">The command-string</param>
+ <param name="Retard">Delay the execution for this amount of milliseconds</param>
+ <param name="useDelay">Use a delay while waiting for a server response (list commands)</param>
  <returns>A ReturnInfo object</returns>
  <remarks>Can be used for any command. See CasparCG's wiki for valid commands</remarks>
 </member>
@@ -1092,6 +1362,11 @@ CasparObjects
  Format TemplateDataText as JSON, if false use XML
  </summary>
 </member>
+<member name="P:CasparObjects.Template.InfoFieldsAdded">
+ <summary>
+ set to True if InfoFields are already added
+ </summary>
+</member>
 <member name="P:CasparObjects.Template.Fields">
  <summary>
  List of filelds
@@ -1132,6 +1407,17 @@ CasparObjects
  <param name="RenderAsElement">Render value as XML element insted of an attribute</param>
  <remarks>Checks for null (Nothing) values</remarks>
 </member>
+<member name="M:CasparObjects.Template.AddField(System.String,System.String,System.Boolean,System.Boolean,CasparObjects.TemplateField.enumAttributeType)">
+ <summary>
+ Add TemplateField to this Template
+ </summary>
+ <param name="Name">Name of the field</param>
+ <param name="Value">Value of the field</param>
+ <param name="Encoding">Enables text encoding for the value</param>
+ <param name="RenderAsElement">Render value as XML element insted of an attribute</param>
+ <param name="AttributeType">The type attribute</param>
+ <remarks>Checks for null (Nothing) values</remarks>
+</member>
 <member name="M:CasparObjects.Template.AddField(System.String,System.Int32)">
  <summary>
  Add TemplateField to this Template
@@ -1162,6 +1448,15 @@ CasparObjects
  <param name="PictureFilename">Full path to the picture file</param>
  <param name="SendAsBase64">Load the file and convert it to Base64 if true, send the filename URI otherwise</param>
 </member>
+<member name="M:CasparObjects.Template.AddPictureField(System.String,System.String,System.Boolean,System.Boolean)">
+ <summary>
+ Add picture field to this Template as URI or as Base64
+ </summary>
+ <param name="Name">Name of the field</param>
+ <param name="PictureFilename">Full path to the picture file</param>
+ <param name="SendAsBase64">Load the file and convert it to Base64 if true, send the filename URI otherwise</param>
+ <param name="SendAsImageAttribute">Send the picture-filename as image attrivute (XML-only)</param>
+</member>
 <member name="M:CasparObjects.Template.AddPictureField(System.String,System.Drawing.Image)">
  <summary>
  Add picture field to this Template as Base64
@@ -1177,6 +1472,11 @@ CasparObjects
  <param name="Name">Name of the field</param>
  <param name="Color">System.Drawing.Color</param>
  <remarks>Formats the color value as hex-string</remarks>
+</member>
+<member name="M:CasparObjects.Template.Clear">
+ <summary>
+ Clear the list of fields
+ </summary>
 </member>
 <member name="M:CasparObjects.Template.ToString">
  <summary>
@@ -1219,6 +1519,12 @@ CasparObjects
  Render the value as an XML Element instead of a Value attribute. Only works in XML.
  </summary>
 </member>
+<member name="P:CasparObjects.TemplateField.AttributeType">
+ <summary>
+ Set the type attribute for this value. Only works in XML.
+ </summary>
+ <returns></returns>
+</member>
 <member name="M:CasparObjects.TemplateField.ToString">
  <summary>
  Formated ToString function
@@ -1245,7 +1551,7 @@ CasparObjects
  </summary>
  <param name="Name">Name of the attachement => name of the attribute.</param>
  <param name="Value">Value of the attachement => value of the attribute.</param>
- <param name="Encoding">Text encoding for the value</param>
+ <param name="EncodeAsHTML">Text encoding for the value</param>
 </member>
 <member name="M:CasparObjects.TemplateField.#ctor(System.String)">
  <summary>
@@ -1260,13 +1566,30 @@ CasparObjects
  <param name="Name">The name of the field</param>
  <param name="Value">The value of the field</param>
 </member>
+<member name="M:CasparObjects.TemplateField.#ctor(System.String,System.String,CasparObjects.TemplateField.enumAttributeType)">
+ <summary>
+ Constructor
+ </summary>
+ <param name="Name">The name of the field</param>
+ <param name="Value">The value of the field</param>
+ <param name="Type">The type attribute</param>
+</member>
 <member name="M:CasparObjects.TemplateField.#ctor(System.String,System.String,System.Boolean)">
  <summary>
  Constructor
  </summary>
  <param name="Name">The name of the field</param>
  <param name="Value">The value of the field</param>
- <param name="Encoding">Enables text encoding for the value</param>
+ <param name="EncodeAsHTML">Enables text encoding for the value</param>
+</member>
+<member name="M:CasparObjects.TemplateField.#ctor(System.String,System.String,System.Boolean,CasparObjects.TemplateField.enumAttributeType)">
+ <summary>
+ Constructor
+ </summary>
+ <param name="Name">The name of the field</param>
+ <param name="Value">The value of the field</param>
+ <param name="EncodeAsHTML">Enables text encoding for the value</param>
+ <param name="Type">The type attribute</param>
 </member>
 <member name="M:CasparObjects.TemplateField.#ctor(System.String,System.String,System.Boolean,System.Boolean)">
  <summary>
@@ -1274,8 +1597,18 @@ CasparObjects
  </summary>
  <param name="Name">The name of the field</param>
  <param name="Value">The value of the field</param>
- <param name="Encoding">Enables text encoding for the value</param>
+ <param name="EncodeAsHTML">Enables text encoding for the value</param>
  <param name="RenderAsElement">Render value as XML element insted of an attribute</param>
+</member>
+<member name="M:CasparObjects.TemplateField.#ctor(System.String,System.String,System.Boolean,System.Boolean,CasparObjects.TemplateField.enumAttributeType)">
+ <summary>
+ Constructor
+ </summary>
+ <param name="Name">The name of the field</param>
+ <param name="Value">The value of the field</param>
+ <param name="EncodeAsHTML">Enables text encoding for the value</param>
+ <param name="RenderAsElement">Render value as XML element insted of an attribute</param>
+ <param name="Type">The type attribute</param>
 </member>
 </members>
 </doc>
