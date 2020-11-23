@@ -7,5 +7,5 @@ You can download the setup program from [here][1] and the documentation from [he
 
 Open source, licensed under the Apache License.
 
-[1]: https://www.dropbox.com/s/j1mie3c4vrre58d/CasparCGAddIn_Setup.exe?dl=0 "Installer for MS Excel"
+[1]: https://www.dropbox.com/s/gc8x12qz7g9am52/CasparCGAddInSetup.zip?dl=0 "Installer for MS Excel"
 [2]: https://www.dropbox.com/s/zm2xc2ulyfrysf8/CasparCG_AddIn.pdf?dl=0 "Documentation"
