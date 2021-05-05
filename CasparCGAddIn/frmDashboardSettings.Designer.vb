@@ -35,11 +35,18 @@ Partial Class frmDashboardSettings
       Me.txtFields = New System.Windows.Forms.TextBox()
       Me.gbControls = New System.Windows.Forms.GroupBox()
       Me.cboControlSet = New System.Windows.Forms.ComboBox()
+      Me.GroupBox1 = New System.Windows.Forms.GroupBox()
+      Me.Label1 = New System.Windows.Forms.Label()
+      Me.cboAutoClearEffect = New System.Windows.Forms.ComboBox()
+      Me.Label2 = New System.Windows.Forms.Label()
+      Me.nudAutoClearEffectDuration = New System.Windows.Forms.NumericUpDown()
       Me.gbLive.SuspendLayout()
       CType(Me.nudLayer, System.ComponentModel.ISupportInitialize).BeginInit()
       CType(Me.nudChannel, System.ComponentModel.ISupportInitialize).BeginInit()
       Me.gbDatafields.SuspendLayout()
       Me.gbControls.SuspendLayout()
+      Me.GroupBox1.SuspendLayout()
+      CType(Me.nudAutoClearEffectDuration, System.ComponentModel.ISupportInitialize).BeginInit()
       Me.SuspendLayout()
       '
       'btnCancel
@@ -145,7 +152,7 @@ Partial Class frmDashboardSettings
       Me.gbDatafields.Controls.Add(Me.txtFields)
       Me.gbDatafields.Location = New System.Drawing.Point(12, 179)
       Me.gbDatafields.Name = "gbDatafields"
-      Me.gbDatafields.Size = New System.Drawing.Size(391, 199)
+      Me.gbDatafields.Size = New System.Drawing.Size(391, 133)
       Me.gbDatafields.TabIndex = 13
       Me.gbDatafields.TabStop = False
       Me.gbDatafields.Text = "Create-List-Datafields:"
@@ -159,7 +166,7 @@ Partial Class frmDashboardSettings
       Me.txtFields.Multiline = True
       Me.txtFields.Name = "txtFields"
       Me.txtFields.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
-      Me.txtFields.Size = New System.Drawing.Size(376, 172)
+      Me.txtFields.Size = New System.Drawing.Size(376, 106)
       Me.txtFields.TabIndex = 0
       '
       'gbControls
@@ -184,6 +191,54 @@ Partial Class frmDashboardSettings
       Me.cboControlSet.Size = New System.Drawing.Size(376, 21)
       Me.cboControlSet.TabIndex = 8
       '
+      'GroupBox1
+      '
+      Me.GroupBox1.Controls.Add(Me.nudAutoClearEffectDuration)
+      Me.GroupBox1.Controls.Add(Me.Label2)
+      Me.GroupBox1.Controls.Add(Me.cboAutoClearEffect)
+      Me.GroupBox1.Controls.Add(Me.Label1)
+      Me.GroupBox1.Location = New System.Drawing.Point(12, 323)
+      Me.GroupBox1.Name = "GroupBox1"
+      Me.GroupBox1.Size = New System.Drawing.Size(391, 58)
+      Me.GroupBox1.TabIndex = 15
+      Me.GroupBox1.TabStop = False
+      Me.GroupBox1.Text = "Auto-Clear"
+      '
+      'Label1
+      '
+      Me.Label1.AutoSize = True
+      Me.Label1.Location = New System.Drawing.Point(6, 16)
+      Me.Label1.Name = "Label1"
+      Me.Label1.Size = New System.Drawing.Size(38, 13)
+      Me.Label1.TabIndex = 0
+      Me.Label1.Text = "Effect:"
+      '
+      'cboAutoClearEffect
+      '
+      Me.cboAutoClearEffect.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+      Me.cboAutoClearEffect.FormattingEnabled = True
+      Me.cboAutoClearEffect.Items.AddRange(New Object() {"CUT", "MIX"})
+      Me.cboAutoClearEffect.Location = New System.Drawing.Point(9, 32)
+      Me.cboAutoClearEffect.Name = "cboAutoClearEffect"
+      Me.cboAutoClearEffect.Size = New System.Drawing.Size(183, 21)
+      Me.cboAutoClearEffect.TabIndex = 1
+      '
+      'Label2
+      '
+      Me.Label2.AutoSize = True
+      Me.Label2.Location = New System.Drawing.Point(199, 16)
+      Me.Label2.Name = "Label2"
+      Me.Label2.Size = New System.Drawing.Size(50, 13)
+      Me.Label2.TabIndex = 2
+      Me.Label2.Text = "Duration:"
+      '
+      'nudAutoClearEffectDuration
+      '
+      Me.nudAutoClearEffectDuration.Location = New System.Drawing.Point(198, 32)
+      Me.nudAutoClearEffectDuration.Name = "nudAutoClearEffectDuration"
+      Me.nudAutoClearEffectDuration.Size = New System.Drawing.Size(187, 20)
+      Me.nudAutoClearEffectDuration.TabIndex = 3
+      '
       'frmDashboardSettings
       '
       Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -191,6 +246,7 @@ Partial Class frmDashboardSettings
       Me.BackColor = System.Drawing.SystemColors.Control
       Me.CancelButton = Me.btnOk
       Me.ClientSize = New System.Drawing.Size(415, 424)
+      Me.Controls.Add(Me.GroupBox1)
       Me.Controls.Add(Me.gbControls)
       Me.Controls.Add(Me.gbDatafields)
       Me.Controls.Add(Me.gbLive)
@@ -209,6 +265,9 @@ Partial Class frmDashboardSettings
       Me.gbDatafields.ResumeLayout(False)
       Me.gbDatafields.PerformLayout()
       Me.gbControls.ResumeLayout(False)
+      Me.GroupBox1.ResumeLayout(False)
+      Me.GroupBox1.PerformLayout()
+      CType(Me.nudAutoClearEffectDuration, System.ComponentModel.ISupportInitialize).EndInit()
       Me.ResumeLayout(False)
 
    End Sub
@@ -226,4 +285,9 @@ Partial Class frmDashboardSettings
    Friend WithEvents txtFields As System.Windows.Forms.TextBox
    Friend WithEvents gbControls As System.Windows.Forms.GroupBox
    Friend WithEvents cboControlSet As System.Windows.Forms.ComboBox
+   Friend WithEvents GroupBox1 As System.Windows.Forms.GroupBox
+   Friend WithEvents cboAutoClearEffect As System.Windows.Forms.ComboBox
+   Friend WithEvents Label1 As System.Windows.Forms.Label
+   Friend WithEvents nudAutoClearEffectDuration As System.Windows.Forms.NumericUpDown
+   Friend WithEvents Label2 As System.Windows.Forms.Label
 End Class

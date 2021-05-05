@@ -1,6 +1,7 @@
 ﻿Imports Microsoft.Office.Interop.Excel
 Imports CasparObjects
 Imports System.Windows.Forms
+Imports System.Globalization
 
 Public Class frmSheetProperties
 
@@ -91,6 +92,23 @@ Public Class frmSheetProperties
 
    Private Sub frmSheetProperties_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
+      MyColorThemes.Loader.Load(Me, _Settings.Theme)
+
+      For Each s As String In [Enum].GetNames(GetType(TimerItem.enumQueryValues))
+
+         s = System.Text.RegularExpressions.Regex.Replace(s, "([A-Z])", " $1").Trim()
+
+         cboTimerQueryValue_1.Items.Add(s)
+         cboTimerQueryValue_2.Items.Add(s)
+         cboTimerQueryValue_3.Items.Add(s)
+         cboTimerQueryValue_4.Items.Add(s)
+         cboTimerQueryValue_5.Items.Add(s)
+         cboTimerQueryValue_6.Items.Add(s)
+         cboTimerQueryValue_7.Items.Add(s)
+         cboTimerQueryValue_8.Items.Add(s)
+
+      Next
+
       'DataSet
       txtDataSetName.Text = CustomProperties.Load(_wrkSheet, "DataSetName", _wrkSheet.Name)
 
@@ -143,8 +161,8 @@ Public Class frmSheetProperties
          Dim sh As String = wrk.Name.ToString.Trim
          If sh <> _wrkSheet.Name.Trim Then
             cboSheetToAppend.Items.Add(sh)
-            cboSlaveWorksheet.Items.Add(sh)
          End If
+         cboSlaveWorksheet.Items.Add(sh)
       Next
 
       Dim sheetToAppend As String = CustomProperties.Load(_wrkSheet, "SheetToAppend", "")
@@ -168,7 +186,10 @@ Public Class frmSheetProperties
          rbLive.Checked = True
       End If
 
-      cboServers.SelectedIndex = CustomProperties.Load(_wrkSheet, "ServerNumber", 0)
+      Dim si As Integer = CustomProperties.Load(_wrkSheet, "ServerNumber", 0)
+      If si < cboServers.Items.Count Then
+         cboServers.SelectedIndex = si
+      End If
 
       nudChannel.Value = CustomProperties.Load(_wrkSheet, "Channel", 1)
 
@@ -185,13 +206,16 @@ Public Class frmSheetProperties
          nudLayer.Width = 183
       End If
 
-      Dim slaveSheet As String = CustomProperties.Load(_wrkSheet, "SlaveWorksheet", "")
+      Dim slaveSheet As String = CustomProperties.Load(_wrkSheet, "SlaveWorksheet", "").Trim
       For c As Integer = 0 To cboSlaveWorksheet.Items.Count - 1
          If cboSlaveWorksheet.Items(c) = slaveSheet Then
             cboSlaveWorksheet.SelectedIndex = c
             Exit For
          End If
       Next
+
+      nudSlaveChannel.Value = CustomProperties.Load(_wrkSheet, "SlaveChannel", CInt(nudChannel.Value) + 1)
+      nudSlaveChannel.Enabled = (slaveSheet = _wrkSheet.Name.Trim)
 
       'Templates
       If _CasparCG IsNot Nothing AndAlso _CasparCG.Connected Then
@@ -222,6 +246,7 @@ Public Class frmSheetProperties
       End If
 
       cboControlSet.SelectedIndex = CustomProperties.Load(_wrkSheet, "ControlsSet", 6)
+      chkShowInDashboard.Checked = CustomProperties.Load(_wrkSheet, "ShowInDashboard", True)
 
       'Queries
       chkRefreshQueries.Checked = CustomProperties.Load(_wrkSheet, "UpdateQueries", False)
@@ -297,6 +322,7 @@ Public Class frmSheetProperties
             cboTimerItem_6.Items.Add(item.Name)
             cboTimerItem_7.Items.Add(item.Name)
             cboTimerItem_8.Items.Add(item.Name)
+            cboTimerTrigger.Items.Add(item.Name)
          Next
 
          If _TimerSheet IsNot Nothing Then
@@ -326,9 +352,24 @@ Public Class frmSheetProperties
                FillTimerControls(_TimerSheet.Fields(7), txtTimerField_8, cboTimerItem_8, cboTimerQueryValue_8)
             End If
 
+            txtTimerInvoke.Text = _TimerSheet.OnTimeInvoke
+
+            For c As Integer = 0 To cboTimerTrigger.Items.Count - 1
+               If _TimerSheet.OnTimeTimer = cboTimerTrigger.Items(c) Then
+                  cboTimerTrigger.SelectedIndex = c
+                  Exit For
+               End If
+            Next
+
          End If
 
       End If
+
+      'Web-Download
+      cboDownloadSource.Text = CustomProperties.Load(_wrkSheet, "DownloadSource", "A")
+      cboDownloadDest.Text = CustomProperties.Load(_wrkSheet, "DownloadDestination", "B")
+      ptbDownloadPath.Path = CustomProperties.Load(_wrkSheet, "DownloadPath", "")
+
 
       Select Case _DialogMode
          Case enumDialogMode.ModeCommon
@@ -440,10 +481,14 @@ Public Class frmSheetProperties
          If _Settings.UseFlashLayers Then
             CustomProperties.Save(_wrkSheet, "FlashLayer", nudFlashLayer.Value.ToString)
          End If
+
          CustomProperties.Save(_wrkSheet, "ControlsSet", cboControlSet.SelectedIndex.ToString)
+         CustomProperties.Save(_wrkSheet, "ShowInDashboard", IIf(chkShowInDashboard.Checked, "1", "0"))
+
          If cboSlaveWorksheet.SelectedIndex > -1 Then
             CustomProperties.Save(_wrkSheet, "SlaveWorksheet", cboSlaveWorksheet.Items(cboSlaveWorksheet.SelectedIndex))
          End If
+         CustomProperties.Save(_wrkSheet, "SlaveChannel", nudSlaveChannel.Value.ToString)
       End If
 
       'Queries
@@ -501,9 +546,20 @@ Public Class frmSheetProperties
                _TimerSheet.Fields.Add(New TimerField(txtTimerField_8.Text, cboTimerItem_8.Items(cboTimerItem_8.SelectedIndex), cboTimerQueryValue_8.SelectedIndex))
             End If
 
+            _TimerSheet.OnTimeInvoke = txtTimerInvoke.Text
+
+            If cboTimerTrigger.SelectedIndex > -1 Then
+               _TimerSheet.OnTimeTimer = cboTimerTrigger.Items(cboTimerTrigger.SelectedIndex)
+            End If
+
          End If
 
       End If
+
+      'Web-Download
+      CustomProperties.Save(_wrkSheet, "DownloadSource", cboDownloadSource.Text)
+      CustomProperties.Save(_wrkSheet, "DownloadDestination", cboDownloadDest.Text)
+      CustomProperties.Save(_wrkSheet, "DownloadPath", ptbDownloadPath.Path)
 
    End Sub
 
@@ -523,11 +579,16 @@ Public Class frmSheetProperties
    Private Sub btnChangeTemplatePath_Click(sender As Object, e As EventArgs) Handles btnChangeTemplatePath.Click
 
       Dim fctp As frmChangeTemplatePath = New frmChangeTemplatePath
+      fctp.Settings = _Settings
       fctp.wrkSheet = _wrkSheet
       fctp.CasparCG = _CasparCG
 
       fctp.ShowDialog(Me)
 
+   End Sub
+
+   Private Sub cboSlaveWorksheet_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboSlaveWorksheet.SelectedIndexChanged
+      nudSlaveChannel.Enabled = (cboSlaveWorksheet.Items(cboSlaveWorksheet.SelectedIndex).ToString.Trim = _wrkSheet.Name.Trim)
    End Sub
 
    Private Sub SetVariables(dveString As String)
@@ -556,15 +617,19 @@ Public Class frmSheetProperties
    End Sub
 
    Private Function GetVariables() As String
-      Return String.Format("{0:F6} {1:F6} {2:F6} {3:F6}", _x, _y, _w, _h)
+      Return String.Format(CultureInfo.InvariantCulture, "{0:F6} {1:F6} {2:F6} {3:F6}", _x, _y, _w, _h)
    End Function
 
    Private Sub DVEPreview()
       If Not rbNone.Checked Then
          If rbProgram.Checked Then
-            _CasparCG.Mixer_Fill(CInt(nudChannel.Value), CInt(nudLayer.Value), GetVariables())
+            If _CasparCG IsNot Nothing AndAlso _CasparCG.Connected Then
+               _CasparCG.Mixer_Fill(CInt(nudChannel.Value), CInt(nudLayer.Value), GetVariables())
+            End If
          Else
-            _CasparCG.Mixer_Fill(_Settings.PreviewChannel, 20, GetVariables())
+            If _CasparCG IsNot Nothing AndAlso _CasparCG.Connected Then
+               _CasparCG.Mixer_Fill(_Settings.PreviewChannel, 20, GetVariables())
+            End If
          End If
       End If
       lblCorrdinates.Text = String.Format("{0:###0}, {1:###0} - {2:###0}, {3:###0}", _xRes * _x, _yRes * _y, _xRes * _w, _yRes * _h)
@@ -664,6 +729,9 @@ Public Class frmSheetProperties
 
    Private Sub MoveButtoms_MouseUp(sender As Object, e As MouseEventArgs) Handles btnFastUp.MouseUp, btnFastDown.MouseUp, btnFastLeft.MouseUp, btnFastRight.MouseUp, btnDown.MouseUp, btnLeft.MouseUp, btnRight.MouseUp, btnUp.MouseUp, btnZoomFastIn.MouseUp, btnZoomFastOut.MouseUp, btnZoomIn.MouseUp, btnZoomOut.MouseUp
       _moveTimer.Stop()
+      If _moveTimer.Interval = _delay Then
+         DoMovement()
+      End If
       _movement = enumMoveDirection.mdNone
    End Sub
 
@@ -681,10 +749,7 @@ Public Class frmSheetProperties
       DVEPreview()
    End Sub
 
-   Private Sub _moveTimer_Tick(sender As Object, e As EventArgs) Handles _moveTimer.Tick
-
-      _moveTimer.Stop()
-      _moveTimer.Interval = _speed
+   Private Sub DoMovement()
 
       Select Case _movement
          Case enumMoveDirection.mdLeft
@@ -726,6 +791,15 @@ Public Class frmSheetProperties
       End Select
 
       DVEPreview()
+
+   End Sub
+
+   Private Sub _moveTimer_Tick(sender As Object, e As EventArgs) Handles _moveTimer.Tick
+
+      _moveTimer.Stop()
+      _moveTimer.Interval = _speed
+
+      DoMovement()
 
       If _movement <> enumMoveDirection.mdNone Then
          _moveTimer.Start()

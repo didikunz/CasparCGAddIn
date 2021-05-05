@@ -6,23 +6,6 @@ CasparCGAddIn
 </name>
 </assembly>
 <members>
-<member name="M:CasparCGAddIn.CustomXML.Save(Microsoft.Office.Interop.Excel.Workbook,System.String,System.String)">
- <summary>
- Saves an XML, that is serialized into a string
- </summary>
- <param name="wrkBook">The workbook to save in</param>
- <param name="id">The Guid as string</param>
- <param name="XML">The serialized xml</param>
- <returns>The id. Always when you save a new id is returned</returns>
-</member>
-<member name="M:CasparCGAddIn.CustomXML.Load(Microsoft.Office.Interop.Excel.Workbook,System.String)">
- <summary>
- Loads a XML string from a workbook
- </summary>
- <param name="wrkBook">The workbook to load from</param>
- <param name="id">The Guid as string</param>
- <returns>The serialized xml</returns>
-</member>
 <member name="T:CasparCGAddIn.My.Resources.Resources">
 <summary>
   Eine stark typisierte Ressourcenklasse zum Suchen von lokalisierten Zeichenfolgen usw.
@@ -349,7 +332,27 @@ CasparCGAddIn
   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
 </summary>
 </member>
+<member name="P:CasparCGAddIn.My.Resources.Resources.Timer_SetOffset">
+<summary>
+  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+</summary>
+</member>
 <member name="P:CasparCGAddIn.My.Resources.Resources.Timer_Start">
+<summary>
+  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:CasparCGAddIn.My.Resources.Resources.Timer_Start_s">
+<summary>
+  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:CasparCGAddIn.My.Resources.Resources.Timer_StartOffset">
+<summary>
+  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:CasparCGAddIn.My.Resources.Resources.Timer_StartOffset_S">
 <summary>
   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
 </summary>
@@ -359,7 +362,17 @@ CasparCGAddIn
   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
 </summary>
 </member>
+<member name="P:CasparCGAddIn.My.Resources.Resources.Timer_Stop_s">
+<summary>
+  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+</summary>
+</member>
 <member name="P:CasparCGAddIn.My.Resources.Resources.TimerPane">
+<summary>
+  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:CasparCGAddIn.My.Resources.Resources.Web_Download">
 <summary>
   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
 </summary>
@@ -368,6 +381,23 @@ CasparCGAddIn
 <summary>
   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
 </summary>
+</member>
+<member name="M:CasparCGAddIn.CustomXML.Save(Microsoft.Office.Interop.Excel.Workbook,System.String,System.String)">
+ <summary>
+ Saves an XML, that is serialized into a string
+ </summary>
+ <param name="wrkBook">The workbook to save in</param>
+ <param name="id">The Guid as string</param>
+ <param name="XML">The serialized xml</param>
+ <returns>The id. Always when you save a new id is returned</returns>
+</member>
+<member name="M:CasparCGAddIn.CustomXML.Load(Microsoft.Office.Interop.Excel.Workbook,System.String)">
+ <summary>
+ Loads a XML string from a workbook
+ </summary>
+ <param name="wrkBook">The workbook to load from</param>
+ <param name="id">The Guid as string</param>
+ <returns>The serialized xml</returns>
 </member>
 <member name="T:CasparCGAddIn.ThisRibbonCollection">
 
@@ -436,7 +466,12 @@ CasparCGAddIn
  Used to save data
  </summary>
 </member>
-<member name="M:CasparCGAddIn.TimerItem.StartTimer">
+<member name="E:CasparCGAddIn.TimerItem.TimeTrigger">
+ <summary>
+ Fired when OnTimeTime has expired.
+ </summary>
+</member>
+<member name="M:CasparCGAddIn.TimerItem.StartTimer(System.TimeSpan)">
  <summary>
  Initialize all variables, start the timer and save the data.
  </summary>
@@ -451,6 +486,11 @@ CasparCGAddIn
  Pause the Timer
  </summary>
 </member>
+<member name="M:CasparCGAddIn.TimerItem.UnPauseTimer">
+ <summary>
+ Resumes the timer from pause
+ </summary>
+</member>
 <member name="M:CasparCGAddIn.TimerItem.StopTimer">
  <summary>
  Stop the timer and save data.
@@ -461,19 +501,24 @@ CasparCGAddIn
  Fires every second. Used to update the graphics.
  </summary>
 </member>
+<member name="E:CasparCGAddIn.TimerSettings.TimeTrigger">
+ <summary>
+ Fired when OnTimeTime of a timer has expired.
+ </summary>
+</member>
 <member name="E:CasparCGAddIn.TimerSettings.SaveTimerData">
  <summary>
  Used to save data
  </summary>
 </member>
-<member name="M:CasparCGAddIn.ucDashboard.CommandEvent(System.Object,CasparCGAddIn.ucPlaybackButtons.CommandkEventArgs)">
+<member name="M:CasparCGAddIn.ucDashboard.CommandEvent(System.Object,CasparCGAddIn.ucPlaybackButtons.CommandEventArgs)">
  <summary>
  Handles the worksheet based PlaybackButtons
  </summary>
  <param name="sender">Event source</param>
  <param name="e">Indicates the workshhet to use and what commnad to be executed</param>
 </member>
-<member name="M:CasparCGAddIn.ucDashboard.pbPlaybackButtons_CommandEvent(System.Object,CasparCGAddIn.ucPlaybackButtons.CommandkEventArgs)">
+<member name="M:CasparCGAddIn.ucDashboard.pbPlaybackButtons_CommandEvent(System.Object,CasparCGAddIn.ucPlaybackButtons.CommandEventArgs)">
  <summary>
  Handles the dashboards own PlaybackButtons
  </summary>

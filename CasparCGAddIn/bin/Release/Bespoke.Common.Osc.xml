@@ -1,0 +1,948 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Bespoke.Common.Osc</name>
+    </assembly>
+    <members>
+        <member name="T:Bespoke.Common.Osc.OscBundle">
+            <summary>
+            Represents a bundle of <see cref="T:Bespoke.Common.Osc.OscMessage"/> and other <see cref="T:Bespoke.Common.Osc.OscBundle"/> objects.
+            </summary>
+        </member>
+        <member name="P:Bespoke.Common.Osc.OscBundle.IsBundle">
+            <summary>
+            Specifies if the packet is an OSC bundle.
+            </summary>
+        </member>
+        <member name="P:Bespoke.Common.Osc.OscBundle.TimeStamp">
+            <summary>
+            Gets the creation time of the bundle.
+            </summary>
+        </member>
+        <member name="P:Bespoke.Common.Osc.OscBundle.Bundles">
+            <summary>
+            Gets the array of nested bundles.
+            </summary>
+        </member>
+        <member name="P:Bespoke.Common.Osc.OscBundle.Messages">
+            <summary>
+            Gets the array of contained messages.
+            </summary>
+        </member>
+        <member name="M:Bespoke.Common.Osc.OscBundle.#ctor(System.Net.IPEndPoint,Bespoke.Common.Osc.OscClient)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Bespoke.Common.Osc.OscBundle"/> class.
+            </summary>
+            <param name="sourceEndPoint">The packet origin.</param>
+            <param name="client">The destination of sent packets when using TransportType.Tcp.</param>
+        </member>
+        <member name="M:Bespoke.Common.Osc.OscBundle.#ctor(System.Net.IPEndPoint,Bespoke.Common.Osc.OscTimeTag,Bespoke.Common.Osc.OscClient)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Bespoke.Common.Osc.OscBundle"/> class.
+            </summary>
+            <param name="sourceEndPoint">The packet origin.</param>
+            <param name="timeStamp">The creation time of the bundle.</param>
+            <param name="client">The destination of sent packets when using TransportType.Tcp.</param>
+        </member>
+        <member name="M:Bespoke.Common.Osc.OscBundle.ToByteArray">
+            <summary>
+            Serialize the packet.
+            </summary>
+            <returns>The newly serialized packet.</returns>
+        </member>
+        <member name="M:Bespoke.Common.Osc.OscBundle.FromByteArray(System.Net.IPEndPoint,System.Byte[],System.Int32@,System.Int32)">
+            <summary>
+            Deserialize the packet.
+            </summary>
+            <param name="sourceEndPoint">The packet origin.</param>
+            <param name="data">The serialized packet.</param>
+            <param name="start">The starting index into the serialized data stream.</param>
+            <param name="end">The ending index into the serialized data stream.</param>
+            <returns>The newly deserialized packet.</returns>
+        </member>
+        <member name="M:Bespoke.Common.Osc.OscBundle.Append``1(``0)">
+            <summary>
+            Appends a value to the packet.
+            </summary>
+            <typeparam name="T">The type of object being appended.</typeparam>
+            <param name="value">The value to append.</param>
+            <returns>The index of the newly added value within the Data property.</returns>
+            <remarks>The value must be of type OscPacket.</remarks>
+        </member>
+        <member name="T:Bespoke.Common.Osc.OscBundleReceivedEventArgs">
+            <summary>
+            Arguments for bundle received events.
+            </summary>
+        </member>
+        <member name="P:Bespoke.Common.Osc.OscBundleReceivedEventArgs.Bundle">
+            <summary>
+            Gets the <see cref="T:Bespoke.Common.Osc.OscBundle"/> received.
+            </summary>
+        </member>
+        <member name="M:Bespoke.Common.Osc.OscBundleReceivedEventArgs.#ctor(Bespoke.Common.Osc.OscBundle)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Bespoke.Common.Osc.OscBundleReceivedEventArgs"/> class.
+            </summary>
+            <param name="bundle">The <see cref="T:Bespoke.Common.Osc.OscBundle"/> received.</param>
+        </member>
+        <member name="T:Bespoke.Common.Osc.OscClient">
+            <summary>
+            Represents a TCP/IP client-side connection.
+            </summary>
+        </member>
+        <member name="E:Bespoke.Common.Osc.OscClient.PacketReceived">
+            <summary>
+            Raised when an OscPacket is received.
+            </summary>
+        </member>
+        <member name="E:Bespoke.Common.Osc.OscClient.BundleReceived">
+            <summary>
+            Raised when an OscBundle is received.
+            </summary>
+        </member>
+        <member name="E:Bespoke.Common.Osc.OscClient.MessageReceived">
+            <summary>
+            Raised when an OscMessage is received.
+            </summary>
+        </member>
+        <member name="E:Bespoke.Common.Osc.OscClient.ReceiveErrored">
+            <summary>
+            Raised when an error occurs during the reception of a packet.
+            </summary>
+        </member>
+        <member name="P:Bespoke.Common.Osc.OscClient.RemoteIPAddress">
+            <summary>
+            Gets the IP address of the server-side of the connection.
+            </summary>
+        </member>
+        <member name="P:Bespoke.Common.Osc.OscClient.RemotePort">
+            <summary>
+            Gets the port of the server-side of the connection.
+            </summary>
+        </member>
+        <member name="P:Bespoke.Common.Osc.OscClient.Connection">
+            <summary>
+            Gets the underlying <see cref="T:Bespoke.Common.Net.TcpConnection"/>.
+            </summary>
+        </member>
+        <member name="P:Bespoke.Common.Osc.OscClient.IsConnected">
+            <summary>
+            Gets ths connected status of the underlying Tcp socket.
+            </summary>
+        </member>
+        <member name="P:Bespoke.Common.Osc.OscClient.RegisteredMethods">
+            <summary>
+            Gets all registered Osc methods (address patterns).
+            </summary>
+        </member>
+        <member name="P:Bespoke.Common.Osc.OscClient.FilterRegisteredMethods">
+            <summary>
+            Specifies if incoming Osc messages should be filtered against the registered methods.
+            </summary>
+        </member>
+        <member name="P:Bespoke.Common.Osc.OscClient.ConsumeParsingExceptions">
+            <summary>
+            Gets or sets the handling of parsing exceptions.
+            </summary>
+        </member>
+        <member name="M:Bespoke.Common.Osc.OscClient.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Bespoke.Common.Osc.OscClient"/> class.
+            </summary>
+        </member>
+        <member name="M:Bespoke.Common.Osc.OscClient.#ctor(Bespoke.Common.Net.TcpConnection)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Bespoke.Common.Osc.OscClient"/> class.
+            </summary>
+            <param name="connection">The <see cref="T:Bespoke.Common.Net.TcpConnection"/> object associated with this instance.</param>
+        </member>
+        <member name="M:Bespoke.Common.Osc.OscClient.#ctor(System.Net.IPEndPoint)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Bespoke.Common.Osc.OscClient"/> class.
+            </summary>
+            <param name="serverEndPoint">The server-side endpoint of the connection.</param>
+        </member>
+        <member name="M:Bespoke.Common.Osc.OscClient.#ctor(System.Net.IPAddress,System.Int32,System.Boolean)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Bespoke.Common.Osc.OscClient"/> class.
+            </summary>
+            <param name="serverIPAddress">The server-side IP address of the connection.</param>
+            <param name="serverPort">The server-side port of the connection.</param>
+            <param name="consumeParsingExceptions">Specifies the behavior of handling parsing exceptions.</param>
+        </member>
+        <member name="M:Bespoke.Common.Osc.OscClient.Connect">
+            <summary>
+            Connect to the previously specified server-side endpoint.
+            </summary>
+        </member>
+        <member name="M:Bespoke.Common.Osc.OscClient.Connect(System.Net.IPEndPoint)">
+            <summary>
+            Connect to the previously specified server-side endpoint.
+            </summary>
+            <param name="serverEndPoint">The server-side endpoint to connect to.</param>
+        </member>
+        <member name="M:Bespoke.Common.Osc.OscClient.Connect(System.Net.IPAddress,System.Int32)">
+            <summary>
+            Connect to a server.
+            </summary>
+            <param name="serverIPAddress">The server-side IP address to connect to.</param>
+            <param name="serverPort">The server-side port to connect to.</param>
+        </member>
+        <member name="M:Bespoke.Common.Osc.OscClient.Close">
+            <summary>
+            Close the connection.
+            </summary>
+        </member>
+        <member name="M:Bespoke.Common.Osc.OscClient.Send(Bespoke.Common.Osc.OscPacket)">
+            <summary>
+            Send an OscPacket over the connection.
+            </summary>
+            <param name="packet">The <see cref="T:Bespoke.Common.Osc.OscPacket"/> to send.</param>
+        </member>
+        <member name="M:Bespoke.Common.Osc.OscClient.RegisterMethod(System.String)">
+            <summary>
+            Register an Osc method.
+            </summary>
+            <param name="method">The Osc address pattern to register.</param>
+        </member>
+        <member name="M:Bespoke.Common.Osc.OscClient.UnRegisterMethod(System.String)">
+            <summary>
+            Unregister an Osc method.
+            </summary>
+            <param name="method">The Osc address pattern to unregister.</param>
+        </member>
+        <member name="M:Bespoke.Common.Osc.OscClient.ClearMethods">
+            <summary>
+            Unregister all Osc methods.
+            </summary>
+        </member>
+        <member name="M:Bespoke.Common.Osc.OscClient.mTcpServer_DataReceived(System.Object,Bespoke.Common.Net.TcpDataReceivedEventArgs)">
+            <summary>
+            Process data received events.
+            </summary>
+            <param name="sender">The sender of the event.</param>
+            <param name="e">An EventArgs object that contains the event data.</param>
+        </member>
+        <member name="M:Bespoke.Common.Osc.OscClient.DataReceived(Bespoke.Common.Net.TcpConnection,System.Net.IPEndPoint,System.Byte[])">
+            <summary>
+            Process the data received event.
+            </summary>
+            <param name="connection">The <see cref="T:Bespoke.Common.Net.TcpConnection" /> object associated with this data.</param>
+            <param name="sourceEndPoint">The source endpoint.</param>
+            <param name="data">The received data.</param>
+        </member>
+        <member name="M:Bespoke.Common.Osc.OscClient.OnPacketReceived(Bespoke.Common.Osc.OscPacket)">
+            <summary>
+            Raises the <see cref="E:Bespoke.Common.Osc.OscClient.PacketReceived"/> event.
+            </summary>
+            <param name="packet">The packet to include in the event arguments.</param>
+        </member>
+        <member name="M:Bespoke.Common.Osc.OscClient.OnBundleReceived(Bespoke.Common.Osc.OscBundle)">
+            <summary>
+            Raises the <see cref="E:Bespoke.Common.Osc.OscClient.BundleReceived"/> event.
+            </summary>
+            <param name="bundle">The packet to include in the event arguments.</param>
+        </member>
+        <member name="M:Bespoke.Common.Osc.OscClient.OnMessageReceived(Bespoke.Common.Osc.OscMessage)">
+            <summary>
+            Raises the <see cref="E:Bespoke.Common.Osc.OscClient.MessageReceived"/> event.
+            </summary>
+            <param name="message">The message to include in the event arguments.</param>
+        </member>
+        <member name="M:Bespoke.Common.Osc.OscClient.OnReceiveErrored(System.Exception)">
+            <summary>
+            Raises the <see cref="E:Bespoke.Common.Osc.OscClient.ReceiveErrored"/> event.
+            </summary>
+            <param name="ex">The associated exception.</param>
+        </member>
+        <member name="T:Bespoke.Common.Osc.OscMessage">
+            <summary>
+            Represents an Osc Message packet.
+            </summary>
+        </member>
+        <member name="P:Bespoke.Common.Osc.OscMessage.IsBundle">
+            <summary>
+            Specifies if the packet is an Osc bundle.
+            </summary>
+        </member>
+        <member name="M:Bespoke.Common.Osc.OscMessage.#ctor(System.Net.IPEndPoint,System.String,System.Object)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Bespoke.Common.Osc.OscMessage"/> class.
+            </summary>
+            <param name="sourceEndPoint">The packet origin.</param>
+            <param name="address">The Osc address pattern.</param>
+            <param name="value">A value to append to the message.</param>
+        </member>
+        <member name="M:Bespoke.Common.Osc.OscMessage.#ctor(System.Net.IPEndPoint,System.String,Bespoke.Common.Osc.OscClient)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Bespoke.Common.Osc.OscMessage"/> class.
+            </summary>
+            <param name="sourceEndPoint">The packet origin.</param>
+            <param name="address">The Osc address pattern.</param>
+            <param name="client">The destination of sent packets when using TransportType.Tcp.</param>
+        </member>
+        <member name="M:Bespoke.Common.Osc.OscMessage.ToByteArray">
+            <summary>
+            Serialize the packet.
+            </summary>
+            <returns>The newly serialized packet.</returns>
+        </member>
+        <member name="M:Bespoke.Common.Osc.OscMessage.FromByteArray(System.Net.IPEndPoint,System.Byte[],System.Int32@)">
+            <summary>
+            Deserialize the packet.
+            </summary>
+            <param name="sourceEndPoint">The packet origin.</param>
+            <param name="data">The serialized packet.</param>
+            <param name="start">The starting index into the serialized data stream.</param>
+            <returns>The newly deserialized packet.</returns>
+        </member>
+        <member name="M:Bespoke.Common.Osc.OscMessage.Append``1(``0)">
+            <summary>
+            Appends a value to the message.
+            </summary>
+            <typeparam name="T">The type of object being appended.</typeparam>
+            <param name="value">The value to append.</param>
+            <returns>The index of the newly appended Data value.</returns>
+        </member>
+        <member name="M:Bespoke.Common.Osc.OscMessage.AppendNil">
+            <summary>
+            Appends a Nil value to the message.
+            </summary>
+            <returns>The index of the newly appended Data value.</returns>
+        </member>
+        <member name="M:Bespoke.Common.Osc.OscMessage.UpdateDataAt(System.Int32,System.Object)">
+            <summary>
+            Update a value within the message at the specified index.
+            </summary>
+            <param name="index">The zero-based index of the element to update.</param>
+            <param name="value">The value to update the element with.</param>
+        </member>
+        <member name="M:Bespoke.Common.Osc.OscMessage.ClearData">
+            <summary>
+            Remove all data from the message.
+            </summary>
+        </member>
+        <member name="F:Bespoke.Common.Osc.OscMessage.AddressPrefix">
+            <summary>
+            The prefix required by Osc address patterns.
+            </summary>
+        </member>
+        <member name="F:Bespoke.Common.Osc.OscMessage.DefaultTag">
+            <summary>
+            The beginning character in an Osc message type tag.
+            </summary>
+        </member>
+        <member name="F:Bespoke.Common.Osc.OscMessage.IntegerTag">
+            <summary>
+            The type tag for a 32-bit integer.
+            </summary>
+        </member>
+        <member name="F:Bespoke.Common.Osc.OscMessage.FloatTag">
+            <summary>
+            The type tag for an floating point value.
+            </summary>
+        </member>
+        <member name="F:Bespoke.Common.Osc.OscMessage.LongTag">
+            <summary>
+            The type tag for a 64-bit integer.
+            </summary>
+        </member>
+        <member name="F:Bespoke.Common.Osc.OscMessage.DoubleTag">
+            <summary>
+            The type tag for an double-precision floating point value.
+            </summary>
+        </member>
+        <member name="F:Bespoke.Common.Osc.OscMessage.StringTag">
+            <summary>
+            The type tag for a string.
+            </summary>
+        </member>
+        <member name="F:Bespoke.Common.Osc.OscMessage.SymbolTag">
+            <summary>
+            The type tag for a symbol.
+            </summary>
+        </member>
+        <member name="F:Bespoke.Common.Osc.OscMessage.BlobTag">
+            <summary>
+            The type tag for a blob (binary large object -- byte array).
+            </summary>
+        </member>
+        <member name="F:Bespoke.Common.Osc.OscMessage.TimeTag">
+            <summary>
+            The type tag for an Osc Time Tag.
+            </summary>
+        </member>
+        <member name="F:Bespoke.Common.Osc.OscMessage.CharacterTag">
+            <summary>
+            The type tag for an ASCII character (sent as a 32-bit int).
+            </summary>
+        </member>
+        <member name="F:Bespoke.Common.Osc.OscMessage.ColorTag">
+            <summary>
+            The type tag for a 32-bit RGBA color;
+            </summary>
+        </member>
+        <member name="F:Bespoke.Common.Osc.OscMessage.TrueTag">
+            <summary>
+            The type tag for True. No bytes are allocated in the argument data.
+            </summary>
+        </member>
+        <member name="F:Bespoke.Common.Osc.OscMessage.FalseTag">
+            <summary>
+            The type tag for False. No bytes are allocated in the argument data.
+            </summary>
+        </member>
+        <member name="F:Bespoke.Common.Osc.OscMessage.NilTag">
+            <summary>
+            The type tag for Nil. No bytes are allocated in the argument data.
+            </summary>
+        </member>
+        <member name="F:Bespoke.Common.Osc.OscMessage.InfinitumTag">
+            <summary>
+            The type tag for inifinitum. No bytes are allocated in the argument data.
+            </summary>
+        </member>
+        <member name="T:Bespoke.Common.Osc.OscMessageReceivedEventArgs">
+            <summary>
+            Arguments for message received events.
+            </summary>
+        </member>
+        <member name="P:Bespoke.Common.Osc.OscMessageReceivedEventArgs.Message">
+            <summary>
+            Gets the <see cref="T:Bespoke.Common.Osc.OscMessage"/> received.
+            </summary>
+        </member>
+        <member name="M:Bespoke.Common.Osc.OscMessageReceivedEventArgs.#ctor(Bespoke.Common.Osc.OscMessage)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Bespoke.Common.Osc.OscMessageReceivedEventArgs"/> class.
+            </summary>
+            <param name="message">The <see cref="T:Bespoke.Common.Osc.OscMessage"/> received.</param>
+        </member>
+        <member name="T:Bespoke.Common.Osc.OscPacket">
+            <summary>
+            Represents the base unit of transmission for the Open Sound Control protocol.
+            </summary>
+        </member>
+        <member name="P:Bespoke.Common.Osc.OscPacket.LittleEndianByteOrder">
+            <summary>
+            Gets or sets the expected endianness of integral value types.
+            </summary>
+            <remarks>Defaults to false (big endian).</remarks>
+        </member>
+        <member name="P:Bespoke.Common.Osc.OscPacket.UdpClient">
+            <summary>
+            Gets or sets the UDP client used for sending packets with TransportType.Udp.
+            </summary>
+            <remarks>Unused for Tcp trasport.</remarks>
+        </member>
+        <member name="P:Bespoke.Common.Osc.OscPacket.IsBundle">
+            <summary>
+            Specifies if the packet is an OSC bundle.
+            </summary>
+        </member>
+        <member name="P:Bespoke.Common.Osc.OscPacket.SourceEndPoint">
+            <summary>
+            Gets the origin of the packet.
+            </summary>
+        </member>
+        <member name="P:Bespoke.Common.Osc.OscPacket.Address">
+            <summary>
+            Gets the Osc address pattern.
+            </summary>
+        </member>
+        <member name="P:Bespoke.Common.Osc.OscPacket.Data">
+            <summary>
+            Gets the contents of the packet.
+            </summary>
+        </member>
+        <member name="P:Bespoke.Common.Osc.OscPacket.Client">
+            <summary>
+            Gets or sets the destination of sent packets when using TransportType.Tcp.
+            </summary>
+            <remarks>Unused for Udp transport.</remarks>
+        </member>
+        <member name="M:Bespoke.Common.Osc.OscPacket.#cctor">
+            <summary>
+            Initialize static members.
+            </summary>
+        </member>
+        <member name="M:Bespoke.Common.Osc.OscPacket.#ctor(System.Net.IPEndPoint,System.String,Bespoke.Common.Osc.OscClient)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Bespoke.Common.Osc.OscPacket"/> class.
+            </summary>
+            <param name="sourceEndPoint">The packet origin.</param>
+            <param name="address">The OSC address pattern.</param>
+            <param name="client">The destination of sent packets when using TransportType.Tcp.</param>
+        </member>
+        <member name="M:Bespoke.Common.Osc.OscPacket.Append``1(``0)">
+            <summary>
+            Appends a value to the packet.
+            </summary>
+            <typeparam name="T">The type of object being appended.</typeparam>
+            <param name="value">The value to append.</param>
+            <returns>The index of the newly added value within the Data property.</returns>
+            <returns>The index of the newly appended value.</returns>
+        </member>
+        <member name="M:Bespoke.Common.Osc.OscPacket.At``1(System.Int32)">
+            <summary>
+            Return a entry in the packet.
+            </summary>
+            <typeparam name="T">The type of value expected at index.</typeparam>
+            <param name="index">The index within the data array.</param>
+            <exception cref="T:System.IndexOutOfRangeException">Thrown if specified index is out of range.</exception>
+            <exception cref="T:System.InvalidCastException">Thrown if the specified T is incompatible with the data at index.</exception>
+            <returns>The entry at the specified index.</returns>
+        </member>
+        <member name="M:Bespoke.Common.Osc.OscPacket.ToByteArray">
+            <summary>
+            Serialize the packet.
+            </summary>
+            <returns>The newly serialized packet.</returns>
+        </member>
+        <member name="M:Bespoke.Common.Osc.OscPacket.FromByteArray(System.Net.IPEndPoint,System.Byte[])">
+            <summary>
+            Deserialize the packet.
+            </summary>
+            <param name="sourceEndPoint">The packet origin.</param>
+            <param name="data">The serialized packet.</param>
+            <returns>The newly deserialized packet.</returns>
+        </member>
+        <member name="M:Bespoke.Common.Osc.OscPacket.FromByteArray(System.Net.IPEndPoint,System.Byte[],System.Int32@,System.Int32)">
+            <summary>
+            Deserialize the packet.
+            </summary>
+            <param name="sourceEndPoint">The packet origin.</param>
+            <param name="data">The serialized packet.</param>
+            <param name="start">The starting index into the serialized data stream.</param>
+            <param name="end">The ending index into the serialized data stream.</param>
+            <returns>The newly deserialized packet.</returns>
+        </member>
+        <member name="M:Bespoke.Common.Osc.OscPacket.Send(Bespoke.Common.Osc.OscPacket,System.Net.IPEndPoint)">
+            <summary>
+            Transmit an Osc packet via UDP.
+            </summary>
+            <param name="packet">The packet to transmit.</param>
+            <param name="destination">The packet's destination.</param>
+        </member>
+        <member name="M:Bespoke.Common.Osc.OscPacket.Send(Bespoke.Common.Osc.OscPacket,Bespoke.Common.Osc.OscClient)">
+            <summary>
+            Transmit an Osc packet via TCP through the connected OscClient.
+            </summary>
+            <param name="packet">The packet to transmit.</param>
+            <param name="client">The OscClient to communicate through.</param>
+            <remarks>The OscClient must be connected for successful transmission.</remarks>
+        </member>
+        <member name="M:Bespoke.Common.Osc.OscPacket.Send(System.Net.IPEndPoint)">
+            <summary>
+            Transmit an Osc packet via UDP.
+            </summary>
+            <param name="destination">The packet's destination.</param>
+        </member>
+        <member name="M:Bespoke.Common.Osc.OscPacket.Send(System.Net.IPEndPoint,System.Net.IPEndPoint)">
+            <summary>
+            Transmit an Osc packet via UDP.
+            </summary>
+            <param name="source">The source end point.</param>
+            <param name="destination">The packet's destination.</param>
+            <remarks>Instantiates a UdpClient object to bind to the specified source endpoint.</remarks>
+        </member>
+        <member name="M:Bespoke.Common.Osc.OscPacket.Send">
+            <summary>
+            Transmit an OSC packet via TCP through the connected <see cref="T:Bespoke.Common.Osc.OscClient"/>.
+            </summary>
+            <remarks>The OscClient must be connected for successful transmission.</remarks>
+            <exception cref="T:System.ArgumentNullException"><see cref="P:Bespoke.Common.Osc.OscPacket.Client"/> is null.</exception>
+        </member>
+        <member name="M:Bespoke.Common.Osc.OscPacket.ValueFromByteArray``1(System.Byte[],System.Int32@)">
+            <summary>
+            Deserialize a value.
+            </summary>
+            <typeparam name="T">The value's data type.</typeparam>
+            <param name="data">The serialized data source.</param>
+            <param name="start">The starting index into the serialized data stream.</param>
+            <returns>The newly deserialized value.</returns>
+        </member>
+        <member name="M:Bespoke.Common.Osc.OscPacket.ValueToByteArray``1(``0)">
+            <summary>
+            Serialize a value.
+            </summary>
+            <typeparam name="T">The value's data type.</typeparam>
+            <param name="value">The value to serialize.</param>
+            <returns>The serialized version of the value.</returns>
+        </member>
+        <member name="M:Bespoke.Common.Osc.OscPacket.PadNull(System.Collections.Generic.List{System.Byte})">
+            <summary>
+            Pad a series of 0-3 null (zero) values.
+            </summary>
+            <param name="data">The source data to pad.</param>
+        </member>
+        <member name="F:Bespoke.Common.Osc.OscPacket.mAddress">
+            <summary>
+            The OSC address pattern.
+            </summary>
+        </member>
+        <member name="F:Bespoke.Common.Osc.OscPacket.mData">
+            <summary>
+            The contents of the packet.
+            </summary>
+        </member>
+        <member name="T:Bespoke.Common.Osc.OscPacketReceivedEventArgs">
+            <summary>
+            Arguments for packet received events.
+            </summary>
+        </member>
+        <member name="P:Bespoke.Common.Osc.OscPacketReceivedEventArgs.Packet">
+            <summary>
+            Gets the <see cref="T:Bespoke.Common.Osc.OscPacket"/> received.
+            </summary>
+        </member>
+        <member name="M:Bespoke.Common.Osc.OscPacketReceivedEventArgs.#ctor(Bespoke.Common.Osc.OscPacket)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Bespoke.Common.Osc.OscMessageReceivedEventArgs"/> class.
+            </summary>
+            <param name="packet">The <see cref="T:Bespoke.Common.Osc.OscPacket"/> received.</param>
+        </member>
+        <member name="T:Bespoke.Common.Osc.OscServer">
+            <summary>
+            Listens for and processes incoming Open Sound Control packets.
+            </summary>
+        </member>
+        <member name="E:Bespoke.Common.Osc.OscServer.PacketReceived">
+            <summary>
+            Raised when an OscPacket is received.
+            </summary>
+        </member>
+        <member name="E:Bespoke.Common.Osc.OscServer.BundleReceived">
+            <summary>
+            Raised when an OscBundle is received.
+            </summary>
+        </member>
+        <member name="E:Bespoke.Common.Osc.OscServer.MessageReceived">
+            <summary>
+            Raised when an OscMessage is received.
+            </summary>
+        </member>
+        <member name="E:Bespoke.Common.Osc.OscServer.ReceiveErrored">
+            <summary>
+            Raised when an error occurs during the reception of a packet.
+            </summary>
+        </member>
+        <member name="P:Bespoke.Common.Osc.OscServer.TransportType">
+            <summary>
+            Gets the selected transport type.
+            </summary>
+        </member>
+        <member name="P:Bespoke.Common.Osc.OscServer.IPAddress">
+            <summary>
+            Gets the local IP address the server is bound to.
+            </summary>
+            <remarks>Not used for UDP multicast.</remarks>
+        </member>
+        <member name="P:Bespoke.Common.Osc.OscServer.Port">
+            <summary>
+            Gets the local port number the server is bound to.
+            </summary>
+        </member>
+        <member name="P:Bespoke.Common.Osc.OscServer.IPEndPoint">
+            <summary>
+            Gets the local IP endpoint the server is bound to.
+            </summary>
+        </member>
+        <member name="P:Bespoke.Common.Osc.OscServer.MulticastAddress">
+            <summary>
+            (Optional) Gets the multicast IP address the server is a member of.
+            </summary>
+            <remarks>Not used for UDP unicast.</remarks>
+        </member>
+        <member name="P:Bespoke.Common.Osc.OscServer.RegisteredMethods">
+            <summary>
+            Gets all registered Osc methods (address patterns).
+            </summary>
+        </member>
+        <member name="P:Bespoke.Common.Osc.OscServer.FilterRegisteredMethods">
+            <summary>
+            Specifies if incoming Osc messages should be filtered against the registered methods.
+            </summary>
+        </member>
+        <member name="P:Bespoke.Common.Osc.OscServer.TransmissionType">
+            <summary>
+            Gets the transmission type being used by the server.
+            </summary>
+        </member>
+        <member name="P:Bespoke.Common.Osc.OscServer.IsRunning">
+            <summary>
+            Gets the status of the server.
+            </summary>
+        </member>
+        <member name="P:Bespoke.Common.Osc.OscServer.ConsumeParsingExceptions">
+            <summary>
+            Gets or sets the handling of parsing exceptions.
+            </summary>
+        </member>
+        <member name="M:Bespoke.Common.Osc.OscServer.#ctor(System.Net.TransportType,System.Net.IPAddress,System.Int32,System.Boolean)">
+            <summary>
+            Creates a new instance of OscServer.
+            </summary>
+            <param name="transportType">The underlying transport protocol.</param>
+            <param name="ipAddress">The local IP address to bind to.</param>
+            <param name="port">The UDP port to bind to.</param>
+            <param name="consumeParsingExceptions">Specifies the behavior of handling parsing exceptions.</param>
+            <remarks>TransmissionType.Unicast.</remarks>
+        </member>
+        <member name="M:Bespoke.Common.Osc.OscServer.#ctor(System.Net.IPAddress,System.Int32,System.Boolean)">
+            <summary>
+            Creates a new instance of OscServer.
+            </summary>
+            <param name="multicastAddress">The multicast IP address to join.</param>
+            <param name="port">The UDP port to bind to.</param>
+            <param name="consumeParsingExceptions">Specifies the behavior of handling parsing exceptions.</param>
+            <remarks>TransmissionType.Multicast.</remarks>
+        </member>
+        <member name="M:Bespoke.Common.Osc.OscServer.#ctor(System.Net.IPAddress,System.Int32,Bespoke.Common.Net.TransmissionType,System.Boolean)">
+            <summary>
+            Creates a new instance of OscServer.
+            </summary>
+            <param name="ipAddress">The local IP address to bind to.</param>
+            <param name="port">The UDP port to bind to.</param>
+            <param name="transmissionType">The transmission type for the server to use.</param>
+            <param name="consumeParsingExceptions">Specifies the behavior of handling parsing exceptions.</param>
+            <remarks>Use this constructor for TransportType.Udp, and any TransmissionType except Multicast.</remarks>
+        </member>
+        <member name="M:Bespoke.Common.Osc.OscServer.#ctor(System.Net.TransportType,System.Net.IPAddress,System.Int32,System.Net.IPAddress,Bespoke.Common.Net.TransmissionType,System.Boolean)">
+            <summary>
+            Creates a new instance of OscServer.
+            </summary>
+            <param name="transportType">The underlying transport protocol.</param>
+            <param name="ipAddress">The local IP address to bind to.</param>
+            <param name="port">The UDP port to bind to.</param>
+            <param name="multicastAddress">The multicast IP address to join.</param>
+            <param name="transmissionType">The transmission type for the server to use.</param>
+            <param name="consumeParsingExceptions">Specifies the behavior of handling parsing exceptions.</param>
+            <remarks>If ipAddress is specified, Unicast; otherwise, if multicastAddress is specified, Multicast.</remarks>
+        </member>
+        <member name="M:Bespoke.Common.Osc.OscServer.Start">
+            <summary>
+            Start listening for incoming Osc packets.
+            </summary>
+            <remarks>This is a non-blocking (asynchronous) call.</remarks>
+        </member>
+        <member name="M:Bespoke.Common.Osc.OscServer.Stop">
+            <summary>
+            Stop listening for Osc packets.
+            </summary>
+        </member>
+        <member name="M:Bespoke.Common.Osc.OscServer.RegisterMethod(System.String)">
+            <summary>
+            Register an Osc method.
+            </summary>
+            <param name="method">The Osc address pattern to register.</param>
+        </member>
+        <member name="M:Bespoke.Common.Osc.OscServer.UnRegisterMethod(System.String)">
+            <summary>
+            Unregister an Osc method.
+            </summary>
+            <param name="method">The Osc address pattern to unregister.</param>
+        </member>
+        <member name="M:Bespoke.Common.Osc.OscServer.ClearMethods">
+            <summary>
+            Unregister all Osc methods.
+            </summary>
+        </member>
+        <member name="M:Bespoke.Common.Osc.OscServer.mUdpServer_DataReceived(System.Object,Bespoke.Common.Net.UdpDataReceivedEventArgs)">
+            <summary>
+            Process data received events.
+            </summary>
+            <param name="sender">The sender of the event.</param>
+            <param name="e">An EventArgs object that contains the event data.</param>
+        </member>
+        <member name="M:Bespoke.Common.Osc.OscServer.mTcpServer_DataReceived(System.Object,Bespoke.Common.Net.TcpDataReceivedEventArgs)">
+            <summary>
+            Process data received events.
+            </summary>
+            <param name="sender">The sender of the event.</param>
+            <param name="e">An EventArgs object that contains the event data.</param>
+        </member>
+        <member name="M:Bespoke.Common.Osc.OscServer.DataReceived(Bespoke.Common.Net.TcpConnection,System.Net.IPEndPoint,System.Byte[])">
+            <summary>
+            Process the data received event.
+            </summary>
+            <param name="connection">The <see cref="T:Bespoke.Common.Net.TcpConnection" /> object associated with this data.</param>
+            <param name="sourceEndPoint">The source endpoint.</param>
+            <param name="data">The received data.</param>
+        </member>
+        <member name="M:Bespoke.Common.Osc.OscServer.OnPacketReceived(Bespoke.Common.Osc.OscPacket)">
+            <summary>
+            Raises the <see cref="E:Bespoke.Common.Osc.OscServer.PacketReceived"/> event.
+            </summary>
+            <param name="packet">The packet to include in the event arguments.</param>
+        </member>
+        <member name="M:Bespoke.Common.Osc.OscServer.OnBundleReceived(Bespoke.Common.Osc.OscBundle)">
+            <summary>
+            Raises the <see cref="E:Bespoke.Common.Osc.OscServer.BundleReceived"/> event.
+            </summary>
+            <param name="bundle">The packet to include in the event arguments.</param>
+        </member>
+        <member name="M:Bespoke.Common.Osc.OscServer.OnMessageReceived(Bespoke.Common.Osc.OscMessage)">
+            <summary>
+            Raises the <see cref="E:Bespoke.Common.Osc.OscServer.MessageReceived"/> event.
+            </summary>
+            <param name="message">The message to include in the event arguments.</param>
+        </member>
+        <member name="M:Bespoke.Common.Osc.OscServer.OnReceiveErrored(System.Exception)">
+            <summary>
+            Raises the <see cref="E:Bespoke.Common.Osc.OscServer.ReceiveErrored"/> event.
+            </summary>
+            <param name="ex">The associated exception.</param>
+        </member>
+        <member name="T:Bespoke.Common.Osc.OscTimeTag">
+            <summary>
+            Represents an Osc Time Tag.
+            </summary>
+        </member>
+        <member name="F:Bespoke.Common.Osc.OscTimeTag.Epoch">
+            <summary>
+            Osc Time Epoch (January 1, 1900 00:00:00).
+            </summary>
+        </member>
+        <member name="F:Bespoke.Common.Osc.OscTimeTag.MinValue">
+            <summary>
+            Minimum Osc Time Tag.
+            </summary>
+        </member>
+        <member name="P:Bespoke.Common.Osc.OscTimeTag.SecondsSinceEpoch">
+            <summary>
+            Gets the first 32 bits of the Osc Time Tag. Specifies the number of seconds since the epoch.
+            </summary>
+        </member>
+        <member name="P:Bespoke.Common.Osc.OscTimeTag.FractionalSecond">
+            <summary>
+            Gets the last 32 bits of the Osc Time Tag. Specifies the fractional part of a second.
+            </summary>
+        </member>
+        <member name="P:Bespoke.Common.Osc.OscTimeTag.DateTime">
+            <summary>
+            Gets the Osc Time Tag as a DateTime value.
+            </summary>
+        </member>
+        <member name="M:Bespoke.Common.Osc.OscTimeTag.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Bespoke.Common.Osc.OscTimeTag"/> class.
+            </summary>
+            <remarks>Defaults the Osc Time Tag value to DateTime.Now.</remarks>
+        </member>
+        <member name="M:Bespoke.Common.Osc.OscTimeTag.#ctor(System.DateTime)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Bespoke.Common.Osc.OscTimeTag"/> class.
+            </summary>
+            <param name="timeStamp">The time stamp to use to set the Osc Time Tag.</param>
+        </member>
+        <member name="M:Bespoke.Common.Osc.OscTimeTag.#ctor(System.Byte[])">
+            <summary>
+            Initializes a new instance of the <see cref="T:Bespoke.Common.Osc.OscTimeTag"/> class.
+            </summary>
+            <param name="data">The time stamp to use to set the Osc Time Tag.</param>
+        </member>
+        <member name="M:Bespoke.Common.Osc.OscTimeTag.Equals(Bespoke.Common.Osc.OscTimeTag,Bespoke.Common.Osc.OscTimeTag)">
+            <summary>
+            Determines whether two specified instances of OscTimeTag are equal.
+            </summary>
+            <param name="lhs">An OscTimeTag.</param>
+            <param name="rhs">An OscTimeTag.</param>
+            <returns>true if lhs and rhs represent the same time tag; otherwise, false.</returns>
+        </member>
+        <member name="M:Bespoke.Common.Osc.OscTimeTag.op_Equality(Bespoke.Common.Osc.OscTimeTag,Bespoke.Common.Osc.OscTimeTag)">
+            <summary>
+            Determines whether two specified instances of OscTimeTag are equal.
+            </summary>
+            <param name="lhs">An OscTimeTag.</param>
+            <param name="rhs">An OscTimeTag.</param>
+            <returns>true if lhs and rhs represent the same time tag; otherwise, false.</returns>
+        </member>
+        <member name="M:Bespoke.Common.Osc.OscTimeTag.op_Inequality(Bespoke.Common.Osc.OscTimeTag,Bespoke.Common.Osc.OscTimeTag)">
+            <summary>
+            Determines whether two specified instances of OscTimeTag are not equal.
+            </summary>
+            <param name="lhs">An OscTimeTag.</param>
+            <param name="rhs">An OscTimeTag.</param>
+            <returns>true if lhs and rhs do not represent the same time tag; otherwise, false.</returns>
+        </member>
+        <member name="M:Bespoke.Common.Osc.OscTimeTag.op_LessThan(Bespoke.Common.Osc.OscTimeTag,Bespoke.Common.Osc.OscTimeTag)">
+            <summary>
+            Determines whether one specified <see cref="T:Bespoke.Common.Osc.OscTimeTag"/> is less than another specified <see cref="T:Bespoke.Common.Osc.OscTimeTag"/>.
+            </summary>
+            <param name="lhs">An OscTimeTag.</param>
+            <param name="rhs">An OscTimeTag.</param>
+            <returns>true if lhs is less than rhs; otherwise, false.</returns>        
+        </member>
+        <member name="M:Bespoke.Common.Osc.OscTimeTag.op_LessThanOrEqual(Bespoke.Common.Osc.OscTimeTag,Bespoke.Common.Osc.OscTimeTag)">
+            <summary>
+            Determines whether one specified <see cref="T:Bespoke.Common.Osc.OscTimeTag"/> is less than or equal to another specified <see cref="T:Bespoke.Common.Osc.OscTimeTag"/>.
+            </summary>
+            <param name="lhs">An OscTimeTag.</param>
+            <param name="rhs">An OscTimeTag.</param>
+            <returns>true if lhs is less than or equal to rhs; otherwise, false.</returns>        
+        </member>
+        <member name="M:Bespoke.Common.Osc.OscTimeTag.op_GreaterThan(Bespoke.Common.Osc.OscTimeTag,Bespoke.Common.Osc.OscTimeTag)">
+            <summary>
+            Determines whether one specified <see cref="T:Bespoke.Common.Osc.OscTimeTag"/> is greater than another specified <see cref="T:Bespoke.Common.Osc.OscTimeTag"/>.
+            </summary>
+            <param name="lhs">An OscTimeTag.</param>
+            <param name="rhs">An OscTimeTag.</param>
+            <returns>true if lhs is greater than rhs; otherwise, false.</returns>        
+        </member>
+        <member name="M:Bespoke.Common.Osc.OscTimeTag.op_GreaterThanOrEqual(Bespoke.Common.Osc.OscTimeTag,Bespoke.Common.Osc.OscTimeTag)">
+            <summary>
+            Determines whether one specified <see cref="T:Bespoke.Common.Osc.OscTimeTag"/> is greater than or equal to another specified <see cref="T:Bespoke.Common.Osc.OscTimeTag"/>.
+            </summary>
+            <param name="lhs">An OscTimeTag.</param>
+            <param name="rhs">An OscTimeTag.</param>
+            <returns>true if lhs is greater than or equal to rhs; otherwise, false.</returns>        
+        </member>
+        <member name="M:Bespoke.Common.Osc.OscTimeTag.IsValidTime(System.DateTime)">
+            <summary>
+            Validates the time stamp for use in an Osc Time Tag.
+            </summary>
+            <param name="timeStamp">The time stamp to validate.</param>
+            <returns>True if the time stamp is a valid Osc Time Tag; false, otherwise.</returns>
+            <remarks>Time stamps must be greater-than-or-equal to <see cref="F:Bespoke.Common.Osc.OscTimeTag.MinValue"/>.</remarks>
+        </member>
+        <member name="M:Bespoke.Common.Osc.OscTimeTag.Set(System.DateTime)">
+            <summary>
+            Sets the value of the Osc Time Tag.
+            </summary>
+            <param name="timeStamp">The time stamp to use to set the Osc Time Tag.</param>
+        </member>
+        <member name="M:Bespoke.Common.Osc.OscTimeTag.ToByteArray">
+            <summary>
+            Convert the Osc Time Tag to a byte array.
+            </summary>
+            <returns>A byte array containing the Osc Time Tag.</returns>
+        </member>
+        <member name="M:Bespoke.Common.Osc.OscTimeTag.Equals(System.Object)">
+            <summary>
+            Returns a value indicating whether this instance is equal to a specified object.
+            </summary>
+            <param name="value">An object to compare to this instance.</param>
+            <returns>true if value is an instance of System.DateTime and equals the value of this instance; otherwise, false.</returns>
+        </member>
+        <member name="M:Bespoke.Common.Osc.OscTimeTag.Equals(Bespoke.Common.Osc.OscTimeTag)">
+            <summary>
+            Returns a value indicating whether this instance is equal to a specified OscTimeTag instance.
+            </summary>
+            <param name="value">An object to compare to this instance.</param>
+            <returns>true if value is an instance of System.DateTime and equals the value of this instance; otherwise, false.</returns>
+        </member>
+        <member name="M:Bespoke.Common.Osc.OscTimeTag.GetHashCode">
+            <summary>
+            Returns the hash code for this instance.
+            </summary>
+            <returns>A 32-bit signed integer hash code.</returns>
+        </member>
+        <member name="M:Bespoke.Common.Osc.OscTimeTag.ToString">
+            <summary>
+            Converts the value of the current <see cref="T:Bespoke.Common.Osc.OscTimeTag"/> object to its equivalent string representation.
+            </summary>
+            <returns>A string representation of the value of the current <see cref="T:Bespoke.Common.Osc.OscTimeTag"/> object.</returns>
+        </member>
+    </members>
+</doc>

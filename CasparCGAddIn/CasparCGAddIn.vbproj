@@ -26,18 +26,41 @@
     <OutputType>Library</OutputType>
     <RootNamespace>CasparCGAddIn</RootNamespace>
     <AssemblyName>CasparCGAddIn</AssemblyName>
-    <LoadBehavior>3</LoadBehavior>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <DefineConstants>VSTO40</DefineConstants>
     <StartupObject>
     </StartupObject>
+    <IsWebBootstrapper>False</IsWebBootstrapper>
     <BootstrapperEnabled>true</BootstrapperEnabled>
-    <BootstrapperComponentsLocation>HomeSite</BootstrapperComponentsLocation>
+    <PublishUrl>veröffentlichen\</PublishUrl>
+    <InstallUrl />
+    <TargetCulture>de</TargetCulture>
+    <ApplicationVersion>1.0.0.0</ApplicationVersion>
+    <AutoIncrementApplicationRevision>true</AutoIncrementApplicationRevision>
+    <UpdateEnabled>true</UpdateEnabled>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>days</UpdateIntervalUnits>
+    <ProductName>CasparCGAddIn</ProductName>
+    <PublisherName />
+    <SupportUrl />
+    <FriendlyName>CasparCGAddIn</FriendlyName>
+    <OfficeApplicationDescription />
+    <LoadBehavior>3</LoadBehavior>
   </PropertyGroup>
   <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.5.2">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.5.2 %28x86 und x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
     <BootstrapperPackage Include="Microsoft.VSTORuntime.4.0">
       <Visible>False</Visible>
-      <ProductName>Microsoft Visual Studio 2010 Tools for Office Runtime %28x86 and x64%29</ProductName>
+      <ProductName>Microsoft Visual Studio 2010-Tools für Office-Laufzeit %28x86 und x64%29</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
     <BootstrapperPackage Include="Microsoft.Windows.Installer.4.5">
@@ -119,6 +142,14 @@
   -->
   <ItemGroup>
     <Reference Include="Accessibility" />
+    <Reference Include="Bespoke.Common, Version=5.0.0.0, Culture=neutral, PublicKeyToken=843a094264521388, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\ZZZ_Extrenals\Bespoke_OSC\Bespoke.Osc-master\Bespoke.Common.Osc\bin\Release\Bespoke.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Bespoke.Common.Osc, Version=0.0.0.0, Culture=neutral, PublicKeyToken=843a094264521388, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\ZZZ_Extrenals\Bespoke_OSC\Bespoke.Osc-master\Bespoke.Common.Osc\bin\Release\Bespoke.Common.Osc.dll</HintPath>
+    </Reference>
     <Reference Include="CommonAppData">
       <HintPath>..\..\ZZZ_Extrenals\CommonAppData.dll</HintPath>
     </Reference>
@@ -189,6 +220,12 @@
   <ItemGroup>
     <AppDesigner Include="My Project\" />
     <Compile Include="CustomXML.vb" />
+    <Compile Include="frmSetTimerStartOffset.Designer.vb">
+      <DependentUpon>frmSetTimerStartOffset.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmSetTimerStartOffset.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="frmTimerLaps.Designer.vb">
       <DependentUpon>frmTimerLaps.vb</DependentUpon>
     </Compile>
@@ -272,6 +309,7 @@
     <Compile Include="TimerLap.vb" />
     <Compile Include="TimerSettings.vb" />
     <Compile Include="TimerSheet.vb" />
+    <Compile Include="TimerTrigger.vb" />
     <Compile Include="ucDashboard.Designer.vb">
       <DependentUpon>ucDashboard.vb</DependentUpon>
     </Compile>
@@ -309,6 +347,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmSelectQuery.resx">
       <DependentUpon>frmSelectQuery.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmSetTimerStartOffset.resx">
+      <DependentUpon>frmSetTimerStartOffset.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmSettings.resx">
       <DependentUpon>frmSettings.vb</DependentUpon>
@@ -393,6 +434,10 @@
     <ProjectReference Include="..\..\ZZZ_Common\CasparObjects\CasparObjects.vbproj">
       <Project>{ee1b6a2b-16a9-4752-9bda-2edbf97cb665}</Project>
       <Name>CasparObjects</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\ZZZ_Common\MyColorThemes\MyColorThemes.vbproj">
+      <Project>{b7b1125e-7a8d-4feb-ac05-07a64c088d33}</Project>
+      <Name>MyColorThemes</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -634,6 +679,24 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Dublicate.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Timer_StartOffset.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Timer_StartOffset_S.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Timer_SetOffset.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Timer_Start_s.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Timer_Stop_s.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Web_Download.png" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

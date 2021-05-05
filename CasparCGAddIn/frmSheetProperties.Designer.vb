@@ -58,6 +58,9 @@ Partial Class frmSheetProperties
       Me.rbDataset = New System.Windows.Forms.RadioButton()
       Me.btnChangeTemplatePath = New System.Windows.Forms.Button()
       Me.gbLive = New System.Windows.Forms.GroupBox()
+      Me.chkShowInDashboard = New System.Windows.Forms.CheckBox()
+      Me.nudSlaveChannel = New System.Windows.Forms.NumericUpDown()
+      Me.Label14 = New System.Windows.Forms.Label()
       Me.nudFlashLayer = New System.Windows.Forms.NumericUpDown()
       Me.lblFlashLayer = New System.Windows.Forms.Label()
       Me.cboSlaveWorksheet = New System.Windows.Forms.ComboBox()
@@ -102,6 +105,11 @@ Partial Class frmSheetProperties
       Me.btnRight = New System.Windows.Forms.Button()
       Me.chkUseDVE = New System.Windows.Forms.CheckBox()
       Me.tpTimer = New System.Windows.Forms.TabPage()
+      Me.Label16 = New System.Windows.Forms.Label()
+      Me.cboTimerTrigger = New System.Windows.Forms.ComboBox()
+      Me.txtTimerInvoke = New System.Windows.Forms.TextBox()
+      Me.Label17 = New System.Windows.Forms.Label()
+      Me.Label15 = New System.Windows.Forms.Label()
       Me.cboTimerItem_8 = New System.Windows.Forms.ComboBox()
       Me.cboTimerItem_7 = New System.Windows.Forms.ComboBox()
       Me.cboTimerItem_6 = New System.Windows.Forms.ComboBox()
@@ -132,6 +140,13 @@ Partial Class frmSheetProperties
       Me.Label10 = New System.Windows.Forms.Label()
       Me.ttToolTip = New System.Windows.Forms.ToolTip(Me.components)
       Me.lnkLablReset = New System.Windows.Forms.LinkLabel()
+      Me.tpWebDownload = New System.Windows.Forms.TabPage()
+      Me.Label18 = New System.Windows.Forms.Label()
+      Me.cboDownloadSource = New System.Windows.Forms.ComboBox()
+      Me.cboDownloadDest = New System.Windows.Forms.ComboBox()
+      Me.Label19 = New System.Windows.Forms.Label()
+      Me.ptbDownloadPath = New CommonControls.ctrPathTextBox()
+      Me.Label20 = New System.Windows.Forms.Label()
       Me.tabTab.SuspendLayout()
       Me.tabCommon.SuspendLayout()
       Me.GroupBox6.SuspendLayout()
@@ -143,6 +158,7 @@ Partial Class frmSheetProperties
       Me.tabAutoUpdate.SuspendLayout()
       Me.grpAutoUpdate.SuspendLayout()
       Me.gbLive.SuspendLayout()
+      CType(Me.nudSlaveChannel, System.ComponentModel.ISupportInitialize).BeginInit()
       CType(Me.nudFlashLayer, System.ComponentModel.ISupportInitialize).BeginInit()
       CType(Me.nudLayer, System.ComponentModel.ISupportInitialize).BeginInit()
       CType(Me.nudChannel, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -152,6 +168,7 @@ Partial Class frmSheetProperties
       Me.GroupBox8.SuspendLayout()
       Me.GroupBox7.SuspendLayout()
       Me.tpTimer.SuspendLayout()
+      Me.tpWebDownload.SuspendLayout()
       Me.SuspendLayout()
       '
       'btnCancel
@@ -186,6 +203,7 @@ Partial Class frmSheetProperties
       Me.tabTab.Controls.Add(Me.tabQueries)
       Me.tabTab.Controls.Add(Me.tabDVE)
       Me.tabTab.Controls.Add(Me.tpTimer)
+      Me.tabTab.Controls.Add(Me.tpWebDownload)
       Me.tabTab.Location = New System.Drawing.Point(12, 12)
       Me.tabTab.Name = "tabTab"
       Me.tabTab.SelectedIndex = 0
@@ -473,6 +491,7 @@ Partial Class frmSheetProperties
       Me.txtDataSetName.Size = New System.Drawing.Size(376, 20)
       Me.txtDataSetName.TabIndex = 1
       Me.ttToolTip.SetToolTip(Me.txtDataSetName, "The name of the data-set.")
+      Me.txtDataSetName.WordWrap = False
       '
       'tabAutoUpdate
       '
@@ -538,7 +557,7 @@ Partial Class frmSheetProperties
       Me.btnChangeTemplatePath.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
       Me.btnChangeTemplatePath.Location = New System.Drawing.Point(14, 319)
       Me.btnChangeTemplatePath.Name = "btnChangeTemplatePath"
-      Me.btnChangeTemplatePath.Size = New System.Drawing.Size(223, 33)
+      Me.btnChangeTemplatePath.Size = New System.Drawing.Size(280, 33)
       Me.btnChangeTemplatePath.TabIndex = 24
       Me.btnChangeTemplatePath.Text = "Change Template-Path..."
       Me.btnChangeTemplatePath.UseVisualStyleBackColor = True
@@ -548,6 +567,9 @@ Partial Class frmSheetProperties
       Me.gbLive.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+      Me.gbLive.Controls.Add(Me.chkShowInDashboard)
+      Me.gbLive.Controls.Add(Me.nudSlaveChannel)
+      Me.gbLive.Controls.Add(Me.Label14)
       Me.gbLive.Controls.Add(Me.nudFlashLayer)
       Me.gbLive.Controls.Add(Me.lblFlashLayer)
       Me.gbLive.Controls.Add(Me.cboSlaveWorksheet)
@@ -569,6 +591,34 @@ Partial Class frmSheetProperties
       Me.gbLive.TabIndex = 20
       Me.gbLive.TabStop = False
       Me.gbLive.Text = "Live-Settings"
+      '
+      'chkShowInDashboard
+      '
+      Me.chkShowInDashboard.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+      Me.chkShowInDashboard.AutoSize = True
+      Me.chkShowInDashboard.CheckAlign = System.Drawing.ContentAlignment.MiddleRight
+      Me.chkShowInDashboard.Location = New System.Drawing.Point(262, 144)
+      Me.chkShowInDashboard.Name = "chkShowInDashboard"
+      Me.chkShowInDashboard.Size = New System.Drawing.Size(119, 17)
+      Me.chkShowInDashboard.TabIndex = 37
+      Me.chkShowInDashboard.Text = "Show in Dashboard"
+      Me.chkShowInDashboard.UseVisualStyleBackColor = True
+      '
+      'nudSlaveChannel
+      '
+      Me.nudSlaveChannel.Location = New System.Drawing.Point(294, 211)
+      Me.nudSlaveChannel.Name = "nudSlaveChannel"
+      Me.nudSlaveChannel.Size = New System.Drawing.Size(87, 20)
+      Me.nudSlaveChannel.TabIndex = 36
+      '
+      'Label14
+      '
+      Me.Label14.AutoSize = True
+      Me.Label14.Location = New System.Drawing.Point(291, 195)
+      Me.Label14.Name = "Label14"
+      Me.Label14.Size = New System.Drawing.Size(49, 13)
+      Me.Label14.TabIndex = 35
+      Me.Label14.Text = "Channel:"
       '
       'nudFlashLayer
       '
@@ -595,7 +645,7 @@ Partial Class frmSheetProperties
       Me.cboSlaveWorksheet.FormattingEnabled = True
       Me.cboSlaveWorksheet.Location = New System.Drawing.Point(6, 211)
       Me.cboSlaveWorksheet.Name = "cboSlaveWorksheet"
-      Me.cboSlaveWorksheet.Size = New System.Drawing.Size(375, 21)
+      Me.cboSlaveWorksheet.Size = New System.Drawing.Size(280, 21)
       Me.cboSlaveWorksheet.TabIndex = 32
       Me.ttToolTip.SetToolTip(Me.cboSlaveWorksheet, "These buttons will be shown in the dashboard.")
       '
@@ -711,9 +761,9 @@ Partial Class frmSheetProperties
       Me.Label3.AutoSize = True
       Me.Label3.Location = New System.Drawing.Point(6, 16)
       Me.Label3.Name = "Label3"
-      Me.Label3.Size = New System.Drawing.Size(94, 13)
+      Me.Label3.Size = New System.Drawing.Size(89, 13)
       Me.Label3.TabIndex = 21
-      Me.Label3.Text = "CasparCG Servers"
+      Me.Label3.Text = "CasparCG Server"
       '
       'tabQueries
       '
@@ -863,6 +913,7 @@ Partial Class frmSheetProperties
       Me.btnZoom100.Name = "btnZoom100"
       Me.btnZoom100.Size = New System.Drawing.Size(32, 32)
       Me.btnZoom100.TabIndex = 13
+      Me.btnZoom100.Tag = "[ignore]"
       Me.btnZoom100.UseVisualStyleBackColor = True
       '
       'btnZoomFastOut
@@ -872,6 +923,7 @@ Partial Class frmSheetProperties
       Me.btnZoomFastOut.Name = "btnZoomFastOut"
       Me.btnZoomFastOut.Size = New System.Drawing.Size(32, 32)
       Me.btnZoomFastOut.TabIndex = 10
+      Me.btnZoomFastOut.Tag = "[ignore]"
       Me.btnZoomFastOut.UseVisualStyleBackColor = True
       '
       'btnZoomIn
@@ -881,6 +933,7 @@ Partial Class frmSheetProperties
       Me.btnZoomIn.Name = "btnZoomIn"
       Me.btnZoomIn.Size = New System.Drawing.Size(32, 32)
       Me.btnZoomIn.TabIndex = 12
+      Me.btnZoomIn.Tag = "[ignore]"
       Me.btnZoomIn.UseVisualStyleBackColor = True
       '
       'btnZoomFastIn
@@ -890,6 +943,7 @@ Partial Class frmSheetProperties
       Me.btnZoomFastIn.Name = "btnZoomFastIn"
       Me.btnZoomFastIn.Size = New System.Drawing.Size(32, 32)
       Me.btnZoomFastIn.TabIndex = 11
+      Me.btnZoomFastIn.Tag = "[ignore]"
       Me.btnZoomFastIn.UseVisualStyleBackColor = True
       '
       'btnZoomOut
@@ -899,6 +953,7 @@ Partial Class frmSheetProperties
       Me.btnZoomOut.Name = "btnZoomOut"
       Me.btnZoomOut.Size = New System.Drawing.Size(32, 32)
       Me.btnZoomOut.TabIndex = 9
+      Me.btnZoomOut.Tag = "[ignore]"
       Me.btnZoomOut.UseVisualStyleBackColor = True
       '
       'GroupBox7
@@ -926,6 +981,7 @@ Partial Class frmSheetProperties
       Me.btnCenter.Name = "btnCenter"
       Me.btnCenter.Size = New System.Drawing.Size(32, 32)
       Me.btnCenter.TabIndex = 9
+      Me.btnCenter.Tag = "[ignore]"
       Me.btnCenter.UseVisualStyleBackColor = True
       '
       'btnFastUp
@@ -935,6 +991,7 @@ Partial Class frmSheetProperties
       Me.btnFastUp.Name = "btnFastUp"
       Me.btnFastUp.Size = New System.Drawing.Size(32, 32)
       Me.btnFastUp.TabIndex = 6
+      Me.btnFastUp.Tag = "[ignore]"
       Me.btnFastUp.UseVisualStyleBackColor = True
       '
       'btnDown
@@ -944,6 +1001,7 @@ Partial Class frmSheetProperties
       Me.btnDown.Name = "btnDown"
       Me.btnDown.Size = New System.Drawing.Size(32, 32)
       Me.btnDown.TabIndex = 8
+      Me.btnDown.Tag = "[ignore]"
       Me.btnDown.UseVisualStyleBackColor = True
       '
       'btnLeft
@@ -953,6 +1011,7 @@ Partial Class frmSheetProperties
       Me.btnLeft.Name = "btnLeft"
       Me.btnLeft.Size = New System.Drawing.Size(32, 32)
       Me.btnLeft.TabIndex = 1
+      Me.btnLeft.Tag = "[ignore]"
       Me.btnLeft.UseVisualStyleBackColor = True
       '
       'btnFastDown
@@ -962,6 +1021,7 @@ Partial Class frmSheetProperties
       Me.btnFastDown.Name = "btnFastDown"
       Me.btnFastDown.Size = New System.Drawing.Size(32, 32)
       Me.btnFastDown.TabIndex = 7
+      Me.btnFastDown.Tag = "[ignore]"
       Me.btnFastDown.UseVisualStyleBackColor = True
       '
       'btnFastLeft
@@ -971,6 +1031,7 @@ Partial Class frmSheetProperties
       Me.btnFastLeft.Name = "btnFastLeft"
       Me.btnFastLeft.Size = New System.Drawing.Size(32, 32)
       Me.btnFastLeft.TabIndex = 2
+      Me.btnFastLeft.Tag = "[ignore]"
       Me.btnFastLeft.UseVisualStyleBackColor = True
       '
       'btnFastRight
@@ -980,6 +1041,7 @@ Partial Class frmSheetProperties
       Me.btnFastRight.Name = "btnFastRight"
       Me.btnFastRight.Size = New System.Drawing.Size(32, 32)
       Me.btnFastRight.TabIndex = 3
+      Me.btnFastRight.Tag = "[ignore]"
       Me.btnFastRight.UseVisualStyleBackColor = True
       '
       'btnUp
@@ -989,6 +1051,7 @@ Partial Class frmSheetProperties
       Me.btnUp.Name = "btnUp"
       Me.btnUp.Size = New System.Drawing.Size(32, 32)
       Me.btnUp.TabIndex = 5
+      Me.btnUp.Tag = "[ignore]"
       Me.btnUp.UseVisualStyleBackColor = True
       '
       'btnRight
@@ -998,6 +1061,7 @@ Partial Class frmSheetProperties
       Me.btnRight.Name = "btnRight"
       Me.btnRight.Size = New System.Drawing.Size(32, 32)
       Me.btnRight.TabIndex = 4
+      Me.btnRight.Tag = "[ignore]"
       Me.btnRight.UseVisualStyleBackColor = True
       '
       'chkUseDVE
@@ -1012,6 +1076,11 @@ Partial Class frmSheetProperties
       '
       'tpTimer
       '
+      Me.tpTimer.Controls.Add(Me.Label16)
+      Me.tpTimer.Controls.Add(Me.cboTimerTrigger)
+      Me.tpTimer.Controls.Add(Me.txtTimerInvoke)
+      Me.tpTimer.Controls.Add(Me.Label17)
+      Me.tpTimer.Controls.Add(Me.Label15)
       Me.tpTimer.Controls.Add(Me.cboTimerItem_8)
       Me.tpTimer.Controls.Add(Me.cboTimerItem_7)
       Me.tpTimer.Controls.Add(Me.cboTimerItem_6)
@@ -1047,6 +1116,49 @@ Partial Class frmSheetProperties
       Me.tpTimer.TabIndex = 5
       Me.tpTimer.Text = "Timer"
       Me.tpTimer.UseVisualStyleBackColor = True
+      '
+      'Label16
+      '
+      Me.Label16.AutoSize = True
+      Me.Label16.Location = New System.Drawing.Point(203, 291)
+      Me.Label16.Name = "Label16"
+      Me.Label16.Size = New System.Drawing.Size(36, 13)
+      Me.Label16.TabIndex = 62
+      Me.Label16.Text = "Timer:"
+      '
+      'cboTimerTrigger
+      '
+      Me.cboTimerTrigger.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+      Me.cboTimerTrigger.FormattingEnabled = True
+      Me.cboTimerTrigger.Location = New System.Drawing.Point(206, 307)
+      Me.cboTimerTrigger.Name = "cboTimerTrigger"
+      Me.cboTimerTrigger.Size = New System.Drawing.Size(186, 21)
+      Me.cboTimerTrigger.TabIndex = 61
+      '
+      'txtTimerInvoke
+      '
+      Me.txtTimerInvoke.Location = New System.Drawing.Point(9, 308)
+      Me.txtTimerInvoke.Name = "txtTimerInvoke"
+      Me.txtTimerInvoke.Size = New System.Drawing.Size(191, 20)
+      Me.txtTimerInvoke.TabIndex = 60
+      '
+      'Label17
+      '
+      Me.Label17.AutoSize = True
+      Me.Label17.Location = New System.Drawing.Point(6, 292)
+      Me.Label17.Name = "Label17"
+      Me.Label17.Size = New System.Drawing.Size(93, 13)
+      Me.Label17.TabIndex = 59
+      Me.Label17.Text = "Invoke-Command:"
+      '
+      'Label15
+      '
+      Me.Label15.AutoSize = True
+      Me.Label15.Location = New System.Drawing.Point(6, 271)
+      Me.Label15.Name = "Label15"
+      Me.Label15.Size = New System.Drawing.Size(198, 13)
+      Me.Label15.TabIndex = 58
+      Me.Label15.Text = "Command, when a On-Time Trigger is hit"
       '
       'cboTimerItem_8
       '
@@ -1086,9 +1198,10 @@ Partial Class frmSheetProperties
       '
       'cboTimerQueryValue_8
       '
+      Me.cboTimerQueryValue_8.DropDownHeight = 220
       Me.cboTimerQueryValue_8.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
       Me.cboTimerQueryValue_8.FormattingEnabled = True
-      Me.cboTimerQueryValue_8.Items.AddRange(New Object() {"Main Min Sec", "Main Hour Min Sec", "Main Days Hour Min Sec", "Main Days Hour Min", "Main Seconds", "Main Total Seconds", "Main Second Number", "Main Minutes", "Main Total Minutes", "Main Minute Number", "Main Hours", "Main Total Hours", "Main Hour Number", "Main Days", "Main Day Number", "Lap Min Sec", "Lap Hour Min Sec", "Lap Days Hour Min Sec", "Lap Days Hour Min", "Lap Seconds", "Lap Total Seconds", "Lap Minutes", "Lap Total Minutes", "Lap Hours", "Lap Total Hours", "Lap Days", "Raw Distance Percent", "Raw Distance Kilometers", "Raw Distance Meters", "Raw Distance Yards", "Raw Distance Chains", "Raw Distance Furlongs", "Raw Distance Miles", "Formatted Distance Percent", "Formatted Distance Kilometers", "Formatted Distance Meters", "Formatted Distance Yards", "Formatted Distance Chains", "Formatted Distance Furlongs", "Formatted Distance Miles"})
+      Me.cboTimerQueryValue_8.IntegralHeight = False
       Me.cboTimerQueryValue_8.Location = New System.Drawing.Point(206, 233)
       Me.cboTimerQueryValue_8.Name = "cboTimerQueryValue_8"
       Me.cboTimerQueryValue_8.Size = New System.Drawing.Size(186, 21)
@@ -1103,9 +1216,10 @@ Partial Class frmSheetProperties
       '
       'cboTimerQueryValue_7
       '
+      Me.cboTimerQueryValue_7.DropDownHeight = 220
       Me.cboTimerQueryValue_7.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
       Me.cboTimerQueryValue_7.FormattingEnabled = True
-      Me.cboTimerQueryValue_7.Items.AddRange(New Object() {"Main Min Sec", "Main Hour Min Sec", "Main Days Hour Min Sec", "Main Days Hour Min", "Main Seconds", "Main Total Seconds", "Main Second Number", "Main Minutes", "Main Total Minutes", "Main Minute Number", "Main Hours", "Main Total Hours", "Main Hour Number", "Main Days", "Main Day Number", "Lap Min Sec", "Lap Hour Min Sec", "Lap Days Hour Min Sec", "Lap Days Hour Min", "Lap Seconds", "Lap Total Seconds", "Lap Minutes", "Lap Total Minutes", "Lap Hours", "Lap Total Hours", "Lap Days", "Raw Distance Percent", "Raw Distance Kilometers", "Raw Distance Meters", "Raw Distance Yards", "Raw Distance Chains", "Raw Distance Furlongs", "Raw Distance Miles", "Formatted Distance Percent", "Formatted Distance Kilometers", "Formatted Distance Meters", "Formatted Distance Yards", "Formatted Distance Chains", "Formatted Distance Furlongs", "Formatted Distance Miles"})
+      Me.cboTimerQueryValue_7.IntegralHeight = False
       Me.cboTimerQueryValue_7.Location = New System.Drawing.Point(206, 208)
       Me.cboTimerQueryValue_7.Name = "cboTimerQueryValue_7"
       Me.cboTimerQueryValue_7.Size = New System.Drawing.Size(186, 21)
@@ -1120,9 +1234,10 @@ Partial Class frmSheetProperties
       '
       'cboTimerQueryValue_6
       '
+      Me.cboTimerQueryValue_6.DropDownHeight = 220
       Me.cboTimerQueryValue_6.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
       Me.cboTimerQueryValue_6.FormattingEnabled = True
-      Me.cboTimerQueryValue_6.Items.AddRange(New Object() {"Main Min Sec", "Main Hour Min Sec", "Main Days Hour Min Sec", "Main Days Hour Min", "Main Seconds", "Main Total Seconds", "Main Second Number", "Main Minutes", "Main Total Minutes", "Main Minute Number", "Main Hours", "Main Total Hours", "Main Hour Number", "Main Days", "Main Day Number", "Lap Min Sec", "Lap Hour Min Sec", "Lap Days Hour Min Sec", "Lap Days Hour Min", "Lap Seconds", "Lap Total Seconds", "Lap Minutes", "Lap Total Minutes", "Lap Hours", "Lap Total Hours", "Lap Days", "Raw Distance Percent", "Raw Distance Kilometers", "Raw Distance Meters", "Raw Distance Yards", "Raw Distance Chains", "Raw Distance Furlongs", "Raw Distance Miles", "Formatted Distance Percent", "Formatted Distance Kilometers", "Formatted Distance Meters", "Formatted Distance Yards", "Formatted Distance Chains", "Formatted Distance Furlongs", "Formatted Distance Miles"})
+      Me.cboTimerQueryValue_6.IntegralHeight = False
       Me.cboTimerQueryValue_6.Location = New System.Drawing.Point(206, 181)
       Me.cboTimerQueryValue_6.Name = "cboTimerQueryValue_6"
       Me.cboTimerQueryValue_6.Size = New System.Drawing.Size(186, 21)
@@ -1137,9 +1252,10 @@ Partial Class frmSheetProperties
       '
       'cboTimerQueryValue_5
       '
+      Me.cboTimerQueryValue_5.DropDownHeight = 220
       Me.cboTimerQueryValue_5.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
       Me.cboTimerQueryValue_5.FormattingEnabled = True
-      Me.cboTimerQueryValue_5.Items.AddRange(New Object() {"Main Min Sec", "Main Hour Min Sec", "Main Days Hour Min Sec", "Main Days Hour Min", "Main Seconds", "Main Total Seconds", "Main Second Number", "Main Minutes", "Main Total Minutes", "Main Minute Number", "Main Hours", "Main Total Hours", "Main Hour Number", "Main Days", "Main Day Number", "Lap Min Sec", "Lap Hour Min Sec", "Lap Days Hour Min Sec", "Lap Days Hour Min", "Lap Seconds", "Lap Total Seconds", "Lap Minutes", "Lap Total Minutes", "Lap Hours", "Lap Total Hours", "Lap Days", "Raw Distance Percent", "Raw Distance Kilometers", "Raw Distance Meters", "Raw Distance Yards", "Raw Distance Chains", "Raw Distance Furlongs", "Raw Distance Miles", "Formatted Distance Percent", "Formatted Distance Kilometers", "Formatted Distance Meters", "Formatted Distance Yards", "Formatted Distance Chains", "Formatted Distance Furlongs", "Formatted Distance Miles"})
+      Me.cboTimerQueryValue_5.IntegralHeight = False
       Me.cboTimerQueryValue_5.Location = New System.Drawing.Point(206, 155)
       Me.cboTimerQueryValue_5.Name = "cboTimerQueryValue_5"
       Me.cboTimerQueryValue_5.Size = New System.Drawing.Size(186, 21)
@@ -1199,9 +1315,10 @@ Partial Class frmSheetProperties
       '
       'cboTimerQueryValue_4
       '
+      Me.cboTimerQueryValue_4.DropDownHeight = 220
       Me.cboTimerQueryValue_4.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
       Me.cboTimerQueryValue_4.FormattingEnabled = True
-      Me.cboTimerQueryValue_4.Items.AddRange(New Object() {"Main Min Sec", "Main Hour Min Sec", "Main Days Hour Min Sec", "Main Days Hour Min", "Main Seconds", "Main Total Seconds", "Main Second Number", "Main Minutes", "Main Total Minutes", "Main Minute Number", "Main Hours", "Main Total Hours", "Main Hour Number", "Main Days", "Main Day Number", "Lap Min Sec", "Lap Hour Min Sec", "Lap Days Hour Min Sec", "Lap Days Hour Min", "Lap Seconds", "Lap Total Seconds", "Lap Minutes", "Lap Total Minutes", "Lap Hours", "Lap Total Hours", "Lap Days", "Raw Distance Percent", "Raw Distance Kilometers", "Raw Distance Meters", "Raw Distance Yards", "Raw Distance Chains", "Raw Distance Furlongs", "Raw Distance Miles", "Formatted Distance Percent", "Formatted Distance Kilometers", "Formatted Distance Meters", "Formatted Distance Yards", "Formatted Distance Chains", "Formatted Distance Furlongs", "Formatted Distance Miles"})
+      Me.cboTimerQueryValue_4.IntegralHeight = False
       Me.cboTimerQueryValue_4.Location = New System.Drawing.Point(206, 128)
       Me.cboTimerQueryValue_4.Name = "cboTimerQueryValue_4"
       Me.cboTimerQueryValue_4.Size = New System.Drawing.Size(186, 21)
@@ -1216,9 +1333,10 @@ Partial Class frmSheetProperties
       '
       'cboTimerQueryValue_3
       '
+      Me.cboTimerQueryValue_3.DropDownHeight = 220
       Me.cboTimerQueryValue_3.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
       Me.cboTimerQueryValue_3.FormattingEnabled = True
-      Me.cboTimerQueryValue_3.Items.AddRange(New Object() {"Main Min Sec", "Main Hour Min Sec", "Main Days Hour Min Sec", "Main Days Hour Min", "Main Seconds", "Main Total Seconds", "Main Second Number", "Main Minutes", "Main Total Minutes", "Main Minute Number", "Main Hours", "Main Total Hours", "Main Hour Number", "Main Days", "Main Day Number", "Lap Min Sec", "Lap Hour Min Sec", "Lap Days Hour Min Sec", "Lap Days Hour Min", "Lap Seconds", "Lap Total Seconds", "Lap Minutes", "Lap Total Minutes", "Lap Hours", "Lap Total Hours", "Lap Days", "Raw Distance Percent", "Raw Distance Kilometers", "Raw Distance Meters", "Raw Distance Yards", "Raw Distance Chains", "Raw Distance Furlongs", "Raw Distance Miles", "Formatted Distance Percent", "Formatted Distance Kilometers", "Formatted Distance Meters", "Formatted Distance Yards", "Formatted Distance Chains", "Formatted Distance Furlongs", "Formatted Distance Miles"})
+      Me.cboTimerQueryValue_3.IntegralHeight = False
       Me.cboTimerQueryValue_3.Location = New System.Drawing.Point(206, 103)
       Me.cboTimerQueryValue_3.Name = "cboTimerQueryValue_3"
       Me.cboTimerQueryValue_3.Size = New System.Drawing.Size(186, 21)
@@ -1233,9 +1351,10 @@ Partial Class frmSheetProperties
       '
       'cboTimerQueryValue_2
       '
+      Me.cboTimerQueryValue_2.DropDownHeight = 220
       Me.cboTimerQueryValue_2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
       Me.cboTimerQueryValue_2.FormattingEnabled = True
-      Me.cboTimerQueryValue_2.Items.AddRange(New Object() {"Main Min Sec", "Main Hour Min Sec", "Main Days Hour Min Sec", "Main Days Hour Min", "Main Seconds", "Main Total Seconds", "Main Second Number", "Main Minutes", "Main Total Minutes", "Main Minute Number", "Main Hours", "Main Total Hours", "Main Hour Number", "Main Days", "Main Day Number", "Lap Min Sec", "Lap Hour Min Sec", "Lap Days Hour Min Sec", "Lap Days Hour Min", "Lap Seconds", "Lap Total Seconds", "Lap Minutes", "Lap Total Minutes", "Lap Hours", "Lap Total Hours", "Lap Days", "Raw Distance Percent", "Raw Distance Kilometers", "Raw Distance Meters", "Raw Distance Yards", "Raw Distance Chains", "Raw Distance Furlongs", "Raw Distance Miles", "Formatted Distance Percent", "Formatted Distance Kilometers", "Formatted Distance Meters", "Formatted Distance Yards", "Formatted Distance Chains", "Formatted Distance Furlongs", "Formatted Distance Miles"})
+      Me.cboTimerQueryValue_2.IntegralHeight = False
       Me.cboTimerQueryValue_2.Location = New System.Drawing.Point(206, 76)
       Me.cboTimerQueryValue_2.Name = "cboTimerQueryValue_2"
       Me.cboTimerQueryValue_2.Size = New System.Drawing.Size(186, 21)
@@ -1260,8 +1379,8 @@ Partial Class frmSheetProperties
       'cboTimerQueryValue_1
       '
       Me.cboTimerQueryValue_1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+      Me.cboTimerQueryValue_1.DropDownWidth = 220
       Me.cboTimerQueryValue_1.FormattingEnabled = True
-      Me.cboTimerQueryValue_1.Items.AddRange(New Object() {"Main Min Sec", "Main Hour Min Sec", "Main Days Hour Min Sec", "Main Days Hour Min", "Main Seconds", "Main Total Seconds", "Main Second Number", "Main Minutes", "Main Total Minutes", "Main Minute Number", "Main Hours", "Main Total Hours", "Main Hour Number", "Main Days", "Main Day Number", "Lap Min Sec", "Lap Hour Min Sec", "Lap Days Hour Min Sec", "Lap Days Hour Min", "Lap Seconds", "Lap Total Seconds", "Lap Minutes", "Lap Total Minutes", "Lap Hours", "Lap Total Hours", "Lap Days", "Raw Distance Percent", "Raw Distance Kilometers", "Raw Distance Meters", "Raw Distance Yards", "Raw Distance Chains", "Raw Distance Furlongs", "Raw Distance Miles", "Formatted Distance Percent", "Formatted Distance Kilometers", "Formatted Distance Meters", "Formatted Distance Yards", "Formatted Distance Chains", "Formatted Distance Furlongs", "Formatted Distance Miles"})
       Me.cboTimerQueryValue_1.Location = New System.Drawing.Point(206, 50)
       Me.cboTimerQueryValue_1.Name = "cboTimerQueryValue_1"
       Me.cboTimerQueryValue_1.Size = New System.Drawing.Size(186, 21)
@@ -1303,6 +1422,82 @@ Partial Class frmSheetProperties
       Me.lnkLablReset.TabStop = True
       Me.lnkLablReset.Text = "Reset to defaults"
       '
+      'tpWebDownload
+      '
+      Me.tpWebDownload.Controls.Add(Me.Label20)
+      Me.tpWebDownload.Controls.Add(Me.ptbDownloadPath)
+      Me.tpWebDownload.Controls.Add(Me.cboDownloadDest)
+      Me.tpWebDownload.Controls.Add(Me.Label19)
+      Me.tpWebDownload.Controls.Add(Me.cboDownloadSource)
+      Me.tpWebDownload.Controls.Add(Me.Label18)
+      Me.tpWebDownload.Location = New System.Drawing.Point(4, 22)
+      Me.tpWebDownload.Name = "tpWebDownload"
+      Me.tpWebDownload.Padding = New System.Windows.Forms.Padding(3)
+      Me.tpWebDownload.Size = New System.Drawing.Size(402, 361)
+      Me.tpWebDownload.TabIndex = 6
+      Me.tpWebDownload.Text = "Web-Download"
+      Me.tpWebDownload.UseVisualStyleBackColor = True
+      '
+      'Label18
+      '
+      Me.Label18.AutoSize = True
+      Me.Label18.Location = New System.Drawing.Point(7, 8)
+      Me.Label18.Name = "Label18"
+      Me.Label18.Size = New System.Drawing.Size(82, 13)
+      Me.Label18.TabIndex = 0
+      Me.Label18.Text = "Source-Column:"
+      '
+      'cboDownloadSource
+      '
+      Me.cboDownloadSource.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+      Me.cboDownloadSource.FormattingEnabled = True
+      Me.cboDownloadSource.Items.AddRange(New Object() {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"})
+      Me.cboDownloadSource.Location = New System.Drawing.Point(10, 24)
+      Me.cboDownloadSource.Name = "cboDownloadSource"
+      Me.cboDownloadSource.Size = New System.Drawing.Size(186, 21)
+      Me.cboDownloadSource.TabIndex = 1
+      '
+      'cboDownloadDest
+      '
+      Me.cboDownloadDest.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+      Me.cboDownloadDest.FormattingEnabled = True
+      Me.cboDownloadDest.Items.AddRange(New Object() {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"})
+      Me.cboDownloadDest.Location = New System.Drawing.Point(202, 24)
+      Me.cboDownloadDest.Name = "cboDownloadDest"
+      Me.cboDownloadDest.Size = New System.Drawing.Size(186, 21)
+      Me.cboDownloadDest.TabIndex = 3
+      '
+      'Label19
+      '
+      Me.Label19.AutoSize = True
+      Me.Label19.Location = New System.Drawing.Point(199, 8)
+      Me.Label19.Name = "Label19"
+      Me.Label19.Size = New System.Drawing.Size(101, 13)
+      Me.Label19.TabIndex = 2
+      Me.Label19.Text = "Destination-Column:"
+      '
+      'ptbDownloadPath
+      '
+      Me.ptbDownloadPath.BackColor = System.Drawing.Color.Transparent
+      Me.ptbDownloadPath.Location = New System.Drawing.Point(11, 66)
+      Me.ptbDownloadPath.MaximumSize = New System.Drawing.Size(30000, 20)
+      Me.ptbDownloadPath.Name = "ptbDownloadPath"
+      Me.ptbDownloadPath.Path = ""
+      Me.ptbDownloadPath.RootFolder = System.Environment.SpecialFolder.Desktop
+      Me.ptbDownloadPath.ShowClearButton = True
+      Me.ptbDownloadPath.Size = New System.Drawing.Size(377, 20)
+      Me.ptbDownloadPath.TabIndex = 4
+      Me.ptbDownloadPath.ToolTipControl = Nothing
+      '
+      'Label20
+      '
+      Me.Label20.AutoSize = True
+      Me.Label20.Location = New System.Drawing.Point(7, 50)
+      Me.Label20.Name = "Label20"
+      Me.Label20.Size = New System.Drawing.Size(70, 13)
+      Me.Label20.TabIndex = 5
+      Me.Label20.Text = "Download to:"
+      '
       'frmSheetProperties
       '
       Me.AcceptButton = Me.btnOk
@@ -1338,6 +1533,7 @@ Partial Class frmSheetProperties
       Me.grpAutoUpdate.PerformLayout()
       Me.gbLive.ResumeLayout(False)
       Me.gbLive.PerformLayout()
+      CType(Me.nudSlaveChannel, System.ComponentModel.ISupportInitialize).EndInit()
       CType(Me.nudFlashLayer, System.ComponentModel.ISupportInitialize).EndInit()
       CType(Me.nudLayer, System.ComponentModel.ISupportInitialize).EndInit()
       CType(Me.nudChannel, System.ComponentModel.ISupportInitialize).EndInit()
@@ -1350,6 +1546,8 @@ Partial Class frmSheetProperties
       Me.GroupBox7.ResumeLayout(False)
       Me.tpTimer.ResumeLayout(False)
       Me.tpTimer.PerformLayout()
+      Me.tpWebDownload.ResumeLayout(False)
+      Me.tpWebDownload.PerformLayout()
       Me.ResumeLayout(False)
       Me.PerformLayout()
 
@@ -1464,4 +1662,19 @@ Partial Class frmSheetProperties
    Friend WithEvents cboTimerItem_3 As System.Windows.Forms.ComboBox
    Friend WithEvents cboTimerItem_2 As System.Windows.Forms.ComboBox
    Friend WithEvents cboTimerItem_1 As System.Windows.Forms.ComboBox
+   Friend WithEvents nudSlaveChannel As System.Windows.Forms.NumericUpDown
+   Friend WithEvents Label14 As System.Windows.Forms.Label
+   Friend WithEvents Label15 As System.Windows.Forms.Label
+   Friend WithEvents Label16 As System.Windows.Forms.Label
+   Friend WithEvents cboTimerTrigger As System.Windows.Forms.ComboBox
+   Friend WithEvents txtTimerInvoke As System.Windows.Forms.TextBox
+   Friend WithEvents Label17 As System.Windows.Forms.Label
+   Friend WithEvents chkShowInDashboard As System.Windows.Forms.CheckBox
+   Friend WithEvents tpWebDownload As System.Windows.Forms.TabPage
+   Friend WithEvents cboDownloadDest As System.Windows.Forms.ComboBox
+   Friend WithEvents Label19 As System.Windows.Forms.Label
+   Friend WithEvents cboDownloadSource As System.Windows.Forms.ComboBox
+   Friend WithEvents Label18 As System.Windows.Forms.Label
+   Friend WithEvents Label20 As System.Windows.Forms.Label
+   Friend WithEvents ptbDownloadPath As CommonControls.ctrPathTextBox
 End Class

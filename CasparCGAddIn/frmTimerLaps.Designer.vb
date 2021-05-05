@@ -56,14 +56,11 @@ Partial Class frmTimerLaps
       '
       'tabTab
       '
-      Me.tabTab.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
       Me.tabTab.Controls.Add(Me.tpGeneral)
-      Me.tabTab.Location = New System.Drawing.Point(4, 12)
+      Me.tabTab.Location = New System.Drawing.Point(12, 12)
       Me.tabTab.Name = "tabTab"
       Me.tabTab.SelectedIndex = 0
-      Me.tabTab.Size = New System.Drawing.Size(447, 292)
+      Me.tabTab.Size = New System.Drawing.Size(446, 292)
       Me.tabTab.TabIndex = 2
       '
       'tpGeneral
@@ -77,7 +74,7 @@ Partial Class frmTimerLaps
       Me.tpGeneral.Location = New System.Drawing.Point(4, 22)
       Me.tpGeneral.Name = "tpGeneral"
       Me.tpGeneral.Padding = New System.Windows.Forms.Padding(3)
-      Me.tpGeneral.Size = New System.Drawing.Size(439, 266)
+      Me.tpGeneral.Size = New System.Drawing.Size(438, 266)
       Me.tpGeneral.TabIndex = 0
       Me.tpGeneral.Text = "General"
       Me.tpGeneral.UseVisualStyleBackColor = True
@@ -89,6 +86,7 @@ Partial Class frmTimerLaps
       Me.btnRemove.Name = "btnRemove"
       Me.btnRemove.Size = New System.Drawing.Size(50, 25)
       Me.btnRemove.TabIndex = 35
+      Me.btnRemove.Tag = "[ignore]"
       Me.btnRemove.UseVisualStyleBackColor = True
       '
       'btnAdd
@@ -98,6 +96,7 @@ Partial Class frmTimerLaps
       Me.btnAdd.Name = "btnAdd"
       Me.btnAdd.Size = New System.Drawing.Size(50, 25)
       Me.btnAdd.TabIndex = 34
+      Me.btnAdd.Tag = "[ignore]"
       Me.btnAdd.UseVisualStyleBackColor = True
       '
       'GroupBox3
@@ -272,7 +271,7 @@ Partial Class frmTimerLaps
       'btnFinish
       '
       Me.btnFinish.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-      Me.btnFinish.Location = New System.Drawing.Point(372, 310)
+      Me.btnFinish.Location = New System.Drawing.Point(383, 310)
       Me.btnFinish.Name = "btnFinish"
       Me.btnFinish.Size = New System.Drawing.Size(75, 25)
       Me.btnFinish.TabIndex = 35
@@ -283,8 +282,7 @@ Partial Class frmTimerLaps
       '
       Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
       Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-      Me.ClientSize = New System.Drawing.Size(455, 342)
-      Me.ControlBox = False
+      Me.ClientSize = New System.Drawing.Size(466, 342)
       Me.Controls.Add(Me.btnFinish)
       Me.Controls.Add(Me.tabTab)
       Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog

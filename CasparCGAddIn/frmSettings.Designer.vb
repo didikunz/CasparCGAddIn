@@ -50,14 +50,20 @@ Partial Class frmSettings
       Me.bsServersClone = New System.Windows.Forms.BindingSource(Me.components)
       Me.Label2 = New System.Windows.Forms.Label()
       Me.tabSettings = New System.Windows.Forms.TabPage()
+      Me.chkFormatForHTML = New System.Windows.Forms.CheckBox()
+      Me.Label4 = New System.Windows.Forms.Label()
+      Me.cboVideoResolution = New System.Windows.Forms.ComboBox()
       Me.chkUseFlashLayers = New System.Windows.Forms.CheckBox()
       Me.chkInhibitPlaybackSlave = New System.Windows.Forms.CheckBox()
       Me.chkUseImageAttr = New System.Windows.Forms.CheckBox()
       Me.chkAutoConnect = New System.Windows.Forms.CheckBox()
       Me.chkShowDashboard = New System.Windows.Forms.CheckBox()
       Me.chkUseAveco = New System.Windows.Forms.CheckBox()
-      Me.cboVideoResolution = New System.Windows.Forms.ComboBox()
-      Me.Label4 = New System.Windows.Forms.Label()
+      Me.tabOsc = New System.Windows.Forms.TabPage()
+      Me.txtOscPort = New System.Windows.Forms.TextBox()
+      Me.Label5 = New System.Windows.Forms.Label()
+      Me.chkUseOscInput = New System.Windows.Forms.CheckBox()
+      Me.lblVersion = New System.Windows.Forms.Label()
       CType(Me.bsServers, System.ComponentModel.ISupportInitialize).BeginInit()
       CType(Me.dgvServers, System.ComponentModel.ISupportInitialize).BeginInit()
       Me.tabTab.SuspendLayout()
@@ -66,6 +72,7 @@ Partial Class frmSettings
       CType(Me.nudPreviewChannel, System.ComponentModel.ISupportInitialize).BeginInit()
       CType(Me.bsServersClone, System.ComponentModel.ISupportInitialize).BeginInit()
       Me.tabSettings.SuspendLayout()
+      Me.tabOsc.SuspendLayout()
       Me.SuspendLayout()
       '
       'ftbCasparExe
@@ -155,6 +162,7 @@ Partial Class frmSettings
       Me.tabTab.Controls.Add(Me.tabServers)
       Me.tabTab.Controls.Add(Me.tabPreview)
       Me.tabTab.Controls.Add(Me.tabSettings)
+      Me.tabTab.Controls.Add(Me.tabOsc)
       Me.tabTab.Location = New System.Drawing.Point(12, 10)
       Me.tabTab.Name = "tabTab"
       Me.tabTab.SelectedIndex = 0
@@ -353,6 +361,7 @@ Partial Class frmSettings
       '
       'tabSettings
       '
+      Me.tabSettings.Controls.Add(Me.chkFormatForHTML)
       Me.tabSettings.Controls.Add(Me.Label4)
       Me.tabSettings.Controls.Add(Me.cboVideoResolution)
       Me.tabSettings.Controls.Add(Me.chkUseFlashLayers)
@@ -368,6 +377,35 @@ Partial Class frmSettings
       Me.tabSettings.TabIndex = 2
       Me.tabSettings.Text = "Settings"
       Me.tabSettings.UseVisualStyleBackColor = True
+      '
+      'chkFormatForHTML
+      '
+      Me.chkFormatForHTML.AutoSize = True
+      Me.chkFormatForHTML.Location = New System.Drawing.Point(18, 140)
+      Me.chkFormatForHTML.Name = "chkFormatForHTML"
+      Me.chkFormatForHTML.Size = New System.Drawing.Size(348, 17)
+      Me.chkFormatForHTML.TabIndex = 27
+      Me.chkFormatForHTML.Text = "Format Texts for HTML Templates (needs a reconnect to CasparCG)"
+      Me.chkFormatForHTML.UseVisualStyleBackColor = True
+      '
+      'Label4
+      '
+      Me.Label4.AutoSize = True
+      Me.Label4.Location = New System.Drawing.Point(15, 226)
+      Me.Label4.Name = "Label4"
+      Me.Label4.Size = New System.Drawing.Size(125, 13)
+      Me.Label4.TabIndex = 26
+      Me.Label4.Text = "Video-resolution for DVE:"
+      '
+      'cboVideoResolution
+      '
+      Me.cboVideoResolution.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+      Me.cboVideoResolution.FormattingEnabled = True
+      Me.cboVideoResolution.Items.AddRange(New Object() {"PAL", "NTSC", "HD 720", "HD 1080", "4K"})
+      Me.cboVideoResolution.Location = New System.Drawing.Point(18, 244)
+      Me.cboVideoResolution.Name = "cboVideoResolution"
+      Me.cboVideoResolution.Size = New System.Drawing.Size(214, 21)
+      Me.cboVideoResolution.TabIndex = 25
       '
       'chkUseFlashLayers
       '
@@ -402,7 +440,7 @@ Partial Class frmSettings
       'chkAutoConnect
       '
       Me.chkAutoConnect.AutoSize = True
-      Me.chkAutoConnect.Location = New System.Drawing.Point(18, 163)
+      Me.chkAutoConnect.Location = New System.Drawing.Point(18, 186)
       Me.chkAutoConnect.Name = "chkAutoConnect"
       Me.chkAutoConnect.Size = New System.Drawing.Size(289, 17)
       Me.chkAutoConnect.TabIndex = 21
@@ -429,24 +467,53 @@ Partial Class frmSettings
       Me.chkUseAveco.Text = "Use with Aveco compatible templates"
       Me.chkUseAveco.UseVisualStyleBackColor = True
       '
-      'cboVideoResolution
+      'tabOsc
       '
-      Me.cboVideoResolution.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-      Me.cboVideoResolution.FormattingEnabled = True
-      Me.cboVideoResolution.Items.AddRange(New Object() {"PAL", "NTSC", "HD 720", "HD 1080", "4K"})
-      Me.cboVideoResolution.Location = New System.Drawing.Point(18, 221)
-      Me.cboVideoResolution.Name = "cboVideoResolution"
-      Me.cboVideoResolution.Size = New System.Drawing.Size(214, 21)
-      Me.cboVideoResolution.TabIndex = 25
+      Me.tabOsc.Controls.Add(Me.txtOscPort)
+      Me.tabOsc.Controls.Add(Me.Label5)
+      Me.tabOsc.Controls.Add(Me.chkUseOscInput)
+      Me.tabOsc.Location = New System.Drawing.Point(4, 22)
+      Me.tabOsc.Name = "tabOsc"
+      Me.tabOsc.Padding = New System.Windows.Forms.Padding(3)
+      Me.tabOsc.Size = New System.Drawing.Size(472, 313)
+      Me.tabOsc.TabIndex = 3
+      Me.tabOsc.Text = "OSC"
+      Me.tabOsc.UseVisualStyleBackColor = True
       '
-      'Label4
+      'txtOscPort
       '
-      Me.Label4.AutoSize = True
-      Me.Label4.Location = New System.Drawing.Point(15, 203)
-      Me.Label4.Name = "Label4"
-      Me.Label4.Size = New System.Drawing.Size(125, 13)
-      Me.Label4.TabIndex = 26
-      Me.Label4.Text = "Video-resolution for DVE:"
+      Me.txtOscPort.Location = New System.Drawing.Point(9, 50)
+      Me.txtOscPort.Name = "txtOscPort"
+      Me.txtOscPort.Size = New System.Drawing.Size(457, 20)
+      Me.txtOscPort.TabIndex = 19
+      '
+      'Label5
+      '
+      Me.Label5.AutoSize = True
+      Me.Label5.Location = New System.Drawing.Point(6, 34)
+      Me.Label5.Name = "Label5"
+      Me.Label5.Size = New System.Drawing.Size(29, 13)
+      Me.Label5.TabIndex = 18
+      Me.Label5.Text = "Port:"
+      '
+      'chkUseOscInput
+      '
+      Me.chkUseOscInput.AutoSize = True
+      Me.chkUseOscInput.Location = New System.Drawing.Point(9, 12)
+      Me.chkUseOscInput.Name = "chkUseOscInput"
+      Me.chkUseOscInput.Size = New System.Drawing.Size(111, 17)
+      Me.chkUseOscInput.TabIndex = 0
+      Me.chkUseOscInput.Text = "Enable OSC Input"
+      Me.chkUseOscInput.UseVisualStyleBackColor = True
+      '
+      'lblVersion
+      '
+      Me.lblVersion.AutoSize = True
+      Me.lblVersion.Location = New System.Drawing.Point(13, 361)
+      Me.lblVersion.Name = "lblVersion"
+      Me.lblVersion.Size = New System.Drawing.Size(42, 13)
+      Me.lblVersion.TabIndex = 10
+      Me.lblVersion.Text = "Version"
       '
       'frmSettings
       '
@@ -454,6 +521,7 @@ Partial Class frmSettings
       Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
       Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
       Me.ClientSize = New System.Drawing.Size(504, 390)
+      Me.Controls.Add(Me.lblVersion)
       Me.Controls.Add(Me.tabTab)
       Me.Controls.Add(Me.btnOk)
       Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog
@@ -473,7 +541,10 @@ Partial Class frmSettings
       CType(Me.bsServersClone, System.ComponentModel.ISupportInitialize).EndInit()
       Me.tabSettings.ResumeLayout(False)
       Me.tabSettings.PerformLayout()
+      Me.tabOsc.ResumeLayout(False)
+      Me.tabOsc.PerformLayout()
       Me.ResumeLayout(False)
+      Me.PerformLayout()
 
    End Sub
    Friend WithEvents ftbCasparExe As CommonControls.ctrFileTextBox
@@ -511,4 +582,10 @@ Partial Class frmSettings
    Friend WithEvents chkUseFlashLayers As System.Windows.Forms.CheckBox
    Friend WithEvents Label4 As System.Windows.Forms.Label
    Friend WithEvents cboVideoResolution As System.Windows.Forms.ComboBox
+   Friend WithEvents tabOsc As System.Windows.Forms.TabPage
+   Friend WithEvents chkUseOscInput As System.Windows.Forms.CheckBox
+   Friend WithEvents txtOscPort As System.Windows.Forms.TextBox
+   Friend WithEvents Label5 As System.Windows.Forms.Label
+   Friend WithEvents lblVersion As System.Windows.Forms.Label
+   Friend WithEvents chkFormatForHTML As System.Windows.Forms.CheckBox
 End Class

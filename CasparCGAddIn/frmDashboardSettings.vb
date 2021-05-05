@@ -3,7 +3,14 @@ Imports CasparObjects
 
 Public Class frmDashboardSettings
 
+   Private _Settings As Settings
    Private _CasparServerNames As List(Of String)
+
+   Public WriteOnly Property Settings As Settings
+      Set(value As Settings)
+         _Settings = value
+      End Set
+   End Property
 
    Public WriteOnly Property CasparServerNames As List(Of String)
       Set(value As List(Of String))
@@ -16,8 +23,12 @@ Public Class frmDashboardSettings
    Public Property Layer As Integer = 20
    Public Property DataFields As String = ""
    Public Property ControlsSet As ucPlaybackButtons.enumControlSets = ucPlaybackButtons.enumControlSets.csLoadPlayStopUpdate
+   Public Property AutoClearEffect As String = "CUT"
+   Public Property AutoClearEffectDuration As Integer = 0
 
    Private Sub frmDashboardSettings_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+
+      MyColorThemes.Loader.Load(Me, _Settings.Theme)
 
       cboServers.Items.Clear()
       cboServers.Items.Add("All")
@@ -41,6 +52,14 @@ Public Class frmDashboardSettings
       flds = flds.Replace("|", vbCrLf)
       txtFields.Text = flds
 
+      If AutoClearEffect = "CUT" Then
+         cboAutoClearEffect.SelectedIndex = 0
+      Else
+         cboAutoClearEffect.SelectedIndex = 1
+      End If
+
+      nudAutoClearEffectDuration.Value = AutoClearEffectDuration
+
    End Sub
 
    Private Sub btnOk_Click(sender As Object, e As EventArgs) Handles btnOk.Click
@@ -56,7 +75,15 @@ Public Class frmDashboardSettings
       flds = flds.Replace("||", "|")
       DataFields = flds
 
-      Me.DialogResult = System.Windows.Forms.DialogResult.OK
+      If cboAutoClearEffect.SelectedIndex = 0 Then
+         AutoClearEffect = "CUT"
+      Else
+         AutoClearEffect = "MIX"
+      End If
+
+      AutoClearEffectDuration = CInt(nudAutoClearEffectDuration.Value)
+
+      DialogResult = System.Windows.Forms.DialogResult.OK
 
    End Sub
 

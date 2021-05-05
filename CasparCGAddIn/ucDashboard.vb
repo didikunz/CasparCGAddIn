@@ -3,16 +3,28 @@ Imports Microsoft.Office.Interop.Excel
 Imports CasparObjects
 Imports System.Diagnostics
 Imports CasparCGAddIn
+Imports Bespoke.Common.Osc
+Imports System.Net
 
 Public Class ucDashboard
-
-#Region "Proverties and module level variables"
 
    Public Enum enumDockingMode
       dmFloating
       dmVertical
       dmHorizontal
    End Enum
+
+   Public Enum enumOSCEvents
+      oscNone
+      oscLoad
+      oscPlay
+      oscNext
+      oscStop
+      oscUpdate
+      oscPreview
+   End Enum
+
+#Region "Proverties and module level variables"
 
    Private _Settings As Settings
    Private _IsCasparConnected As Boolean
@@ -25,6 +37,7 @@ Public Class ucDashboard
 
    Private WithEvents _listSheet As Worksheet
    Private _currentRow As Integer = 0
+   Private _currentCol As String = "A"
 
    'Private _PendingRefresh As Boolean = False
    Private _PendingRefreshAutoplay As Boolean = False
@@ -35,10 +48,13 @@ Public Class ucDashboard
    Private _Channel As Integer = 1
    Private _Layer As Integer = 20
    Private _DataFields As String = ""
+   Private _AutoClearEffect As String = "CUT"
+   Private _AutoClearEffectDuration As Integer = 0
 
    Private _DockingMode As enumDockingMode = enumDockingMode.dmVertical
 
    Private WithEvents _ResizeTimer As Timer = New Timer
+   Private WithEvents _server As OscServer = Nothing
 
    Public Property ListPaneVisible As Boolean
       Get
@@ -59,8 +75,16 @@ Public Class ucDashboard
 
          If _Settings IsNot Nothing Then
 
+            MyColorThemes.Loader.LoadControl(Me, _Settings.Theme)
+
             If _DataFields = "" Then
                _DataFields = _Settings.DefaultDataFields
+            End If
+
+            If _Settings.UseOSCInput Then
+               _server = New OscServer(TransportType.Udp, IPAddress.Loopback, _Settings.OSCInputPort)
+               _server.FilterRegisteredMethods = False
+               _server.Start()
             End If
 
          End If
@@ -117,7 +141,7 @@ Public Class ucDashboard
    ''' </summary>
    ''' <param name="sender">Event source</param>
    ''' <param name="e">Indicates the workshhet to use and what commnad to be executed</param>
-   Private Sub CommandEvent(sender As Object, e As ucPlaybackButtons.CommandkEventArgs)
+   Private Sub CommandEvent(sender As Object, e As ucPlaybackButtons.CommandEventArgs)
 
       If _CasparRibon IsNot Nothing AndAlso e.Sheet IsNot Nothing AndAlso sender IsNot Nothing Then
 
@@ -428,6 +452,20 @@ Public Class ucDashboard
             End If
             col += 1
 
+            'Auto Clear
+            Dim autoClear As Boolean = False
+            cell = range(1, col)
+            If cell.Text = "Auto Clear" Then
+               cell = range(_currentRow, col)
+               Dim inte As Integer = 0
+               If IsNumeric(cell.Text.ToString) Then
+                  If Integer.TryParse(cell.Text, inte) Then
+                     autoClear = (inte = 1)
+                  End If
+               End If
+            End If
+            col += 1
+
             If Preview Then
 
                Dim pvw As CasparCG = _Settings.Preview
@@ -440,6 +478,9 @@ Public Class ucDashboard
                      If caspar.Connected Then
                         If Autoplay Then
                            caspar.Play(channel, layer, tmplClipName, doLoop, effect, duration, direction, "Linear")
+                           If autoClear Then
+                              caspar.LoadBG(channel, layer, "EMPTY", False, _AutoClearEffect, _AutoClearEffectDuration, "", "linear", True)
+                           End If
                         Else
                            If showFirstFrame Then
                               caspar.Load(channel, layer, tmplClipName)
@@ -455,6 +496,9 @@ Public Class ucDashboard
                      If caspar.Connected Then
                         If Autoplay Then
                            caspar.Play(channel, layer, tmplClipName, doLoop, effect, duration, direction, "Linear")
+                           If autoClear Then
+                              caspar.LoadBG(channel, layer, "EMPTY", False, _AutoClearEffect, _AutoClearEffectDuration, "", "linear", True)
+                           End If
                         Else
                            If showFirstFrame Then
                               caspar.Load(channel, layer, tmplClipName)
@@ -532,13 +576,34 @@ Public Class ucDashboard
                   End If
                End If
 
-
             ElseIf kind = "A" Or kind = "I" Or kind = "V" Then
+
+               'Auto Clear
+               Dim autoClear As Boolean = False
+               Dim col As Integer = 6
+               Do
+                  cell = range(1, col)
+                  If cell.Text = "Auto Clear" Then
+                     cell = range(_currentRow, col)
+                     Dim inte As Integer = 0
+                     If IsNumeric(cell.Text.ToString) Then
+                        If Integer.TryParse(cell.Text, inte) Then
+                           autoClear = (inte = 1)
+                           Exit Do
+                        End If
+                     End If
+                     Exit Do
+                  End If
+                  col += 1
+               Loop Until col > 50
 
                If _ServerNumber = 0 Then
                   For Each caspar As CasparCG In _Settings.Servers
                      If caspar.Connected Then
                         caspar.Play(channel, layer)
+                        If autoClear Then
+                           caspar.LoadBG(channel, layer, "EMPTY", False, _AutoClearEffect, _AutoClearEffectDuration, "", "linear", True)
+                        End If
                      End If
                   Next
                Else
@@ -546,6 +611,9 @@ Public Class ucDashboard
                      Dim caspar As CasparCG = _Settings.Servers(_ServerNumber - 1)
                      If caspar.Connected Then
                         caspar.Play(channel, layer)
+                        If autoClear Then
+                           caspar.LoadBG(channel, layer, "EMPTY", False, _AutoClearEffect, _AutoClearEffectDuration, "", "linear", True)
+                        End If
                      End If
                   End If
                End If
@@ -817,13 +885,15 @@ Public Class ucDashboard
 
          Dim slaveSheets As HashSet(Of String) = New HashSet(Of String)
          If _Settings.InhibitPlayback4Slave Then
+
             Dim slaveSheet As String = ""
             For Each sh As Worksheet In _ActiveWorkbook.Worksheets
-               slaveSheet = CustomProperties.Load(sh, "SlaveWorksheet", "")
-               If slaveSheet <> "" Then
+               slaveSheet = CustomProperties.Load(sh, "SlaveWorksheet", "").Trim
+               If slaveSheet <> "" And sh.Name.Trim <> slaveSheet Then
                   slaveSheets.Add(slaveSheet)
                End If
             Next
+
          End If
 
          For Each sheet As Worksheet In _ActiveWorkbook.Worksheets
@@ -832,13 +902,18 @@ Public Class ucDashboard
 
                If CustomProperties.Load(sheet, "Template", "") <> "" Then
 
-                  Dim upCntr As ucPlaybackControls = New ucPlaybackControls
-                  upCntr.Sheet = sheet
+                  If CustomProperties.Load(sheet, "ShowInDashboard", True) Then
 
-                  'Add to flpFlow 
-                  flpFlow.Controls.Add(upCntr)
-                  upCntr.ControlsSet = CustomProperties.Load(sheet, "ControlsSet", CInt(ucPlaybackButtons.enumControlSets.csLoadPlayStopUpdate))
-                  AddHandler upCntr.CommandEvent, AddressOf CommandEvent
+                     Dim upCntr As ucPlaybackControls = New ucPlaybackControls
+                     upCntr.Settings = _Settings
+                     upCntr.Sheet = sheet
+
+                     'Add to flpFlow 
+                     flpFlow.Controls.Add(upCntr)
+                     upCntr.ControlsSet = CustomProperties.Load(sheet, "ControlsSet", CInt(ucPlaybackButtons.enumControlSets.csLoadPlayStopUpdate))
+                     AddHandler upCntr.CommandEvent, AddressOf CommandEvent
+
+                  End If
 
                End If
 
@@ -893,6 +968,9 @@ Public Class ucDashboard
          End If
          _DataFields = flds
 
+         _AutoClearEffect = CustomProperties.Load(_listSheet, "AutoClearEffect", "CUT")
+         _AutoClearEffectDuration = CustomProperties.Load(_listSheet, "AutoClearEffectDuration", 0)
+
          Me.ControlsSet = CustomProperties.Load(_listSheet, "ControlsSet", 0)
 
       End If
@@ -907,11 +985,14 @@ Public Class ucDashboard
 
       fds.CasparServerNames = lst
 
+      fds.Settings = _Settings
       fds.ServerNumber = _ServerNumber
       fds.Channel = _Channel
       fds.Layer = _Layer
       fds.DataFields = _DataFields
       fds.ControlsSet = Me.ControlsSet
+      fds.AutoClearEffect = _AutoClearEffect
+      fds.AutoClearEffectDuration = _AutoClearEffectDuration
 
       If fds.ShowDialog = DialogResult.OK Then
 
@@ -922,6 +1003,9 @@ Public Class ucDashboard
          _DataFields = fds.DataFields
          _Settings.DefaultDataFields = _DataFields
 
+         _AutoClearEffect = fds.AutoClearEffect
+         _AutoClearEffectDuration = fds.AutoClearEffectDuration
+
          Me.ControlsSet = fds.ControlsSet
 
          If _listSheet IsNot Nothing Then
@@ -931,6 +1015,8 @@ Public Class ucDashboard
             CustomProperties.Save(_listSheet, "Layer", _Layer.ToString)
             CustomProperties.Save(_listSheet, "DataFields", _DataFields)
             CustomProperties.Save(_listSheet, "ControlsSet", CInt(Me.ControlsSet).ToString)
+            CustomProperties.Save(_listSheet, "AutoClearEffect", _AutoClearEffect)
+            CustomProperties.Save(_listSheet, "AutoClearEffectDuration", _AutoClearEffectDuration)
 
             _ActiveWorkbook.Saved = False
 
@@ -1032,6 +1118,11 @@ Public Class ucDashboard
       cell.Font.Bold = True
       col += 1
 
+      cell = range(1, col)
+      cell.Value = "Auto Clear"
+      cell.Font.Bold = True
+      col += 1
+
       CustomProperties.Save(_listSheet, "IsDashboardList", "1")
 
       CustomProperties.Save(_listSheet, "ServerNumber", _ServerNumber.ToString)
@@ -1039,6 +1130,8 @@ Public Class ucDashboard
       CustomProperties.Save(_listSheet, "Layer", _Layer.ToString)
       CustomProperties.Save(_listSheet, "DataFields", _DataFields)
       CustomProperties.Save(_listSheet, "ControlsSet", CInt(Me.ControlsSet).ToString)
+      CustomProperties.Save(_listSheet, "AutoClearEffect", _AutoClearEffect)
+      CustomProperties.Save(_listSheet, "AutoClearEffectDuration", _AutoClearEffectDuration)
 
       _ActiveWorkbook.Saved = False
 
@@ -1059,6 +1152,7 @@ Public Class ucDashboard
    Private Sub lnklblQueries_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles lnklblQueries.LinkClicked
 
       Dim fsq As frmSelectQuery = New frmSelectQuery
+      fsq.Settings = _Settings
       fsq.wrkSheet = _listSheet
       fsq.currentRow = _currentRow
 
@@ -1107,7 +1201,7 @@ Public Class ucDashboard
    ''' </summary>
    ''' <param name="sender">Event source</param>
    ''' <param name="e">Indicates what commnad to be executed</param>
-   Private Sub pbPlaybackButtons_CommandEvent(sender As Object, e As ucPlaybackButtons.CommandkEventArgs) Handles pbPlaybackButtons.CommandEvent
+   Private Sub pbPlaybackButtons_CommandEvent(sender As Object, e As ucPlaybackButtons.CommandEventArgs) Handles pbPlaybackButtons.CommandEvent
 
       Select Case e.Command
 
@@ -1146,6 +1240,8 @@ Public Class ucDashboard
          _Layer = CustomProperties.Load(_listSheet, "Layer", 20)
 
          _DataFields = CustomProperties.Load(_listSheet, "DataFields", "")
+         _AutoClearEffect = CustomProperties.Load(_listSheet, "AutoClearEffect", "CUT")
+         _AutoClearEffectDuration = CustomProperties.Load(_listSheet, "AutoClearEffectDuration", 0)
 
          Me.ControlsSet = CustomProperties.Load(_listSheet, "ControlsSet", CInt(ucPlaybackButtons.enumControlSets.csLoadPlayStopUpdate))
 
@@ -1275,19 +1371,27 @@ Public Class ucDashboard
    End Sub
 
    Private Sub cboTemplates_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboTemplates.SelectedIndexChanged
-      SetCells(cboTemplates.Items(cboTemplates.SelectedIndex), "T")
+      If cboTemplates.SelectedIndex > -1 Then
+         SetCells(cboTemplates.Items(cboTemplates.SelectedIndex), "T")
+      End If
    End Sub
 
    Private Sub cboAudio_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboAudio.SelectedIndexChanged
-      SetCells(cboAudio.Items(cboAudio.SelectedIndex), "A")
+      If cboAudio.SelectedIndex > -1 Then
+         SetCells(cboAudio.Items(cboAudio.SelectedIndex), "A")
+      End If
    End Sub
 
    Private Sub cboImages_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboImages.SelectedIndexChanged
-      SetCells(cboImages.Items(cboImages.SelectedIndex), "I")
+      If cboImages.SelectedIndex > -1 Then
+         SetCells(cboImages.Items(cboImages.SelectedIndex), "I")
+      End If
    End Sub
 
    Private Sub cboVideo_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboVideo.SelectedIndexChanged
-      SetCells(cboVideo.Items(cboVideo.SelectedIndex), "V")
+      If cboVideo.SelectedIndex > -1 Then
+         SetCells(cboVideo.Items(cboVideo.SelectedIndex), "V")
+      End If
    End Sub
 
    Private Sub _listSheet_SelectionChange(Target As Range) Handles _listSheet.SelectionChange
@@ -1295,8 +1399,154 @@ Public Class ucDashboard
       _currentRow = Target.Row
       panList.Enabled = (_currentRow > 1)
 
-      Dim range As Excel.Range = _listSheet.Cells
-      Dim cell As Excel.Range = range(_currentRow, 1)
+      If Target.Column < 27 Then
+         _currentCol = ChrW(Target.Column + 64).ToString
+      Else
+         _currentCol = "Z"
+      End If
+
+   End Sub
+
+   Private Sub ucDashboard_HandleDestroyed(sender As Object, e As EventArgs) Handles Me.HandleDestroyed
+      If _server IsNot Nothing Then
+         _server.Stop()
+      End If
+   End Sub
+
+   Private Sub _server_MessageReceived(sender As Object, e As OscMessageReceivedEventArgs) Handles _server.MessageReceived
+
+      Static savedCol As String = ""
+      Static savedRow As Integer = 0
+
+      If e.Message IsNot Nothing AndAlso e.Message.Data.Count > 0 Then
+
+         Dim adr As String = ""
+         If Not e.Message.Address = "" Then
+            adr = e.Message.Address.Trim.ToLower
+         End If
+
+         If TypeOf e.Message.Data(0) Is String Then
+
+            Dim com As String = e.Message.Data(0).ToString.Trim.ToLower
+
+            If adr.Contains("listsheet") Then
+
+               If _ActiveWorkbook.ActiveSheet.Name = _listSheet.Name Then
+
+                  Dim rng As Range = Nothing
+
+                  Select Case com
+                     Case "load"
+                        pbPlaybackButtons.DoLoad(True)
+
+                     Case "play"
+                        pbPlaybackButtons.DoPlay(True)
+
+                     Case "next"
+                        pbPlaybackButtons.DoNext(True)
+
+                     Case "stop"
+                        pbPlaybackButtons.DoStop(True)
+
+                     Case "update"
+                        pbPlaybackButtons.DoUpdate(True)
+
+                     Case "preview"
+                        LoadTemplateOrClip(True, True)
+
+                     Case "first"
+                        rng = _listSheet.Range(String.Format("{0}2", _currentCol))
+                        rng.Select()
+
+                     Case "up"
+                        If _currentRow > 1 Then
+                           rng = _listSheet.Range(String.Format("{0}{1}", _currentCol, _currentRow - 1))
+                           rng.Select()
+                        End If
+
+                     Case "down"
+                        rng = _listSheet.Range(String.Format("{0}{1}", _currentCol, _currentRow + 1))
+                        rng.Select()
+
+                     Case "last"
+                        Dim s As String = _currentCol
+                        rng = _listSheet.Cells.SpecialCells(XlCellType.xlCellTypeLastCell, Type.Missing)
+                        rng = _listSheet.Range(String.Format("{0}{1}", s, rng.Row))
+                        rng.Select()
+
+                     Case "pageup"
+                        Dim cnt As Integer = _ActiveWorkbook.Application.ActiveWindow.VisibleRange.Rows.Count
+                        If _currentRow > cnt Then
+                           rng = _listSheet.Range(String.Format("{0}{1}", _currentCol, _currentRow - cnt))
+                           rng.Select()
+                        Else
+                           rng = _listSheet.Range(String.Format("{0}2", _currentCol))
+                           rng.Select()
+                        End If
+
+                     Case "pagedown"
+                        Dim cnt As Integer = _ActiveWorkbook.Application.ActiveWindow.VisibleRange.Rows.Count
+                        rng = _listSheet.Range(String.Format("{0}{1}", _currentCol, _currentRow + cnt))
+                        rng.Select()
+
+                     Case "savepos"
+                        savedCol = _currentCol
+                        savedRow = _currentRow
+
+                     Case "loadpos"
+                        If savedCol <> "" And savedRow > 0 Then
+                           rng = _listSheet.Range(String.Format("{0}{1}", savedCol, savedRow))
+                           rng.Select()
+                        End If
+
+                     Case Else
+                        Try
+                           rng = _listSheet.Range(com.ToUpper)
+                           rng.Select()
+                        Catch ex As Exception
+                           'Ignore
+                        End Try
+
+                  End Select
+
+               End If
+
+            Else
+
+               Dim cmd As enumOSCEvents = enumOSCEvents.oscNone
+
+               Select Case com
+                  Case "load"
+                     cmd = enumOSCEvents.oscLoad
+                  Case "play"
+                     cmd = enumOSCEvents.oscPlay
+                  Case "next"
+                     cmd = enumOSCEvents.oscNext
+                  Case "stop"
+                     cmd = enumOSCEvents.oscStop
+                  Case "update"
+                     cmd = enumOSCEvents.oscUpdate
+                  Case "preview"
+                     cmd = enumOSCEvents.oscPreview
+               End Select
+
+               If Not cmd = enumOSCEvents.oscNone Then
+
+                  For Each pc As Control In flpFlow.Controls
+
+                     If TypeOf pc Is ucPlaybackControls Then
+                        CType(pc, ucPlaybackControls).HandleOscCommand(adr, cmd)
+                     End If
+
+                  Next
+
+               End If
+
+            End If
+
+         End If
+
+      End If
 
    End Sub
 

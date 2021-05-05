@@ -69,6 +69,7 @@ Partial Class ucPlaybackButtons
       Me.btnLoad_LPSU.Name = "btnLoad_LPSU"
       Me.btnLoad_LPSU.Size = New System.Drawing.Size(46, 47)
       Me.btnLoad_LPSU.TabIndex = 13
+      Me.btnLoad_LPSU.Tag = "[ignore]"
       Me.btnLoad_LPSU.UseVisualStyleBackColor = True
       '
       'btnUpdate_LPSU
@@ -79,6 +80,7 @@ Partial Class ucPlaybackButtons
       Me.btnUpdate_LPSU.Name = "btnUpdate_LPSU"
       Me.btnUpdate_LPSU.Size = New System.Drawing.Size(47, 47)
       Me.btnUpdate_LPSU.TabIndex = 12
+      Me.btnUpdate_LPSU.Tag = "[ignore]"
       Me.btnUpdate_LPSU.UseVisualStyleBackColor = True
       '
       'btnStop_LPSU
@@ -89,6 +91,7 @@ Partial Class ucPlaybackButtons
       Me.btnStop_LPSU.Name = "btnStop_LPSU"
       Me.btnStop_LPSU.Size = New System.Drawing.Size(46, 47)
       Me.btnStop_LPSU.TabIndex = 11
+      Me.btnStop_LPSU.Tag = "[ignore]"
       Me.btnStop_LPSU.UseVisualStyleBackColor = True
       '
       'btnPlay_LPSU
@@ -99,6 +102,7 @@ Partial Class ucPlaybackButtons
       Me.btnPlay_LPSU.Name = "btnPlay_LPSU"
       Me.btnPlay_LPSU.Size = New System.Drawing.Size(46, 47)
       Me.btnPlay_LPSU.TabIndex = 9
+      Me.btnPlay_LPSU.Tag = "[ignore]"
       Me.btnPlay_LPSU.UseVisualStyleBackColor = True
       '
       'tlpPlayStop
@@ -126,6 +130,7 @@ Partial Class ucPlaybackButtons
       Me.btnStop_PS.Name = "btnStop_PS"
       Me.btnStop_PS.Size = New System.Drawing.Size(99, 47)
       Me.btnStop_PS.TabIndex = 12
+      Me.btnStop_PS.Tag = "[ignore]"
       Me.btnStop_PS.UseVisualStyleBackColor = True
       '
       'btnPlay_PS
@@ -136,6 +141,7 @@ Partial Class ucPlaybackButtons
       Me.btnPlay_PS.Name = "btnPlay_PS"
       Me.btnPlay_PS.Size = New System.Drawing.Size(98, 47)
       Me.btnPlay_PS.TabIndex = 10
+      Me.btnPlay_PS.Tag = "[ignore]"
       Me.btnPlay_PS.UseVisualStyleBackColor = True
       '
       'tlpLoadPlayStop
@@ -164,6 +170,7 @@ Partial Class ucPlaybackButtons
       Me.btnStop_LPS.Name = "btnStop_LPS"
       Me.btnStop_LPS.Size = New System.Drawing.Size(65, 47)
       Me.btnStop_LPS.TabIndex = 16
+      Me.btnStop_LPS.Tag = "[ignore]"
       Me.btnStop_LPS.UseVisualStyleBackColor = True
       '
       'btnPlay_LPS
@@ -174,6 +181,7 @@ Partial Class ucPlaybackButtons
       Me.btnPlay_LPS.Name = "btnPlay_LPS"
       Me.btnPlay_LPS.Size = New System.Drawing.Size(63, 47)
       Me.btnPlay_LPS.TabIndex = 15
+      Me.btnPlay_LPS.Tag = "[ignore]"
       Me.btnPlay_LPS.UseVisualStyleBackColor = True
       '
       'btnLoad_LPS
@@ -184,6 +192,7 @@ Partial Class ucPlaybackButtons
       Me.btnLoad_LPS.Name = "btnLoad_LPS"
       Me.btnLoad_LPS.Size = New System.Drawing.Size(63, 47)
       Me.btnLoad_LPS.TabIndex = 14
+      Me.btnLoad_LPS.Tag = "[ignore]"
       Me.btnLoad_LPS.UseVisualStyleBackColor = True
       '
       'tlpPlayNextStop
@@ -212,6 +221,7 @@ Partial Class ucPlaybackButtons
       Me.btnStop_PNS.Name = "btnStop_PNS"
       Me.btnStop_PNS.Size = New System.Drawing.Size(65, 47)
       Me.btnStop_PNS.TabIndex = 12
+      Me.btnStop_PNS.Tag = "[ignore]"
       Me.btnStop_PNS.UseVisualStyleBackColor = True
       '
       'btnNext_PNS
@@ -222,6 +232,7 @@ Partial Class ucPlaybackButtons
       Me.btnNext_PNS.Name = "btnNext_PNS"
       Me.btnNext_PNS.Size = New System.Drawing.Size(63, 47)
       Me.btnNext_PNS.TabIndex = 11
+      Me.btnNext_PNS.Tag = "[ignore]"
       Me.btnNext_PNS.UseVisualStyleBackColor = True
       '
       'btnPlay_PNS
@@ -232,6 +243,7 @@ Partial Class ucPlaybackButtons
       Me.btnPlay_PNS.Name = "btnPlay_PNS"
       Me.btnPlay_PNS.Size = New System.Drawing.Size(63, 47)
       Me.btnPlay_PNS.TabIndex = 10
+      Me.btnPlay_PNS.Tag = "[ignore]"
       Me.btnPlay_PNS.UseVisualStyleBackColor = True
       '
       'tlpPlayStopUpdate
@@ -260,6 +272,7 @@ Partial Class ucPlaybackButtons
       Me.btnUpdate_PSU.Name = "btnUpdate_PSU"
       Me.btnUpdate_PSU.Size = New System.Drawing.Size(65, 47)
       Me.btnUpdate_PSU.TabIndex = 13
+      Me.btnUpdate_PSU.Tag = "[ignore]"
       Me.btnUpdate_PSU.UseVisualStyleBackColor = True
       '
       'btnStop_PSU
@@ -270,6 +283,7 @@ Partial Class ucPlaybackButtons
       Me.btnStop_PSU.Name = "btnStop_PSU"
       Me.btnStop_PSU.Size = New System.Drawing.Size(63, 47)
       Me.btnStop_PSU.TabIndex = 12
+      Me.btnStop_PSU.Tag = "[ignore]"
       Me.btnStop_PSU.UseVisualStyleBackColor = True
       '
       'btnPlay_PSU
@@ -280,6 +294,7 @@ Partial Class ucPlaybackButtons
       Me.btnPlay_PSU.Name = "btnPlay_PSU"
       Me.btnPlay_PSU.Size = New System.Drawing.Size(63, 47)
       Me.btnPlay_PSU.TabIndex = 10
+      Me.btnPlay_PSU.Tag = "[ignore]"
       Me.btnPlay_PSU.UseVisualStyleBackColor = True
       '
       'tlpLoadPlayNextStop
@@ -309,6 +324,7 @@ Partial Class ucPlaybackButtons
       Me.btnStop_LPNS.Name = "btnStop_LPNS"
       Me.btnStop_LPNS.Size = New System.Drawing.Size(47, 47)
       Me.btnStop_LPNS.TabIndex = 17
+      Me.btnStop_LPNS.Tag = "[ignore]"
       Me.btnStop_LPNS.UseVisualStyleBackColor = True
       '
       'btnNext_LPNS
@@ -319,6 +335,7 @@ Partial Class ucPlaybackButtons
       Me.btnNext_LPNS.Name = "btnNext_LPNS"
       Me.btnNext_LPNS.Size = New System.Drawing.Size(46, 47)
       Me.btnNext_LPNS.TabIndex = 16
+      Me.btnNext_LPNS.Tag = "[ignore]"
       Me.btnNext_LPNS.UseVisualStyleBackColor = True
       '
       'btnLoad_LPNS
@@ -329,6 +346,7 @@ Partial Class ucPlaybackButtons
       Me.btnLoad_LPNS.Name = "btnLoad_LPNS"
       Me.btnLoad_LPNS.Size = New System.Drawing.Size(46, 47)
       Me.btnLoad_LPNS.TabIndex = 14
+      Me.btnLoad_LPNS.Tag = "[ignore]"
       Me.btnLoad_LPNS.UseVisualStyleBackColor = True
       '
       'btnPlay_LPNS
@@ -339,6 +357,7 @@ Partial Class ucPlaybackButtons
       Me.btnPlay_LPNS.Name = "btnPlay_LPNS"
       Me.btnPlay_LPNS.Size = New System.Drawing.Size(46, 47)
       Me.btnPlay_LPNS.TabIndex = 15
+      Me.btnPlay_LPNS.Tag = "[ignore]"
       Me.btnPlay_LPNS.UseVisualStyleBackColor = True
       '
       'tlpPlayNextStopUpdate
@@ -368,6 +387,7 @@ Partial Class ucPlaybackButtons
       Me.btnNext_PNSU.Name = "btnNext_PNSU"
       Me.btnNext_PNSU.Size = New System.Drawing.Size(46, 47)
       Me.btnNext_PNSU.TabIndex = 11
+      Me.btnNext_PNSU.Tag = "[ignore]"
       Me.btnNext_PNSU.UseVisualStyleBackColor = True
       '
       'btnPlay_PNSU
@@ -378,6 +398,7 @@ Partial Class ucPlaybackButtons
       Me.btnPlay_PNSU.Name = "btnPlay_PNSU"
       Me.btnPlay_PNSU.Size = New System.Drawing.Size(46, 47)
       Me.btnPlay_PNSU.TabIndex = 10
+      Me.btnPlay_PNSU.Tag = "[ignore]"
       Me.btnPlay_PNSU.UseVisualStyleBackColor = True
       '
       'btnUpdate_PNSU
@@ -388,6 +409,7 @@ Partial Class ucPlaybackButtons
       Me.btnUpdate_PNSU.Name = "btnUpdate_PNSU"
       Me.btnUpdate_PNSU.Size = New System.Drawing.Size(47, 47)
       Me.btnUpdate_PNSU.TabIndex = 13
+      Me.btnUpdate_PNSU.Tag = "[ignore]"
       Me.btnUpdate_PNSU.UseVisualStyleBackColor = True
       '
       'btnStop_PNSU
@@ -398,6 +420,7 @@ Partial Class ucPlaybackButtons
       Me.btnStop_PNSU.Name = "btnStop_PNSU"
       Me.btnStop_PNSU.Size = New System.Drawing.Size(46, 47)
       Me.btnStop_PNSU.TabIndex = 12
+      Me.btnStop_PNSU.Tag = "[ignore]"
       Me.btnStop_PNSU.UseVisualStyleBackColor = True
       '
       'tlpLoadPlayStopUpdate

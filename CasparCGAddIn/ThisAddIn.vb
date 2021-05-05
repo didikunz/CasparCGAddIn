@@ -1,6 +1,7 @@
 ﻿Imports Microsoft.Office.Interop.Excel
 Imports CasparObjects
 Imports System.Windows.Forms
+Imports Microsoft.Win32
 
 Public Class ThisAddIn
 
@@ -15,6 +16,8 @@ Public Class ThisAddIn
 
    Private _sheetDeleteInProgress As Boolean = False
 
+   'Private _functionsAddinRef As ExcelFunctions.Connect
+
    Public ReadOnly Property IsCasparConnected As Boolean
       Get
          Return _IsCasparConnected
@@ -27,7 +30,7 @@ Public Class ThisAddIn
       End Get
    End Property
 
-   Public Sub ConnectAll(useAveco As Boolean)
+   Public Sub ConnectAll(useAveco As Boolean, formatForHTML As Boolean)
 
       Dim errText As String = ""
 
@@ -53,6 +56,7 @@ Public Class ThisAddIn
          Else
             caspar.AddInfoFields = CasparCG.enumAddInfoFieldsType.itStandard
          End If
+         caspar.FormatTextsForHTML = formatForHTML
 
       Next
 
@@ -106,6 +110,15 @@ Public Class ThisAddIn
          _Settings = New Settings()
       End If
 
+      If _Settings IsNot Nothing Then
+         Dim officeVersion As String = Application.Version
+         Dim rk As RegistryKey = Registry.CurrentUser.OpenSubKey("Software\Microsoft\Office\" + officeVersion + "\Common")
+         If rk IsNot Nothing Then
+            Dim themeCode As Integer = CInt(rk.GetValue("UI Theme"))
+            _Settings.UseDarkTheme = (themeCode = 4)
+         End If
+      End If
+
       _CasparRibon = Globals.Ribbons.ribCasparCG
 
       _Dashboard = New ucDashboard
@@ -121,7 +134,36 @@ Public Class ThisAddIn
       _CasparRibon.SettingsFilename = _SettingsFilename
       _CasparRibon.SetDashboardObjects(_Dashboard, _DashboardPane)
 
+
+      '_functionsAddinRef = New ExcelFunctions.Connect()
+
+      ''_functionsAddinRef.Unregister()
+
+      'Dim name As String = _functionsAddinRef.GetType().Namespace + "." + _functionsAddinRef.GetType().Name
+      'Dim guid As String = _functionsAddinRef.GetType().GUID.ToString.ToUpper
+
+      'Dim blnFound As Boolean = False
+      'For Each a As Excel.AddIn In Application.AddIns
+      '   Try
+      '      If a.CLSID.Contains(guid) Then
+      '         blnFound = True
+      '         If Not a.Installed Then
+      '            a.Installed = True
+      '         End If
+      '      End If
+      '   Catch ex As Exception
+      '   End Try
+      'Next
+      'If Not blnFound Then
+      '   _functionsAddinRef.Register()
+      '   'Application.AddIns.Add(name).Installed = True
+      'End If
+
    End Sub
+
+   'Protected Overrides Function RequestComAddInAutomationService() As Object
+   '   Return _functionsAddinRef
+   'End Function
 
    Private Sub _DashboardPane_DockPositionChanged(sender As Object, e As EventArgs) Handles _DashboardPane.DockPositionChanged
 
@@ -192,35 +234,39 @@ Public Class ThisAddIn
 
    Private Sub Application_WorkbookActivate(Wb As Workbook) Handles Application.WorkbookActivate
 
+      Dim isCasparWorkbook As Boolean = False
+
       If _Settings.ConnectOnStartUp And Not _IsCasparConnected Then
 
-         Dim isCasparWookkbook As Boolean = False
          For Each ws As Worksheet In Wb.Sheets
 
             If CustomProperties.Load(ws, "IsDashboardList", False) Then
 
-               isCasparWookkbook = True
+               isCasparWorkbook = True
 
             Else
 
                For Each name As Excel.Name In ws.Names
 
                   If name.Name.Contains("CasparOutput") Then
-                     isCasparWookkbook = True
+                     isCasparWorkbook = True
                      Exit For
                   End If
 
                Next
             End If
 
-            If isCasparWookkbook Then
+            If isCasparWorkbook Then
                Exit For
             End If
 
          Next
 
-         If isCasparWookkbook Then
-            ConnectAll(_Settings.UseAveco)
+         If isCasparWorkbook Then
+            ConnectAll(_Settings.UseAveco, _Settings.FormatTextsForHTML)
+            _DashboardPane.Visible = True
+         Else
+            _DashboardPane.Visible = False
          End If
 
       End If

@@ -316,4 +316,22 @@
   <data name="Dublicate" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Dublicate.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="Timer_StartOffset" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Timer_StartOffset.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Timer_StartOffset_S" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Timer_StartOffset_S.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Timer_SetOffset" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Timer_SetOffset.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Timer_Start_s" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Timer_Start_s.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Timer_Stop_s" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Timer_Stop_s.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Web_Download" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Web_Download.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>

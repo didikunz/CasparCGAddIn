@@ -2,10 +2,17 @@
 
 Public Class frmTimerLaps
 
+   Private _Settings As Settings
    Private _TimerSettings As TimerSettings
 
    Private _currentLap As TimerLap = Nothing
    Private _currentPos As Integer = 0
+
+   Public WriteOnly Property Settings As Settings
+      Set(value As Settings)
+         _Settings = value
+      End Set
+   End Property
 
    Public WriteOnly Property TimerSettings As TimerSettings
       Set(value As TimerSettings)
@@ -15,6 +22,8 @@ Public Class frmTimerLaps
 
 
    Private Sub frmTimerLaps_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+
+      MyColorThemes.Loader.Load(Me, _Settings.Theme)
 
       If _TimerSettings IsNot Nothing AndAlso _TimerSettings.SelectedItem IsNot Nothing Then
 
@@ -78,9 +87,11 @@ Public Class frmTimerLaps
          If txtPartDistance.Text <> "" Then
             If Double.TryParse(txtPartDistance.Text, dbl) Then
                _currentLap.Distance = dbl
-               txtPartDistance.BackColor = System.Drawing.SystemColors.Window
+               txtPartDistance.ForeColor = _Settings.Theme.ForeColor
+               txtPartDistance.BackColor = _Settings.Theme.BackColor
             Else
-               txtPartDistance.BackColor = System.Drawing.Color.LightPink
+               txtPartDistance.ForeColor = _Settings.Theme.HighliteForeColor
+               txtPartDistance.BackColor = _Settings.Theme.HighliteBackColor
                isOk = False
             End If
          End If

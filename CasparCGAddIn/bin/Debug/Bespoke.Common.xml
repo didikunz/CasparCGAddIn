@@ -1,0 +1,1757 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Bespoke.Common</name>
+    </assembly>
+    <members>
+        <member name="T:Bespoke.Common.Assert">
+            <summary>
+            Provides a set of methods to verify conditions.
+            </summary>
+        </member>
+        <member name="M:Bespoke.Common.Assert.ParamIsNotNull(System.String,System.Object)">
+            <summary>
+            Verify that a parameter is not null.
+            </summary>
+            <param name="paramName">The name of the paramater to verify.</param>
+            <param name="param">The object to test for null.</param>
+            <exception cref="T:System.ArgumentNullException">Thrown if <paramref name="param"/> is null.</exception>
+        </member>
+        <member name="M:Bespoke.Common.Assert.ParamIsNotNull(System.Object)">
+            <summary>
+            Verify that a parameter is not null.
+            </summary>
+            <param name="param">The object to test for null.</param>
+            <exception cref="T:System.ArgumentNullException">Thrown if <paramref name="param"/> is null.</exception>
+        </member>
+        <member name="M:Bespoke.Common.Assert.IsTrue(System.Boolean)">
+            <summary>
+            Verify that a condition is true.
+            </summary>
+            <param name="condition">The condition to verify.</param>
+            <exception cref="T:System.ArgumentException">Thrown if <paramref name="condition"/> is false.</exception>
+        </member>
+        <member name="M:Bespoke.Common.Assert.IsTrue(System.String,System.Boolean)">
+            <summary>
+            Verify that a condition is true.
+            </summary>
+            <param name="paramName">The name of the paramater to verify.</param>
+            <param name="condition">The condition to verify.</param>
+            <exception cref="T:System.ArgumentException">Thrown if <paramref name="condition"/> is false.</exception>
+        </member>
+        <member name="M:Bespoke.Common.Assert.IsFalse(System.Boolean)">
+            <summary>
+            Verify that a condition is false.
+            </summary>
+            <param name="condition">The condition to verify.</param>
+            <exception cref="T:System.ArgumentException">Thrown if <paramref name="condition"/> is true.</exception>
+        </member>
+        <member name="M:Bespoke.Common.Assert.IsFalse(System.String,System.Boolean)">
+            <summary>
+            Verify that a condition is false.
+            </summary>
+            <param name="paramName">The name of the paramater to verify.</param>
+            <param name="condition">The condition to verify.</param>
+            <exception cref="T:System.ArgumentException">Thrown if <paramref name="condition"/> is true.</exception>
+        </member>
+        <member name="T:Bespoke.Common.CommandLineParser">
+            <summary>
+            Command-line parsing class.
+            </summary>
+            <remarks>Looks for command-line arguments in the format: name1=value1 name2=value2 ...</remarks>
+        </member>
+        <member name="P:Bespoke.Common.CommandLineParser.Item(System.String)">
+            <summary>
+            Gets a argument associated with the specified key.
+            </summary>
+            <param name="key">The name of the argument to retrieve.</param>
+            <returns> The value associated with the specified key. If the specified key is not
+            found, a <see cref="T:System.Collections.Generic.KeyNotFoundException"/> is thrown.
+            </returns>
+        </member>
+        <member name="P:Bespoke.Common.CommandLineParser.Count">
+            <summary>
+            Gets the number of arguments present on the command-line.
+            </summary>
+            <remarks>Does not include the name of the invoked application.</remarks>
+        </member>
+        <member name="P:Bespoke.Common.CommandLineParser.Keys">
+            <summary>
+            Gets the list of argument names.
+            </summary>
+        </member>
+        <member name="P:Bespoke.Common.CommandLineParser.Values">
+            <summary>
+            Gets the list of argument values.
+            </summary>
+        </member>
+        <member name="M:Bespoke.Common.CommandLineParser.#ctor(System.String[])">
+            <summary>
+            Initializes a new instance of the <see cref="T:Bespoke.Common.CommandLineParser"/> class.
+            </summary>
+            <param name="args">The arguments provided from the command-line (typically passed into Main).</param>
+        </member>
+        <member name="M:Bespoke.Common.CommandLineParser.CollapseArguments(System.String[])">
+            <summary>
+            Collapse the set of arguments into a single, space-delimted string.
+            </summary>
+            <param name="args">The set of command-line arguments.</param>
+            <returns>A single, space-delimted string representation of the arguments.</returns>
+        </member>
+        <member name="M:Bespoke.Common.CommandLineParser.ContainsKey(System.String)">
+            <summary>
+            Determine if the specified argument exists.
+            </summary>
+            <param name="key">The name of the argument to find.</param>
+            <returns>true if the argument exists; otherwise, false.</returns>
+        </member>
+        <member name="M:Bespoke.Common.CommandLineParser.ParseWindowsCommandLine(System.String[])">
+            <summary>
+            Parse the standard windows command-line.
+            </summary>
+            <param name="args"></param>
+        </member>
+        <member name="M:Bespoke.Common.CommandLineParser.ParseSpecialCommandLine(System.String)">
+            <summary>
+            Parse a command-line containing (`) as the value delimiter.
+            </summary>
+            <param name="collapsedArgs">The collapsed arguments string.</param>
+        </member>
+        <member name="T:Bespoke.Common.ExceptionEventArgs">
+            <summary>
+            Data for exception events.
+            </summary>
+        </member>
+        <member name="P:Bespoke.Common.ExceptionEventArgs.Exception">
+            <summary>
+            Gets the associated <see cref="P:Bespoke.Common.ExceptionEventArgs.Exception"/>.
+            </summary>
+        </member>
+        <member name="M:Bespoke.Common.ExceptionEventArgs.#ctor(System.Exception)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Bespoke.Common.ExceptionEventArgs"/> class.
+            </summary>
+            <param name="ex">The associated exception.</param>
+        </member>
+        <member name="T:Bespoke.Common.FloatExtensions">
+            <summary>
+            Extesion methods for <see cref="T:System.Single"/>.
+            </summary>
+        </member>
+        <member name="M:Bespoke.Common.FloatExtensions.ToDegrees(System.Single)">
+            <summary>
+            Converts radians to degrees.
+            </summary>
+            <param name="radians">The angle in radians.</param>
+            <returns>The angle in degrees.</returns>
+        </member>
+        <member name="M:Bespoke.Common.FloatExtensions.ToRadians(System.Single)">
+            <summary>
+            Converts degrees to radians.
+            </summary>
+            <param name="degrees">The angle in degrees.</param>
+            <returns>The angle in radians</returns>
+        </member>
+        <member name="T:Bespoke.Common.ModifierKeys">
+            <summary>
+            Set of keyboard modifier keys.
+            </summary>
+        </member>
+        <member name="F:Bespoke.Common.ModifierKeys.None">
+            <summary>
+            No modifier key.
+            </summary>
+        </member>
+        <member name="F:Bespoke.Common.ModifierKeys.Shift">
+            <summary>
+            The left or right Shift keys.
+            </summary>
+        </member>
+        <member name="F:Bespoke.Common.ModifierKeys.Control">
+            <summary>
+            The left or right Control keys.
+            </summary>
+        </member>
+        <member name="F:Bespoke.Common.ModifierKeys.Alt">
+            <summary>
+            The left or right Alt keys.
+            </summary>
+        </member>
+        <member name="F:Bespoke.Common.ModifierKeys.CapsLock">
+            <summary>
+            The Caps Lock key.
+            </summary>
+        </member>
+        <member name="T:Bespoke.Common.InputManager">
+            <summary>
+            Helper class for keyboard and mouse input.
+            </summary>
+        </member>
+        <member name="T:Bespoke.Common.InputManager.MouseButtons">
+            <summary>
+            Set of mouse buttons.
+            </summary>
+        </member>
+        <member name="F:Bespoke.Common.InputManager.MouseButtons.None">
+            <summary>
+            No button.
+            </summary>
+        </member>
+        <member name="F:Bespoke.Common.InputManager.MouseButtons.Left">
+            <summary>
+            The left mouse button.
+            </summary>
+        </member>
+        <member name="F:Bespoke.Common.InputManager.MouseButtons.Right">
+            <summary>
+            The right mouse button.
+            </summary>
+        </member>
+        <member name="F:Bespoke.Common.InputManager.MouseButtons.Middle">
+            <summary>
+            The middle mouse button.
+            </summary>
+        </member>
+        <member name="F:Bespoke.Common.InputManager.MouseButtons.XButton1">
+            <summary>
+            The first XButton.
+            </summary>
+        </member>
+        <member name="F:Bespoke.Common.InputManager.MouseButtons.XButton2">
+            <summary>
+            The second XButton.
+            </summary>
+        </member>
+        <member name="T:Bespoke.Common.InputManager.VKeys">
+            <summary>
+            Virtual key codes.
+            </summary>
+        </member>
+        <member name="F:Bespoke.Common.InputManager.VKeys.SHIFT">
+            <summary>
+            The Shift key.
+            </summary>
+        </member>
+        <member name="F:Bespoke.Common.InputManager.VKeys.CONTROL">
+            <summary>
+            The Control key.
+            </summary>
+        </member>
+        <member name="F:Bespoke.Common.InputManager.VKeys.MENU">
+            <summary>
+            The Menu key.
+            </summary>
+        </member>
+        <member name="F:Bespoke.Common.InputManager.VKeys.ESCAPE">
+            <summary>
+            The Escape key.
+            </summary>
+        </member>
+        <member name="F:Bespoke.Common.InputManager.VKeys.BACK">
+            <summary>
+            The Back key.
+            </summary>
+        </member>
+        <member name="F:Bespoke.Common.InputManager.VKeys.TAB">
+            <summary>
+            The Tab key.
+            </summary>
+        </member>
+        <member name="F:Bespoke.Common.InputManager.VKeys.RETURN">
+            <summary>
+            The Return key.
+            </summary>
+        </member>
+        <member name="F:Bespoke.Common.InputManager.VKeys.PRIOR">
+            <summary>
+            The Prior key.
+            </summary>
+        </member>
+        <member name="F:Bespoke.Common.InputManager.VKeys.NEXT">
+            <summary>
+            The Next key.
+            </summary>
+        </member>
+        <member name="F:Bespoke.Common.InputManager.VKeys.END">
+            <summary>
+            The End key.
+            </summary>
+        </member>
+        <member name="F:Bespoke.Common.InputManager.VKeys.HOME">
+            <summary>
+            The Home key.
+            </summary>
+        </member>
+        <member name="F:Bespoke.Common.InputManager.VKeys.LEFT">
+            <summary>
+            The Left Arrow key.
+            </summary>
+        </member>
+        <member name="F:Bespoke.Common.InputManager.VKeys.UP">
+            <summary>
+            The Up Arrow key.
+            </summary>
+        </member>
+        <member name="F:Bespoke.Common.InputManager.VKeys.RIGHT">
+            <summary>
+            The Right Arrow key.
+            </summary>
+        </member>
+        <member name="F:Bespoke.Common.InputManager.VKeys.DOWN">
+            <summary>
+            The Down Arrow key.
+            </summary>
+        </member>
+        <member name="F:Bespoke.Common.InputManager.VKeys.SELECT">
+            <summary>
+            The Select key.
+            </summary>
+        </member>
+        <member name="F:Bespoke.Common.InputManager.VKeys.PRINT">
+            <summary>
+            The Print key.
+            </summary>
+        </member>
+        <member name="F:Bespoke.Common.InputManager.VKeys.EXECUTE">
+            <summary>
+            The Execute key.
+            </summary>
+        </member>
+        <member name="F:Bespoke.Common.InputManager.VKeys.SNAPSHOT">
+            <summary>
+            The Snapshot key.
+            </summary>
+        </member>
+        <member name="F:Bespoke.Common.InputManager.VKeys.INSERT">
+            <summary>
+            The Insert key.
+            </summary>
+        </member>
+        <member name="F:Bespoke.Common.InputManager.VKeys.DELETE">
+            <summary>
+            The Delete key.
+            </summary>
+        </member>
+        <member name="F:Bespoke.Common.InputManager.VKeys.HELP">
+            <summary>
+            The Help key.
+            </summary>
+        </member>
+        <member name="F:Bespoke.Common.InputManager.VKeys.NUMPAD0">
+            <summary>
+            The Number Pad 0 key.
+            </summary>
+        </member>
+        <member name="F:Bespoke.Common.InputManager.VKeys.NUMPAD1">
+            <summary>
+            The Number Pad 1 key.
+            </summary>
+        </member>
+        <member name="F:Bespoke.Common.InputManager.VKeys.NUMPAD2">
+            <summary>
+            The Number Pad 2 key.
+            </summary>
+        </member>
+        <member name="F:Bespoke.Common.InputManager.VKeys.NUMPAD3">
+            <summary>
+            The Number Pad 3 key.
+            </summary>
+        </member>
+        <member name="F:Bespoke.Common.InputManager.VKeys.NUMPAD4">
+            <summary>
+            The Number Pad 4 key.
+            </summary>
+        </member>
+        <member name="F:Bespoke.Common.InputManager.VKeys.NUMPAD5">
+            <summary>
+            The Number Pad 5 key.
+            </summary>
+        </member>
+        <member name="F:Bespoke.Common.InputManager.VKeys.NUMPAD6">
+            <summary>
+            The Number Pad 6 key.
+            </summary>
+        </member>
+        <member name="F:Bespoke.Common.InputManager.VKeys.NUMPAD7">
+            <summary>
+            The Number Pad 7 key.
+            </summary>
+        </member>
+        <member name="F:Bespoke.Common.InputManager.VKeys.NUMPAD8">
+            <summary>
+            The Number Pad 8 key.
+            </summary>
+        </member>
+        <member name="F:Bespoke.Common.InputManager.VKeys.NUMPAD9">
+            <summary>
+            The Number Pad 9 key.
+            </summary>
+        </member>
+        <member name="F:Bespoke.Common.InputManager.VKeys.MULTIPLY">
+            <summary>
+            The Multiply key.
+            </summary>
+        </member>
+        <member name="F:Bespoke.Common.InputManager.VKeys.ADD">
+            <summary>
+            The Add key.
+            </summary>
+        </member>
+        <member name="F:Bespoke.Common.InputManager.VKeys.SEPARATOR">
+            <summary>
+            The Separator key.
+            </summary>
+        </member>
+        <member name="F:Bespoke.Common.InputManager.VKeys.SUBTRACT">
+            <summary>
+            The Subtract key.
+            </summary>
+        </member>
+        <member name="F:Bespoke.Common.InputManager.VKeys.DECIMAL">
+            <summary>
+            The Decimal key.
+            </summary>
+        </member>
+        <member name="F:Bespoke.Common.InputManager.VKeys.DIVIDE">
+            <summary>
+            The Divide key.
+            </summary>
+        </member>
+        <member name="F:Bespoke.Common.InputManager.VKeys.F1">
+            <summary>
+            The F1 key.
+            </summary>
+        </member>
+        <member name="F:Bespoke.Common.InputManager.VKeys.F2">
+            <summary>
+            The F2 key.
+            </summary>
+        </member>
+        <member name="F:Bespoke.Common.InputManager.VKeys.F3">
+            <summary>
+            The F3 key.
+            </summary>
+        </member>
+        <member name="F:Bespoke.Common.InputManager.VKeys.F4">
+            <summary>
+            The F4 key.
+            </summary>
+        </member>
+        <member name="F:Bespoke.Common.InputManager.VKeys.F5">
+            <summary>
+            The F5 key.
+            </summary>
+        </member>
+        <member name="F:Bespoke.Common.InputManager.VKeys.F6">
+            <summary>
+            The F6 key.
+            </summary>
+        </member>
+        <member name="F:Bespoke.Common.InputManager.VKeys.F7">
+            <summary>
+            The F7 key.
+            </summary>
+        </member>
+        <member name="F:Bespoke.Common.InputManager.VKeys.F8">
+            <summary>
+            The F8 key.
+            </summary>
+        </member>
+        <member name="F:Bespoke.Common.InputManager.VKeys.F9">
+            <summary>
+            The F9 key.
+            </summary>
+        </member>
+        <member name="F:Bespoke.Common.InputManager.VKeys.F10">
+            <summary>
+            The F10 key.
+            </summary>
+        </member>
+        <member name="F:Bespoke.Common.InputManager.VKeys.F11">
+            <summary>
+            The F11 key.
+            </summary>
+        </member>
+        <member name="F:Bespoke.Common.InputManager.VKeys.F12">
+            <summary>
+            The F12 key.
+            </summary>
+        </member>
+        <member name="F:Bespoke.Common.InputManager.VKeys.OEM_1">
+            <summary>
+            ',:' for US.
+            </summary>
+        </member>
+        <member name="F:Bespoke.Common.InputManager.VKeys.OEM_PLUS">
+            <summary>
+            '+' any country 
+            </summary>
+        </member>
+        <member name="F:Bespoke.Common.InputManager.VKeys.OEM_COMMA">
+            <summary>
+            ',' any country 
+            </summary>
+        </member>
+        <member name="F:Bespoke.Common.InputManager.VKeys.OEM_MINUS">
+            <summary>
+            '-' any country
+            </summary>
+        </member>
+        <member name="F:Bespoke.Common.InputManager.VKeys.OEM_PERIOD">
+            <summary>
+            '.' any country 
+            </summary>
+        </member>
+        <member name="F:Bespoke.Common.InputManager.VKeys.OEM_2">
+            <summary>
+            '/?' for US
+            </summary>
+        </member>
+        <member name="F:Bespoke.Common.InputManager.VKeys.OEM_3">
+            <summary>
+            '`~' for US
+            </summary>
+        </member>
+        <member name="F:Bespoke.Common.InputManager.VKeys.MEDIA_NEXT_TRACK">
+            <summary>
+            The Media Next Track key.
+            </summary>
+        </member>
+        <member name="F:Bespoke.Common.InputManager.VKeys.MEDIA_PREV_TRACK">
+            <summary>
+            The Media Previous Track key.
+            </summary>
+        </member>
+        <member name="F:Bespoke.Common.InputManager.VKeys.MEDIA_STOP">
+            <summary>
+            The Media Stop Track key.
+            </summary>
+        </member>
+        <member name="F:Bespoke.Common.InputManager.VKeys.MEDIA_PLAY_PAUSE">
+            <summary>
+            The Media Pause Track key.
+            </summary>
+        </member>
+        <member name="F:Bespoke.Common.InputManager.VKeys.LWIN">
+            <summary>
+            The Left Windows key.
+            </summary>
+        </member>
+        <member name="F:Bespoke.Common.InputManager.VKeys.RWIN">
+            <summary>
+            The Right Windows key.
+            </summary>
+        </member>
+        <member name="F:Bespoke.Common.InputManager.VKeys.A">
+            <summary>
+            The A key.
+            </summary>
+        </member>
+        <member name="F:Bespoke.Common.InputManager.VKeys.B">
+            <summary>
+            The B key.
+            </summary>
+        </member>
+        <member name="F:Bespoke.Common.InputManager.VKeys.C">
+            <summary>
+            The C key.
+            </summary>
+        </member>
+        <member name="F:Bespoke.Common.InputManager.VKeys.D">
+            <summary>
+            The D key.
+            </summary>
+        </member>
+        <member name="F:Bespoke.Common.InputManager.VKeys.E">
+            <summary>
+            The E key.
+            </summary>
+        </member>
+        <member name="F:Bespoke.Common.InputManager.VKeys.F">
+            <summary>
+            The F key.
+            </summary>
+        </member>
+        <member name="F:Bespoke.Common.InputManager.VKeys.G">
+            <summary>
+            The G key.
+            </summary>
+        </member>
+        <member name="F:Bespoke.Common.InputManager.VKeys.H">
+            <summary>
+            The H key.
+            </summary>
+        </member>
+        <member name="F:Bespoke.Common.InputManager.VKeys.I">
+            <summary>
+            The I key.
+            </summary>
+        </member>
+        <member name="F:Bespoke.Common.InputManager.VKeys.J">
+            <summary>
+            The J key.
+            </summary>
+        </member>
+        <member name="F:Bespoke.Common.InputManager.VKeys.K">
+            <summary>
+            The K key.
+            </summary>
+        </member>
+        <member name="F:Bespoke.Common.InputManager.VKeys.L">
+            <summary>
+            The L key.
+            </summary>
+        </member>
+        <member name="F:Bespoke.Common.InputManager.VKeys.M">
+            <summary>
+            The M key.
+            </summary>
+        </member>
+        <member name="F:Bespoke.Common.InputManager.VKeys.N">
+            <summary>
+            The N key.
+            </summary>
+        </member>
+        <member name="F:Bespoke.Common.InputManager.VKeys.O">
+            <summary>
+            The O key.
+            </summary>
+        </member>
+        <member name="F:Bespoke.Common.InputManager.VKeys.P">
+            <summary>
+            The P key.
+            </summary>
+        </member>
+        <member name="F:Bespoke.Common.InputManager.VKeys.Q">
+            <summary>
+            The Q key.
+            </summary>
+        </member>
+        <member name="F:Bespoke.Common.InputManager.VKeys.R">
+            <summary>
+            The R key.
+            </summary>
+        </member>
+        <member name="F:Bespoke.Common.InputManager.VKeys.S">
+            <summary>
+            The S key.
+            </summary>
+        </member>
+        <member name="F:Bespoke.Common.InputManager.VKeys.T">
+            <summary>
+            The T key.
+            </summary>
+        </member>
+        <member name="F:Bespoke.Common.InputManager.VKeys.U">
+            <summary>
+            The U key.
+            </summary>
+        </member>
+        <member name="F:Bespoke.Common.InputManager.VKeys.V">
+            <summary>
+            The V key.
+            </summary>
+        </member>
+        <member name="F:Bespoke.Common.InputManager.VKeys.W">
+            <summary>
+            The W key.
+            </summary>
+        </member>
+        <member name="F:Bespoke.Common.InputManager.VKeys.X">
+            <summary>
+            The X key.
+            </summary>
+        </member>
+        <member name="F:Bespoke.Common.InputManager.VKeys.Y">
+            <summary>
+            The Y key.
+            </summary>
+        </member>
+        <member name="F:Bespoke.Common.InputManager.VKeys.Z">
+            <summary>
+            The Z key.
+            </summary>
+        </member>
+        <member name="T:Bespoke.Common.InputManager.KeyEventType">
+            <summary>
+            Set of valid keyboard events.
+            </summary>
+        </member>
+        <member name="F:Bespoke.Common.InputManager.KeyEventType.Down">
+            <summary>
+            Key down.
+            </summary>
+        </member>
+        <member name="F:Bespoke.Common.InputManager.KeyEventType.Up">
+            <summary>
+            Key up.
+            </summary>
+        </member>
+        <member name="M:Bespoke.Common.InputManager.SendMessage(System.IntPtr,System.Int32,System.IntPtr,System.IntPtr)">
+            <summary>
+            Send windows message.
+            </summary>
+            <param name="hWnd">Handled to destination window.</param>
+            <param name="Msg">Message.</param>
+            <param name="wParam">First message parameter.</param>
+            <param name="lParam">Second message parameter.</param>
+            <returns>The return value specifies the result of the message processing; it depends on the message sent.</returns>
+        </member>
+        <member name="M:Bespoke.Common.InputManager.MouseMove(System.Int32,System.Int32)">
+            <summary>
+            Mouse the mouse cursor.
+            </summary>
+            <param name="x">The x position.</param>
+            <param name="y">The y position.</param>
+        </member>
+        <member name="M:Bespoke.Common.InputManager.MouseDown(Bespoke.Common.InputManager.MouseButtons)">
+            <summary>
+            Send a mouse "down" event.
+            </summary>
+            <param name="button">The associated mouse button.</param>
+        </member>
+        <member name="M:Bespoke.Common.InputManager.MouseUp(Bespoke.Common.InputManager.MouseButtons)">
+            <summary>
+            Send a mouse "up" event.
+            </summary>
+            <param name="button">The associated mouse button.</param>
+        </member>
+        <member name="M:Bespoke.Common.InputManager.MouseClick(Bespoke.Common.InputManager.MouseButtons)">
+            <summary>
+            Send a mouse "click" event.
+            </summary>
+            <param name="button">The associated mouse button.</param>
+        </member>
+        <member name="M:Bespoke.Common.InputManager.MouseDoubleClick">
+            <summary>
+            Send a mouse "double cick" event.
+            </summary>
+        </member>
+        <member name="M:Bespoke.Common.InputManager.MouseWheel(System.UInt32)">
+            <summary>
+            Send a mouse "wheel" event.
+            </summary>
+            <param name="value">The value of the mouse wheel.</param>
+        </member>
+        <member name="M:Bespoke.Common.InputManager.SendKeys(Bespoke.Common.InputManager.VKeys[])">
+            <summary>
+            Send a "down" then "up" event for a set of keys.
+            </summary>
+            <param name="keys">The associated keys.</param>
+        </member>
+        <member name="M:Bespoke.Common.InputManager.SendKeys(Bespoke.Common.ModifierKeys,Bespoke.Common.InputManager.VKeys[])">
+            <summary>
+            Send a "down" then "up" event for a set of keys.
+            </summary>
+            <param name="modifierKeys">Modifier keys associated with each key event.</param>
+            <param name="keys">The associated keys.</param>
+        </member>
+        <member name="M:Bespoke.Common.InputManager.SendKeys(Bespoke.Common.ModifierKeys,Bespoke.Common.InputManager.VKeys[],Bespoke.Common.InputManager.KeyEventType)">
+            <summary>
+            Send an event for a set of keys.
+            </summary>
+            <param name="modifierKeys">Modifier keys associated with each key event.</param>
+            <param name="keys">The associated keys.</param>
+            <param name="eventType">The event type.</param>
+        </member>
+        <member name="M:Bespoke.Common.InputManager.Tab">
+            <summary>
+            Send Tab down/up events.
+            </summary>
+        </member>
+        <member name="M:Bespoke.Common.InputManager.ShiftTab">
+            <summary>
+            Send Shift-Tab down/up events.
+            </summary>
+        </member>
+        <member name="M:Bespoke.Common.InputManager.AltTab">
+            <summary>
+            Send Alt-Tab down/up events.
+            </summary>
+        </member>
+        <member name="M:Bespoke.Common.InputManager.AltShiftTab">
+            <summary>
+            Send Alt-Shift=Tab down/up events.
+            </summary>
+        </member>
+        <member name="T:Bespoke.Common.Net.IPServer">
+            <summary>
+            Helper methods for IP servers.
+            </summary>
+        </member>
+        <member name="M:Bespoke.Common.Net.IPServer.GetLocalIPAddresses">
+            <summary>
+            Get the local IP addresses bound to this computer.
+            </summary>
+            <returns>The list of IP addresses bound to this computer.</returns>
+            <exception cref="T:System.Exception">Thrown if no local IP addresses are found.</exception>
+        </member>
+        <member name="M:Bespoke.Common.Net.IPServer.IsUdpEndPointAvailable(System.Net.IPAddress,System.Int32)">
+            <summary>
+            Determine if the specified Udp end point is available.
+            </summary>
+            <param name="ipAddress">The IP address to check.</param>
+            <param name="port">The port to check.</param>
+            <returns>true if the specified end point is available; otherwise, false.</returns>
+        </member>
+        <member name="M:Bespoke.Common.Net.IPServer.IsUdpEndPointAvailable(System.Net.IPEndPoint)">
+            <summary>
+            Determine if the specified Udp end point is available.
+            </summary>
+            <param name="ipEndPoint">The IP end point to check.</param>
+            <returns>true if the specified end point is available; otherwise, false.</returns>
+        </member>
+        <member name="M:Bespoke.Common.Net.IPServer.IsTcpEndPointAvailable(System.Net.IPAddress,System.Int32)">
+            <summary>
+            Determine if the specified Tcp end point is available.
+            </summary>
+            <param name="ipAddress">The IP address to check.</param>
+            <param name="port">The port to check.</param>
+            <returns>true if the specified end point is available; otherwise, false.</returns>
+        </member>
+        <member name="M:Bespoke.Common.Net.IPServer.IsTcpEndPointAvailable(System.Net.IPEndPoint)">
+            <summary>
+            Determine if the specified Tcp end point is available.
+            </summary>
+            <param name="ipEndPoint">The IP end point to check.</param>
+            <returns>true if the specified end point is available; otherwise, false.</returns>
+        </member>
+        <member name="T:Bespoke.Common.Net.TcpConnection">
+            <summary>
+            Represents a single TCP/IP connection.
+            </summary>
+            <remarks><see cref="T:Bespoke.Common.Net.TcpConnection"/> objects can be used in conjunction with <see cref="T:Bespoke.Common.Net.TcpServer"/> or as simple
+            wrappers to a <see cref="T:System.Net.Sockets.Socket"/>. Data can be received automatically by the TcpConnection object by invoking the
+            ReceiveDataAsync method. This mechanism transmits the data asynchronously using Socket.BeginReceive/EndReceive.
+            Additionally, messages are framed using a 4-byte integer containing the length of the message. The DataReceived event
+            is raised as complete messages are received. Users can perform their own message handling by not invoking the
+            ReceiveDataAsynchronously method and accessing the TcpConnection.Client/Reader/Writer properties directly.
+            When performing manual data handling, in conjunction with a <see cref="T:Bespoke.Common.Net.TcpServer"/> object, set the <see cref="P:Bespoke.Common.Net.TcpServer.ReceiveDataInline"/>
+            property to false.
+            </remarks>
+        </member>
+        <member name="T:Bespoke.Common.Net.TcpConnection.DataReceiveState">
+            <summary>
+            The possible states a connection can be in while receiving data.
+            </summary>
+        </member>
+        <member name="F:Bespoke.Common.Net.TcpConnection.DataReceiveState.MessageFraming">
+            <summary>
+            Processing the framing data to describe the forthcoming message.
+            </summary>
+        </member>
+        <member name="F:Bespoke.Common.Net.TcpConnection.DataReceiveState.Message">
+            <summary>
+            Processing the message data.
+            </summary>
+        </member>
+        <member name="E:Bespoke.Common.Net.TcpConnection.Disconnected">
+            <summary>
+            Raised when a connection is disconnected.
+            </summary>
+        </member>
+        <member name="E:Bespoke.Common.Net.TcpConnection.DataReceived">
+            <summary>
+            Raised when data is received.
+            </summary>
+        </member>
+        <member name="P:Bespoke.Common.Net.TcpConnection.Client">
+            <summary>
+            Gets the associated socket.
+            </summary>
+            <remarks>This property is primarily useful for manual data handling. If you employ inline
+            data handling through the ReceiveDataAsynchronously method, you should attach a handler
+            to the DataReceived event to process incoming messages.</remarks>
+        </member>
+        <member name="P:Bespoke.Common.Net.TcpConnection.Reader">
+            <summary>
+            Gets the associated reader.
+            </summary>
+        </member>
+        <member name="P:Bespoke.Common.Net.TcpConnection.Writer">
+            <summary>
+            Gets the associated writer.
+            </summary>        
+        </member>
+        <member name="P:Bespoke.Common.Net.TcpConnection.LittleEndianByteOrder">
+            <summary>
+            Gets or sets the expected endianness of integral value types.
+            </summary>
+        </member>
+        <member name="M:Bespoke.Common.Net.TcpConnection.#ctor(System.Net.Sockets.Socket,System.Boolean)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Bespoke.Common.Net.TcpConnection"/> class.
+            </summary>
+            <param name="client">The associated socket.</param>
+            <param name="littleEndianByteOrder">The expected endianness of integral value types.</param>
+        </member>
+        <member name="M:Bespoke.Common.Net.TcpConnection.Dispose">
+            <summary>
+            Release the resources associated with this object.
+            </summary>
+        </member>
+        <member name="M:Bespoke.Common.Net.TcpConnection.Close">
+            <summary>
+            Closes the current connection and associated helpers.
+            </summary>
+        </member>
+        <member name="M:Bespoke.Common.Net.TcpConnection.ReceiveDataAsync">
+            <summary>
+            Initiates the asynchronous system to receive framed messages.
+            </summary>
+            <remarks>When using this system, all messages must begin with a 4-byte integer containing the length of the message.</remarks>
+        </member>
+        <member name="M:Bespoke.Common.Net.TcpConnection.InitDataReceivedCallback">
+            <summary>
+            Clear the associated buffer and invoke Socket.BeginReceive().
+            </summary>
+        </member>
+        <member name="M:Bespoke.Common.Net.TcpConnection.DataReceivedCallback(System.IAsyncResult)">
+            <summary>
+            The callback paired with Socket.BeginReceive().
+            </summary>
+            <param name="asyncResult"></param>
+        </member>
+        <member name="M:Bespoke.Common.Net.TcpConnection.OnDataReceived(Bespoke.Common.Net.TcpDataReceivedEventArgs)">
+            <summary>
+            Raise the DataReceived event.
+            </summary>
+            <param name="e">An <see cref="T:Bespoke.Common.Net.TcpDataReceivedEventArgs"/> object that contains the event data.</param>
+        </member>
+        <member name="M:Bespoke.Common.Net.TcpConnection.OnDisconnected(Bespoke.Common.Net.TcpConnectionEventArgs)">
+            <summary>
+            Raise the Disconnected event.
+            </summary>
+            <param name="e">An <see cref="T:Bespoke.Common.Net.TcpConnectionEventArgs"/> object that contains the event data.</param>
+        </member>
+        <member name="T:Bespoke.Common.Net.TcpConnectionEventArgs">
+            <summary>
+            Data for Tcp connection-related events.
+            </summary>
+        </member>
+        <member name="P:Bespoke.Common.Net.TcpConnectionEventArgs.Connection">
+            <summary>
+            Gets the associated connection.
+            </summary>
+        </member>
+        <member name="M:Bespoke.Common.Net.TcpConnectionEventArgs.#ctor(Bespoke.Common.Net.TcpConnection)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Bespoke.Common.Net.TcpConnectionEventArgs"/> class.
+            </summary>
+            <param name="connection">The associated connection.</param>
+        </member>
+        <member name="T:Bespoke.Common.Net.TcpDataReceivedEventArgs">
+            <summary>
+            Data for Tcp data received events.
+            </summary>
+        </member>
+        <member name="P:Bespoke.Common.Net.TcpDataReceivedEventArgs.Connection">
+            <summary>
+            Gets the associated connection.
+            </summary>
+        </member>
+        <member name="P:Bespoke.Common.Net.TcpDataReceivedEventArgs.Data">
+            <summary>
+            Gets the associated data.
+            </summary>
+        </member>
+        <member name="M:Bespoke.Common.Net.TcpDataReceivedEventArgs.#ctor(Bespoke.Common.Net.TcpConnection,System.Byte[])">
+            <summary>
+            Initializes a new instance of the <see cref="T:Bespoke.Common.Net.TcpDataReceivedEventArgs"/> class.
+            </summary>
+            <param name="connection">The associated connection.</param>
+            <param name="data">The associated data.</param>
+        </member>
+        <member name="T:Bespoke.Common.Net.TcpServer">
+            <summary>
+            A multi-threaded Tcp server.
+            </summary>
+            <remarks>Data can be received automatically, by the connections established by the <see cref="T:Bespoke.Common.Net.TcpServer"/> 
+            by setting <see cref="P:Bespoke.Common.Net.TcpServer.ReceiveDataInline"/> to true during instantiation (the default behavior). This establishes
+            asynchronous reception of Tcp messages framed using a 4-byte integer containing the length of the message. The
+            <see cref="E:Bespoke.Common.Net.TcpServer.DataReceived"/> event is raised as complete messages are received. Users can perform their own
+            message handling by setting <see cref="P:Bespoke.Common.Net.TcpServer.ReceiveDataInline"/> to false and listening for <see cref="E:Bespoke.Common.Net.TcpServer.Connected" /> events.</remarks>
+        </member>
+        <member name="F:Bespoke.Common.Net.TcpServer.MaxPendingConnections">
+            <summary>
+            The maximum number of connections that can be pending.
+            </summary>
+        </member>
+        <member name="E:Bespoke.Common.Net.TcpServer.Connected">
+            <summary>
+            Raised when a connection is established.
+            </summary>
+        </member>
+        <member name="E:Bespoke.Common.Net.TcpServer.Disconnected">
+            <summary>
+            Raised when a connection is disconnected.
+            </summary>
+        </member>
+        <member name="E:Bespoke.Common.Net.TcpServer.DataReceived">
+            <summary>
+            Raised when data is received.
+            </summary>
+        </member>
+        <member name="P:Bespoke.Common.Net.TcpServer.IPAddress">
+            <summary>
+            Gets the IP address the Tcp server is bound to.
+            </summary>
+        </member>
+        <member name="P:Bespoke.Common.Net.TcpServer.Port">
+            <summary>
+            Gets the port the Tcp server is bound to.
+            </summary>
+        </member>
+        <member name="P:Bespoke.Common.Net.TcpServer.IsRunning">
+            <summary>
+            Gets the state of the server.
+            </summary>
+        </member>
+        <member name="P:Bespoke.Common.Net.TcpServer.ActiveConnectionCount">
+            <summary>
+            Gets the number of active connections.
+            </summary>
+        </member>
+        <member name="P:Bespoke.Common.Net.TcpServer.ActiveConnections">
+            <summary>
+            Gets the list of active connections.
+            </summary>
+        </member>
+        <member name="P:Bespoke.Common.Net.TcpServer.ReceiveDataInline">
+            <summary>
+            Gets the data reception mode applied to the Tcp server.
+            </summary>
+        </member>
+        <member name="P:Bespoke.Common.Net.TcpServer.LittleEndianByteOrder">
+            <summary>
+            Gets or sets the expected endianness of integral value types.
+            </summary>
+        </member>
+        <member name="M:Bespoke.Common.Net.TcpServer.#ctor(System.Int32)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Bespoke.Common.Net.TcpServer"/> class.
+            </summary>
+            <param name="port">The port to bind to.</param>
+            <remarks>Uses the loopback address, inline data reception and little endian byte order.</remarks>
+        </member>
+        <member name="M:Bespoke.Common.Net.TcpServer.#ctor(System.Net.IPAddress,System.Int32,System.Boolean,System.Boolean)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Bespoke.Common.Net.TcpServer"/> class.
+            </summary>
+            <param name="ipAddress">The IP address to bind to.</param>
+            <param name="port">The port to bind to.</param>
+            <param name="receiveDataInline">The mode of automatic data reception.</param>
+            <param name="littleEndianByteOrder">The expected endianness of integral value types.</param>
+        </member>
+        <member name="M:Bespoke.Common.Net.TcpServer.Dispose">
+            <summary>
+            Release the resources associated with this object.
+            </summary>
+        </member>
+        <member name="M:Bespoke.Common.Net.TcpServer.Start">
+            <summary>
+            Start the Tcp server.
+            </summary>
+            <remarks>This is a non-blocking (asynchronous) call.</remarks>
+            <returns>A <seealso cref="T:System.Threading.Tasks.Task"/>Task associated with the method.</returns>
+        </member>
+        <member name="M:Bespoke.Common.Net.TcpServer.Stop">
+            <summary>
+            Stop the Tcp server.
+            </summary>
+        </member>
+        <member name="M:Bespoke.Common.Net.TcpServer.CloseConnection(Bespoke.Common.Net.TcpConnection)">
+            <summary>
+            Close an active connection.
+            </summary>
+            <param name="connection">The connection to close.</param>
+        </member>
+        <member name="M:Bespoke.Common.Net.TcpServer.OnConnected(Bespoke.Common.Net.TcpConnectionEventArgs)">
+            <summary>
+            Raise the Connected event.
+            </summary>
+            <param name="e">An <see cref="T:Bespoke.Common.Net.TcpConnectionEventArgs"/> object that contains the event data.</param>
+        </member>
+        <member name="M:Bespoke.Common.Net.TcpServer.OnDisconnected(System.Object,Bespoke.Common.Net.TcpConnectionEventArgs)">
+            <summary>
+            Raise the Disconnected event.
+            </summary>
+            <param name="sender"></param>
+            <param name="e">An <see cref="T:Bespoke.Common.Net.TcpConnectionEventArgs"/> object that contains the event data.</param>
+        </member>
+        <member name="M:Bespoke.Common.Net.TcpServer.OnDataReceived(System.Object,Bespoke.Common.Net.TcpDataReceivedEventArgs)">
+            <summary>
+            Raise the DataReceived event.
+            </summary>
+            <param name="sender"></param>
+            <param name="e">An <see cref="T:Bespoke.Common.Net.TcpDataReceivedEventArgs"/> object that contains the event data.</param>
+        </member>
+        <member name="M:Bespoke.Common.Net.TcpServer.CloseMarkedConnections">
+            <summary>
+            Close marked connections.
+            </summary>
+        </member>
+        <member name="T:Bespoke.Common.Net.TransmissionType">
+            <summary>
+            Types of transmission.
+            </summary>
+        </member>
+        <member name="F:Bespoke.Common.Net.TransmissionType.Unicast">
+            <summary>
+            Transmit to subscribed clients only. Includes heartbeat exchanges.
+            </summary>
+        </member>
+        <member name="F:Bespoke.Common.Net.TransmissionType.Multicast">
+            <summary>
+            Transmit via Udp multicast. No heartbeat exchanges.
+            </summary>
+        </member>
+        <member name="F:Bespoke.Common.Net.TransmissionType.Broadcast">
+            <summary>
+            Transmit via Udp broadcast. No heartbeat exchanges.
+            </summary>
+        </member>
+        <member name="F:Bespoke.Common.Net.TransmissionType.LocalBroadcast">
+            <summary>
+            Local unicast without subcription or heartbeat exchanges.
+            </summary>
+        </member>
+        <member name="T:Bespoke.Common.Net.UdpDataReceivedEventArgs">
+            <summary>
+            Data for Udp data received events.
+            </summary>
+        </member>
+        <member name="P:Bespoke.Common.Net.UdpDataReceivedEventArgs.SourceEndPoint">
+            <summary>
+            Gets the associated source end point.
+            </summary>
+        </member>
+        <member name="P:Bespoke.Common.Net.UdpDataReceivedEventArgs.Data">
+            <summary>
+            Gets the associated data.
+            </summary>
+        </member>
+        <member name="M:Bespoke.Common.Net.UdpDataReceivedEventArgs.#ctor(System.Net.IPEndPoint,System.Byte[])">
+            <summary>
+            Initializes a new instance of the <see cref="T:Bespoke.Common.Net.UdpDataReceivedEventArgs"/> class.
+            </summary>
+            <param name="sourceEndPoint">The associated source endpoiint.</param>
+            <param name="data">The associated data.</param>
+        </member>
+        <member name="T:Bespoke.Common.Net.UdpServer">
+            <summary>
+            A Udp server.
+            </summary>
+        </member>
+        <member name="T:Bespoke.Common.Net.UdpServer.UdpState">
+            <summary>
+            Udp state class whose instances are passed between asynchronous BeginReceieve/EndReceive calls.
+            </summary>
+        </member>
+        <member name="P:Bespoke.Common.Net.UdpServer.UdpState.Client">
+            <summary>
+            Gets the associated client.
+            </summary>
+        </member>
+        <member name="P:Bespoke.Common.Net.UdpServer.UdpState.IPEndPoint">
+            <summary>
+            Gets the associted end point.
+            </summary>
+        </member>
+        <member name="M:Bespoke.Common.Net.UdpServer.UdpState.#ctor(System.Net.Sockets.UdpClient,System.Net.IPEndPoint)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Bespoke.Common.Net.UdpServer.UdpState"/> class.
+            </summary>
+            <param name="client">The associated client.</param>
+            <param name="ipEndPoint">The associated end point.</param>
+        </member>
+        <member name="E:Bespoke.Common.Net.UdpServer.DataReceived">
+            <summary>
+            Raised when data is received.
+            </summary>
+        </member>
+        <member name="P:Bespoke.Common.Net.UdpServer.IPAddress">
+            <summary>
+            Gets the IP address the Udp server is bound to.
+            </summary>
+        </member>
+        <member name="P:Bespoke.Common.Net.UdpServer.Port">
+            <summary>
+            Gets the port the Udp server is bound to.
+            </summary>
+        </member>
+        <member name="P:Bespoke.Common.Net.UdpServer.MulticastAddress">
+            <summary>
+            Gets the multicast address the server is joined to.
+            </summary>
+        </member>
+        <member name="P:Bespoke.Common.Net.UdpServer.IsRunning">
+            <summary>
+            Gets the state of the server.
+            </summary>
+        </member>
+        <member name="P:Bespoke.Common.Net.UdpServer.TransmissionType">
+            <summary>
+            Gets the associated transmission type.
+            </summary>
+        </member>
+        <member name="M:Bespoke.Common.Net.UdpServer.#ctor(System.Int32)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Bespoke.Common.Net.UdpServer"/> class.
+            </summary>
+            <param name="port">The port to bind to.</param>
+            <remarks>Binds the server to the loopback address using TransmissionType.LocalBroadcast.</remarks>
+        </member>
+        <member name="M:Bespoke.Common.Net.UdpServer.#ctor(System.Int32,System.Net.IPAddress)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Bespoke.Common.Net.UdpServer"/> class.
+            </summary>
+            <param name="port">The port to bind to.</param>
+            <param name="multicastAddress">The multicast address to join.</param>
+            <remarks>Binds the server to the loopback address and joins the specified multicast address.</remarks>
+        </member>
+        <member name="M:Bespoke.Common.Net.UdpServer.#ctor(System.Net.IPAddress,System.Int32)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Bespoke.Common.Net.UdpServer"/> class.
+            </summary>
+            <param name="ipAddress">The IP address to bind to.</param>
+            <param name="port">The port to bind to.</param>
+            <remarks>Binds the server to the specified IP address using TransmissionType.Unicast".</remarks>
+        </member>
+        <member name="M:Bespoke.Common.Net.UdpServer.#ctor(System.Net.IPAddress,System.Int32,System.Net.IPAddress,Bespoke.Common.Net.TransmissionType)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Bespoke.Common.Net.UdpServer"/> class.
+            </summary>
+            <param name="ipAddress">The IP address to bind to.</param>
+            <param name="port">The port to bind to.</param>
+            <param name="multicastAddress">The multicast address to join.</param>
+            <param name="transmissionType">The associated transmission type.</param>
+        </member>
+        <member name="M:Bespoke.Common.Net.UdpServer.Start">
+            <summary>
+            Start the Udp server and begin receiving data.
+            </summary>
+        </member>
+        <member name="M:Bespoke.Common.Net.UdpServer.Stop">
+            <summary>
+            Stop the Udp server.
+            </summary>
+        </member>
+        <member name="M:Bespoke.Common.Net.UdpServer.EndReceive(System.IAsyncResult)">
+            <summary>
+            EndReceive paired call.
+            </summary>
+            <param name="asyncResult">Paired result object from the BeginReceive call.</param>
+        </member>
+        <member name="M:Bespoke.Common.Net.UdpServer.OnDataReceived(Bespoke.Common.Net.UdpDataReceivedEventArgs)">
+            <summary>
+            Raise the DataReceived event.
+            </summary>
+            <param name="e">An EventArgs object that contains the event data.</param>
+        </member>
+        <member name="T:Bespoke.Common.Node`1">
+            <summary>
+            A single-parented node forming a tree structure.
+            </summary>
+            <typeparam name="T">The type of data contained within the node.</typeparam>
+        </member>
+        <member name="P:Bespoke.Common.Node`1.Parent">
+            <summary>
+            Gets or sets the parent of the node.
+            </summary>
+        </member>
+        <member name="P:Bespoke.Common.Node`1.Root">
+            <summary>
+            Gets the root of this node's branch of the tree structure.
+            </summary>
+        </member>
+        <member name="P:Bespoke.Common.Node`1.Children">
+            <summary>
+            Gets the children of this node.
+            </summary>
+        </member>
+        <member name="P:Bespoke.Common.Node`1.Data">
+            <summary>
+            Gets the data associated with this node.
+            </summary>
+        </member>
+        <member name="M:Bespoke.Common.Node`1.#ctor(`0)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Bespoke.Common.Node`1"/> class.
+            </summary>
+            <param name="data">The data to associate with the node.</param>
+        </member>
+        <member name="M:Bespoke.Common.Node`1.IsAncestorOf(Bespoke.Common.Node{`0})">
+            <summary>
+            Determines if the current node is an ancestor of the specified node.
+            </summary>
+            <param name="node">The node to test against.</param>
+            <returns>true if the current node is an ancestore of <paramref name="node"/>; otherwise, false.</returns>
+        </member>
+        <member name="M:Bespoke.Common.Node`1.IsDescendantOf(Bespoke.Common.Node{`0})">
+            <summary>
+            Determines if the current node is a descendant of the specified node.
+            </summary>
+            <param name="node">The node to test against.</param>
+            <returns>true if the current node is an descendant of <paramref name="node"/>; otherwise, false.</returns>
+        </member>
+        <member name="M:Bespoke.Common.Node`1.SharesHierarchyWith(Bespoke.Common.Node{`0})">
+            <summary>
+            Determines if the current node is an ancestor or descendant of the specified node.
+            </summary>
+            <param name="node">The node to test against.</param>
+            <returns>true if the current node is an ancestore or descendant of <paramref name="node"/>; otherwise, false.</returns>
+        </member>
+        <member name="M:Bespoke.Common.Node`1.GetDepthFirstEnumerator">
+            <summary>
+            Retreive a depth-first search enumerator for this node.
+            </summary>
+            <returns>A depth-first search enumerator for this node.</returns>
+        </member>
+        <member name="M:Bespoke.Common.Node`1.GetBreadthFirstEnumerator">
+            <summary>
+            Retreive a breadth-first search enumerator for this node.
+            </summary>
+            <returns>A breadth-first search enumerator for this node.</returns>
+        </member>
+        <member name="M:Bespoke.Common.Node`1.GetEnumerator">
+            <summary>
+            Gets the default enumerator (breadth-first).
+            </summary>
+            <returns>A breadth-first search enumerator for this node.</returns>
+        </member>
+        <member name="M:Bespoke.Common.Node`1.System#Collections#IEnumerable#GetEnumerator">
+            <summary>
+            Gets the default enumerator (breadth-first).
+            </summary>
+            <returns>A breadth-first search enumerator for this node.</returns>
+        </member>
+        <member name="T:Bespoke.Common.NodeCollection`1">
+            <summary>
+            A collection of nodes, forming a tree structure.
+            </summary>
+            <typeparam name="T">The type of data contained within each node.</typeparam>
+        </member>
+        <member name="P:Bespoke.Common.NodeCollection`1.Owner">
+            <summary>
+            Gets the owner of this node collection.
+            </summary>
+        </member>
+        <member name="P:Bespoke.Common.NodeCollection`1.Count">
+            <summary>
+            Gets the number of nodes contained within this collection.
+            </summary>
+        </member>
+        <member name="P:Bespoke.Common.NodeCollection`1.Item(System.Int32)">
+            <summary>
+            Gets the node at the specified index.
+            </summary>
+            <param name="index">The zero-based index of the node to get.</param>
+            <returns>The node at the specified index.</returns>
+            <exception cref="T:System.ArgumentOutOfRangeException">Thrown if <paramref name="index"/> is less than 0. -or- index is equal to or greater than <see cref="P:Bespoke.Common.NodeCollection`1.Count"/>.</exception>
+        </member>
+        <member name="M:Bespoke.Common.NodeCollection`1.#ctor(Bespoke.Common.Node{`0})">
+            <summary>
+            Initializes a new instance of the <see cref="T:Bespoke.Common.NodeCollection`1"/> class.
+            </summary>
+            <param name="owner">The owner of the collection.</param>
+        </member>
+        <member name="M:Bespoke.Common.NodeCollection`1.Add(Bespoke.Common.Node{`0})">
+            <summary>
+            Add a node to the collection.
+            </summary>
+            <param name="item">The node to add.</param>
+            <exception cref="T:System.InvalidOperationException">Thrown if the node is already a member of the hierarchy.</exception>
+        </member>
+        <member name="M:Bespoke.Common.NodeCollection`1.Remove(Bespoke.Common.Node{`0})">
+            <summary>
+            Remove a node from the collection.
+            </summary>
+            <param name="item">The node to remove.</param>
+            <returns>true if item is successfully removed; otherwise, false. This method also returns false if item was not found in the list.</returns>
+        </member>
+        <member name="M:Bespoke.Common.NodeCollection`1.Contains(Bespoke.Common.Node{`0})">
+            <summary>
+            Determines whether a node is in the collection.
+            </summary>
+            <param name="item">The node to locate.</param>
+            <returns>true if node is found in the collection; otherwise, false.</returns>
+        </member>
+        <member name="M:Bespoke.Common.NodeCollection`1.Clear">
+            <summary>
+            Removes all nodes from the collection.
+            </summary>
+        </member>
+        <member name="M:Bespoke.Common.NodeCollection`1.GetEnumerator">
+            <summary>
+            Returns an enumerator that iterates through the collection.
+            </summary>
+            <returns>An enumerator for the collection.</returns>
+        </member>
+        <member name="M:Bespoke.Common.NodeCollection`1.System#Collections#IEnumerable#GetEnumerator">
+            <summary>
+            Returns an enumerator that iterates through the collection.
+            </summary>
+            <returns>A enumerator for the collection.</returns>
+        </member>
+        <member name="T:Bespoke.Common.ObjectRegistry">
+            <summary>
+            General-purpose container for associating objects with string names.
+            </summary>
+        </member>
+        <member name="P:Bespoke.Common.ObjectRegistry.Item(System.String)">
+            <summary>
+            Gets the object associated with the specified name.
+            </summary>
+            <param name="name">The name of the object to get.</param>
+            <return> The object associated with the specified name. If the specified name is not
+            found, a <see cref="T:System.Collections.Generic.KeyNotFoundException"/> is thrown.</return>
+            <exception cref="T:System.ArgumentNullException"><paramref name="name"/> is null.</exception>
+            <exception cref="T:System.Collections.Generic.KeyNotFoundException"><paramref name="name"/> does not exist in the collection.</exception>
+        </member>
+        <member name="P:Bespoke.Common.ObjectRegistry.Objects">
+            <summary>
+            Gets the list of objects contained in the registry.
+            </summary>
+        </member>
+        <member name="M:Bespoke.Common.ObjectRegistry.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Bespoke.Common.ObjectRegistry"/> class.
+            </summary>
+        </member>
+        <member name="M:Bespoke.Common.ObjectRegistry.GetRegisteredObject``1(System.String)">
+            <summary>
+            Gets the object associated with the specified name.
+            </summary>
+            <typeparam name="T">The type of object expected to be stored with the specified name.</typeparam>
+            <param name="name">The name of the object to get.</param>
+            <returns>The object associated with the specified name. If the specified name is not found, null is returned.</returns>
+            <exception cref="T:System.InvalidCastException"><paramref name="name"/> exists, but does not store specified type.</exception>
+        </member>
+        <member name="M:Bespoke.Common.ObjectRegistry.GetRegisteredObject``1">
+            <summary>
+            Gets the object associated with the type.
+            </summary>
+            <typeparam name="T">The type of object to search on.</typeparam>
+            <returns>The object associated with the specified type. If the specified type is not found, null is returned.</returns>
+            <exception cref="T:System.InvalidCastException">object exists with the associated type name, but does not store specified type.</exception>
+            <remarks>Uses the type name as the key associated with the object.</remarks>
+        </member>
+        <member name="M:Bespoke.Common.ObjectRegistry.RegisterObject(System.Object)">
+            <summary>
+            Add an object to the registry.
+            </summary>
+            <param name="value">The object to add.</param>
+            <remarks>Uses the type name as the key associated with the object.
+            Overwrites any previously registered object associated with the same name.</remarks>
+        </member>
+        <member name="M:Bespoke.Common.ObjectRegistry.RegisterObject(System.String,System.Object)">
+            <summary>
+            Add an object to the registry.
+            </summary>
+            <param name="name">The name to associate with the object.</param>
+            <param name="value">The object to add.</param>
+            <remarks>Overwrites any previously registered object associated with the same name.</remarks>
+        </member>
+        <member name="M:Bespoke.Common.ObjectRegistry.UnregisterObject(System.Type)">
+            <summary>
+            Remove an object from the registry.
+            </summary>
+            <param name="type">The type of the object to remove.</param>
+            <exception cref="T:System.ArgumentNullException"><paramref name="type"/> is null.</exception>
+            <remarks>Uses the type name as the key associated with the object.</remarks>
+        </member>
+        <member name="M:Bespoke.Common.ObjectRegistry.UnregisterObject(System.String)">
+            <summary>
+            Remove an object from the registry.
+            </summary>
+            <param name="name">The name of the object to remove.</param>
+        </member>
+        <member name="T:Bespoke.Common.RandomHelper">
+            <summary>
+            Helper class for random numbers.
+            </summary>
+        </member>
+        <member name="P:Bespoke.Common.RandomHelper.Randmon">
+            <summary>
+            Gets or sets the <see cref="T:System.Random"/> object associated with this helper.
+            </summary>
+        </member>
+        <member name="M:Bespoke.Common.RandomHelper.#cctor">
+            <summary>
+            Initializes the static instance of the <see cref="T:Bespoke.Common.RandomHelper"/> class.
+            </summary>
+        </member>
+        <member name="M:Bespoke.Common.RandomHelper.Next">
+            <summary>
+            Returns a nonnegative random number.
+            </summary>
+            <returns>A 32-bit signed integer greater than or equal to zero and less than <see cref="F:System.Int32.MaxValue"/>.</returns>
+        </member>
+        <member name="M:Bespoke.Common.RandomHelper.Next(System.Int32)">
+            <summary>
+            Returns a nonnegative random number less than the specified maximum.
+            </summary>
+            <param name="maxValue">The exclusive upper bound of the random number to be generated. maxValue must be greater than or equal to zero.</param>
+            <returns>A 32-bit signed integer greater than or equal to zero, and less than maxValue; that is, the range of return values ordinarily
+            includes zero but not maxValue. However, if maxValue equals zero, maxValue is returned.</returns>
+            <exception cref="T:System.ArgumentOutOfRangeException">maxValue is less than zero.</exception>
+        </member>
+        <member name="M:Bespoke.Common.RandomHelper.Next(System.Int32,System.Int32)">
+            <summary>
+            Returns a random number within a specified range.
+            </summary>
+            <param name="minValue">The inclusive lower bound of the random number returned.</param>
+            <param name="maxValue">The exclusive upper bound of the random number returned. maxValue must be greater than or equal to minValue.</param>
+            <returns>A 32-bit signed integer greater than or equal to minValue and less than maxValue; that is, the range of return values includes
+            minValue but not maxValue. If minValue equals maxValue, minValue is returned.</returns>
+            <exception cref="T:System.ArgumentOutOfRangeException">minValue is greater than maxValue.</exception>
+        </member>
+        <member name="M:Bespoke.Common.RandomHelper.NextFloat">
+            <summary>
+            Returns a random number between 0.0f and 1.0f.
+            </summary>
+            <returns>A single-precision floating point number greater than or equal to 0.0f, and less than 1.0f.</returns>
+        </member>
+        <member name="M:Bespoke.Common.RandomHelper.NextFloat(System.Double,System.Double)">
+            <summary>
+            Returns a random number within a specified range.
+            </summary>
+            <param name="minValue">The inclusive lower bound of the random number returned.</param>
+            <param name="maxValue">The exclusive upper bound of the random number returned. maxValue must be greater than minValue.</param>
+            <returns>A single-precision floating point number greater than or equal to minValue and less than maxValue;
+            that is, the range of return values includes minValue but not maxValue. If minValue equals maxValue, minValue is returned.</returns>
+            <exception cref="T:System.ArgumentOutOfRangeException">minValue is greater than maxValue.</exception>
+        </member>
+        <member name="M:Bespoke.Common.RandomHelper.NextDouble">
+            <summary>
+            Returns a random number between 0.0 and 1.0.
+            </summary>
+            <returns>A double-precision floating point number greater than or equal to 0.0, and less than 1.0.</returns>
+        </member>
+        <member name="M:Bespoke.Common.RandomHelper.NextDouble(System.Double,System.Double)">
+            <summary>
+            Returns a random number within a specified range.
+            </summary>
+            <param name="minValue">The inclusive lower bound of the random number returned.</param>
+            <param name="maxValue">The exclusive upper bound of the random number returned. maxValue must be greater than minValue.</param>
+            <returns>A double-precision floating point number greater than or equal to minValue and less than maxValue;
+            that is, the range of return values includes minValue but not maxValue. If minValue equals maxValue, minValue is returned.</returns>
+            <exception cref="T:System.ArgumentOutOfRangeException">minValue is greater than maxValue.</exception>
+        </member>
+        <member name="M:Bespoke.Common.RandomHelper.NextBoolean">
+            <summary>
+            Returns a random boolean value.
+            </summary>
+            <returns>A random boolean value.</returns>
+        </member>
+        <member name="T:Bespoke.Common.ServiceContainer">
+            <summary>
+            Container class which implements the IServiceProvider interface. Used to pass shared services between components.
+            </summary>
+        </member>
+        <member name="M:Bespoke.Common.ServiceContainer.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Bespoke.Common.ServiceContainer"/> class.
+            </summary>
+        </member>
+        <member name="M:Bespoke.Common.ServiceContainer.AddService``1(``0)">
+            <summary>
+            Add a service to the container.
+            </summary>
+            <typeparam name="T">The type of the service.</typeparam>
+            <param name="service">The service to add.</param>
+        </member>
+        <member name="M:Bespoke.Common.ServiceContainer.GetService(System.Type)">
+            <summary>
+            Find the specified service.
+            </summary>
+            <param name="serviceType">The type of the service to find.</param>
+            <returns>The object associated with the specified service type; otherwise, null if the service is not found.</returns>
+        </member>
+        <member name="M:Bespoke.Common.ServiceContainer.GetService``1">
+            <summary>
+            Find the specified service.
+            </summary>
+            <typeparam name="T">The type of the service to find.</typeparam>
+            <returns>The object associated with the specified service type; otherwise, null if the service is not found.</returns>
+        </member>
+        <member name="M:Bespoke.Common.ServiceContainer.RemoveService(System.Type)">
+            <summary>
+            Remove a service from the container.
+            </summary>
+            <param name="serviceType">The type of the service to remove.</param>
+        </member>
+        <member name="T:Bespoke.Common.StringExtensions">
+            <summary>
+            Extesion methods for <see cref="T:System.String"/>.
+            </summary>
+        </member>
+        <member name="M:Bespoke.Common.StringExtensions.IsNumeric(System.String)">
+            <summary>
+            Determine if a string represents a numeric value.
+            </summary>
+            <param name="value">The value to test.</param>
+            <returns>true if <paramref name="value"/> represents a numeric value; otherwise, false.</returns>
+        </member>
+        <member name="M:Bespoke.Common.StringExtensions.IsNumeric(System.String,System.Int32@)">
+            <summary>
+            Determine if a string represents a numeric value.
+            </summary>
+            <param name="value">The value to test.</param>
+            <param name="result">The numeric value potentially stored within the string.</param>
+            <returns>true if <paramref name="value"/> represents a numeric value; otherwise, false.</returns>
+        </member>
+        <member name="T:Bespoke.Common.SubArray`1">
+            <summary>
+            Represented a subset of an array.
+            </summary>
+            <typeparam name="T">The underlying array type.</typeparam>
+        </member>
+        <member name="P:Bespoke.Common.SubArray`1.Length">
+            <summary>
+            Gets the length of the array.
+            </summary>
+        </member>
+        <member name="P:Bespoke.Common.SubArray`1.Item(System.Int32)">
+            <summary>
+            Gets the value at the specified index.
+            </summary>
+            <param name="index">The zero-based index of the value to get.</param>
+            <returns>The value at the specified index.</returns>
+            <exception cref="T:System.ArgumentOutOfRangeException">Thrown if <paramref name="index"/> is less than 0. -or- <paramref name="index"/> is equal to or greater than <see cref="P:Bespoke.Common.SubArray`1.Length"/>.</exception>
+        </member>
+        <member name="M:Bespoke.Common.SubArray`1.#ctor(`0[],System.Int32,System.Int32)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Bespoke.Common.SubArray`1"/> class.
+            </summary>
+            <param name="source">The source array.</param>
+            <param name="start">The index, into the source array, to begin the sub array.</param>
+            <param name="length">The length of the sub array.</param>
+            <exception cref="T:System.ArgumentOutOfRangeException">Thrown if <paramref name="start"/> is less than 0. -or- <paramref name="start"/> is equal to or greater than <paramref name="source"/>.Length.
+            -or- <paramref name="length"/> is less and 0. -or- <paramref name="length"/> is greater than <paramref name="source"/>.Length - <paramref name="start"/>.</exception>
+        </member>
+        <member name="M:Bespoke.Common.SubArray`1.GetEnumerator">
+            <summary>
+            Returns an enumerator that iterates through the array.
+            </summary>
+            <returns>An enumerator for the array.</returns>
+        </member>
+        <member name="M:Bespoke.Common.SubArray`1.System#Collections#IEnumerable#GetEnumerator">
+            <summary>
+            Returns an enumerator that iterates through the array.
+            </summary>
+            <returns>A enumerator for the array.</returns>
+        </member>
+        <member name="M:Bespoke.Common.SubArray`1.ToArray">
+            <summary>
+            Copy the contents of the sub array to a new array.
+            </summary>
+            <returns>The newly allocated array.</returns>
+        </member>
+        <member name="T:Bespoke.Common.Utility">
+            <summary>
+            General-Purpose utility functions.
+            </summary>
+        </member>
+        <member name="M:Bespoke.Common.Utility.ASCIIByteArrayToString(System.Byte[])">
+            <summary>
+            Convert a byte array of ASCII characters to a string.
+            </summary>
+            <param name="source">The source array containing the ASCII characters.</param>
+            <returns>A string with the same characters in the byte array.</returns>
+        </member>
+        <member name="M:Bespoke.Common.Utility.UnicodeByteArrayToString(System.Byte[])">
+            <summary>
+            Convert a byte array of ASCII characters to a string.
+            </summary>
+            <param name="source">The source array containing the ASCII characters.</param>
+            <returns>A string with the same characters in the byte array.</returns>
+        </member>
+        <member name="M:Bespoke.Common.Utility.ValuesInProximity(System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Determine if two values are near each other.
+            </summary>
+            <param name="value1">The first value.</param>
+            <param name="value2">The second value.</param>
+            <param name="proximityThreshold">The proximity threshold.</param>
+            <returns>true if the difference between the values is less than or equal to <paramref name="proximityThreshold"/>; otherwise, false.</returns>
+        </member>
+        <member name="M:Bespoke.Common.Utility.ValuesInProximity(System.Double,System.Double,System.Double)">
+            <summary>
+            Determine if two values are near each other.
+            </summary>
+            <param name="value1">The first value.</param>
+            <param name="value2">The second value.</param>
+            <param name="proximityThreshold">The proximity threshold.</param>
+            <returns>true if the difference between the values is less than or equal to <paramref name="proximityThreshold"/>; otherwise, false.</returns>
+        </member>
+        <member name="M:Bespoke.Common.Utility.ValuesInProximity(System.DateTime,System.DateTime,System.TimeSpan)">
+            <summary>
+            Determine if two values are near each other.
+            </summary>
+            <param name="value1">The first value.</param>
+            <param name="value2">The second value.</param>
+            <param name="proximityThreshold">The proximity threshold.</param>
+            <returns>true if the difference between the values is less than or equal to <paramref name="proximityThreshold"/>; otherwise, false.</returns>
+        </member>
+        <member name="M:Bespoke.Common.Utility.GetEnumValues(System.Type)">
+            <summary>
+            Get the values of an enumeration.
+            </summary>
+            <param name="enumType">The enumeration.</param>
+            <returns>An array of <see cref="T:System.Enum"/> values present within the enumeration.</returns>
+            <exception cref="T:System.ArgumentException"><paramref name="enumType"/> is not an enumeration.</exception>
+        </member>
+        <member name="M:Bespoke.Common.Utility.GetEnumMaxValue(System.Type)">
+            <summary>
+            Get the maximum integer value associated with an enumeration.
+            </summary>
+            <param name="enumType">The enumeration.</param>
+            <returns>The maximum integer value associated with the specified enumeration.</returns>
+            <exception cref="T:System.ArgumentException"><paramref name="enumType"/> is not an enumeration.</exception>
+        </member>
+        <member name="M:Bespoke.Common.Utility.CopySubArray``1(``0[],System.Int32,System.Int32)">
+            <summary>
+            Copy a subset of an array.
+            </summary>
+            <typeparam name="T">The array type.</typeparam>
+            <param name="source">The source array to copy from.</param>
+            <param name="start">The index into the source array at which copying begins.</param>
+            <param name="length">The number of elements to copy.</param>
+            <returns>A copy of the subset of the source array.</returns>
+        </member>
+        <member name="M:Bespoke.Common.Utility.SwapEndian(System.Byte[])">
+            <summary>
+            Swap byte order.
+            </summary>
+            <param name="data">The source data.</param>
+            <returns>The swapped data source.</returns>
+        </member>
+        <member name="M:Bespoke.Common.Utility.IsFlagSet(System.Enum,System.Enum)">
+            <summary>
+            Bitwise test for flag.
+            </summary>
+            <param name="input">Enumerated value to test.</param>
+            <param name="flagToMatch">Flag to match against.</param>
+            <returns>true if the flag is set; otherwise, false.</returns>
+        </member>
+        <member name="M:Bespoke.Common.Utility.BuildLatinSquareRow(System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Build a row for a latin square.
+            </summary>
+            <param name="seed">The seed (starting point) of the row.</param>
+            <param name="minValue">The minimum value that can reside within the square.</param>
+            <param name="conditionCount">The number of conditions within the square.</param>
+            <returns>A row for a latin square.</returns>
+            <exception cref="T:System.ArgumentException"><paramref name="minValue"/> is greater than or equal to <paramref name="conditionCount"/>. -or- <paramref name="seed"/> is less
+            than <paramref name="minValue"/>. -or- <paramref name="seed"/> is greater than or equal to <paramref name="conditionCount"/></exception>
+        </member>
+        <member name="M:Bespoke.Common.Utility.Reset(System.Timers.Timer)">
+            <summary>
+            Extension method for resetting a <seealso cref="T:System.Timers.Timer"/> object.
+            </summary>
+            <param name="timer">The timer to reset.</param>
+        </member>
+    </members>
+</doc>

@@ -13,6 +13,8 @@ Public Class frmSettings
 
    Private Sub frmSettings_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
+      MyColorThemes.Loader.Load(Me, _Settings.Theme)
+
       If _Settings.Servers.Count = 0 Then
          _Settings.Servers.Add(New CasparCG)
          rbModeRemote.Checked = True
@@ -35,6 +37,7 @@ Public Class frmSettings
       chkUseImageAttr.Checked = _Settings.UseImageAttributes
       chkInhibitPlaybackSlave.Checked = _Settings.InhibitPlayback4Slave
       chkUseFlashLayers.Checked = _Settings.UseFlashLayers
+      chkFormatForHTML.Checked = _Settings.FormatTextsForHTML
 
       chkAutoConnect.Checked = _Settings.ConnectOnStartUp
 
@@ -50,6 +53,11 @@ Public Class frmSettings
          Case CasparCGAddIn.Settings.enumVideoResolution.vr4K
             cboVideoResolution.SelectedIndex = 4
       End Select
+
+      chkUseOscInput.Checked = _Settings.UseOSCInput
+      txtOscPort.Text = _Settings.OSCInputPort.ToString
+
+      lblVersion.Text = String.Format("Version: {0}.{1}.{2}.{3:0000}", My.Application.Info.Version.Major, My.Application.Info.Version.MajorRevision, My.Application.Info.Version.Minor, My.Application.Info.Version.MinorRevision)
 
    End Sub
 
@@ -97,6 +105,7 @@ Public Class frmSettings
       _Settings.UseImageAttributes = chkUseImageAttr.Checked
       _Settings.InhibitPlayback4Slave = chkInhibitPlaybackSlave.Checked
       _Settings.UseFlashLayers = chkUseFlashLayers.Checked
+      _Settings.FormatTextsForHTML = chkFormatForHTML.Checked
 
       Select Case cboVideoResolution.SelectedIndex
          Case 0
@@ -110,6 +119,12 @@ Public Class frmSettings
          Case 4
             _Settings.VideoResolution = CasparCGAddIn.Settings.enumVideoResolution.vr4K
       End Select
+
+      _Settings.UseOSCInput = chkUseOscInput.Checked
+      Dim inte As Integer = 0
+      If Integer.TryParse(txtOscPort.Text, inte) Then
+         _Settings.OSCInputPort = inte
+      End If
 
    End Sub
 

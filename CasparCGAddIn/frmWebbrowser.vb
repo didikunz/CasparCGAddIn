@@ -272,6 +272,8 @@ Public Class frmWebbrowser
 
    Private Sub frmWebbrowser_Load(sender As Object, e As EventArgs) Handles Me.Load
 
+      MyColorThemes.Loader.Load(Me, _Settings.Theme)
+
       txtUrl.Text = WebAddress
 
       Select Case Mode

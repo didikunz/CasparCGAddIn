@@ -26,6 +26,7 @@ Partial Class ucDashboard
       Me.flpFlow = New System.Windows.Forms.FlowLayoutPanel()
       Me.lblHeader = New System.Windows.Forms.Label()
       Me.panList = New System.Windows.Forms.Panel()
+      Me.pbPlaybackButtons = New CasparCGAddIn.ucPlaybackButtons()
       Me.panMiddle = New System.Windows.Forms.Panel()
       Me.lnkLabelRefreshLists = New System.Windows.Forms.LinkLabel()
       Me.lnklblQueries = New System.Windows.Forms.LinkLabel()
@@ -41,7 +42,6 @@ Partial Class ucDashboard
       Me.rbVideo = New System.Windows.Forms.RadioButton()
       Me.btnSettings = New System.Windows.Forms.Button()
       Me.ttTips = New System.Windows.Forms.ToolTip(Me.components)
-      Me.pbPlaybackButtons = New CasparCGAddIn.ucPlaybackButtons()
       Me.panList.SuspendLayout()
       Me.panMiddle.SuspendLayout()
       Me.panTop.SuspendLayout()
@@ -67,6 +67,7 @@ Partial Class ucDashboard
       Me.lblHeader.Name = "lblHeader"
       Me.lblHeader.Size = New System.Drawing.Size(192, 21)
       Me.lblHeader.TabIndex = 10
+      Me.lblHeader.Tag = "[ignore]"
       Me.lblHeader.Text = "List"
       Me.lblHeader.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
       '
@@ -82,6 +83,18 @@ Partial Class ucDashboard
       Me.panList.Name = "panList"
       Me.panList.Size = New System.Drawing.Size(205, 190)
       Me.panList.TabIndex = 11
+      '
+      'pbPlaybackButtons
+      '
+      Me.pbPlaybackButtons.BackColor = System.Drawing.Color.Transparent
+      Me.pbPlaybackButtons.ControlsSet = CasparCGAddIn.ucPlaybackButtons.enumControlSets.csPlayStop
+      Me.pbPlaybackButtons.Location = New System.Drawing.Point(0, 134)
+      Me.pbPlaybackButtons.Margin = New System.Windows.Forms.Padding(0)
+      Me.pbPlaybackButtons.Name = "pbPlaybackButtons"
+      Me.pbPlaybackButtons.Size = New System.Drawing.Size(203, 56)
+      Me.pbPlaybackButtons.State = CasparCGAddIn.ucPlaybackButtons.enumState.stIdle
+      Me.pbPlaybackButtons.TabIndex = 21
+      Me.pbPlaybackButtons.Tag = "[ignore]"
       '
       'panMiddle
       '
@@ -189,6 +202,7 @@ Partial Class ucDashboard
       Me.rbTemplate.Size = New System.Drawing.Size(46, 46)
       Me.rbTemplate.TabIndex = 11
       Me.rbTemplate.TabStop = True
+      Me.rbTemplate.Tag = "[ignore]"
       Me.ttTips.SetToolTip(Me.rbTemplate, "Graphic Template")
       Me.rbTemplate.UseVisualStyleBackColor = True
       '
@@ -200,6 +214,7 @@ Partial Class ucDashboard
       Me.rbAudio.Name = "rbAudio"
       Me.rbAudio.Size = New System.Drawing.Size(46, 46)
       Me.rbAudio.TabIndex = 12
+      Me.rbAudio.Tag = "[ignore]"
       Me.ttTips.SetToolTip(Me.rbAudio, "Audio Clip")
       Me.rbAudio.UseVisualStyleBackColor = True
       '
@@ -211,6 +226,7 @@ Partial Class ucDashboard
       Me.rbImage.Name = "rbImage"
       Me.rbImage.Size = New System.Drawing.Size(46, 46)
       Me.rbImage.TabIndex = 13
+      Me.rbImage.Tag = "[ignore]"
       Me.ttTips.SetToolTip(Me.rbImage, "Image")
       Me.rbImage.UseVisualStyleBackColor = True
       '
@@ -222,6 +238,7 @@ Partial Class ucDashboard
       Me.rbVideo.Name = "rbVideo"
       Me.rbVideo.Size = New System.Drawing.Size(46, 46)
       Me.rbVideo.TabIndex = 14
+      Me.rbVideo.Tag = "[ignore]"
       Me.ttTips.SetToolTip(Me.rbVideo, "Video Clip")
       Me.rbVideo.UseVisualStyleBackColor = True
       '
@@ -233,25 +250,14 @@ Partial Class ucDashboard
       Me.btnSettings.Name = "btnSettings"
       Me.btnSettings.Size = New System.Drawing.Size(24, 23)
       Me.btnSettings.TabIndex = 9
+      Me.btnSettings.Tag = "[ignore]"
       Me.ttTips.SetToolTip(Me.btnSettings, "Settings")
       Me.btnSettings.UseVisualStyleBackColor = True
-      '
-      'pbPlaybackButtons
-      '
-      Me.pbPlaybackButtons.BackColor = System.Drawing.Color.Transparent
-      Me.pbPlaybackButtons.ControlsSet = CasparCGAddIn.ucPlaybackButtons.enumControlSets.csPlayStop
-      Me.pbPlaybackButtons.Location = New System.Drawing.Point(0, 134)
-      Me.pbPlaybackButtons.Margin = New System.Windows.Forms.Padding(0)
-      Me.pbPlaybackButtons.Name = "pbPlaybackButtons"
-      Me.pbPlaybackButtons.Size = New System.Drawing.Size(203, 56)
-      Me.pbPlaybackButtons.State = CasparCGAddIn.ucPlaybackButtons.enumState.stIdle
-      Me.pbPlaybackButtons.TabIndex = 21
       '
       'ucDashboard
       '
       Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
       Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-      'Me.BackColor = System.Drawing.SystemColors.Control
       Me.Controls.Add(Me.flpFlow)
       Me.Controls.Add(Me.panList)
       Me.Name = "ucDashboard"

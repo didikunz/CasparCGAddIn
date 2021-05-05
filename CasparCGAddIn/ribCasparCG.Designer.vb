@@ -42,54 +42,57 @@
    <System.Diagnostics.DebuggerStepThrough()>
    Private Sub InitializeComponent()
       Dim RibbonDialogLauncherImpl1 As Microsoft.Office.Tools.Ribbon.RibbonDialogLauncher = Me.Factory.CreateRibbonDialogLauncher
+      Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(ribCasparCG))
       Dim RibbonDialogLauncherImpl2 As Microsoft.Office.Tools.Ribbon.RibbonDialogLauncher = Me.Factory.CreateRibbonDialogLauncher
       Dim RibbonDialogLauncherImpl3 As Microsoft.Office.Tools.Ribbon.RibbonDialogLauncher = Me.Factory.CreateRibbonDialogLauncher
       Dim RibbonDialogLauncherImpl4 As Microsoft.Office.Tools.Ribbon.RibbonDialogLauncher = Me.Factory.CreateRibbonDialogLauncher
       Dim RibbonDialogLauncherImpl5 As Microsoft.Office.Tools.Ribbon.RibbonDialogLauncher = Me.Factory.CreateRibbonDialogLauncher
       Dim RibbonDialogLauncherImpl6 As Microsoft.Office.Tools.Ribbon.RibbonDialogLauncher = Me.Factory.CreateRibbonDialogLauncher
       Dim RibbonDialogLauncherImpl7 As Microsoft.Office.Tools.Ribbon.RibbonDialogLauncher = Me.Factory.CreateRibbonDialogLauncher
-      Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(ribCasparCG))
       Me.tabCasparCG = Me.Factory.CreateRibbonTab
       Me.grpConnections = Me.Factory.CreateRibbonGroup
-      Me.grpSelection = Me.Factory.CreateRibbonGroup
-      Me.grpDataset = Me.Factory.CreateRibbonGroup
-      Me.grpPreview = Me.Factory.CreateRibbonGroup
-      Me.grpInsert = Me.Factory.CreateRibbonGroup
-      Me.grpAutoUpdate = Me.Factory.CreateRibbonGroup
-      Me.sepAutoUpdate1 = Me.Factory.CreateRibbonSeparator
-      Me.sepAutoUpdate2 = Me.Factory.CreateRibbonSeparator
-      Me.grpView = Me.Factory.CreateRibbonGroup
-      Me.sepView1 = Me.Factory.CreateRibbonSeparator
-      Me.grpTimer = Me.Factory.CreateRibbonGroup
-      Me.sepTimer1 = Me.Factory.CreateRibbonSeparator
-      Me.cboItems = Me.Factory.CreateRibbonComboBox
-      Me.txtTimerPreview = Me.Factory.CreateRibbonEditBox
-      Me.ButtonGroup1 = Me.Factory.CreateRibbonButtonGroup
-      Me.grpLap = Me.Factory.CreateRibbonGroup
-      Me.cboLap = Me.Factory.CreateRibbonComboBox
-      Me.grpUserFunctions = Me.Factory.CreateRibbonGroup
       Me.togConnect = Me.Factory.CreateRibbonToggleButton
+      Me.grpSelection = Me.Factory.CreateRibbonGroup
       Me.btnSetOutputRange = Me.Factory.CreateRibbonButton
+      Me.grpDataset = Me.Factory.CreateRibbonGroup
       Me.btnSaveDataSet = Me.Factory.CreateRibbonButton
       Me.btnSaveAllDataSets = Me.Factory.CreateRibbonButton
+      Me.grpPreview = Me.Factory.CreateRibbonGroup
       Me.btnPreview = Me.Factory.CreateRibbonButton
+      Me.grpInsert = Me.Factory.CreateRibbonGroup
       Me.btnImageFile = Me.Factory.CreateRibbonButton
       Me.btnBaseFolder = Me.Factory.CreateRibbonButton
       Me.btnColor = Me.Factory.CreateRibbonButton
+      Me.grpAutoUpdate = Me.Factory.CreateRibbonGroup
       Me.togAutoUpdate = Me.Factory.CreateRibbonToggleButton
+      Me.sepAutoUpdate1 = Me.Factory.CreateRibbonSeparator
       Me.btnBrowser = Me.Factory.CreateRibbonButton
       Me.btnBrowserRefresh = Me.Factory.CreateRibbonButton
+      Me.sepAutoUpdate2 = Me.Factory.CreateRibbonSeparator
       Me.btnRefreshData = Me.Factory.CreateRibbonButton
+      Me.grpView = Me.Factory.CreateRibbonGroup
       Me.btnDashboard = Me.Factory.CreateRibbonButton
+      Me.sepView1 = Me.Factory.CreateRibbonSeparator
       Me.btnListPane = Me.Factory.CreateRibbonButton
       Me.btnTimerPane = Me.Factory.CreateRibbonButton
+      Me.btnShowSheetProperties = Me.Factory.CreateRibbonButton
+      Me.grpTimer = Me.Factory.CreateRibbonGroup
+      Me.cboItems = Me.Factory.CreateRibbonComboBox
+      Me.txtTimerPreview = Me.Factory.CreateRibbonEditBox
+      Me.ButtonGroup1 = Me.Factory.CreateRibbonButtonGroup
       Me.btnTimerPlus = Me.Factory.CreateRibbonButton
       Me.btnTimerMinus = Me.Factory.CreateRibbonButton
-      Me.btnStartTimer = Me.Factory.CreateRibbonButton
-      Me.btnPauseTimer = Me.Factory.CreateRibbonButton
+      Me.sepTimer1 = Me.Factory.CreateRibbonSeparator
+      Me.sbtnStartTimer = Me.Factory.CreateRibbonSplitButton
+      Me.btnStartTimmerWithOffset = Me.Factory.CreateRibbonButton
+      Me.btnSetOffset = Me.Factory.CreateRibbonButton
+      Me.togPauseTimer = Me.Factory.CreateRibbonToggleButton
       Me.btnStopTimer = Me.Factory.CreateRibbonButton
+      Me.grpLap = Me.Factory.CreateRibbonGroup
+      Me.cboLap = Me.Factory.CreateRibbonComboBox
       Me.btnLapPause = Me.Factory.CreateRibbonButton
       Me.btnLapResume = Me.Factory.CreateRibbonButton
+      Me.grpUserFunctions = Me.Factory.CreateRibbonGroup
       Me.btnUserFunction1 = Me.Factory.CreateRibbonButton
       Me.btnUserFunction2 = Me.Factory.CreateRibbonButton
       Me.btnUserFunction3 = Me.Factory.CreateRibbonButton
@@ -99,6 +102,7 @@
       Me.btnUserFunction7 = Me.Factory.CreateRibbonButton
       Me.btnUserFunction8 = Me.Factory.CreateRibbonButton
       Me.btnUserFunction9 = Me.Factory.CreateRibbonButton
+      Me.btnWebDownload = Me.Factory.CreateRibbonButton
       Me.tabCasparCG.SuspendLayout()
       Me.grpConnections.SuspendLayout()
       Me.grpSelection.SuspendLayout()
@@ -135,146 +139,6 @@
       Me.grpConnections.Label = "Servers"
       Me.grpConnections.Name = "grpConnections"
       '
-      'grpSelection
-      '
-      Me.grpSelection.Items.Add(Me.btnSetOutputRange)
-      Me.grpSelection.Label = "Selection"
-      Me.grpSelection.Name = "grpSelection"
-      '
-      'grpDataset
-      '
-      Me.grpDataset.DialogLauncher = RibbonDialogLauncherImpl2
-      Me.grpDataset.Items.Add(Me.btnSaveDataSet)
-      Me.grpDataset.Items.Add(Me.btnSaveAllDataSets)
-      Me.grpDataset.Label = "Data-Sets"
-      Me.grpDataset.Name = "grpDataset"
-      '
-      'grpPreview
-      '
-      Me.grpPreview.DialogLauncher = RibbonDialogLauncherImpl3
-      Me.grpPreview.Items.Add(Me.btnPreview)
-      Me.grpPreview.Label = "Preview"
-      Me.grpPreview.Name = "grpPreview"
-      '
-      'grpInsert
-      '
-      Me.grpInsert.Items.Add(Me.btnImageFile)
-      Me.grpInsert.Items.Add(Me.btnBaseFolder)
-      Me.grpInsert.Items.Add(Me.btnColor)
-      Me.grpInsert.Label = "Insert"
-      Me.grpInsert.Name = "grpInsert"
-      '
-      'grpAutoUpdate
-      '
-      Me.grpAutoUpdate.DialogLauncher = RibbonDialogLauncherImpl4
-      Me.grpAutoUpdate.Items.Add(Me.togAutoUpdate)
-      Me.grpAutoUpdate.Items.Add(Me.sepAutoUpdate1)
-      Me.grpAutoUpdate.Items.Add(Me.btnBrowser)
-      Me.grpAutoUpdate.Items.Add(Me.btnBrowserRefresh)
-      Me.grpAutoUpdate.Items.Add(Me.sepAutoUpdate2)
-      Me.grpAutoUpdate.Items.Add(Me.btnRefreshData)
-      Me.grpAutoUpdate.Label = "Data"
-      Me.grpAutoUpdate.Name = "grpAutoUpdate"
-      '
-      'sepAutoUpdate1
-      '
-      Me.sepAutoUpdate1.Name = "sepAutoUpdate1"
-      '
-      'sepAutoUpdate2
-      '
-      Me.sepAutoUpdate2.Name = "sepAutoUpdate2"
-      '
-      'grpView
-      '
-      Me.grpView.Items.Add(Me.btnDashboard)
-      Me.grpView.Items.Add(Me.sepView1)
-      Me.grpView.Items.Add(Me.btnListPane)
-      Me.grpView.Items.Add(Me.btnTimerPane)
-      Me.grpView.Label = "View"
-      Me.grpView.Name = "grpView"
-      '
-      'sepView1
-      '
-      Me.sepView1.Name = "sepView1"
-      '
-      'grpTimer
-      '
-      Me.grpTimer.DialogLauncher = RibbonDialogLauncherImpl5
-      Me.grpTimer.Items.Add(Me.cboItems)
-      Me.grpTimer.Items.Add(Me.txtTimerPreview)
-      Me.grpTimer.Items.Add(Me.ButtonGroup1)
-      Me.grpTimer.Items.Add(Me.sepTimer1)
-      Me.grpTimer.Items.Add(Me.btnStartTimer)
-      Me.grpTimer.Items.Add(Me.btnPauseTimer)
-      Me.grpTimer.Items.Add(Me.btnStopTimer)
-      Me.grpTimer.Label = "Timer"
-      Me.grpTimer.Name = "grpTimer"
-      '
-      'sepTimer1
-      '
-      Me.sepTimer1.Name = "sepTimer1"
-      '
-      'cboItems
-      '
-      Me.cboItems.Label = "ComboBox1"
-      Me.cboItems.Name = "cboItems"
-      Me.cboItems.ScreenTip = "Selected Item"
-      Me.cboItems.ShowLabel = False
-      Me.cboItems.SuperTip = "Select the current timer-item to be handled."
-      Me.cboItems.Text = Nothing
-      '
-      'txtTimerPreview
-      '
-      Me.txtTimerPreview.Label = "EditBox1"
-      Me.txtTimerPreview.MaxLength = 15
-      Me.txtTimerPreview.Name = "txtTimerPreview"
-      Me.txtTimerPreview.ScreenTip = "Timer preview"
-      Me.txtTimerPreview.ShowLabel = False
-      Me.txtTimerPreview.SizeString = "00:00:00:00:00:00"
-      Me.txtTimerPreview.SuperTip = "Displays the timers current time"
-      Me.txtTimerPreview.Text = Nothing
-      '
-      'ButtonGroup1
-      '
-      Me.ButtonGroup1.Items.Add(Me.btnTimerPlus)
-      Me.ButtonGroup1.Items.Add(Me.btnTimerMinus)
-      Me.ButtonGroup1.Name = "ButtonGroup1"
-      '
-      'grpLap
-      '
-      Me.grpLap.DialogLauncher = RibbonDialogLauncherImpl6
-      Me.grpLap.Items.Add(Me.cboLap)
-      Me.grpLap.Items.Add(Me.btnLapPause)
-      Me.grpLap.Items.Add(Me.btnLapResume)
-      Me.grpLap.Label = "Laps"
-      Me.grpLap.Name = "grpLap"
-      '
-      'cboLap
-      '
-      Me.cboLap.Label = "Lap"
-      Me.cboLap.Name = "cboLap"
-      Me.cboLap.ScreenTip = "Select Lap"
-      Me.cboLap.ShowItemImage = False
-      Me.cboLap.ShowLabel = False
-      Me.cboLap.SuperTip = "Select the Lap to handle"
-      Me.cboLap.Text = Nothing
-      '
-      'grpUserFunctions
-      '
-      Me.grpUserFunctions.DialogLauncher = RibbonDialogLauncherImpl7
-      Me.grpUserFunctions.Items.Add(Me.btnUserFunction1)
-      Me.grpUserFunctions.Items.Add(Me.btnUserFunction2)
-      Me.grpUserFunctions.Items.Add(Me.btnUserFunction3)
-      Me.grpUserFunctions.Items.Add(Me.btnUserFunction4)
-      Me.grpUserFunctions.Items.Add(Me.btnUserFunction5)
-      Me.grpUserFunctions.Items.Add(Me.btnUserFunction6)
-      Me.grpUserFunctions.Items.Add(Me.btnUserFunction7)
-      Me.grpUserFunctions.Items.Add(Me.btnUserFunction8)
-      Me.grpUserFunctions.Items.Add(Me.btnUserFunction9)
-      Me.grpUserFunctions.Label = "User functions"
-      Me.grpUserFunctions.Name = "grpUserFunctions"
-      Me.grpUserFunctions.Visible = False
-      '
       'togConnect
       '
       Me.togConnect.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge
@@ -286,6 +150,12 @@
       Me.togConnect.SuperTip = "Connects or disconnects from the server(s). Setup the servers using the dialog-la" &
     "uncher bellow."
       '
+      'grpSelection
+      '
+      Me.grpSelection.Items.Add(Me.btnSetOutputRange)
+      Me.grpSelection.Label = "Selection"
+      Me.grpSelection.Name = "grpSelection"
+      '
       'btnSetOutputRange
       '
       Me.btnSetOutputRange.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge
@@ -295,6 +165,14 @@
       Me.btnSetOutputRange.ScreenTip = "Set Output Range"
       Me.btnSetOutputRange.ShowImage = True
       Me.btnSetOutputRange.SuperTip = "Set the Excel-range that is sent to CasparCG."
+      '
+      'grpDataset
+      '
+      Me.grpDataset.DialogLauncher = RibbonDialogLauncherImpl2
+      Me.grpDataset.Items.Add(Me.btnSaveDataSet)
+      Me.grpDataset.Items.Add(Me.btnSaveAllDataSets)
+      Me.grpDataset.Label = "Data-Sets"
+      Me.grpDataset.Name = "grpDataset"
       '
       'btnSaveDataSet
       '
@@ -318,6 +196,13 @@
       Me.btnSaveAllDataSets.ShowImage = True
       Me.btnSaveAllDataSets.SuperTip = "Safe all Data-Sets of all worksheets to CasparCG."
       '
+      'grpPreview
+      '
+      Me.grpPreview.DialogLauncher = RibbonDialogLauncherImpl3
+      Me.grpPreview.Items.Add(Me.btnPreview)
+      Me.grpPreview.Label = "Preview"
+      Me.grpPreview.Name = "grpPreview"
+      '
       'btnPreview
       '
       Me.btnPreview.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge
@@ -328,6 +213,14 @@
       Me.btnPreview.ScreenTip = "Show Preview"
       Me.btnPreview.ShowImage = True
       Me.btnPreview.SuperTip = "Shows the current worksheet on CasparCG's preview channel (if one is defined)."
+      '
+      'grpInsert
+      '
+      Me.grpInsert.Items.Add(Me.btnImageFile)
+      Me.grpInsert.Items.Add(Me.btnBaseFolder)
+      Me.grpInsert.Items.Add(Me.btnColor)
+      Me.grpInsert.Label = "Insert"
+      Me.grpInsert.Name = "grpInsert"
       '
       'btnImageFile
       '
@@ -358,6 +251,19 @@
       Me.btnColor.SuperTip = "Insert a color into the current cell. The color will be formated as a hexadecimal" &
     " number."
       '
+      'grpAutoUpdate
+      '
+      Me.grpAutoUpdate.DialogLauncher = RibbonDialogLauncherImpl4
+      Me.grpAutoUpdate.Items.Add(Me.togAutoUpdate)
+      Me.grpAutoUpdate.Items.Add(Me.sepAutoUpdate1)
+      Me.grpAutoUpdate.Items.Add(Me.btnBrowser)
+      Me.grpAutoUpdate.Items.Add(Me.btnBrowserRefresh)
+      Me.grpAutoUpdate.Items.Add(Me.btnWebDownload)
+      Me.grpAutoUpdate.Items.Add(Me.sepAutoUpdate2)
+      Me.grpAutoUpdate.Items.Add(Me.btnRefreshData)
+      Me.grpAutoUpdate.Label = "Data"
+      Me.grpAutoUpdate.Name = "grpAutoUpdate"
+      '
       'togAutoUpdate
       '
       Me.togAutoUpdate.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge
@@ -367,6 +273,10 @@
       Me.togAutoUpdate.ScreenTip = "Toggle Auto-Update"
       Me.togAutoUpdate.ShowImage = True
       Me.togAutoUpdate.SuperTip = "If activated perform an auto-update for the current worksheet."
+      '
+      'sepAutoUpdate1
+      '
+      Me.sepAutoUpdate1.Name = "sepAutoUpdate1"
       '
       'btnBrowser
       '
@@ -388,6 +298,10 @@
       Me.btnBrowserRefresh.ShowImage = True
       Me.btnBrowserRefresh.SuperTip = "Refreshes the data for the current worksheet."
       '
+      'sepAutoUpdate2
+      '
+      Me.sepAutoUpdate2.Name = "sepAutoUpdate2"
+      '
       'btnRefreshData
       '
       Me.btnRefreshData.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge
@@ -397,6 +311,16 @@
       Me.btnRefreshData.ScreenTip = "Refresh all data"
       Me.btnRefreshData.ShowImage = True
       Me.btnRefreshData.SuperTip = "Refreshes all data from all browser imports and Power Queries"
+      '
+      'grpView
+      '
+      Me.grpView.Items.Add(Me.btnDashboard)
+      Me.grpView.Items.Add(Me.sepView1)
+      Me.grpView.Items.Add(Me.btnListPane)
+      Me.grpView.Items.Add(Me.btnTimerPane)
+      Me.grpView.Items.Add(Me.btnShowSheetProperties)
+      Me.grpView.Label = "View"
+      Me.grpView.Name = "grpView"
       '
       'btnDashboard
       '
@@ -408,10 +332,14 @@
       Me.btnDashboard.ShowImage = True
       Me.btnDashboard.SuperTip = "Shows the CasparCG Dashboard"
       '
+      'sepView1
+      '
+      Me.sepView1.Name = "sepView1"
+      '
       'btnListPane
       '
       Me.btnListPane.Image = Global.CasparCGAddIn.My.Resources.Resources.FlatList_16x
-      Me.btnListPane.Label = "List-pane"
+      Me.btnListPane.Label = "List-Pane"
       Me.btnListPane.Name = "btnListPane"
       Me.btnListPane.ScreenTip = "View list pane"
       Me.btnListPane.ShowImage = True
@@ -425,6 +353,54 @@
       Me.btnTimerPane.ScreenTip = "Timer Group"
       Me.btnTimerPane.ShowImage = True
       Me.btnTimerPane.SuperTip = "Show the timer group"
+      '
+      'btnShowSheetProperties
+      '
+      Me.btnShowSheetProperties.Image = Global.CasparCGAddIn.My.Resources.Resources.Playback_Controls_Settings
+      Me.btnShowSheetProperties.Label = "Sheet Props"
+      Me.btnShowSheetProperties.Name = "btnShowSheetProperties"
+      Me.btnShowSheetProperties.ScreenTip = "Sheet Properties"
+      Me.btnShowSheetProperties.ShowImage = True
+      Me.btnShowSheetProperties.SuperTip = "Show the properties for the current sheet."
+      '
+      'grpTimer
+      '
+      Me.grpTimer.DialogLauncher = RibbonDialogLauncherImpl5
+      Me.grpTimer.Items.Add(Me.cboItems)
+      Me.grpTimer.Items.Add(Me.txtTimerPreview)
+      Me.grpTimer.Items.Add(Me.ButtonGroup1)
+      Me.grpTimer.Items.Add(Me.sepTimer1)
+      Me.grpTimer.Items.Add(Me.sbtnStartTimer)
+      Me.grpTimer.Items.Add(Me.togPauseTimer)
+      Me.grpTimer.Items.Add(Me.btnStopTimer)
+      Me.grpTimer.Label = "Timer"
+      Me.grpTimer.Name = "grpTimer"
+      '
+      'cboItems
+      '
+      Me.cboItems.Label = "ComboBox1"
+      Me.cboItems.Name = "cboItems"
+      Me.cboItems.ScreenTip = "Selected Item"
+      Me.cboItems.ShowLabel = False
+      Me.cboItems.SuperTip = "Select the current timer-item to be handled."
+      Me.cboItems.Text = Nothing
+      '
+      'txtTimerPreview
+      '
+      Me.txtTimerPreview.Label = "EditBox1"
+      Me.txtTimerPreview.MaxLength = 15
+      Me.txtTimerPreview.Name = "txtTimerPreview"
+      Me.txtTimerPreview.ScreenTip = "Timer preview"
+      Me.txtTimerPreview.ShowLabel = False
+      Me.txtTimerPreview.SizeString = "00:00:00:00:00:00"
+      Me.txtTimerPreview.SuperTip = "Displays the timers current time"
+      Me.txtTimerPreview.Text = Nothing
+      '
+      'ButtonGroup1
+      '
+      Me.ButtonGroup1.Items.Add(Me.btnTimerPlus)
+      Me.ButtonGroup1.Items.Add(Me.btnTimerMinus)
+      Me.ButtonGroup1.Name = "ButtonGroup1"
       '
       'btnTimerPlus
       '
@@ -444,26 +420,48 @@
       Me.btnTimerMinus.ShowImage = True
       Me.btnTimerMinus.SuperTip = "Minus one second"
       '
-      'btnStartTimer
+      'sepTimer1
       '
-      Me.btnStartTimer.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge
-      Me.btnStartTimer.Image = Global.CasparCGAddIn.My.Resources.Resources.Timer_Start
-      Me.btnStartTimer.Label = "Start"
-      Me.btnStartTimer.Name = "btnStartTimer"
-      Me.btnStartTimer.ScreenTip = "Start Timer"
-      Me.btnStartTimer.ShowImage = True
-      Me.btnStartTimer.SuperTip = "Start the timer"
+      Me.sepTimer1.Name = "sepTimer1"
       '
-      'btnPauseTimer
+      'sbtnStartTimer
       '
-      Me.btnPauseTimer.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge
-      Me.btnPauseTimer.Image = Global.CasparCGAddIn.My.Resources.Resources.Timer_Pause
-      Me.btnPauseTimer.Label = "Pause"
-      Me.btnPauseTimer.Name = "btnPauseTimer"
-      Me.btnPauseTimer.ScreenTip = "Pause Timer"
-      Me.btnPauseTimer.ShowImage = True
-      Me.btnPauseTimer.SuperTip = "Pause the timer. Suspends the timer."
-      Me.btnPauseTimer.Visible = False
+      Me.sbtnStartTimer.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge
+      Me.sbtnStartTimer.Image = Global.CasparCGAddIn.My.Resources.Resources.Timer_Start
+      Me.sbtnStartTimer.Items.Add(Me.btnStartTimmerWithOffset)
+      Me.sbtnStartTimer.Items.Add(Me.btnSetOffset)
+      Me.sbtnStartTimer.Label = "Start"
+      Me.sbtnStartTimer.Name = "sbtnStartTimer"
+      Me.sbtnStartTimer.ScreenTip = "Start from zero"
+      Me.sbtnStartTimer.SuperTip = "Starts the current timer from zero"
+      '
+      'btnStartTimmerWithOffset
+      '
+      Me.btnStartTimmerWithOffset.Image = Global.CasparCGAddIn.My.Resources.Resources.Timer_StartOffset_S
+      Me.btnStartTimmerWithOffset.Label = "Start from offset"
+      Me.btnStartTimmerWithOffset.Name = "btnStartTimmerWithOffset"
+      Me.btnStartTimmerWithOffset.ScreenTip = "Start from offset"
+      Me.btnStartTimmerWithOffset.ShowImage = True
+      Me.btnStartTimmerWithOffset.SuperTip = "Starts the current timer from the setted offset time."
+      '
+      'btnSetOffset
+      '
+      Me.btnSetOffset.Image = Global.CasparCGAddIn.My.Resources.Resources.Timer_SetOffset
+      Me.btnSetOffset.Label = "Set the start offset..."
+      Me.btnSetOffset.Name = "btnSetOffset"
+      Me.btnSetOffset.ScreenTip = "Set the start offset-time"
+      Me.btnSetOffset.ShowImage = True
+      Me.btnSetOffset.SuperTip = "Set the start offset time for the current timer."
+      '
+      'togPauseTimer
+      '
+      Me.togPauseTimer.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge
+      Me.togPauseTimer.Image = Global.CasparCGAddIn.My.Resources.Resources.Timer_Pause
+      Me.togPauseTimer.Label = "Pause"
+      Me.togPauseTimer.Name = "togPauseTimer"
+      Me.togPauseTimer.ScreenTip = "Pause"
+      Me.togPauseTimer.ShowImage = True
+      Me.togPauseTimer.SuperTip = "Pause / un-pause the current timer."
       '
       'btnStopTimer
       '
@@ -473,7 +471,26 @@
       Me.btnStopTimer.Name = "btnStopTimer"
       Me.btnStopTimer.ScreenTip = "Stop Timer"
       Me.btnStopTimer.ShowImage = True
-      Me.btnStopTimer.SuperTip = "Stops the timer"
+      Me.btnStopTimer.SuperTip = "Stops the current timer"
+      '
+      'grpLap
+      '
+      Me.grpLap.DialogLauncher = RibbonDialogLauncherImpl6
+      Me.grpLap.Items.Add(Me.cboLap)
+      Me.grpLap.Items.Add(Me.btnLapPause)
+      Me.grpLap.Items.Add(Me.btnLapResume)
+      Me.grpLap.Label = "Laps"
+      Me.grpLap.Name = "grpLap"
+      '
+      'cboLap
+      '
+      Me.cboLap.Label = "Lap"
+      Me.cboLap.Name = "cboLap"
+      Me.cboLap.ScreenTip = "Select Lap"
+      Me.cboLap.ShowItemImage = False
+      Me.cboLap.ShowLabel = False
+      Me.cboLap.SuperTip = "Select the Lap to handle"
+      Me.cboLap.Text = Nothing
       '
       'btnLapPause
       '
@@ -482,7 +499,7 @@
       Me.btnLapPause.Name = "btnLapPause"
       Me.btnLapPause.ScreenTip = "Lap Pause"
       Me.btnLapPause.ShowImage = True
-      Me.btnLapPause.SuperTip = "Stops the timer to show a a lap"
+      Me.btnLapPause.SuperTip = "Frezzes the current timer to show a lap."
       '
       'btnLapResume
       '
@@ -491,7 +508,23 @@
       Me.btnLapResume.Name = "btnLapResume"
       Me.btnLapResume.ScreenTip = "Lap Resume"
       Me.btnLapResume.ShowImage = True
-      Me.btnLapResume.SuperTip = "Resumes the running timer display"
+      Me.btnLapResume.SuperTip = "Un-frezzes the current timer display."
+      '
+      'grpUserFunctions
+      '
+      Me.grpUserFunctions.DialogLauncher = RibbonDialogLauncherImpl7
+      Me.grpUserFunctions.Items.Add(Me.btnUserFunction1)
+      Me.grpUserFunctions.Items.Add(Me.btnUserFunction2)
+      Me.grpUserFunctions.Items.Add(Me.btnUserFunction3)
+      Me.grpUserFunctions.Items.Add(Me.btnUserFunction4)
+      Me.grpUserFunctions.Items.Add(Me.btnUserFunction5)
+      Me.grpUserFunctions.Items.Add(Me.btnUserFunction6)
+      Me.grpUserFunctions.Items.Add(Me.btnUserFunction7)
+      Me.grpUserFunctions.Items.Add(Me.btnUserFunction8)
+      Me.grpUserFunctions.Items.Add(Me.btnUserFunction9)
+      Me.grpUserFunctions.Label = "User functions"
+      Me.grpUserFunctions.Name = "grpUserFunctions"
+      Me.grpUserFunctions.Visible = False
       '
       'btnUserFunction1
       '
@@ -583,6 +616,14 @@
       Me.btnUserFunction9.SuperTip = "Triggers a user function by running a script"
       Me.btnUserFunction9.Tag = "9"
       '
+      'btnWebDownload
+      '
+      Me.btnWebDownload.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge
+      Me.btnWebDownload.Image = Global.CasparCGAddIn.My.Resources.Resources.Web_Download
+      Me.btnWebDownload.Label = "Web Download"
+      Me.btnWebDownload.Name = "btnWebDownload"
+      Me.btnWebDownload.ShowImage = True
+      '
       'ribCasparCG
       '
       Me.Name = "ribCasparCG"
@@ -630,7 +671,6 @@
    Friend WithEvents btnImageFile As Microsoft.Office.Tools.Ribbon.RibbonButton
    Friend WithEvents btnColor As Microsoft.Office.Tools.Ribbon.RibbonButton
    Friend WithEvents btnBaseFolder As Microsoft.Office.Tools.Ribbon.RibbonButton
-   Friend WithEvents btnStartTimer As Microsoft.Office.Tools.Ribbon.RibbonButton
    Friend WithEvents grpAutoUpdate As Microsoft.Office.Tools.Ribbon.RibbonGroup
    Friend WithEvents togAutoUpdate As Microsoft.Office.Tools.Ribbon.RibbonToggleButton
    Friend WithEvents grpView As Microsoft.Office.Tools.Ribbon.RibbonGroup
@@ -644,7 +684,6 @@
    Friend WithEvents sepView1 As Microsoft.Office.Tools.Ribbon.RibbonSeparator
    Friend WithEvents btnListPane As Microsoft.Office.Tools.Ribbon.RibbonButton
    Friend WithEvents btnTimerPane As Microsoft.Office.Tools.Ribbon.RibbonButton
-   Friend WithEvents btnPauseTimer As Microsoft.Office.Tools.Ribbon.RibbonButton
    Friend WithEvents btnStopTimer As Microsoft.Office.Tools.Ribbon.RibbonButton
    Friend WithEvents sepTimer1 As Microsoft.Office.Tools.Ribbon.RibbonSeparator
    Friend WithEvents btnTimerPlus As Microsoft.Office.Tools.Ribbon.RibbonButton
@@ -666,6 +705,12 @@
    Friend WithEvents btnUserFunction9 As Microsoft.Office.Tools.Ribbon.RibbonButton
    Friend WithEvents cboItems As Microsoft.Office.Tools.Ribbon.RibbonComboBox
    Friend WithEvents ButtonGroup1 As Microsoft.Office.Tools.Ribbon.RibbonButtonGroup
+   Friend WithEvents togPauseTimer As Microsoft.Office.Tools.Ribbon.RibbonToggleButton
+   Friend WithEvents sbtnStartTimer As Microsoft.Office.Tools.Ribbon.RibbonSplitButton
+   Friend WithEvents btnStartTimmerWithOffset As Microsoft.Office.Tools.Ribbon.RibbonButton
+   Friend WithEvents btnSetOffset As Microsoft.Office.Tools.Ribbon.RibbonButton
+   Friend WithEvents btnShowSheetProperties As Microsoft.Office.Tools.Ribbon.RibbonButton
+   Friend WithEvents btnWebDownload As Microsoft.Office.Tools.Ribbon.RibbonButton
 End Class
 
 Partial Class ThisRibbonCollection

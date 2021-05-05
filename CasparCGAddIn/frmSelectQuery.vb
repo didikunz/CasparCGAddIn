@@ -3,8 +3,15 @@ Imports System.Windows.Forms
 
 Public Class frmSelectQuery
 
+   Private _Settings As Settings
    Private _wrkSheet As Worksheet
    Private _currentRow As Integer
+
+   Public WriteOnly Property Settings As Settings
+      Set(value As Settings)
+         _Settings = value
+      End Set
+   End Property
 
    Public WriteOnly Property wrkSheet As Worksheet
       Set(value As Worksheet)
@@ -19,6 +26,8 @@ Public Class frmSelectQuery
    End Property
 
    Private Sub frmSelectQuery_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+
+      MyColorThemes.Loader.Load(Me, _Settings.Theme)
 
       Dim AppObject As Workbook = Globals.ThisAddIn.Application.ActiveWorkbook
 

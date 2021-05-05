@@ -4,10 +4,16 @@ Imports CasparCGAddIn
 
 Public Class ucPlaybackControls
 
+#Region "Proverties and module level variables"
+
+   Private _Settings As Settings
    Private _sheet As Excel.Worksheet
 
    Private _DoReload As Boolean = False
    Private WithEvents _timResetRelaod As Timer = New Timer
+
+   Public Property OscEndpoint As String = ""
+
 
    Public Property State As ucPlaybackButtons.enumState
       Get
@@ -15,6 +21,12 @@ Public Class ucPlaybackControls
       End Get
       Set(value As ucPlaybackButtons.enumState)
          upcPlaybackButtons.State = value
+      End Set
+   End Property
+
+   Public WriteOnly Property Settings As Settings
+      Set(value As Settings)
+         _Settings = value
       End Set
    End Property
 
@@ -39,12 +51,44 @@ Public Class ucPlaybackControls
       End Set
    End Property
 
+#End Region
 
-   'Events
-   Public Delegate Sub CommandEventHandler(ByVal sender As Object, ByVal e As ucPlaybackButtons.CommandkEventArgs)
+#Region "Event Declarations"
+
+   Public Delegate Sub CommandEventHandler(ByVal sender As Object, ByVal e As ucPlaybackButtons.CommandEventArgs)
 
    Public Event CommandEvent As CommandEventHandler
 
+#End Region
+
+#Region "Methods"
+
+   Public Sub HandleOscCommand(ByVal oscEndpoint As String, ByVal command As ucDashboard.enumOSCEvents)
+
+      If oscEndpoint = Me.OscEndpoint Then
+
+         Select Case command
+            Case ucDashboard.enumOSCEvents.oscLoad
+               upcPlaybackButtons.DoLoad(True)
+            Case ucDashboard.enumOSCEvents.oscPlay
+               upcPlaybackButtons.DoPlay(True)
+            Case ucDashboard.enumOSCEvents.oscNext
+               upcPlaybackButtons.DoNext(True)
+            Case ucDashboard.enumOSCEvents.oscStop
+               upcPlaybackButtons.DoStop(True)
+            Case ucDashboard.enumOSCEvents.oscUpdate
+               upcPlaybackButtons.DoUpdate(True)
+            Case ucDashboard.enumOSCEvents.oscPreview
+               upcPlaybackButtons.DoPreview()
+         End Select
+
+      End If
+
+   End Sub
+
+#End Region
+
+#Region "Helpers and UI code"
 
    Private Function ContrastingColor(col As System.Drawing.Color) As System.Drawing.Color
 
@@ -76,6 +120,8 @@ Public Class ucPlaybackControls
             Me.btnPreview.ForeColor = System.Drawing.Color.FromKnownColor(System.Drawing.KnownColor.ControlText)
          End If
 
+         OscEndpoint = CustomProperties.Load(_sheet, "OscEndPoint", "/dashboard/" + Me.lblHeader.Text.Trim.ToLower.Replace(" ", ""))
+
       End If
 
    End Sub
@@ -83,8 +129,10 @@ Public Class ucPlaybackControls
    Private Sub btnChangeCaption_Click(sender As Object, e As EventArgs) Handles btnChangeCaption.Click
 
       Dim fpcc As frmPlaybackControlsCaptions = New frmPlaybackControlsCaptions
+      fpcc.Settings = _Settings
       fpcc.CaptionText = Me.lblHeader.Text
       fpcc.CaptionColor = Me.lblHeader.BackColor
+      fpcc.OscEndpoint = OscEndpoint
 
       If fpcc.ShowDialog = DialogResult.OK Then
 
@@ -94,6 +142,9 @@ Public Class ucPlaybackControls
          CustomProperties.Save(_sheet, "DashboardCaptionColor", fpcc.CaptionColor.ToArgb.ToString)
          Me.lblHeader.BackColor = fpcc.CaptionColor
          Me.lblHeader.ForeColor = ContrastingColor(fpcc.CaptionColor)
+
+         CustomProperties.Save(_sheet, "OscEndPoint", fpcc.OscEndpoint)
+         OscEndpoint = fpcc.OscEndpoint
 
       End If
 
@@ -109,7 +160,7 @@ Public Class ucPlaybackControls
             State = ucPlaybackButtons.enumState.stIdle
          End If
 
-         RaiseEvent CommandEvent(Me, New ucPlaybackButtons.CommandkEventArgs(ucPlaybackButtons.enumCommandType.ctPreview, _sheet))
+         RaiseEvent CommandEvent(Me, New ucPlaybackButtons.CommandEventArgs(ucPlaybackButtons.enumCommandType.ctPreview, _sheet))
 
          _DoReload = True
          _timResetRelaod.Interval = 3000
@@ -122,7 +173,7 @@ Public Class ucPlaybackControls
    End Sub
 
 
-   Private Sub upcPlaybackButtons_CommandEvent(sender As Object, e As ucPlaybackButtons.CommandkEventArgs) Handles upcPlaybackButtons.CommandEvent
+   Private Sub upcPlaybackButtons_CommandEvent(sender As Object, e As ucPlaybackButtons.CommandEventArgs) Handles upcPlaybackButtons.CommandEvent
       RaiseEvent CommandEvent(Me, e)
    End Sub
 
@@ -130,5 +181,7 @@ Public Class ucPlaybackControls
       _timResetRelaod.Stop()
       _DoReload = False
    End Sub
+
+#End Region
 
 End Class

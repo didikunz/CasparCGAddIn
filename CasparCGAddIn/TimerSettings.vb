@@ -60,10 +60,12 @@ Public Class TimerSettings
 
       Public Property Item As TimerItem
       Public Property Time As TimeSpan
+      Public Property HasStopped As Boolean
 
-      Public Sub New(Item As TimerItem, Time As TimeSpan)
+      Public Sub New(Item As TimerItem, Time As TimeSpan, HasStopped As Boolean)
          Me.Item = Item
          Me.Time = Time
+         Me.HasStopped = HasStopped
       End Sub
 
    End Class
@@ -73,14 +75,36 @@ Public Class TimerSettings
    ''' </summary>
    Public Event TimerRefresh As EventHandler(Of TimerRefreshEventArgs)
 
+   Public Class TimeTriggerEventArgs
+      Inherits EventArgs
+
+      Public Property Item As TimerItem
+
+      Public Sub New(Item As TimerItem)
+         Me.Item = Item
+      End Sub
+
+   End Class
+
+   ''' <summary>
+   ''' Fired when OnTimeTime of a timer has expired.
+   ''' </summary>
+   Public Event TimeTrigger As EventHandler(Of TimeTriggerEventArgs)
+
    ''' <summary>
    ''' Used to save data
    ''' </summary>
    Public Event SaveTimerData As EventHandler
 
+
    Private Sub HandleTimerRefresh(sender As Object, e As TimerItem.TimerRefreshEventArgs)
-      Dim trea As TimerRefreshEventArgs = New TimerRefreshEventArgs(CType(sender, TimerItem), e.Time)
+      Dim trea As TimerRefreshEventArgs = New TimerRefreshEventArgs(CType(sender, TimerItem), e.Time, e.HasStopped)
       RaiseEvent TimerRefresh(Me, trea)
+   End Sub
+
+   Private Sub HandleTimeTrigger(sender As Object, e As EventArgs)
+      Dim ttea As TimeTriggerEventArgs = New TimeTriggerEventArgs(CType(sender, TimerItem))
+      RaiseEvent TimeTrigger(Me, ttea)
    End Sub
 
    Private Sub HandleSaveTimerData(sender As Object, e As EventArgs)
@@ -89,6 +113,42 @@ Public Class TimerSettings
 #End Region
 
 #Region "Methods"
+
+   Public Sub AddTimerItem(item As TimerItem)
+
+      item.Parent = Me
+      AddHandler item.TimerRefresh, AddressOf HandleTimerRefresh
+      AddHandler item.TimeTrigger, AddressOf HandleTimeTrigger
+      AddHandler item.SaveTimerData, AddressOf HandleSaveTimerData
+
+      _Items.Add(item)
+
+   End Sub
+
+   Public Sub RemoveTimerItem(item As TimerItem)
+
+      RemoveHandler item.TimerRefresh, AddressOf HandleTimerRefresh
+      RemoveHandler item.TimeTrigger, AddressOf HandleTimeTrigger
+      RemoveHandler item.SaveTimerData, AddressOf HandleSaveTimerData
+
+      _Items.Remove(item)
+
+   End Sub
+
+   Public Function GetTimerByName(name As String) As TimerItem
+
+      Dim ret As TimerItem = Nothing
+
+      For Each ti As TimerItem In _Items
+         If ti.Name = name Then
+            ret = ti
+            Exit For
+         End If
+      Next
+
+      Return ret
+
+   End Function
 
    Public Sub RunTimer()
       For Each ti As TimerItem In _Items
@@ -170,6 +230,7 @@ Public Class TimerSettings
          For Each item As TimerItem In _Items
             item.Parent = Me
             AddHandler item.TimerRefresh, AddressOf HandleTimerRefresh
+            AddHandler item.TimeTrigger, AddressOf HandleTimeTrigger
             AddHandler item.SaveTimerData, AddressOf HandleSaveTimerData
          Next
 
@@ -181,6 +242,7 @@ Public Class TimerSettings
    Public Sub ReleaseEvents()
       For Each item As TimerItem In _Items
          RemoveHandler item.TimerRefresh, AddressOf HandleTimerRefresh
+         RemoveHandler item.TimeTrigger, AddressOf HandleTimeTrigger
          RemoveHandler item.SaveTimerData, AddressOf HandleSaveTimerData
       Next
    End Sub

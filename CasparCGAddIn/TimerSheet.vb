@@ -13,6 +13,9 @@ Public Class TimerSheet
       End Get
    End Property
 
+   Public Property OnTimeTimer As String = ""
+   Public Property OnTimeInvoke As String = ""
+
    <XmlIgnore()>
    Public Property Server As Integer = 0
    <XmlIgnore()>

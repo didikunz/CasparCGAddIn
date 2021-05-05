@@ -47,26 +47,50 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="CasparCGAddIn.dll" size="467968">
-      <assemblyIdentity name="CasparCGAddIn" version="1.0.0.827" language="neutral" processorArchitecture="msil" />
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Bespoke.Common.dll" size="36352">
+      <assemblyIdentity name="Bespoke.Common" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>SwXBe2aWXOj9sngv3VSyBJW1d55gCU/6527PMRF+lGw=</dsig:DigestValue>
+        <dsig:DigestValue>cfsiM8/2eP7R5CeCfSKsNzOMcRtqTLRQaT6JZVnMM/c=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="CasparObjects.dll" size="56320">
-      <assemblyIdentity name="CasparObjects" version="1.0.0.1" language="neutral" processorArchitecture="msil" />
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Bespoke.Common.Osc.dll" size="24576">
+      <assemblyIdentity name="Bespoke.Common.Osc" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>AYCXPBdB8h3ktja86AihisqTTH6pl/lBqQe8r0YWUao=</dsig:DigestValue>
+        <dsig:DigestValue>B3G1EVCGCN4WelO1I1vn9rNW0V2/DK9T2d0u5Bfysik=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="CasparCGAddIn.dll" size="524288">
+      <assemblyIdentity name="CasparCGAddIn" version="1.0.0.718" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+        <dsig:DigestValue>rjfMt55LZUzZO0MTmXBBCRLMR+sN8dd//eV/Om3Jxkk=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="CasparObjects.dll" size="67072">
+      <assemblyIdentity name="CasparObjects" version="2.1.0.1" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+        <dsig:DigestValue>nrlC1p9mfsx8yFX7mjgflBq+fdHsTHFKIWtie24jjq0=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -179,6 +203,18 @@
     </dependentAssembly>
   </dependency>
   <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="MyColorThemes.dll" size="15360">
+      <assemblyIdentity name="MyColorThemes" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+        <dsig:DigestValue>BhOwPn+uzGGo7lrGW0lIGecGI512MntE2mhqg5t2cgc=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <dependency>
     <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Newtonsoft.Json.dll" size="465408">
       <assemblyIdentity name="Newtonsoft.Json" version="7.0.0.0" publicKeyToken="30AD4FE6B2A6AEED" language="neutral" processorArchitecture="msil" />
       <hash>
@@ -194,7 +230,7 @@
     <vstav3:entryPointsCollection>
       <vstav3:entryPoints>
         <vstav3:entryPoint class="CasparCGAddIn.ThisAddIn">
-          <assemblyIdentity name="CasparCGAddIn" version="1.0.0.827" language="neutral" processorArchitecture="msil" />
+          <assemblyIdentity name="CasparCGAddIn" version="1.0.0.718" language="neutral" processorArchitecture="msil" />
         </vstav3:entryPoint>
       </vstav3:entryPoints>
     </vstav3:entryPointsCollection>
@@ -208,11 +244,11 @@
             <vstov4:friendlyName>CasparCGAddIn</vstov4:friendlyName>
             <vstov4:description>CasparCGAddIn</vstov4:description>
             <vstov4.1:ribbonTypes xmlns:vstov4.1="urn:schemas-microsoft-com:vsto.v4.1">
-              <vstov4.1:ribbonType name="CasparCGAddIn.ribCasparCG, CasparCGAddIn, Version=1.0.0.827, Culture=neutral, PublicKeyToken=null" />
+              <vstov4.1:ribbonType name="CasparCGAddIn.ribCasparCG, CasparCGAddIn, Version=1.0.0.718, Culture=neutral, PublicKeyToken=null" />
             </vstov4.1:ribbonTypes>
           </vstov4:appAddIn>
         </vstov4:customization>
       </vstov4:customizations>
     </vstav3:application>
   </vstav3:addIn>
-<publisherIdentity name="CN=Big-Caspar\Didi" issuerKeyHash="2a51dbb4960244b815bc2083391a744a188eed4a" /><Signature Id="StrongNameSignature" xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha256" /><Reference URI=""><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" /><Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" /><DigestValue>2xJZoImZqkb1w8ZmfknEkFVIHcSzIAi0N4QsQfNtutc=</DigestValue></Reference></SignedInfo><SignatureValue>eiN2bse6/4Cz8lxBQ/N305Pkm6ohCyLaxO1VnJDNTjMC3TGtla8n8lDlqMeOPlIDrJCSfFyZ1VQz5dDjmgIacZm531dibpZ+RBC4mAJ2vsr/gxvIhnqHwnpevUYFLj+q7Ewh6g/VdMD6BqjZsIxq2dLVBw7xYEs3f0qsuB+rdFc=</SignatureValue><KeyInfo Id="StrongNameKeyInfo"><KeyValue><RSAKeyValue><Modulus>uJd/u/PRqzq44fen8oY+Typo/dUe1CEyeilBaZYTgY36jTWF9j+tL55XfYDCFm0wvADANlzqblZCyfHo2vPgcEtzn7mDFr66G7PP2zL+rm7vm6/Tz0B01Mx9JbRD1s7+2OTmzVRKwmSKNAy4BRmMnUFLj690Y8eXBhIHz8hAv0s=</Modulus><Exponent>AQAB</Exponent></RSAKeyValue></KeyValue><msrel:RelData xmlns:msrel="http://schemas.microsoft.com/windows/rel/2005/reldata"><r:license xmlns:r="urn:mpeg:mpeg21:2003:01-REL-R-NS" xmlns:as="http://schemas.microsoft.com/windows/pki/2005/Authenticode"><r:grant><as:ManifestInformation Hash="d7ba6df3412c8437b40820b3c41d485590c4497e66c6c3f546aa9989a05912db" Description="" Url=""><as:assemblyIdentity name="CasparCGAddIn.dll" version="1.0.0.0" publicKeyToken="4977fc6a3b7ae1c1" language="neutral" processorArchitecture="msil" type="win32" /></as:ManifestInformation><as:SignedBy /><as:AuthenticodePublisher><as:X509SubjectName>CN=Big-Caspar\Didi</as:X509SubjectName></as:AuthenticodePublisher></r:grant><r:issuer><Signature Id="AuthenticodeSignature" xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha256" /><Reference URI=""><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" /><Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" /><DigestValue>v4qG2DD4lUkRGkP/PUJZg4+7LjTlSHoFo967alZ2V3s=</DigestValue></Reference></SignedInfo><SignatureValue>VzZGAsNh1A3XvPAirclJOFWiiv4l9dzvZcCk4bYGR9rCTCa63b1cwKbW8rqLXAPwIZx8O6VptUphLZ8bfNPnCEpO1wj54/vYIwe9IJcyxRSOLoIa5RE0e1Oc01X8yQ3W6njnpflB4jnWgSjchozssxharkCRS2Y5WYoFjBykhow=</SignatureValue><KeyInfo><KeyValue><RSAKeyValue><Modulus>uJd/u/PRqzq44fen8oY+Typo/dUe1CEyeilBaZYTgY36jTWF9j+tL55XfYDCFm0wvADANlzqblZCyfHo2vPgcEtzn7mDFr66G7PP2zL+rm7vm6/Tz0B01Mx9JbRD1s7+2OTmzVRKwmSKNAy4BRmMnUFLj690Y8eXBhIHz8hAv0s=</Modulus><Exponent>AQAB</Exponent></RSAKeyValue></KeyValue><X509Data><X509Certificate>MIIB1TCCAT6gAwIBAgIQHaIqd2F1LZpF6gEVduL3hjANBgkqhkiG9w0BAQsFADApMScwJQYDVQQDHh4AQgBpAGcALQBDAGEAcwBwAGEAcgBcAEQAaQBkAGkwHhcNMTcxMjE2MTIzNzQ1WhcNMTgxMjE2MTgzNzQ1WjApMScwJQYDVQQDHh4AQgBpAGcALQBDAGEAcwBwAGEAcgBcAEQAaQBkAGkwgZ8wDQYJKoZIhvcNAQEBBQADgY0AMIGJAoGBALiXf7vz0as6uOH3p/KGPk8qaP3VHtQhMnopQWmWE4GN+o01hfY/rS+eV32AwhZtMLwAwDZc6m5WQsnx6Nrz4HBLc5+5gxa+uhuzz9sy/q5u75uv089AdNTMfSW0Q9bO/tjk5s1USsJkijQMuAUZjJ1BS4+vdGPHlwYSB8/IQL9LAgMBAAEwDQYJKoZIhvcNAQELBQADgYEAC30UMtP3Mcwwy/RrD16pRC8ZfaquIXw7ialgzTzcScaH/Gm+ulPoLykWVF4zkuGWeu64o0uFOzz3faDWhXsS9Pn998CIj/q5G6MaofpCiPnCrkNBO/Od/WAO8a8VZ+dPA8omOtIWc+/YJTbeG7Xoc+41J/52kmTR192QrFR41Cc=</X509Certificate></X509Data></KeyInfo></Signature></r:issuer></r:license></msrel:RelData></KeyInfo></Signature></asmv1:assembly>
+<publisherIdentity name="CN=Big-Caspar\Didi" issuerKeyHash="2a51dbb4960244b815bc2083391a744a188eed4a" /><Signature Id="StrongNameSignature" xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha256" /><Reference URI=""><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" /><Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" /><DigestValue>8kebgBZtpKuOhRwIp0ZKp4P18GKQEIEQsCoSkdAShw8=</DigestValue></Reference></SignedInfo><SignatureValue>qo6Icc/SP1aKcJnFqyiPjjb57ZR14CogSsrX9pgDveKnSutVRBI+1rkI9Za2yFV8CfH8bpymZPoLDcDPQv2nDnr6mK96w+4dpOusY5DlN766SoA0Mngd15VY4nIjUL3ZCNnXqExwIWsRpsnp6enAvR1hESBe9XQtoMcBsvAqyx8=</SignatureValue><KeyInfo Id="StrongNameKeyInfo"><KeyValue><RSAKeyValue><Modulus>uJd/u/PRqzq44fen8oY+Typo/dUe1CEyeilBaZYTgY36jTWF9j+tL55XfYDCFm0wvADANlzqblZCyfHo2vPgcEtzn7mDFr66G7PP2zL+rm7vm6/Tz0B01Mx9JbRD1s7+2OTmzVRKwmSKNAy4BRmMnUFLj690Y8eXBhIHz8hAv0s=</Modulus><Exponent>AQAB</Exponent></RSAKeyValue></KeyValue><msrel:RelData xmlns:msrel="http://schemas.microsoft.com/windows/rel/2005/reldata"><r:license xmlns:r="urn:mpeg:mpeg21:2003:01-REL-R-NS" xmlns:as="http://schemas.microsoft.com/windows/pki/2005/Authenticode"><r:grant><as:ManifestInformation Hash="0f8712d091122ab01081109062f0f583a74a46a7081c858eaba46d16809b47f2" Description="" Url=""><as:assemblyIdentity name="CasparCGAddIn.dll" version="1.0.0.0" publicKeyToken="4977fc6a3b7ae1c1" language="neutral" processorArchitecture="msil" type="win32" /></as:ManifestInformation><as:SignedBy /><as:AuthenticodePublisher><as:X509SubjectName>CN=Big-Caspar\Didi</as:X509SubjectName></as:AuthenticodePublisher></r:grant><r:issuer><Signature Id="AuthenticodeSignature" xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha256" /><Reference URI=""><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" /><Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" /><DigestValue>vZ7K/u2xmXVnioxsv5xyv//oqXokvaCMLUO5Pih1KJY=</DigestValue></Reference></SignedInfo><SignatureValue>BDzTB9PKUKo3Jf1cG6bf1FRRkX99iPeYbvJ1MgJap6I1bMCLeBJGGsNk059sMsuSH8aQTrqjPsujEFXp+1df0j3+FTbIifsCQJgNcktSF2GafDdCwkuXNayEG+HgAKtOg/kr0hpyQa2Es1ti8lOkgLZcqa6dqkNg+yh+wT8bRkY=</SignatureValue><KeyInfo><KeyValue><RSAKeyValue><Modulus>uJd/u/PRqzq44fen8oY+Typo/dUe1CEyeilBaZYTgY36jTWF9j+tL55XfYDCFm0wvADANlzqblZCyfHo2vPgcEtzn7mDFr66G7PP2zL+rm7vm6/Tz0B01Mx9JbRD1s7+2OTmzVRKwmSKNAy4BRmMnUFLj690Y8eXBhIHz8hAv0s=</Modulus><Exponent>AQAB</Exponent></RSAKeyValue></KeyValue><X509Data><X509Certificate>MIIB1TCCAT6gAwIBAgIQHaIqd2F1LZpF6gEVduL3hjANBgkqhkiG9w0BAQsFADApMScwJQYDVQQDHh4AQgBpAGcALQBDAGEAcwBwAGEAcgBcAEQAaQBkAGkwHhcNMTcxMjE2MTIzNzQ1WhcNMTgxMjE2MTgzNzQ1WjApMScwJQYDVQQDHh4AQgBpAGcALQBDAGEAcwBwAGEAcgBcAEQAaQBkAGkwgZ8wDQYJKoZIhvcNAQEBBQADgY0AMIGJAoGBALiXf7vz0as6uOH3p/KGPk8qaP3VHtQhMnopQWmWE4GN+o01hfY/rS+eV32AwhZtMLwAwDZc6m5WQsnx6Nrz4HBLc5+5gxa+uhuzz9sy/q5u75uv089AdNTMfSW0Q9bO/tjk5s1USsJkijQMuAUZjJ1BS4+vdGPHlwYSB8/IQL9LAgMBAAEwDQYJKoZIhvcNAQELBQADgYEAC30UMtP3Mcwwy/RrD16pRC8ZfaquIXw7ialgzTzcScaH/Gm+ulPoLykWVF4zkuGWeu64o0uFOzz3faDWhXsS9Pn998CIj/q5G6MaofpCiPnCrkNBO/Od/WAO8a8VZ+dPA8omOtIWc+/YJTbeG7Xoc+41J/52kmTR192QrFR41Cc=</X509Certificate></X509Data></KeyInfo></Signature></r:issuer></r:license></msrel:RelData></KeyInfo></Signature></asmv1:assembly>

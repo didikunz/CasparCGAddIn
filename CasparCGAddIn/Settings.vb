@@ -16,6 +16,8 @@ Public Class Settings
    Private _ServerList As List(Of String) = New List(Of String)
    Private _Servers As List(Of CasparCG) = New List(Of CasparCG)
 
+   Private _Theme As MyColorThemes.Theme
+
    Public ReadOnly Property ServerList As List(Of String)
       Get
          Return _ServerList
@@ -29,6 +31,22 @@ Public Class Settings
       End Get
    End Property
 
+   Public ReadOnly Property Theme As MyColorThemes.Theme
+      Get
+         If _Theme Is Nothing Then
+            If Me.UseDarkTheme Then
+               _Theme = MyColorThemes.Loader.CreateDarkTheme()
+            Else
+               _Theme = MyColorThemes.Loader.CreateDefaultTheme()
+               _Theme.WindowBackgroundImageTopColor = Drawing.SystemColors.Control
+               _Theme.WindowBackgroundImageBottomColor = Drawing.SystemColors.Control
+            End If
+         End If
+         Return _Theme
+      End Get
+   End Property
+
+
    Public Property PreviewServer As String = ""
    Public Property PreviewChannel As Integer = 1
    Public Property ConnectOnStartUp As Boolean = False
@@ -39,12 +57,17 @@ Public Class Settings
    Public Property UseImageAttributes As Boolean = False
    Public Property InhibitPlayback4Slave As Boolean = True
    Public Property UseFlashLayers As Boolean = False
+   Public Property FormatTextsForHTML As Boolean = False
+   Public Property UseDarkTheme As Boolean = False
 
    Public Property VideoResolution As enumVideoResolution = enumVideoResolution.vrHD1080
 
    Public Property BrowserLocation As System.Drawing.Point = New System.Drawing.Point(10, 10)
    Public Property BrowserSize As System.Drawing.Size = New System.Drawing.Size(1072, 645)
    Public Property BrowserWindowstate As System.Windows.Forms.FormWindowState = FormWindowState.Normal
+
+   Public Property UseOSCInput As Boolean = False
+   Public Property OSCInputPort As Integer = 8250
 
 
    <XmlIgnore()>
@@ -124,12 +147,17 @@ Public Class Settings
       Me.UseImageAttributes = sets.UseImageAttributes
       Me.InhibitPlayback4Slave = sets.InhibitPlayback4Slave
       Me.UseFlashLayers = sets.UseFlashLayers
+      Me.FormatTextsForHTML = sets.FormatTextsForHTML
+      Me.UseDarkTheme = sets.UseDarkTheme
 
       Me.VideoResolution = sets.VideoResolution
 
       Me.BrowserLocation = sets.BrowserLocation
       Me.BrowserSize = sets.BrowserSize
       Me.BrowserWindowstate = sets.BrowserWindowstate
+
+      Me.UseOSCInput = sets.UseOSCInput
+      Me.OSCInputPort = sets.OSCInputPort
 
    End Sub
 

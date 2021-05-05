@@ -20,7 +20,7 @@ Public Class CustomProperties
    End Function
 
    Public Shared Function Load(wrkSheet As Worksheet, Key As String, DefaultValue As Boolean) As Boolean
-      Dim inte As Integer = Load(wrkSheet, Key, IIf(DefaultValue, 1, 0))
+      Dim inte As Integer = Load(wrkSheet, Key, CInt(IIf(DefaultValue, 1, 0)))
       Return (inte = 1)
    End Function
 

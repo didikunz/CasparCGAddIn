@@ -6,6 +6,22 @@ CasparObjects
 </name>
 </assembly>
 <members>
+<member name="T:CasparObjects.My.Resources.Resources">
+<summary>
+  Eine stark typisierte Ressourcenklasse zum Suchen von lokalisierten Zeichenfolgen usw.
+</summary>
+</member>
+<member name="P:CasparObjects.My.Resources.Resources.ResourceManager">
+<summary>
+  Gibt die zwischengespeicherte ResourceManager-Instanz zurück, die von dieser Klasse verwendet wird.
+</summary>
+</member>
+<member name="P:CasparObjects.My.Resources.Resources.Culture">
+<summary>
+  Überschreibt die CurrentUICulture-Eigenschaft des aktuellen Threads für alle
+  Ressourcenzuordnungen, die diese stark typisierte Ressourcenklasse verwenden.
+</summary>
+</member>
 <member name="T:CasparObjects.CasparCG">
  <summary>
  CasparCG connection object
@@ -139,6 +155,11 @@ CasparObjects
  IP-Address or computer name to connect to Caspar
  </summary>
 </member>
+<member name="P:CasparObjects.CasparCG.FormatTextsForHTML">
+ <summary>
+ True to replace backslashes, single and double quotes for HTML.
+ </summary>
+</member>
 <member name="P:CasparObjects.CasparCG.IsLocal">
  <summary>
  If Caspar is on the local machine
@@ -162,7 +183,6 @@ CasparObjects
  Indicate connection status
  </summary>
  <remarks>True if connected, false otherwise</remarks>
- 
 </member>
 <member name="P:CasparObjects.CasparCG.Version">
  <summary>
@@ -236,27 +256,6 @@ CasparObjects
  <summary>
  Sets the last layer, that will be cleared by Clearlayers
  </summary>
-</member>
-<member name="M:CasparObjects.CasparCG.IsPlaying">
- <summary>
- Check if something is playing on the default layer and channel
- </summary>
- <returns></returns>
-</member>
-<member name="M:CasparObjects.CasparCG.IsPlaying(System.Int32)">
- <summary>
- Check if something is playing on the given layer on the default channel
- </summary>
- <param name="Layer">The layer number</param>
- <returns></returns>
-</member>
-<member name="M:CasparObjects.CasparCG.IsPlaying(System.Int32,System.Int32)">
- <summary>
- Check if something is playing on the given layer on the given channel
- </summary>
- <param name="Channel">The channel in Caspar</param>
- <param name="Layer">The layer number</param>
- <returns></returns>
 </member>
 <member name="M:CasparObjects.CasparCG.CG_Add(CasparObjects.Template)">
  <summary>
@@ -695,23 +694,19 @@ CasparObjects
  <returns>A ReturnInfo object</returns>
  <remarks>The main Data_Store Function.</remarks>
 </member>
-<member name="M:CasparObjects.CasparCG.Data_Store(System.Int32,System.Int32,System.String,CasparObjects.Template)">
- <summary>
- Stores templatedata as a dataset on the server.
- </summary>
- <param name="Channel">The channel in Caspar</param>
- <param name="Layer">The layer number</param>
- <param name="DataSetName">The name of the dataset</param>
- <param name="TemplateData">The Template object to get fields from</param>
- <returns>A ReturnInfo object</returns>
- <remarks>A sub Data_Store Function. Adds a channel and a layer TemplateField to the Fields collection. This is usefull to call back the server via TCP/IP.</remarks>
-</member>
 <member name="M:CasparObjects.CasparCG.Data_Retrieve(System.String)">
  <summary>
  Get the data contained in a named dataset
  </summary>
  <param name="DataSetName">Name of the dataset to retrieve</param>
  <returns></returns>
+</member>
+<member name="M:CasparObjects.CasparCG.Data_Remove(System.String)">
+ <summary>
+ Remove the dataset
+ </summary>
+ <param name="DataSetName">Name of the dataset to remove</param>
+ <returns>A ReturnInfo object</returns>
 </member>
 <member name="M:CasparObjects.CasparCG.GetDataSets">
  <summary>
@@ -868,6 +863,39 @@ CasparObjects
  <param name="Direction">Direction of the in effect</param>
  <param name="Tween">Tween to be used aon in effect</param>
 </member>
+<member name="M:CasparObjects.CasparCG.PlayUDP(System.Int32,System.Int32)">
+ <summary>
+ Plays a local UDP stream from port 1234
+ </summary>
+ <param name="Channel">The channel in Caspar</param>
+ <param name="Layer">The layer number</param>
+</member>
+<member name="M:CasparObjects.CasparCG.PlayUDP(System.Int32,System.Int32,System.Int32)">
+ <summary>
+ Plays a local UDP stream from the given port
+ </summary>
+ <param name="Channel">The channel in Caspar</param>
+ <param name="Layer">The layer number</param>
+ <param name="Port">Port of the stream</param>
+</member>
+<member name="M:CasparObjects.CasparCG.PlayUDP(System.Int32,System.Int32,System.String,System.Int32)">
+ <summary>
+ Plays a UDP stream
+ </summary>
+ <param name="Channel">The channel in Caspar</param>
+ <param name="Layer">The layer number</param>
+ <param name="IPAddress">IP Address of the stream</param>
+ <param name="Port">Port of the stream</param>
+</member>
+<member name="M:CasparObjects.CasparCG.PlayStream(System.Int32,System.Int32,System.String)">
+ <summary>
+ Plays a stream
+ </summary>
+ <param name="Channel">The channel in Caspar</param>
+ <param name="Layer">The layer number</param>
+ <param name="Videolink">The video link to play</param>
+ <returns></returns>
+</member>
 <member name="M:CasparObjects.CasparCG.Stopp">
  <summary>
  Stop Command
@@ -885,6 +913,14 @@ CasparObjects
  </summary>
  <param name="Channel">The channel in Caspar</param>
  <param name="Layer">The layer number</param>
+</member>
+<member name="M:CasparObjects.CasparCG.SetMixerResolution(System.Int32,System.Int32)">
+ <summary>
+ Used to set the channels resolution for mixer effects like Mixer_Fill etc.
+ </summary>
+ <param name="width">Channels width, defaults to 1920</param>
+ <param name="height">Channels height, defaults to 1080</param>
+ <remarks></remarks>
 </member>
 <member name="M:CasparObjects.CasparCG.Mixer_FadeIn(System.Int32,System.Int32)">
  <summary>
@@ -905,6 +941,17 @@ CasparObjects
  <returns>A ReturnInfo object</returns>
  <remarks>The main Mixer_FadeIn function</remarks>
 </member>
+<member name="M:CasparObjects.CasparCG.Mixer_FadeIn(System.Int32,System.Int32,System.Int32,System.Boolean)">
+ <summary>
+ Fades a layer in
+ </summary>
+ <param name="Channel">The channel in Caspar</param>
+ <param name="Layer">The layer number</param>
+ <param name="Duration">The time to fade, in frames</param>
+ <param name="WithAudio">Also fades audio if true</param>
+ <returns>A ReturnInfo object</returns>
+ <remarks>The main Mixer_FadeIn function</remarks>
+</member>
 <member name="M:CasparObjects.CasparCG.Mixer_FadeOut(System.Int32,System.Int32)">
  <summary>
  Fades a layer out
@@ -922,7 +969,234 @@ CasparObjects
  <param name="Layer">The layer number</param>
  <param name="Duration">The time to fade, in frames</param>
  <returns>A ReturnInfo object</returns>
+</member>
+<member name="M:CasparObjects.CasparCG.Mixer_FadeOut(System.Int32,System.Int32,System.Int32,System.Boolean)">
+ <summary>
+ Fades a layer out
+ </summary>
+ <param name="Channel">The channel in Caspar</param>
+ <param name="Layer">The layer number</param>
+ <param name="Duration">The time to fade, in frames</param>
+ <param name="WithAudio">Also fades audio if true</param>
+ <returns>A ReturnInfo object</returns>
  <remarks>The main Mixer_FadeOut function</remarks>
+</member>
+<member name="M:CasparObjects.CasparCG.Mixer_Fill(System.Int32,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32)">
+ <summary>
+ Scales a layer in a given rectanngle
+ </summary>
+ <param name="Channel">The channel in Caspar</param>
+ <param name="Layer">The layer number</param>
+ <param name="X">X position of the rectanngle, in pixels</param>
+ <param name="Y">X position of the rectanngle, in pixels</param>
+ <param name="Width">Width of the rectangle, in pixels</param>
+ <param name="Height">Height of the rectangle, in pixels</param>
+ <returns>A ReturnInfo object</returns>
+ <remarks>Arguments as Integer</remarks> 
+</member>
+<member name="M:CasparObjects.CasparCG.Mixer_Fill(System.Int32,System.Int32,System.Double,System.Double,System.Double,System.Double)">
+ <summary>
+ Scales a layer in a given rectanngle
+ </summary>
+ <param name="Channel">The channel in Caspar</param>
+ <param name="Layer">The layer number</param>
+ <param name="X">X position of the rectanngle, in pixels</param>
+ <param name="Y">X position of the rectanngle, in pixels</param>
+ <param name="Width">Width of the rectangle, in pixels</param>
+ <param name="Height">Height of the rectangle, in pixels</param>
+ <returns>A ReturnInfo object</returns>
+ <remarks>Arguments as Doubles</remarks> 
+</member>
+<member name="M:CasparObjects.CasparCG.Mixer_Fill(System.Int32,System.Int32,System.Drawing.Rectangle)">
+ <summary>
+ Scales a layer in a given rectanngle
+ </summary>
+ <param name="Layer">The layer number</param>
+ <param name="Duration">The time to move into the given position, in frames</param>
+ <param name="rect">A Drawing.Rectangle that defines the position, in pixels</param>
+ <returns>A ReturnInfo object</returns>
+ <remarks>Defaults to DefaultChannel</remarks>
+</member>
+<member name="M:CasparObjects.CasparCG.Mixer_Fill(System.Int32,System.Int32,System.Int32,System.Drawing.Rectangle)">
+ <summary>
+ Scales a layer in a given rectanngle
+ </summary>
+ <param name="Channel">The channel in Caspar</param>
+ <param name="Layer">The layer number</param>
+ <param name="Duration">The time to move into the given position, in frames</param>
+ <param name="rect">A Drawing.Rectangle that defines the position, in pixels</param>
+ <returns>A ReturnInfo object</returns>
+</member>
+<member name="M:CasparObjects.CasparCG.Mixer_Fill(System.Int32,System.Int32,System.Int32,System.Drawing.Rectangle,System.String)">
+ <summary>
+ Scales a layer in a given rectanngle
+ </summary>
+ <param name="Channel">The channel in Caspar</param>
+ <param name="Layer">The layer number</param>
+ <param name="Duration">The time to move into the given position, in frames</param>
+ <param name="rect">A Drawing.Rectangle that defines the position, in pixels</param>
+ <param name="tween">A string containing the tween. See AMCP doc for details</param>
+ <returns>A ReturnInfo object</returns>
+</member>
+<member name="M:CasparObjects.CasparCG.Mixer_Fill(System.Int32,System.Int32,System.Int32,System.Drawing.Rectangle,System.String,System.Boolean)">
+ <summary>
+ Scales a layer in a given rectanngle
+ </summary>
+ <param name="Channel">The channel in Caspar</param>
+ <param name="Layer">The layer number</param>
+ <param name="Duration">The time to move into the given position, in frames</param>
+ <param name="rect">A Drawing.Rectangle that defines the position, in pixels</param>
+ <param name="tween">A string containing the tween. See AMCP doc for details</param>
+ <param name="Defer">Does not execute the command, wait for a Mixer_Commit</param>
+ <returns>A ReturnInfo object</returns>
+</member>
+<member name="M:CasparObjects.CasparCG.Mixer_Fill(System.Int32,System.Int32,System.Double,System.Double,System.Double,System.Double,System.Int32,System.String,System.Boolean)">
+ <summary>
+ Scales a layer in a given rectanngle
+ </summary>
+ <param name="Channel">The channel in Caspar</param>
+ <param name="Layer">The layer number</param>
+ <param name="X">X position of the rectanngle, in pixels</param>
+ <param name="Y">X position of the rectanngle, in pixels</param>
+ <param name="Width">Width of the rectangle, in pixels</param>
+ <param name="Height">Height of the rectangle, in pixels</param>
+ <param name="Duration">The time to move into the given position, in frames</param>
+ <param name="tween">A string containing the tween. See AMCP doc for details</param>
+ <param name="Defer">Does not execute the command, wait for a Mixer_Commit</param>
+ <returns>A ReturnInfo object</returns>
+ <remarks>Arguments as Doubles</remarks> 
+</member>
+<member name="M:CasparObjects.CasparCG.Mixer_Fill(System.Int32,System.Int32,System.String)">
+ <summary>
+ Scales a layer in a given rectanngle
+ </summary>
+ <param name="Channel">The channel in Caspar</param>
+ <param name="Layer">The layer number</param>
+ <param name="DVEffect">As string formated according to the values in the AMCP protocoll of the MIXER_FILL effect</param>
+ <returns>A ReturnInfo object</returns>
+ <remarks>Old version</remarks>  
+</member>
+<member name="M:CasparObjects.CasparCG.Mixer_Fill(System.Int32,System.Int32,System.String,System.Int32)">
+ <summary>
+ Scales a layer in a given rectanngle
+ </summary>
+ <param name="Channel">The channel in Caspar</param>
+ <param name="Layer">The layer number</param>
+ <param name="DVEffect">As string formated according to the values in the AMCP protocoll of the MIXER_FILL effect</param>
+ <param name="Duration">The time to move into the given position, in frames</param>
+ <returns>A ReturnInfo object</returns>
+ <remarks>Old version</remarks>  
+</member>
+<member name="M:CasparObjects.CasparCG.Mixer_Fill(System.Int32,System.Int32,System.String,System.Int32,System.Boolean)">
+ <summary>
+ Scales a layer in a given rectanngle
+ </summary>
+ <param name="Channel">The channel in Caspar</param>
+ <param name="Layer">The layer number</param>
+ <param name="DVEffect">As string formated according to the values in the AMCP protocoll of the MIXER_FILL effect</param>
+ <param name="Duration">The time to move into the given position, in frames</param>
+ <param name="Defer">Does not execute the command, wait for a Mixer_Commit</param>
+ <returns>A ReturnInfo object</returns>
+ <remarks>Old version</remarks>  
+</member>
+<member name="M:CasparObjects.CasparCG.Mixer_Clip(System.Int32,System.Int32,System.Drawing.Rectangle)">
+ <summary>
+ Clips a layer around it's edges
+ </summary>
+ <param name="Layer">The layer number</param>
+ <param name="Duration">The time to move into the given position, in frames</param>
+ <param name="rect">A Drawing.Rectangle that defines the clipping, in pixels</param>
+ <returns>A ReturnInfo object</returns>
+ <remarks>Defaults to DefaultChannel</remarks>
+</member>
+<member name="M:CasparObjects.CasparCG.Mixer_Clip(System.Int32,System.Int32,System.Int32,System.Drawing.Rectangle)">
+ <summary>
+ Clips a layer around it's edges
+ </summary>
+ <param name="Channel"></param>
+ <param name="Layer"></param>
+ <param name="Duration"></param>
+ <param name="rect"></param>
+ <returns></returns>
+</member>
+<member name="M:CasparObjects.CasparCG.Mixer_Clip(System.Int32,System.Int32,System.Int32,System.Drawing.Rectangle,System.String)">
+ <summary>
+ Clips a layer around it's edges
+ </summary>
+ <param name="Channel">The channel in Caspar</param>
+ <param name="Layer">The layer number</param>
+ <param name="Duration">The time to move into the given position, in frames</param>
+ <param name="rect">A Drawing.Rectangle that defines the position, in pixels</param>
+ <param name="tween">A string containing the tween. See AMCP doc for details</param>
+ <returns>A ReturnInfo object</returns>
+</member>
+<member name="M:CasparObjects.CasparCG.Mixer_Clip(System.Int32,System.Int32,System.Int32,System.Drawing.Rectangle,System.String,System.Boolean)">
+ <summary>
+ Clips a layer around it's edges
+ </summary>
+ <param name="Channel">The channel in Caspar</param>
+ <param name="Layer">The layer number</param>
+ <param name="Duration">The time to move into the given position, in frames</param>
+ <param name="rect">A Drawing.Rectangle that defines the position, in pixels</param>
+ <param name="tween">A string containing the tween. See AMCP doc for details</param>
+ <param name="Defer">Does not execute the command, wait for a Mixer_Commit</param>
+ <returns>A ReturnInfo object</returns>
+</member>
+<member name="M:CasparObjects.CasparCG.Mixer_Clip(System.Int32,System.Int32,System.Double,System.Double,System.Double,System.Double,System.Int32,System.String,System.Boolean)">
+ <summary>
+ Clips a layer around it's edges
+ </summary>
+ <param name="Channel">The channel in Caspar</param>
+ <param name="Layer">The layer number</param>
+ <param name="X">X position of the rectanngle, in pixels</param>
+ <param name="Y">X position of the rectanngle, in pixels</param>
+ <param name="Width">Width of the rectangle, in pixels</param>
+ <param name="Height">Height of the rectangle, in pixels</param>
+ <param name="Duration">The time to move into the given position, in frames</param>
+ <param name="tween">A string containing the tween. See AMCP doc for details</param>
+ <param name="Defer">Does not execute the command, wait for a Mixer_Commit</param>
+ <returns>A ReturnInfo object</returns>
+ <remarks>Arguments as Doubles</remarks> 
+</member>
+<member name="M:CasparObjects.CasparCG.Mixer_Clip(System.Int32,System.Int32,System.String)">
+ <summary>
+ Clips a layer around it's edges
+ </summary>
+ <param name="Channel">The channel in Caspar</param>
+ <param name="Layer">The layer number</param>
+ <param name="DVEffect">As string formated according to the values in the AMCP protocoll of the MIXER_FILL effect</param>
+ <returns>A ReturnInfo object</returns>
+ <remarks>Old version</remarks>  
+</member>
+<member name="M:CasparObjects.CasparCG.Mixer_Clip(System.Int32,System.Int32,System.String,System.Int32)">
+ <summary>
+ Clips a layer around it's edges
+ </summary>
+ <param name="Channel">The channel in Caspar</param>
+ <param name="Layer">The layer number</param>
+ <param name="DVEffect">As string formated according to the values in the AMCP protocoll of the MIXER_FILL effect</param>
+ <param name="Duration">The time to move into the given position, in frames</param>
+ <returns>A ReturnInfo object</returns>
+ <remarks>Old version</remarks>  
+</member>
+<member name="M:CasparObjects.CasparCG.Mixer_Clip(System.Int32,System.Int32,System.String,System.Int32,System.Boolean)">
+ <summary>
+ Clips a layer around it's edges
+ </summary>
+ <param name="Channel">The channel in Caspar</param>
+ <param name="Layer">The layer number</param>
+ <param name="DVEffect">As string formated according to the values in the AMCP protocoll of the MIXER_FILL effect</param>
+ <param name="Duration">The time to move into the given position, in frames</param>
+ <param name="Defer">Does not execute the command, wait for a Mixer_Commit</param>
+ <returns>A ReturnInfo object</returns>
+ <remarks>Old version</remarks>  
+</member>
+<member name="M:CasparObjects.CasparCG.Mixer_Commit(System.Int32)">
+ <summary>
+ Executes all defered Mixer commands of the given channel.
+ </summary>
+ <param name="Channel"></param>
+ <returns>A ReturnInfo object</returns>
 </member>
 <member name="M:CasparObjects.CasparCG.Clear">
  <summary>
@@ -967,6 +1241,310 @@ CasparObjects
  <param name="Channel">The channel in Caspar</param>
  <param name="FirstLayer">The fisrt layer to swap</param>
  <param name="SecondLayer">The second layer to swap</param>
+</member>
+<member name="M:CasparObjects.CasparCG.ChannelHorizontalResolution(System.Int32)">
+ <summary>
+ Get the horizontal resolution of a channel
+ </summary>
+ <param name="Channel">Channel to query</param>
+ <returns>Horizontal resolution</returns>
+</member>
+<member name="M:CasparObjects.CasparCG.ChannelVerticalResolution(System.Int32)">
+ <summary>
+ Get the vertical resolution of a channel
+ </summary>
+ <param name="Channel">Channel to query</param>
+ <returns>Vertical resolution</returns>
+</member>
+<member name="M:CasparObjects.CasparCG.ChannelFramerate(System.Int32)">
+ <summary>
+ Get the frame-rate of a channel
+ </summary>
+ <param name="Channel">Channel to query</param>
+ <returns>Frame-rate in fps</returns>
+</member>
+<member name="M:CasparObjects.CasparCG.ChannelIsInterlaced(System.Int32)">
+ <summary>
+ Query if a channel is interlaced or nor
+ </summary>
+ <param name="Channel">Channel to query</param>
+ <returns>True if the channel is interlaced</returns>
+</member>
+<member name="M:CasparObjects.CasparCG.IsNDISourceAvailable(System.String,System.String)">
+ <summary>
+ Checks if a NDI Source is available
+ </summary>
+ <param name="ComputerName">The name of the Computer sending NDI</param>
+ <param name="ChannelName">The NDI chnnel</param>
+ <returns>True if it is available</returns>
+</member>
+<member name="M:CasparObjects.CasparCG.IsNDISourceAvailable(System.String)">
+ <summary>
+ Checks if a NDI Source is available
+ </summary>
+ <param name="ComputerAndChannelName">Combined Computer- and ChannelName</param>
+ <returns>True if it is available</returns>
+</member>
+<member name="M:CasparObjects.CasparCG.NDIPlay(System.String,System.String)">
+ <summary>
+ NDI Play Comand
+ </summary>
+ <param name="ComputerName">The name of the Computer sending NDI</param>
+ <param name="ChannelName">The NDI chnnel</param>
+</member>
+<member name="M:CasparObjects.CasparCG.NDIPlay(System.Int32,System.String,System.String)">
+ <summary>
+ NDI Play Comand
+ </summary>
+ <param name="Layer">The layer number</param>
+ <param name="ComputerName">The name of the Computer sending NDI</param>
+ <param name="ChannelName">The NDI chnnel</param>
+</member>
+<member name="M:CasparObjects.CasparCG.NDIPlay(System.Int32,System.Int32,System.String,System.String)">
+ <summary>
+ NDI Play Command
+ </summary>
+ <param name="Channel">The channel in Caspar</param>
+ <param name="Layer">The layer number</param>
+ <param name="ComputerName">The name of the Computer sending NDI</param>
+ <param name="ChannelName">The NDI chnnel</param>
+</member>
+<member name="M:CasparObjects.CasparCG.NDIPlay(System.Int32,System.Int32,System.String)">
+ <summary>
+ NDI Play Command
+ </summary>
+ <param name="Channel">The channel in Caspar</param>
+ <param name="Layer">The layer number</param>
+ <param name="ComputerAndChannelName">Combined Computer- and ChannelName</param>
+</member>
+<member name="M:CasparObjects.CasparCG.Grab(System.Int32)">
+ <summary>
+ Grab the output to a bitmap
+ </summary>
+ <param name="channel">The channel in Caspar</param>
+ <returns>A Drawing.Bitmap object</returns>
+ <remarks>Defaults to channel 1</remarks>
+</member>
+<member name="M:CasparObjects.CasparCG.Grab(System.Int32,System.Int32)">
+ <summary>
+ Grab the output to a bitmap
+ </summary>
+ <param name="channel">The channel in Caspar</param>
+ <param name="layer">The layer number</param>
+ <returns>A Drawing.Bitmap object</returns>
+</member>
+<member name="M:CasparObjects.CasparCG.SimpleGrab(System.String,System.Int32,System.Int32)">
+ <summary>
+ Simple Grab function also for remote servers
+ </summary>
+ <param name="Filename">The filename to store the grabbed image</param>
+ <param name="channel">The channel in Caspar</param>
+ <param name="layer">The layer number</param>
+</member>
+<member name="M:CasparObjects.CasparCG.IsPlaying">
+ <summary>
+ Check if something is playing on the default layer and channel
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CasparObjects.CasparCG.IsPlaying(System.Int32)">
+ <summary>
+ Check if something is playing on the given layer on the default channel
+ </summary>
+ <param name="Layer">The layer number</param>
+ <returns></returns>
+</member>
+<member name="M:CasparObjects.CasparCG.IsPlaying(System.Int32,System.Int32)">
+ <summary>
+ Check if something is playing on the given layer on the given channel
+ </summary>
+ <param name="Channel">The channel in Caspar</param>
+ <param name="Layer">The layer number</param>
+ <returns></returns>
+</member>
+<member name="M:CasparObjects.CasparCG.GetMediaClipsNames">
+ <summary>
+ Get all media clip names
+ </summary>
+ <returns>List of media clip names</returns>
+</member>
+<member name="M:CasparObjects.CasparCG.GetMediaClipsNames(CasparObjects.CasparCG.MediaTypes)">
+ <summary>
+ Get specified media clip names
+ </summary>
+ <param name="ShowMedia">Media clip types</param>
+ <returns>List of media clip names</returns>
+</member>
+<member name="M:CasparObjects.CasparCG.GetMediaClipsNames(CasparObjects.CasparCG.MediaTypes,System.Boolean)">
+ <summary>
+ Get specified media clip names
+ </summary>
+ <param name="ShowMedia">Media clip types</param>
+ <param name="AddEmptyEntry">True if the first entry is empty. Usefull to be able to set a selection (combobox) to nothing.</param>
+ <returns>List of media clip names</returns>
+</member>
+<member name="M:CasparObjects.CasparCG.GetMediaClipsNames(System.String,CasparObjects.CasparCG.MediaTypes)">
+ <summary>
+ Get specified media clip names
+ </summary>
+ <param name="FolderName">The name of the subfolder, that is used to list the entries</param>
+ <param name="ShowMedia">Media clip types</param>
+ <returns>List of media clip names</returns>
+</member>
+<member name="M:CasparObjects.CasparCG.GetMediaClipsNames(System.String,CasparObjects.CasparCG.MediaTypes,System.Boolean)">
+ <summary>
+ Get specified media clip names
+ </summary>
+ <param name="FolderName">The name of the subfolder, that is used to list the entries</param>
+ <param name="ShowMedia">Media clip types</param>
+ <param name="AddEmptyEntry">True if the first entry is empty. Usefull to be able to set a selection (combobox) to nothing.</param>
+ <returns>List of media clip names</returns>
+</member>
+<member name="M:CasparObjects.CasparCG.GetMediaClipsNames(System.String,CasparObjects.CasparCG.MediaTypes,System.Boolean,System.Boolean)">
+ <summary>
+ Get specified media clip names
+ </summary>
+ <param name="FolderName">The name of the subfolder, that is used to list the entries</param>
+ <param name="ShowMedia">Media clip types</param>
+ <param name="AddEmptyEntry">True if the first entry is empty. Usefull to be able to set a selection (combobox) to nothing.</param>
+ <param name="SuppressFolderName">If True only the name of the template is returned, if False the foldername and the templatename is returned</param>
+ <returns></returns>
+</member>
+<member name="M:CasparObjects.CasparCG.GetMediaFolderNames">
+ <summary>
+ Get a list of media folder names
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CasparObjects.CasparCG.GetMediaFolderNames(System.Boolean)">
+ <summary>
+ Get a list of media folder names
+ </summary>
+ <param name="AddEmptyEntry">True if the first entry is empty. Usefull to be able to set a selection (combobox) to nothing.</param>
+ <returns></returns>
+</member>
+<member name="M:CasparObjects.CasparCG.GetTemplateNames">
+ <summary>
+ Get a list of template names
+ </summary>
+ <returns>List of template names</returns>
+</member>
+<member name="M:CasparObjects.CasparCG.GetTemplateNames(System.Boolean)">
+ <summary>
+ Get a list of template names
+ </summary>
+ <param name="AddEmptyEntry">True if the first entry is empty. Usefull to be able to set a selection (combobox) to nothing.</param>
+ <returns>List of template names</returns>
+</member>
+<member name="M:CasparObjects.CasparCG.GetTemplateNames(System.String)">
+ <summary>
+ Get a list of template names
+ </summary>
+ <param name="FolderName">The name of the subfolder, that is used to list the entries</param>
+ <returns>List of template names</returns>
+</member>
+<member name="M:CasparObjects.CasparCG.GetTemplateNames(System.String,System.Boolean)">
+ <summary>
+ Get a list of template names
+ </summary>
+ <param name="FolderName">The name of the subfolder, that is used to list the entries</param>
+ <param name="AddEmptyEntry">True if the first entry is empty. Usefull to be able to set a selection (combobox) to nothing.</param>
+ <returns>List of template names</returns>
+</member>
+<member name="M:CasparObjects.CasparCG.GetTemplateNames(System.String,System.Boolean,System.Boolean)">
+ <summary>
+ Get a list of template names
+ </summary>
+ <param name="FolderName">The name of the subfolder, that is used to list the entries</param>
+ <param name="AddEmptyEntry">True if the first entry is empty. Usefull to be able to set a selection (combobox) to nothing.</param>
+ <param name="SuppressFolderName">If True only the name of the template is returned, if False the foldername and the templatename is returned</param>
+ <returns>List of template names</returns>
+</member>
+<member name="M:CasparObjects.CasparCG.GetTemplateFolderNames">
+ <summary>
+ Get a list of template folder names
+ </summary>
+ <returns>List of folder names</returns>
+</member>
+<member name="M:CasparObjects.CasparCG.GetTemplateFolderNames(System.Boolean)">
+ <summary>
+ Get a list of template folder names
+ </summary>
+ <param name="AddEmptyEntry">True if the first entry is empty. Usefull to be able to set a selection (combobox) to nothing.</param>
+ <returns>List of folder names</returns>
+</member>
+<member name="M:CasparObjects.CasparCG.GetAllTemplateFolderNames">
+ <summary>
+ Get a list of template folder names, that contains also the sub paths.
+ </summary>
+ <returns>List of folder names</returns>
+</member>
+<member name="M:CasparObjects.CasparCG.GetAllTemplateFolderNames(System.Boolean)">
+ <summary>
+ Get a list of template folder names, that contains also the sub paths.
+ </summary>
+ <param name="AddEmptyEntry">True if the first entry is empty. Usefull to be able to set a selection (combobox) to nothing.</param>
+ <returns>List of folder names</returns>
+</member>
+<member name="M:CasparObjects.CasparCG.GetTemplate(System.String)">
+ <summary>
+ Get a Template object by providing a name
+ </summary>
+ <param name="Name">The name of the template</param>
+ <returns>A Template object parsed out of informations queried by Caspar</returns>
+ <remarks></remarks>
+</member>
+<member name="M:CasparObjects.CasparCG.GetTemplates">
+ <summary>
+ Get a list of Template objects
+ </summary>
+ <returns>List of Template objects parsed out of informations queried by Caspar</returns>
+</member>
+<member name="T:CasparObjects.CasparCG.LayerStatus">
+ <summary>
+ LayerStatus object
+ </summary>
+ <remarks>Used for GetLayerStatus</remarks>
+</member>
+<member name="P:CasparObjects.CasparCG.LayerStatus.FilePlaying">
+ <summary>
+ The name of the file playing
+ </summary>
+</member>
+<member name="P:CasparObjects.CasparCG.LayerStatus.Status">
+ <summary>
+ The layer status
+ </summary>
+</member>
+<member name="P:CasparObjects.CasparCG.LayerStatus.FrameNumber">
+ <summary>
+ The current position in frames
+ </summary>
+</member>
+<member name="P:CasparObjects.CasparCG.LayerStatus.TotalFrames">
+ <summary>
+ The length of the clip in frames
+ </summary>
+</member>
+<member name="P:CasparObjects.CasparCG.LayerStatus.BackGroundIsEmpty">
+ <summary>
+ Determines if a file has been loaded for seamless playback
+ </summary>
+</member>
+<member name="M:CasparObjects.CasparCG.GetLayerStatus(System.Int32)">
+ <summary>
+ Get the status of a layer
+ </summary>
+ <param name="Layer">The layer number</param>
+ <returns>A LayerStatus object</returns>
+</member>
+<member name="M:CasparObjects.CasparCG.GetLayerStatus(System.Int32,System.Int32)">
+ <summary>
+ Get the status of a layer
+ </summary>
+ <param name="Channel">The channel in Caspar</param>
+ <param name="Layer">The layer number</param>
+ <returns>A LayerStatus object</returns>
 </member>
 <member name="M:CasparObjects.CasparCG.Execute(System.String)">
  <summary>
@@ -1047,176 +1625,7 @@ CasparObjects
  <summary>
  Disconnects from Caspar
  </summary>
- <remarks>The object can reconnect</remarks>
-</member>
-<member name="M:CasparObjects.CasparCG.GetMediaClipsNames">
- <summary>
- Get all media clip names
- </summary>
- <returns>List of media clip names</returns>
-</member>
-<member name="M:CasparObjects.CasparCG.GetMediaClipsNames(CasparObjects.CasparCG.MediaTypes)">
- <summary>
- Get specified media clip names
- </summary>
- <param name="ShowMedia">Media clip types</param>
- <returns>List of media clip names</returns>
-</member>
-<member name="M:CasparObjects.CasparCG.GetMediaClipsNames(CasparObjects.CasparCG.MediaTypes,System.Boolean)">
- <summary>
- Get specified media clip names
- </summary>
- <param name="ShowMedia">Media clip types</param>
- <param name="AddEmptyEntry">True if the first entry is empty. Usefull to be able to set a selection (combobox) to nothing.</param>
- <returns>List of media clip names</returns>
-</member>
-<member name="M:CasparObjects.CasparCG.GetMediaClipsNames(System.String,CasparObjects.CasparCG.MediaTypes)">
- <summary>
- Get specified media clip names
- </summary>
- <param name="FolderName">The name of the subfolder, that is used to list the entries</param>
- <param name="ShowMedia">Media clip types</param>
- <returns>List of media clip names</returns>
-</member>
-<member name="M:CasparObjects.CasparCG.GetMediaClipsNames(System.String,CasparObjects.CasparCG.MediaTypes,System.Boolean)">
- <summary>
- Get specified media clip names
- </summary>
- <param name="FolderName">The name of the subfolder, that is used to list the entries</param>
- <param name="ShowMedia">Media clip types</param>
- <param name="AddEmptyEntry">True if the first entry is empty. Usefull to be able to set a selection (combobox) to nothing.</param>
- <returns>List of media clip names</returns>
-</member>
-<member name="M:CasparObjects.CasparCG.GetMediaFolderNames">
- <summary>
- Get a list of media folder names
- </summary>
- <returns></returns>
-</member>
-<member name="M:CasparObjects.CasparCG.GetMediaFolderNames(System.Boolean)">
- <summary>
- Get a list of media folder names
- </summary>
- <param name="AddEmptyEntry">True if the first entry is empty. Usefull to be able to set a selection (combobox) to nothing.</param>
- <returns></returns>
-</member>
-<member name="M:CasparObjects.CasparCG.GetTemplateNames">
- <summary>
- Get a list of template names
- </summary>
- <returns>List of template names</returns>
-</member>
-<member name="M:CasparObjects.CasparCG.GetTemplateNames(System.Boolean)">
- <summary>
- Get a list of template names
- </summary>
- <param name="AddEmptyEntry">True if the first entry is empty. Usefull to be able to set a selection (combobox) to nothing.</param>
- <returns>List of template names</returns>
-</member>
-<member name="M:CasparObjects.CasparCG.GetTemplateNames(System.String)">
- <summary>
- Get a list of template names
- </summary>
- <param name="FolderName">The name of the subfolder, that is used to list the entries</param>
- <returns>List of template names</returns>
-</member>
-<member name="M:CasparObjects.CasparCG.GetTemplateNames(System.String,System.Boolean)">
- <summary>
- Get a list of template names
- </summary>
- <param name="FolderName">The name of the subfolder, that is used to list the entries</param>
- <param name="AddEmptyEntry">True if the first entry is empty. Usefull to be able to set a selection (combobox) to nothing.</param>
- <returns>List of template names</returns>
-</member>
-<member name="M:CasparObjects.CasparCG.GetTemplateFolderNames">
- <summary>
- Get a list of template folder names
- </summary>
- <returns>List of folder names</returns>
-</member>
-<member name="M:CasparObjects.CasparCG.GetTemplateFolderNames(System.Boolean)">
- <summary>
- Get a list of template folder names
- </summary>
- <param name="AddEmptyEntry">True if the first entry is empty. Usefull to be able to set a selection (combobox) to nothing.</param>
- <returns>List of folder names</returns>
-</member>
-<member name="M:CasparObjects.CasparCG.GetTemplate(System.String)">
- <summary>
- Get a Template object by providing a name
- </summary>
- <param name="Name">The name of the template</param>
- <returns>A Template object parsed out of informations queried by Caspar</returns>
- <remarks></remarks>
-</member>
-<member name="M:CasparObjects.CasparCG.GetTemplates">
- <summary>
- Get a list of Template objects
- </summary>
- <returns>List of Template objects parsed out of informations queried by Caspar</returns>
-</member>
-<member name="M:CasparObjects.CasparCG.Grab(System.Int32)">
- <summary>
- Grab the output to a bitmap
- </summary>
- <param name="channel">The channel in Caspar</param>
- <returns>A Drawing.Bitmap object</returns>
- <remarks>Defaults to channel 1</remarks>
-</member>
-<member name="M:CasparObjects.CasparCG.Grab(System.Int32,System.Int32)">
- <summary>
- Grab the output to a bitmap
- </summary>
- <param name="channel">The channel in Caspar</param>
- <param name="layer">The layer number</param>
- <returns>A Drawing.Bitmap object</returns>
-</member>
-<member name="T:CasparObjects.CasparCG.LayerStatus">
- <summary>
- LayerStatus object
- </summary>
- <remarks>Used for GetLayerStatus</remarks>
-</member>
-<member name="P:CasparObjects.CasparCG.LayerStatus.FilePlaying">
- <summary>
- The name of the file playing
- </summary>
-</member>
-<member name="P:CasparObjects.CasparCG.LayerStatus.Status">
- <summary>
- The layer status
- </summary>
-</member>
-<member name="P:CasparObjects.CasparCG.LayerStatus.FrameNumber">
- <summary>
- The current position in frames
- </summary>
-</member>
-<member name="P:CasparObjects.CasparCG.LayerStatus.TotalFrames">
- <summary>
- The length of the clip in frames
- </summary>
-</member>
-<member name="P:CasparObjects.CasparCG.LayerStatus.BackGroundIsEmpty">
- <summary>
- Determines if a file has been loaded for seamless playback
- </summary>
-</member>
-<member name="M:CasparObjects.CasparCG.GetLayerStatus(System.Int32,System.Int32)">
- <summary>
- Get the status of a layer
- </summary>
- <param name="Channel">The channel in Caspar</param>
- <param name="Layer">The layer number</param>
- <returns>A LayerStatus object</returns>
-</member>
-<member name="M:CasparObjects.CasparCG.GetLayerStatus(System.String)">
- <summary>
- Get the status of a layer
- </summary>
- <param name="Layer">The channel and layer as a string</param>
- <returns>Old function, use GetLayerStatus(Channel, Layer) instead</returns>
- <remarks></remarks>
+ <remarks>The object can reconnect on version 2.0.7</remarks>
 </member>
 <member name="M:CasparObjects.CasparCG.SerializeToString">
  <summary>
@@ -1224,6 +1633,22 @@ CasparObjects
  </summary>
  <returns>A XML formated string</returns>
  <remarks>Used to store the settings</remarks>
+</member>
+<member name="M:CasparObjects.CasparCG.CurrentCountryIsNTSC">
+ <summary>
+ Checks if the current threads country uses NTSC framerate 29.97, 30, 59.94 or 60fps
+ </summary>
+ <returns>True/False</returns>
+</member>
+<member name="M:CasparObjects.CasparCG.WriteCasparConfig(System.String,System.String,System.String,System.String,System.String)">
+ <summary>
+ Write a caspar.config file based on a template
+ </summary>
+ <param name="TemplateXMLFilename">Template file to use. {paths} will be replaced by the paths to the assets, {videomode} will be replased with the 1080i and the current framerate.</param>
+ <param name="CasparExePath">Path to the CasparCG exe file</param>
+ <param name="AssetsPath">Base path for all assets. If the folders do not exist, they will be created.</param>
+ <param name="modePAL">Optional, videomode string for PAL countries</param>
+ <param name="modeNTSC">Optional, videomode string for NTSC countries</param>
 </member>
 <member name="M:CasparObjects.CasparCG.#ctor">
  <summary>
@@ -1243,22 +1668,6 @@ CasparObjects
  </summary>
  <returns>A clone of this object</returns>
  <remarks>To reuse the socket connection, create a clone of the object</remarks>
-</member>
-<member name="T:CasparObjects.My.Resources.Resources">
-<summary>
-  Eine stark typisierte Ressourcenklasse zum Suchen von lokalisierten Zeichenfolgen usw.
-</summary>
-</member>
-<member name="P:CasparObjects.My.Resources.Resources.ResourceManager">
-<summary>
-  Gibt die zwischengespeicherte ResourceManager-Instanz zurück, die von dieser Klasse verwendet wird.
-</summary>
-</member>
-<member name="P:CasparObjects.My.Resources.Resources.Culture">
-<summary>
-  Überschreibt die CurrentUICulture-Eigenschaft des aktuellen Threads für alle
-  Ressourcenzuordnungen, die diese stark typisierte Ressourcenklasse verwenden.
-</summary>
 </member>
 <member name="T:CasparObjects.ReturnInfo">
  <summary>
@@ -1373,10 +1782,11 @@ CasparObjects
  </summary>
  <remarks>Used to send template fields to a template. Also set by the GetTemplates function</remarks>
 </member>
-<member name="M:CasparObjects.Template.TemplateDataText">
+<member name="M:CasparObjects.Template.TemplateDataText(System.Boolean)">
  <summary>
  Formats the Fields list as XML
  </summary>
+ <param name="FormatForHTML">True to replace backslashes, single and double quotes for HTML</param>
  <returns>A XML formated string</returns>
  <remarks>Uses the XML format, that the template commands need</remarks>
 </member>
