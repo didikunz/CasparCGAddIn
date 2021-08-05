@@ -28,7 +28,7 @@ Public Class frmChangeTemplatePath
 
    Private Sub frmChangeTemplatePath_Load(sender As Object, e As EventArgs) Handles Me.Load
 
-      MyColorThemes.Loader.Load(Me, _Settings.Theme)
+      Loader.Load(Me, _Settings.Theme)
 
       Dim lst As List(Of String) = _CasparCG.GetTemplateFolderNames()
 

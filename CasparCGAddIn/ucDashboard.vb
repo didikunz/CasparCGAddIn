@@ -50,6 +50,7 @@ Public Class ucDashboard
    Private _DataFields As String = ""
    Private _AutoClearEffect As String = "CUT"
    Private _AutoClearEffectDuration As Integer = 0
+   Private _LayerRules As LayerRules = Nothing
 
    Private _DockingMode As enumDockingMode = enumDockingMode.dmVertical
 
@@ -75,7 +76,7 @@ Public Class ucDashboard
 
          If _Settings IsNot Nothing Then
 
-            MyColorThemes.Loader.LoadControl(Me, _Settings.Theme)
+            Loader.LoadControl(Me, _Settings.Theme)
 
             If _DataFields = "" Then
                _DataFields = _Settings.DefaultDataFields
@@ -933,6 +934,16 @@ Public Class ucDashboard
 
                   RefreshComboboxes()
 
+                  'Load LayerRules from the _listSheet
+                  Dim rules As String = CustomProperties.Load(_listSheet, "LayerRules", "")
+                  If rules <> "" Then
+                     _LayerRules = New LayerRules(rules)
+                  Else
+                     If _Settings IsNot Nothing Then
+                        _LayerRules = New LayerRules(_Settings.DefaultLayerRules)
+                     End If
+                  End If
+
                   'Load ControlsSet from the _listSheet
                   Me.ControlsSet = CustomProperties.Load(_listSheet, "ControlsSet", CInt(ucPlaybackButtons.enumControlSets.csLoadPlayStopUpdate))
                   _currentRow = 0
@@ -964,12 +975,18 @@ Public Class ucDashboard
 
          Dim flds As String = CustomProperties.Load(_listSheet, "DataFields", "")
          If flds = "" Then
-            flds = "f0|f1|f2|f3|f4|f5"
+            If _Settings IsNot Nothing AndAlso _Settings.DefaultDataFields <> "" Then
+               flds = _Settings.DefaultDataFields
+            Else
+               flds = "f0|f1|f2|f3|f4|f5"
+            End If
          End If
          _DataFields = flds
 
          _AutoClearEffect = CustomProperties.Load(_listSheet, "AutoClearEffect", "CUT")
          _AutoClearEffectDuration = CustomProperties.Load(_listSheet, "AutoClearEffectDuration", 0)
+
+         _LayerRules = New LayerRules(CustomProperties.Load(_listSheet, "LayerRules", ""))
 
          Me.ControlsSet = CustomProperties.Load(_listSheet, "ControlsSet", 0)
 
@@ -993,6 +1010,7 @@ Public Class ucDashboard
       fds.ControlsSet = Me.ControlsSet
       fds.AutoClearEffect = _AutoClearEffect
       fds.AutoClearEffectDuration = _AutoClearEffectDuration
+      fds.LayerRules = _LayerRules
 
       If fds.ShowDialog = DialogResult.OK Then
 
@@ -1001,10 +1019,10 @@ Public Class ucDashboard
          _Layer = fds.Layer
 
          _DataFields = fds.DataFields
-         _Settings.DefaultDataFields = _DataFields
 
          _AutoClearEffect = fds.AutoClearEffect
          _AutoClearEffectDuration = fds.AutoClearEffectDuration
+         _LayerRules = fds.LayerRules
 
          Me.ControlsSet = fds.ControlsSet
 
@@ -1017,6 +1035,10 @@ Public Class ucDashboard
             CustomProperties.Save(_listSheet, "ControlsSet", CInt(Me.ControlsSet).ToString)
             CustomProperties.Save(_listSheet, "AutoClearEffect", _AutoClearEffect)
             CustomProperties.Save(_listSheet, "AutoClearEffectDuration", _AutoClearEffectDuration)
+
+            If _LayerRules IsNot Nothing Then
+               CustomProperties.Save(_listSheet, "LayerRules", _LayerRules.GetRules())
+            End If
 
             _ActiveWorkbook.Saved = False
 
@@ -1133,6 +1155,10 @@ Public Class ucDashboard
       CustomProperties.Save(_listSheet, "AutoClearEffect", _AutoClearEffect)
       CustomProperties.Save(_listSheet, "AutoClearEffectDuration", _AutoClearEffectDuration)
 
+      If _LayerRules IsNot Nothing Then
+         CustomProperties.Save(_listSheet, "LayerRules", _LayerRules.GetRules())
+      End If
+
       _ActiveWorkbook.Saved = False
 
       cboTemplates.Visible = True
@@ -1243,10 +1269,22 @@ Public Class ucDashboard
          _AutoClearEffect = CustomProperties.Load(_listSheet, "AutoClearEffect", "CUT")
          _AutoClearEffectDuration = CustomProperties.Load(_listSheet, "AutoClearEffectDuration", 0)
 
+         Dim rules As String = CustomProperties.Load(_listSheet, "LayerRules", "")
+         If rules <> "" Then
+            _LayerRules = New LayerRules(rules)
+         Else
+            If _Settings IsNot Nothing Then
+               _LayerRules = New LayerRules(_Settings.DefaultLayerRules)
+            End If
+         End If
+
          Me.ControlsSet = CustomProperties.Load(_listSheet, "ControlsSet", CInt(ucPlaybackButtons.enumControlSets.csLoadPlayStopUpdate))
 
       Else
          Me.ControlsSet = ucPlaybackButtons.enumControlSets.csLoadPlayStopUpdate
+         If _Settings IsNot Nothing Then
+            _LayerRules = New LayerRules(_Settings.DefaultLayerRules)
+         End If
       End If
 
       cboTemplates.Visible = False
@@ -1363,7 +1401,15 @@ Public Class ucDashboard
          'Layer
          cell = range(_currentRow, 5)
          If cell.Text = "" And cell.HasFormula = False Then
-            cell.Value = _Layer
+            If Kind = "T" Then
+               If _LayerRules IsNot Nothing Then
+                  cell.Value = _LayerRules.CheckRules(templateOrClipName, _Layer)
+               Else
+                  cell.Value = _Layer
+               End If
+            Else
+               cell.Value = _Layer
+            End If
          End If
 
       End If
@@ -1549,7 +1595,6 @@ Public Class ucDashboard
       End If
 
    End Sub
-
 
 #End Region
 

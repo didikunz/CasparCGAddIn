@@ -1,0 +1,767 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\CefSharp.Common.90.6.50\build\CefSharp.Common.props" Condition="Exists('..\packages\CefSharp.Common.90.6.50\build\CefSharp.Common.props')" />
+  <Import Project="..\packages\cef.redist.x86.90.6.5\build\cef.redist.x86.props" Condition="Exists('..\packages\cef.redist.x86.90.6.5\build\cef.redist.x86.props')" />
+  <Import Project="..\packages\cef.redist.x64.90.6.5\build\cef.redist.x64.props" Condition="Exists('..\packages\cef.redist.x64.90.6.5\build\cef.redist.x64.props')" />
+  <Import Project="..\packages\cef.redist.x86.91.1.23\build\cef.redist.x86.props" Condition="Exists('..\packages\cef.redist.x86.91.1.23\build\cef.redist.x86.props')" />
+  <Import Project="..\packages\cef.redist.x64.91.1.23\build\cef.redist.x64.props" Condition="Exists('..\packages\cef.redist.x64.91.1.23\build\cef.redist.x64.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <!--
+    This section defines project-level properties.
+
+    AssemblyName
+      Name of the output assembly.
+    Configuration
+      Specifies a default value for debug.
+    OutputType
+      Must be "Library" for VSTO.
+    Platform
+      Specifies what CPU the output of this project can run on.
+    NoStandardLibraries
+      Set to "false" for VSTO.
+    RootNamespace
+      In C#, this specifies the namespace given to new files. In VB, all objects are
+      wrapped in this namespace at runtime.
+  -->
+  <PropertyGroup>
+    <ProjectTypeGuids>{BAA0C2D2-18E2-41B9-852F-F413020CAA33};{F184B08F-C81C-45F6-A57F-5ABD9991F28F}</ProjectTypeGuids>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{563A3AAC-C8BF-442C-88D4-CEE57BC6E6B2}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>CasparCGAddIn</RootNamespace>
+    <AssemblyName>CasparCGAddIn</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <DefineConstants>VSTO40</DefineConstants>
+    <StartupObject>
+    </StartupObject>
+    <IsWebBootstrapper>False</IsWebBootstrapper>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <PublishUrl>veröffentlichen\</PublishUrl>
+    <InstallUrl />
+    <TargetCulture>de</TargetCulture>
+    <ApplicationVersion>1.0.0.0</ApplicationVersion>
+    <AutoIncrementApplicationRevision>true</AutoIncrementApplicationRevision>
+    <UpdateEnabled>true</UpdateEnabled>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>days</UpdateIntervalUnits>
+    <ProductName>CasparCGAddIn</ProductName>
+    <PublisherName />
+    <SupportUrl />
+    <FriendlyName>CasparCGAddIn</FriendlyName>
+    <OfficeApplicationDescription />
+    <LoadBehavior>3</LoadBehavior>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.5.2">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.5.2 %28x86 und x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.VSTORuntime.4.0">
+      <Visible>False</Visible>
+      <ProductName>Microsoft Visual Studio 2010-Tools für Office-Laufzeit %28x86 und x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.4.5">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 4.5</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <PropertyGroup>
+    <!--
+      OfficeApplication
+        Add-in host application
+    -->
+    <OfficeApplication>Excel</OfficeApplication>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionInfer>On</OptionInfer>
+  </PropertyGroup>
+  <!--
+    This section defines properties that are set when the "Debug" configuration is selected.
+
+    DebugSymbols
+      If "true", create symbols (.pdb). If "false", do not create symbols.
+    DefineConstants
+      Constants defined for the preprocessor.
+    EnableUnmanagedDebugging
+      If "true", starting the debugger will attach both managed and unmanaged debuggers.
+    Optimize
+      If "true", optimize the build output. If "false", do not optimize.
+    OutputPath
+      Output path of project relative to the project file.
+    WarningLevel
+      Warning level for the compiler.
+  -->
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DefineConstants>$(DefineConstants)</DefineConstants>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <DebugType>full</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DocumentationFile>CasparCGAddIn.xml</DocumentationFile>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <RemoveIntegerChecks>false</RemoveIntegerChecks>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+  </PropertyGroup>
+  <!--
+    This section defines properties that are set when the "Release" configuration is selected.
+
+    DebugSymbols
+      If "true", create symbols (.pdb). If "false", do not create symbols.
+    DefineConstants
+      Constants defined for the preprocessor.
+    EnableUnmanagedDebugging
+      If "true", starting the debugger will attach both managed and unmanaged debuggers.
+    Optimize
+      If "true", optimize the build output. If "false", do not optimize.
+    OutputPath
+      Output path of project relative to the project file.
+    WarningLevel
+      Warning level for the compiler.
+  -->
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DefineConstants>
+    </DefineConstants>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DocumentationFile>CasparCGAddIn.xml</DocumentationFile>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <RemoveIntegerChecks>false</RemoveIntegerChecks>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+  </PropertyGroup>
+  <!--
+    This section specifies references for the project.
+  -->
+  <ItemGroup>
+    <Reference Include="Accessibility" />
+    <Reference Include="Bespoke.Common, Version=5.0.0.0, Culture=neutral, PublicKeyToken=843a094264521388, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\ZZZ_Extrenals\Bespoke_OSC\Bespoke.Osc-master\Bespoke.Common.Osc\bin\Release\Bespoke.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Bespoke.Common.Osc, Version=0.0.0.0, Culture=neutral, PublicKeyToken=843a094264521388, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\ZZZ_Extrenals\Bespoke_OSC\Bespoke.Osc-master\Bespoke.Common.Osc\bin\Release\Bespoke.Common.Osc.dll</HintPath>
+    </Reference>
+    <Reference Include="CommonAppData">
+      <HintPath>..\..\ZZZ_Extrenals\CommonAppData.dll</HintPath>
+    </Reference>
+    <Reference Include="CommonControls">
+      <HintPath>..\..\ZZZ_Extrenals\CommonControls.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Office.Tools.Excel.v4.0.Utilities, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\..\SchwingMaster\ExternalDlls\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Office.Tools.v4.0.Framework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.VisualStudio.Tools.Applications.Runtime, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.Office.Tools, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.Office.Tools.Common, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.Office.Tools.Excel, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Office.Tools.Common.v4.0.Utilities, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Office, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c">
+      <Private>False</Private>
+      <EmbedInteropTypes>true</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="Microsoft.Office.Interop.Excel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c">
+      <Private>False</Private>
+      <EmbedInteropTypes>true</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="stdole, Version=7.0.3300.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+      <Private>False</Private>
+    </Reference>
+  </ItemGroup>
+  <!-- Visual Basic supports importing namespaces (equivalent to "using" statements in C#). -->
+  <ItemGroup>
+    <Import Include="Microsoft.VisualBasic" />
+    <Import Include="System" />
+    <Import Include="System.Collections.Generic" />
+    <Import Include="System.Linq" />
+    <Import Include="System.Text" />
+    <Import Include="System.Xml.Linq" />
+    <Import Include="Office = Microsoft.Office.Core" />
+    <Import Include="Excel = Microsoft.Office.Interop.Excel" />
+    <Import Include="Microsoft.Office.Tools.Excel" />
+  </ItemGroup>
+  <!--
+    This section defines the user source files that are part of the project.
+     
+    A "Compile" element specifies a source file to compile.
+    An "EmbeddedResource" element specifies an .resx file for embedded resources.
+    A "None" element specifies a file that is not to be passed to the compiler (for instance, 
+    a text file or XML file).
+    The "AppDesigner" element specifies the directory where the application properties files
+    can be found.
+  -->
+  <ItemGroup>
+    <AppDesigner Include="My Project\" />
+    <Compile Include="CustomXML.vb" />
+    <Compile Include="frmLayerRules.Designer.vb">
+      <DependentUpon>frmLayerRules.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmLayerRules.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmSetTimerStartOffset.Designer.vb">
+      <DependentUpon>frmSetTimerStartOffset.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmSetTimerStartOffset.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmTimerLaps.Designer.vb">
+      <DependentUpon>frmTimerLaps.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmTimerLaps.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmTimerSettings.Designer.vb">
+      <DependentUpon>frmTimerSettings.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmTimerSettings.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LayerRules.vb" />
+    <Compile Include="Loader.vb" />
+    <Compile Include="Theme.vb" />
+    <Compile Include="TimerField.vb" />
+    <Compile Include="CustomDocumentProperties.vb" />
+    <Compile Include="CustomProperies.vb" />
+    <Compile Include="ExtractInfo.vb" />
+    <Compile Include="frmChangeTemplatePath.Designer.vb">
+      <DependentUpon>frmChangeTemplatePath.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmChangeTemplatePath.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmDashboardSettings.Designer.vb">
+      <DependentUpon>frmDashboardSettings.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmDashboardSettings.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmPlaybackControlsCaptions.Designer.vb">
+      <DependentUpon>frmPlaybackControlsCaptions.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmPlaybackControlsCaptions.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmSelectQuery.Designer.vb">
+      <DependentUpon>frmSelectQuery.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmSelectQuery.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmSettings.Designer.vb">
+      <DependentUpon>frmSettings.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmSettings.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmSheetProperties.Designer.vb">
+      <DependentUpon>frmSheetProperties.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmSheetProperties.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmWait.Designer.vb">
+      <DependentUpon>frmWait.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmWait.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmWebbrowser.Designer.vb">
+      <DependentUpon>frmWebbrowser.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmWebbrowser.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="My Project\Resources1.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="ribCasparCG.Designer.vb">
+      <DependentUpon>ribCasparCG.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ribCasparCG.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Settings.vb" />
+    <Compile Include="ThisAddIn.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TimerItem.vb" />
+    <Compile Include="TimerLap.vb" />
+    <Compile Include="TimerSettings.vb" />
+    <Compile Include="TimerSheet.vb" />
+    <Compile Include="TimerTrigger.vb" />
+    <Compile Include="ucDashboard.Designer.vb">
+      <DependentUpon>ucDashboard.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ucDashboard.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ucPlaybackButtons.Designer.vb">
+      <DependentUpon>ucPlaybackButtons.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ucPlaybackButtons.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ucPlaybackControls.Designer.vb">
+      <DependentUpon>ucPlaybackControls.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ucPlaybackControls.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ucTimeSpanEditor.Designer.vb">
+      <DependentUpon>ucTimeSpanEditor.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ucTimeSpanEditor.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="XInfos.vb" />
+    <EmbeddedResource Include="frmChangeTemplatePath.resx">
+      <DependentUpon>frmChangeTemplatePath.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmDashboardSettings.resx">
+      <DependentUpon>frmDashboardSettings.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmLayerRules.resx">
+      <DependentUpon>frmLayerRules.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmPlaybackControlsCaptions.resx">
+      <DependentUpon>frmPlaybackControlsCaptions.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmSelectQuery.resx">
+      <DependentUpon>frmSelectQuery.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmSetTimerStartOffset.resx">
+      <DependentUpon>frmSetTimerStartOffset.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmSettings.resx">
+      <DependentUpon>frmSettings.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmSheetProperties.resx">
+      <DependentUpon>frmSheetProperties.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmTimerLaps.resx">
+      <DependentUpon>frmTimerLaps.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmTimerSettings.resx">
+      <DependentUpon>frmTimerSettings.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmWait.resx">
+      <DependentUpon>frmWait.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmWebbrowser.resx">
+      <DependentUpon>frmWebbrowser.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ribCasparCG.resx">
+      <DependentUpon>ribCasparCG.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ucDashboard.resx">
+      <DependentUpon>ucDashboard.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ucPlaybackButtons.resx">
+      <DependentUpon>ucPlaybackButtons.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ucPlaybackControls.resx">
+      <DependentUpon>ucPlaybackControls.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ucTimeSpanEditor.resx">
+      <DependentUpon>ucTimeSpanEditor.vb</DependentUpon>
+    </EmbeddedResource>
+    <None Include="CasparCGAddIn_TemporaryKey.pfx" />
+    <None Include="My Project\DataSources\CasparObjects.CasparCG.datasource" />
+    <None Include="My Project\DataSources\ClockItem.datasource" />
+    <None Include="My Project\DataSources\frmSetupWebData.WebData.datasource" />
+    <None Include="My Project\DataSources\LayerRule.datasource" />
+    <None Include="My Project\DataSources\TimerItem.datasource" />
+    <None Include="My Project\DataSources\TimerSettings.datasource" />
+    <None Include="packages.config" />
+    <None Include="ThisAddIn.Designer.xml">
+      <DependentUpon>ThisAddIn.vb</DependentUpon>
+    </None>
+    <Compile Include="ThisAddIn.Designer.vb">
+      <DependentUpon>ThisAddIn.Designer.xml</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\AssemblyInfo.vb" />
+    <EmbeddedResource Include="My Project\Resources.resx">
+      <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+      <LastGenOutput>Resources1.Designer.vb</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="My Project\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.vb</LastGenOutput>
+    </None>
+    <Compile Include="My Project\Settings.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Select_Range.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Select_Template.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Save_Dataset.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Save_XML.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Save_All_Datasets.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\ZZZ_Common\CasparObjects\CasparObjects.vbproj">
+      <Project>{ee1b6a2b-16a9-4752-9bda-2edbf97cb665}</Project>
+      <Name>CasparObjects</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Preview.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\PreviewRefresh.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Refresh.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Connect_32.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Connect.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Connect.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Preview.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\PreviewRefresh.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Refresh_Icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Save_All_Datasets.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Select_Template.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Save_Dataset.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Save_XML.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Select_Range.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Open_Image.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Paint_Palette.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Base_Folder.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ASPNETWeb_64x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\StartTime_48x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\StartTime_64x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Synchronize.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{94E38DFF-614B-4CBD-B67C-F211BB35CE8B}" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Playback_Controls_Next.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Playback_Controls_Play.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Playback_Controls_Stop.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Playback_Controls_Update.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ThreeDots.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Playback_Controls_Settings.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Playback_Controls_Template.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Playback_Controls_Audio.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Playback_Controls_Images.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Playback_Controls_Video.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GaugeMeter.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Playback_Controls_Load.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Live.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Live64.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Save_All_Datasets32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Save_Dataset32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\PowerQuery32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Refresh32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Playback_Controls_LoadQuery.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Playback_Controls_Query.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Refresh16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Web_Refresh_64x1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Web_Refresh_64x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\google-loading-icon.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\loader-spinner.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\FlatList_16x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GlyphLeft.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GlyphRight.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GlyphDown.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GlyphUp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GlyphFastLeft.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GlyphFastUp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GlyphFastDown.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GlyphFastRight.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GlyphCenter.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\TimerPane.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Timer_Plus.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Timer_Minus.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Timer_Reset.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Add_Button.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Cancel_16x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Timer.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Timer_Stop.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Timer_Pause.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Timer_Start.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Timer_Resume.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Timer_Lap.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Timer_Load.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\F9.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\F8.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\F7.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\F6.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\F5.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\F4.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\F3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\F2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\F1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Dublicate.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Timer_StartOffset.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Timer_StartOffset_S.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Timer_SetOffset.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Timer_Start_s.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Timer_Stop_s.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Web_Download.png" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionExplicit>Off</OptionExplicit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionCompare>Binary</OptionCompare>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionStrict>Off</OptionStrict>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignManifests>true</SignManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestKeyFile>CasparCGAddIn_TemporaryKey.pfx</ManifestKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestCertificateThumbprint>679666443B5F985DF0D9FECFCA4DEAC2D112487A</ManifestCertificateThumbprint>
+  </PropertyGroup>
+  <!-- Include the build rules for a Visual Basic project. -->
+  <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
+  <!-- Include additional build rules for an Office application add-in. -->
+  <Import Project="$(VSToolsPath)\OfficeTools\Microsoft.VisualStudio.Tools.Office.targets" Condition="'$(VSToolsPath)' != ''" />
+  <!-- This section defines VSTO properties that describe the host-changeable project properties. -->
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{BAA0C2D2-18E2-41B9-852F-F413020CAA33}">
+        <ProjectProperties HostName="Excel" HostPackage="{29A7B9D7-A7F1-4328-8EF0-6B2D1A56B2C1}" OfficeVersion="15.0" VstxVersion="4.0" ApplicationType="Excel" Language="vb" TemplatesPath="" DebugInfoExeName="#Software\Microsoft\Office\16.0\Excel\InstallRoot\Path#excel.exe" DebugInfoCommandLine="/x" AddItemTemplatesGuid="{DCFE8D25-4715-4C33-9EAB-A34A9EBC9544}" />
+        <Host Name="Excel" IconIndex="0">
+          <HostItem Name="ThisAddIn" Code="ThisAddIn.vb" CanonicalName="AddIn" CanActivate="false" IconIndex="1" Blueprint="ThisAddIn.Designer.xml" GeneratedCode="ThisAddIn.Designer.vb" />
+        </Host>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\cef.redist.x64.91.1.23\build\cef.redist.x64.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\cef.redist.x64.91.1.23\build\cef.redist.x64.props'))" />
+    <Error Condition="!Exists('..\packages\cef.redist.x86.91.1.23\build\cef.redist.x86.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\cef.redist.x86.91.1.23\build\cef.redist.x86.props'))" />
+    <Error Condition="!Exists('..\packages\cef.redist.x64.90.6.5\build\cef.redist.x64.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\cef.redist.x64.90.6.5\build\cef.redist.x64.props'))" />
+    <Error Condition="!Exists('..\packages\cef.redist.x86.90.6.5\build\cef.redist.x86.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\cef.redist.x86.90.6.5\build\cef.redist.x86.props'))" />
+    <Error Condition="!Exists('..\packages\CefSharp.Common.90.6.50\build\CefSharp.Common.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\CefSharp.Common.90.6.50\build\CefSharp.Common.props'))" />
+    <Error Condition="!Exists('..\packages\CefSharp.Common.90.6.50\build\CefSharp.Common.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\CefSharp.Common.90.6.50\build\CefSharp.Common.targets'))" />
+  </Target>
+  <Import Project="..\packages\CefSharp.Common.90.6.50\build\CefSharp.Common.targets" Condition="Exists('..\packages\CefSharp.Common.90.6.50\build\CefSharp.Common.targets')" />
+</Project>

@@ -16,7 +16,7 @@ Public Class Settings
    Private _ServerList As List(Of String) = New List(Of String)
    Private _Servers As List(Of CasparCG) = New List(Of CasparCG)
 
-   Private _Theme As MyColorThemes.Theme
+   Private _Theme As Theme
 
    Public ReadOnly Property ServerList As List(Of String)
       Get
@@ -31,13 +31,13 @@ Public Class Settings
       End Get
    End Property
 
-   Public ReadOnly Property Theme As MyColorThemes.Theme
+   Public ReadOnly Property Theme As Theme
       Get
          If _Theme Is Nothing Then
             If Me.UseDarkTheme Then
-               _Theme = MyColorThemes.Loader.CreateDarkTheme()
+               _Theme = Loader.CreateDarkTheme()
             Else
-               _Theme = MyColorThemes.Loader.CreateDefaultTheme()
+               _Theme = Loader.CreateDefaultTheme()
                _Theme.WindowBackgroundImageTopColor = Drawing.SystemColors.Control
                _Theme.WindowBackgroundImageBottomColor = Drawing.SystemColors.Control
             End If
@@ -52,6 +52,7 @@ Public Class Settings
    Public Property ConnectOnStartUp As Boolean = False
    Public Property DashboardVisible As Boolean = False
    Public Property DefaultDataFields As String = "f0|f1|f2|f3|f4|f5"
+   Public Property DefaultLayerRules As String = ""
    Public Property UseAveco As Boolean = False
    Public Property ShowDashboard As Boolean = True
    Public Property UseImageAttributes As Boolean = False
@@ -142,6 +143,7 @@ Public Class Settings
       Me.ConnectOnStartUp = sets.ConnectOnStartUp
       Me.DashboardVisible = sets.DashboardVisible
       Me.DefaultDataFields = sets.DefaultDataFields
+      Me.DefaultLayerRules = sets.DefaultLayerRules
       Me.UseAveco = sets.UseAveco
       Me.ShowDashboard = sets.ShowDashboard
       Me.UseImageAttributes = sets.UseImageAttributes

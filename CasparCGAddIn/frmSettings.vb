@@ -13,7 +13,7 @@ Public Class frmSettings
 
    Private Sub frmSettings_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
-      MyColorThemes.Loader.Load(Me, _Settings.Theme)
+      Loader.Load(Me, _Settings.Theme)
 
       If _Settings.Servers.Count = 0 Then
          _Settings.Servers.Add(New CasparCG)

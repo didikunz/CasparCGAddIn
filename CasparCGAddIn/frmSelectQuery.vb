@@ -27,7 +27,7 @@ Public Class frmSelectQuery
 
    Private Sub frmSelectQuery_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
-      MyColorThemes.Loader.Load(Me, _Settings.Theme)
+      Loader.Load(Me, _Settings.Theme)
 
       Dim AppObject As Workbook = Globals.ThisAddIn.Application.ActiveWorkbook
 

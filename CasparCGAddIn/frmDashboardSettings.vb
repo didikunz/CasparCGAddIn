@@ -25,10 +25,11 @@ Public Class frmDashboardSettings
    Public Property ControlsSet As ucPlaybackButtons.enumControlSets = ucPlaybackButtons.enumControlSets.csLoadPlayStopUpdate
    Public Property AutoClearEffect As String = "CUT"
    Public Property AutoClearEffectDuration As Integer = 0
+   Public Property LayerRules As LayerRules = New LayerRules
 
    Private Sub frmDashboardSettings_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
-      MyColorThemes.Loader.Load(Me, _Settings.Theme)
+      Loader.Load(Me, _Settings.Theme)
 
       cboServers.Items.Clear()
       cboServers.Items.Add("All")
@@ -85,6 +86,19 @@ Public Class frmDashboardSettings
 
       DialogResult = System.Windows.Forms.DialogResult.OK
 
+   End Sub
+
+   Private Sub lnklblDefaultDatafields_LinkClicked(sender As Object, e As System.Windows.Forms.LinkLabelLinkClickedEventArgs) Handles lnklblDefaultDatafields.LinkClicked
+      If _Settings IsNot Nothing Then
+         _Settings.DefaultDataFields = DataFields
+      End If
+   End Sub
+
+   Private Sub lnklblLayerRules_LinkClicked(sender As Object, e As System.Windows.Forms.LinkLabelLinkClickedEventArgs) Handles lnklblLayerRules.LinkClicked
+      Dim flr As frmLayerRules = New frmLayerRules
+      flr.Settings = _Settings
+      flr.LayerRules = LayerRules
+      flr.ShowDialog()
    End Sub
 
 End Class

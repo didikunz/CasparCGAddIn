@@ -220,6 +220,12 @@
   <ItemGroup>
     <AppDesigner Include="My Project\" />
     <Compile Include="CustomXML.vb" />
+    <Compile Include="frmLayerRules.Designer.vb">
+      <DependentUpon>frmLayerRules.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmLayerRules.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="frmSetTimerStartOffset.Designer.vb">
       <DependentUpon>frmSetTimerStartOffset.vb</DependentUpon>
     </Compile>
@@ -238,6 +244,9 @@
     <Compile Include="frmTimerSettings.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="LayerRules.vb" />
+    <Compile Include="Loader.vb" />
+    <Compile Include="Theme.vb" />
     <Compile Include="TimerField.vb" />
     <Compile Include="CustomDocumentProperties.vb" />
     <Compile Include="CustomProperies.vb" />
@@ -342,6 +351,9 @@
       <DependentUpon>frmDashboardSettings.vb</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="frmLayerRules.resx">
+      <DependentUpon>frmLayerRules.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmPlaybackControlsCaptions.resx">
       <DependentUpon>frmPlaybackControlsCaptions.vb</DependentUpon>
     </EmbeddedResource>
@@ -390,8 +402,10 @@
     <None Include="My Project\DataSources\CasparObjects.CasparCG.datasource" />
     <None Include="My Project\DataSources\ClockItem.datasource" />
     <None Include="My Project\DataSources\frmSetupWebData.WebData.datasource" />
+    <None Include="My Project\DataSources\LayerRule.datasource" />
     <None Include="My Project\DataSources\TimerItem.datasource" />
     <None Include="My Project\DataSources\TimerSettings.datasource" />
+    <None Include="packages.config" />
     <None Include="ThisAddIn.Designer.xml">
       <DependentUpon>ThisAddIn.vb</DependentUpon>
     </None>
@@ -434,10 +448,6 @@
     <ProjectReference Include="..\..\ZZZ_Common\CasparObjects\CasparObjects.vbproj">
       <Project>{ee1b6a2b-16a9-4752-9bda-2edbf97cb665}</Project>
       <Name>CasparObjects</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\ZZZ_Common\MyColorThemes\MyColorThemes.vbproj">
-      <Project>{b7b1125e-7a8d-4feb-ac05-07a64c088d33}</Project>
-      <Name>MyColorThemes</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

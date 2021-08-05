@@ -24,7 +24,7 @@ Public Class frmTimerSettings
 
    Private Sub frmTimerSettings_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
-      MyColorThemes.Loader.Load(Me, _Settings.Theme)
+      Loader.Load(Me, _Settings.Theme)
 
       If _TimerSettings IsNot Nothing Then
 

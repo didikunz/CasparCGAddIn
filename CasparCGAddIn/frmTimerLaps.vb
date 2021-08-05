@@ -23,7 +23,7 @@ Public Class frmTimerLaps
 
    Private Sub frmTimerLaps_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
-      MyColorThemes.Loader.Load(Me, _Settings.Theme)
+      Loader.Load(Me, _Settings.Theme)
 
       If _TimerSettings IsNot Nothing AndAlso _TimerSettings.SelectedItem IsNot Nothing Then
 

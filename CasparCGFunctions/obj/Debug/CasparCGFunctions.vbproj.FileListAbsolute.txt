@@ -1,7 +1,6 @@
 D:\Projects\CasparCGAddIn\CasparCGFunctions\bin\Debug\CasparCGFunctions.dll
 D:\Projects\CasparCGAddIn\CasparCGFunctions\bin\Debug\CasparCGFunctions.pdb
 D:\Projects\CasparCGAddIn\CasparCGFunctions\bin\Debug\CasparCGFunctions.xml
-D:\Projects\CasparCGAddIn\CasparCGFunctions\obj\Debug\CasparCGFunctions.vbprojResolveAssemblyReference.cache
 D:\Projects\CasparCGAddIn\CasparCGFunctions\obj\Debug\CasparCGFunctions.vbproj.ResolveComReference.cache
 D:\Projects\CasparCGAddIn\CasparCGFunctions\obj\Debug\CasparCGFunctions.vbproj.GenerateResource.Cache
 D:\Projects\CasparCGAddIn\CasparCGFunctions\obj\Debug\CasparCGFunctions.dll
@@ -18,3 +17,5 @@ D:\Dropbox\_AA_external\CasparCGAddIn\CasparCGFunctions\obj\Debug\CasparCGFuncti
 D:\Dropbox\_AA_external\CasparCGAddIn\CasparCGFunctions\obj\Debug\CasparCGFunctions.dll
 D:\Dropbox\_AA_external\CasparCGAddIn\CasparCGFunctions\obj\Debug\CasparCGFunctions.xml
 D:\Dropbox\_AA_external\CasparCGAddIn\CasparCGFunctions\obj\Debug\CasparCGFunctions.pdb
+D:\Projects\CasparCGAddIn\CasparCGFunctions\obj\Debug\CasparCGFunctions.vbproj.AssemblyReference.cache
+D:\Projects\CasparCGAddIn\CasparCGFunctions\obj\Debug\CasparCGFunctions.vbproj.CoreCompileInputs.cache

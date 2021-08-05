@@ -17,7 +17,7 @@
 
    Private Sub frmSetTimerStartOffset_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
-      MyColorThemes.Loader.Load(Me, Settings.Theme)
+      Loader.Load(Me, Settings.Theme)
 
       If CurrentItem IsNot Nothing Then
          tseOffset.Value = CurrentItem.Offset

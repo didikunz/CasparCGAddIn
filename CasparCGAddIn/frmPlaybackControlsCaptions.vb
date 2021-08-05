@@ -19,7 +19,7 @@ Public Class frmPlaybackControlsCaptions
 
    Private Sub frmPlaybackControlsCaptions_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
-      MyColorThemes.Loader.Load(Me, _Settings.Theme)
+      Loader.Load(Me, _Settings.Theme)
 
       txtCaption.Text = Me.CaptionText
       _tempCaptionColor = Me.CaptionColor

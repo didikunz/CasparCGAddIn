@@ -257,6 +257,11 @@ CasparObjects
  Sets the last layer, that will be cleared by Clearlayers
  </summary>
 </member>
+<member name="P:CasparObjects.CasparCG.MetaDataPath">
+ <summary>
+ Sets the path to write metadata files into.
+ </summary>
+</member>
 <member name="M:CasparObjects.CasparCG.CG_Add(CasparObjects.Template)">
  <summary>
  Adds the template in Caspar
@@ -1881,6 +1886,24 @@ CasparObjects
  </summary>
  <param name="Name">Name of the field</param>
  <param name="Color">System.Drawing.Color</param>
+ <remarks>Formats the color value as hex-string with leading 0x</remarks>
+</member>
+<member name="M:CasparObjects.Template.AddColorField(System.String,System.Drawing.Color,System.Boolean)">
+ <summary>
+ Add color field to this Template
+ </summary>
+ <param name="Name">Name of the field</param>
+ <param name="Color">System.Drawing.Color</param>
+ <param name="ForHTML">If true adds # before the color string, 0x otherwise</param>
+ <remarks>Formats the color value as hex-string</remarks>
+</member>
+<member name="M:CasparObjects.Template.AddColorField(System.String,System.Int32,System.Boolean)">
+ <summary>
+ Add color field to this Template
+ </summary>
+ <param name="Name">Name of the field</param>
+ <param name="Color">integer with RGB color</param>
+ <param name="ForHTML">If true adds # before the color string, 0x otherwise</param>
  <remarks>Formats the color value as hex-string</remarks>
 </member>
 <member name="M:CasparObjects.Template.Clear">

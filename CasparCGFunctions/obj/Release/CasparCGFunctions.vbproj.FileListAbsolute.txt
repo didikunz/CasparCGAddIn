@@ -1,10 +1,11 @@
 D:\Projects\CasparCGAddIn\CasparCGFunctions\bin\Release\CasparCGFunctions.dll
 D:\Projects\CasparCGAddIn\CasparCGFunctions\bin\Release\CasparCGFunctions.pdb
 D:\Projects\CasparCGAddIn\CasparCGFunctions\bin\Release\CasparCGFunctions.xml
-D:\Projects\CasparCGAddIn\CasparCGFunctions\obj\Release\CasparCGFunctions.vbprojResolveAssemblyReference.cache
 D:\Projects\CasparCGAddIn\CasparCGFunctions\obj\Release\CasparCGFunctions.vbproj.ResolveComReference.cache
 D:\Projects\CasparCGAddIn\CasparCGFunctions\obj\Release\ExcelFunctions.Resources.resources
 D:\Projects\CasparCGAddIn\CasparCGFunctions\obj\Release\CasparCGFunctions.vbproj.GenerateResource.Cache
 D:\Projects\CasparCGAddIn\CasparCGFunctions\obj\Release\CasparCGFunctions.dll
 D:\Projects\CasparCGAddIn\CasparCGFunctions\obj\Release\CasparCGFunctions.xml
 D:\Projects\CasparCGAddIn\CasparCGFunctions\obj\Release\CasparCGFunctions.pdb
+D:\Projects\CasparCGAddIn\CasparCGFunctions\obj\Release\CasparCGFunctions.vbproj.AssemblyReference.cache
+D:\Projects\CasparCGAddIn\CasparCGFunctions\obj\Release\CasparCGFunctions.vbproj.CoreCompileInputs.cache

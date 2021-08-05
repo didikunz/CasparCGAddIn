@@ -61,7 +61,6 @@ D:\Projects\CasparCGAddIn\CasparCGAddIn\bin\Debug\Bespoke.Common.Osc.pdb
 D:\Projects\CasparCGAddIn\CasparCGAddIn\bin\Debug\Bespoke.Common.Osc.xml
 D:\Projects\CasparCGAddIn\CasparCGAddIn\bin\Debug\Newtonsoft.Json.pdb
 D:\Projects\CasparCGAddIn\CasparCGAddIn\bin\Debug\Newtonsoft.Json.xml
-D:\Projects\CasparCGAddIn\CasparCGAddIn\obj\Debug\CasparCGAddIn.vbprojResolveAssemblyReference.cache
 D:\Projects\CasparCGAddIn\CasparCGAddIn\obj\Debug\CasparCGAddIn.frmChangeTemplatePath.resources
 D:\Projects\CasparCGAddIn\CasparCGAddIn\obj\Debug\CasparCGAddIn.frmDashboardSettings.resources
 D:\Projects\CasparCGAddIn\CasparCGAddIn\obj\Debug\CasparCGAddIn.frmPlaybackControlsCaptions.resources
@@ -83,9 +82,6 @@ D:\Projects\CasparCGAddIn\CasparCGAddIn\obj\Debug\CasparCGAddIn.dll
 D:\Projects\CasparCGAddIn\CasparCGAddIn\obj\Debug\CasparCGAddIn.xml
 D:\Projects\CasparCGAddIn\CasparCGAddIn\obj\Debug\CasparCGAddIn.pdb
 D:\Projects\CasparCGAddIn\CasparCGAddIn\obj\Debug\CasparCGAddIn.frmSetTimerStartOffset.resources
-D:\Projects\CasparCGAddIn\CasparCGAddIn\bin\Debug\MyColorThemes.dll
-D:\Projects\CasparCGAddIn\CasparCGAddIn\bin\Debug\MyColorThemes.pdb
-D:\Projects\CasparCGAddIn\CasparCGAddIn\bin\Debug\MyColorThemes.xml
 D:\Dropbox\_AA_external\CasparCGAddIn\CasparCGAddIn\bin\Debug\Microsoft.Office.Tools.Excel.v4.0.Utilities.dll
 D:\Dropbox\_AA_external\CasparCGAddIn\CasparCGAddIn\bin\Debug\MyColorThemes.dll
 D:\Dropbox\_AA_external\CasparCGAddIn\CasparCGAddIn\bin\Debug\MyColorThemes.pdb
@@ -96,3 +92,8 @@ D:\Dropbox\_AA_external\CasparCGAddIn\CasparCGAddIn\obj\Debug\CasparCGAddIn.frmS
 D:\Dropbox\_AA_external\CasparCGAddIn\CasparCGAddIn\obj\Debug\CasparCGAddIn.frmTimerLaps.resources
 D:\Dropbox\_AA_external\CasparCGAddIn\CasparCGAddIn\obj\Debug\CasparCGAddIn.frmTimerSettings.resources
 D:\Dropbox\_AA_external\CasparCGAddIn\CasparCGAddIn\obj\Debug\CasparCGAddIn.ucTimeSpanEditor.resources
+D:\Projects\CasparCGAddIn\CasparCGAddIn\bin\Debug\CasparObjects.dll.config
+D:\Projects\CasparCGAddIn\CasparCGAddIn\obj\Debug\CasparCGAddIn.vbproj.CoreCompileInputs.cache
+D:\Projects\CasparCGAddIn\CasparCGAddIn\obj\Debug\CasparCGAddIn.vbproj.CopyComplete
+D:\Projects\CasparCGAddIn\CasparCGAddIn\obj\Debug\CasparCGAddIn.vbproj.AssemblyReference.cache
+D:\Projects\CasparCGAddIn\CasparCGAddIn\obj\Debug\CasparCGAddIn.frmLayerRules.resources

@@ -92,7 +92,7 @@ Public Class frmSheetProperties
 
    Private Sub frmSheetProperties_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
-      MyColorThemes.Loader.Load(Me, _Settings.Theme)
+      Loader.Load(Me, _Settings.Theme)
 
       For Each s As String In [Enum].GetNames(GetType(TimerItem.enumQueryValues))
 

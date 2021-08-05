@@ -2,7 +2,6 @@
 Imports System.Windows.Forms
 
 Public Class frmWebbrowser
-
    Public Enum enumMode
       modeTable
       modeDiv
@@ -272,7 +271,7 @@ Public Class frmWebbrowser
 
    Private Sub frmWebbrowser_Load(sender As Object, e As EventArgs) Handles Me.Load
 
-      MyColorThemes.Loader.Load(Me, _Settings.Theme)
+      Loader.Load(Me, _Settings.Theme)
 
       txtUrl.Text = WebAddress
 
