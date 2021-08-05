@@ -40,15 +40,13 @@ D:\Projects\CasparCGAddIn\CasparCGAddIn\obj\Release\CasparCGAddIn.xml
 D:\Projects\CasparCGAddIn\CasparCGAddIn\obj\Release\CasparCGAddIn.pdb
 D:\Projects\CasparCGAddIn\CasparCGAddIn\bin\Release\Bespoke.Common.dll
 D:\Projects\CasparCGAddIn\CasparCGAddIn\bin\Release\Bespoke.Common.Osc.dll
-D:\Projects\CasparCGAddIn\CasparCGAddIn\bin\Release\MyColorThemes.dll
 D:\Projects\CasparCGAddIn\CasparCGAddIn\bin\Release\Bespoke.Common.pdb
 D:\Projects\CasparCGAddIn\CasparCGAddIn\bin\Release\Bespoke.Common.xml
 D:\Projects\CasparCGAddIn\CasparCGAddIn\bin\Release\Bespoke.Common.Osc.pdb
 D:\Projects\CasparCGAddIn\CasparCGAddIn\bin\Release\Bespoke.Common.Osc.xml
-D:\Projects\CasparCGAddIn\CasparCGAddIn\bin\Release\MyColorThemes.pdb
-D:\Projects\CasparCGAddIn\CasparCGAddIn\bin\Release\MyColorThemes.xml
 D:\Projects\CasparCGAddIn\CasparCGAddIn\obj\Release\CasparCGAddIn.frmSetTimerStartOffset.resources
 D:\Projects\CasparCGAddIn\CasparCGAddIn\bin\Release\CasparObjects.dll.config
 D:\Projects\CasparCGAddIn\CasparCGAddIn\obj\Release\CasparCGAddIn.vbproj.AssemblyReference.cache
 D:\Projects\CasparCGAddIn\CasparCGAddIn\obj\Release\CasparCGAddIn.vbproj.CoreCompileInputs.cache
 D:\Projects\CasparCGAddIn\CasparCGAddIn\obj\Release\CasparCGAddIn.vbproj.CopyComplete
+D:\Projects\CasparCGAddIn\CasparCGAddIn\obj\Release\CasparCGAddIn.frmLayerRules.resources
