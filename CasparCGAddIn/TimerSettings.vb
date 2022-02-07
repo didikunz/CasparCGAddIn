@@ -78,9 +78,17 @@ Public Class TimerSettings
    Public Class TimeTriggerEventArgs
       Inherits EventArgs
 
+      Public Enum enumMode
+         TimeTrigger
+         PlayTrigger
+         StopTrigger
+      End Enum
+
+      Public Property Mode As enumMode
       Public Property Item As TimerItem
 
-      Public Sub New(Item As TimerItem)
+      Public Sub New(Mode As enumMode, Item As TimerItem)
+         Me.Mode = Mode
          Me.Item = Item
       End Sub
 
@@ -103,7 +111,17 @@ Public Class TimerSettings
    End Sub
 
    Private Sub HandleTimeTrigger(sender As Object, e As EventArgs)
-      Dim ttea As TimeTriggerEventArgs = New TimeTriggerEventArgs(CType(sender, TimerItem))
+      Dim ttea As TimeTriggerEventArgs = New TimeTriggerEventArgs(TimeTriggerEventArgs.enumMode.TimeTrigger, CType(sender, TimerItem))
+      RaiseEvent TimeTrigger(Me, ttea)
+   End Sub
+
+   Private Sub HandlePlayTrigger(sender As Object, e As EventArgs)
+      Dim ttea As TimeTriggerEventArgs = New TimeTriggerEventArgs(TimeTriggerEventArgs.enumMode.PlayTrigger, CType(sender, TimerItem))
+      RaiseEvent TimeTrigger(Me, ttea)
+   End Sub
+
+   Private Sub HandleStopTrigger(sender As Object, e As EventArgs)
+      Dim ttea As TimeTriggerEventArgs = New TimeTriggerEventArgs(TimeTriggerEventArgs.enumMode.StopTrigger, CType(sender, TimerItem))
       RaiseEvent TimeTrigger(Me, ttea)
    End Sub
 
@@ -119,6 +137,8 @@ Public Class TimerSettings
       item.Parent = Me
       AddHandler item.TimerRefresh, AddressOf HandleTimerRefresh
       AddHandler item.TimeTrigger, AddressOf HandleTimeTrigger
+      AddHandler item.PlayTrigger, AddressOf HandlePlayTrigger
+      AddHandler item.StopTrigger, AddressOf HandleStopTrigger
       AddHandler item.SaveTimerData, AddressOf HandleSaveTimerData
 
       _Items.Add(item)
@@ -129,6 +149,8 @@ Public Class TimerSettings
 
       RemoveHandler item.TimerRefresh, AddressOf HandleTimerRefresh
       RemoveHandler item.TimeTrigger, AddressOf HandleTimeTrigger
+      RemoveHandler item.PlayTrigger, AddressOf HandlePlayTrigger
+      RemoveHandler item.StopTrigger, AddressOf HandleStopTrigger
       RemoveHandler item.SaveTimerData, AddressOf HandleSaveTimerData
 
       _Items.Remove(item)
@@ -231,6 +253,8 @@ Public Class TimerSettings
             item.Parent = Me
             AddHandler item.TimerRefresh, AddressOf HandleTimerRefresh
             AddHandler item.TimeTrigger, AddressOf HandleTimeTrigger
+            AddHandler item.PlayTrigger, AddressOf HandlePlayTrigger
+            AddHandler item.StopTrigger, AddressOf HandleStopTrigger
             AddHandler item.SaveTimerData, AddressOf HandleSaveTimerData
          Next
 
@@ -243,6 +267,8 @@ Public Class TimerSettings
       For Each item As TimerItem In _Items
          RemoveHandler item.TimerRefresh, AddressOf HandleTimerRefresh
          RemoveHandler item.TimeTrigger, AddressOf HandleTimeTrigger
+         RemoveHandler item.PlayTrigger, AddressOf HandlePlayTrigger
+         RemoveHandler item.StopTrigger, AddressOf HandleStopTrigger
          RemoveHandler item.SaveTimerData, AddressOf HandleSaveTimerData
       Next
    End Sub

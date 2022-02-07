@@ -53,6 +53,7 @@ Public Class frmSettings
          Case CasparCGAddIn.Settings.enumVideoResolution.vr4K
             cboVideoResolution.SelectedIndex = 4
       End Select
+      tseCountDown.Value = _Settings.DefaultCountDownStartTime
 
       chkUseOscInput.Checked = _Settings.UseOSCInput
       txtOscPort.Text = _Settings.OSCInputPort.ToString
@@ -119,6 +120,7 @@ Public Class frmSettings
          Case 4
             _Settings.VideoResolution = CasparCGAddIn.Settings.enumVideoResolution.vr4K
       End Select
+      _Settings.DefaultCountDownStartTime = tseCountDown.Value
 
       _Settings.UseOSCInput = chkUseOscInput.Checked
       Dim inte As Integer = 0
@@ -151,6 +153,7 @@ Public Class frmSettings
             Dim cas As CasparCG = CType(bsServers.Current, CasparCG)
             cas.ServerAdress = "localhost"
             cas.Retries = 20
+            bsServers.ResetBindings(False)
          End If
       End If
 

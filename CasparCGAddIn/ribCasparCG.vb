@@ -298,7 +298,7 @@ Public Class ribCasparCG
 
             classNames.Add(name)
 
-            sb.AppendLine(name + " {")
+            sb.AppendLine("." + name + " {")
 
             sb.AppendLine("   font-family: " + style.Font.Name.ToString + ";")
             sb.AppendLine("   font-size: " + style.Font.Size.ToString + "px;")
@@ -425,12 +425,12 @@ Public Class ribCasparCG
 
    Public Sub LoadTemplate(sheet As Microsoft.Office.Interop.Excel.Worksheet, Autoplay As Boolean, PlaybackCtrl As ucPlaybackControls)
 
-      If Not PlaybackCtrl.State = ucPlaybackButtons.enumState.stQueryFinished Then
+      If PlaybackCtrl IsNot Nothing AndAlso Not PlaybackCtrl.State = ucPlaybackButtons.enumState.stQueryFinished Then
          _PendingRefreshAutoplay = Autoplay
          RefreshQueries(sheet, PlaybackCtrl)
       End If
 
-      If Not PlaybackCtrl.State = ucPlaybackButtons.enumState.stQueryRunning Then
+      If PlaybackCtrl Is Nothing OrElse Not PlaybackCtrl.State = ucPlaybackButtons.enumState.stQueryRunning Then
 
          _PendingRefreshAutoplay = False
 
@@ -573,10 +573,12 @@ Public Class ribCasparCG
 
                End If
 
-               If Autoplay Then
-                  PlaybackCtrl.State = ucPlaybackButtons.enumState.stPlaying
-               Else
-                  PlaybackCtrl.State = ucPlaybackButtons.enumState.stLoaded
+               If PlaybackCtrl IsNot Nothing Then
+                  If Autoplay Then
+                     PlaybackCtrl.State = ucPlaybackButtons.enumState.stPlaying
+                  Else
+                     PlaybackCtrl.State = ucPlaybackButtons.enumState.stLoaded
+                  End If
                End If
 
             End If
@@ -1124,7 +1126,7 @@ Public Class ribCasparCG
    Private Function XLColorToString(xlcolor As Object, blackAsWhite As Boolean) As String
 
       Dim color As System.Drawing.Color = ColorTranslator.FromOle(xlcolor)
-      If color = Color.Black Then
+      If blackAsWhite AndAlso color = Color.Black Then
          color = Color.White
       End If
 
@@ -1184,8 +1186,8 @@ Public Class ribCasparCG
       Dim range As Excel.Range = name.RefersToRange
       Dim cell As Excel.Range
 
-      Dim varName As Object = Nothing
-      Dim varValue As Object = Nothing
+      Dim varName As Object
+      Dim varValue As Object
 
       'Dim objClipboard As Object = My.Computer.Clipboard.GetDataObject
       'Dim imgClipboard As System.Drawing.Image
@@ -1385,25 +1387,6 @@ Public Class ribCasparCG
                   cell = range(row, 1)
                   varName = cell.Text
 
-                  'Old code to send cell pictures. Remove?
-                  'cell = range(row, 2)
-                  'Dim pic As Excel.Shape = GetImage(wrkSheet, row, 2)
-                  'If pic IsNot Nothing Then
-
-                  '   If varName IsNot Nothing Then
-
-                  '      blnClipboardUsed = True
-
-                  '      pic.CopyPicture(XlPictureAppearance.xlScreen, XlCopyPictureFormat.xlBitmap)
-                  '      imgClipboard = My.Computer.Clipboard.GetData(System.Windows.Forms.DataFormats.Bitmap)
-
-                  '      If imgClipboard IsNot Nothing Then
-                  '         tmpl.AddPictureField(varName.ToString, imgClipboard)
-                  '      End If
-
-
-                  '   End If
-
                   If range.Columns.Count > 2 Then
 
                      If varName IsNot Nothing AndAlso varName <> "" Then
@@ -1479,7 +1462,6 @@ Public Class ribCasparCG
             'End If
 
       End Select
-
 
    End Function
 
@@ -2121,7 +2103,7 @@ Public Class ribCasparCG
       ServicePointManager.Expect100Continue = True
       ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12
 
-      Dim response As HttpWebResponse = Nothing
+      Dim response As HttpWebResponse
 
       Try
          Dim request As HttpWebRequest = CType(WebRequest.Create(Uri), HttpWebRequest)
@@ -2498,25 +2480,80 @@ Public Class ribCasparCG
 
          For Each ts As TimerSheet In _TimerSettings.Sheets
 
-            If ts.OnTimeTimer = e.Item.Name Then
+            If e.Mode = TimerSettings.TimeTriggerEventArgs.enumMode.TimeTrigger Then
 
-               If ts.OnTimeInvoke <> "" Then
+               If ts.OnTimeTimer = e.Item.Name Then
 
-                  If ts.Server = 0 Then
+                  If ts.OnTimeInvoke <> "" Then
 
-                     For Each caspar As CasparCG In _Settings.Servers
-                        If caspar.Connected Then
-                           caspar.CG_Invoke(ts.Channel, ts.Layer, ts.OnTimeInvoke, ts.FlashLayer)
+                     If ts.Server = 0 Then
+
+                        For Each caspar As CasparCG In _Settings.Servers
+                           If caspar.Connected Then
+                              caspar.CG_Invoke(ts.Channel, ts.Layer, ts.OnTimeInvoke, ts.FlashLayer)
+                           End If
+                        Next
+
+                     Else
+
+                        If ts.Server <= _Settings.Servers.Count Then
+                           Dim caspar As CasparCG = _Settings.Servers(ts.Server - 1)
+                           If caspar.Connected Then
+                              caspar.CG_Invoke(ts.Channel, ts.Layer, ts.OnTimeInvoke, ts.FlashLayer)
+                           End If
+                        End If
+
+                     End If
+
+                  End If
+
+               End If
+
+            ElseIf e.Mode = TimerSettings.TimeTriggerEventArgs.enumMode.PlayTrigger Then
+
+               If ts.AutoPlayTimer = e.Item.Name Then
+
+                  If ts.AutoPlayMode <> TimerSheet.enumAutoPlayMode.doNothing Then
+
+                     Dim sh As Microsoft.Office.Interop.Excel.Worksheet = Nothing
+                     For Each wrk As Microsoft.Office.Interop.Excel.Worksheet In _ActiveWorkbook.Sheets
+                        If wrk.Name.Trim = ts.WorksheetName Then
+                           sh = wrk
+                           Exit For
                         End If
                      Next
 
-                  Else
+                     If sh IsNot Nothing Then
+                        LoadTemplate(sh, True, Nothing)
+                     End If
 
-                     If ts.Server <= _Settings.Servers.Count Then
-                        Dim caspar As CasparCG = _Settings.Servers(ts.Server - 1)
-                        If caspar.Connected Then
-                           caspar.CG_Invoke(ts.Channel, ts.Layer, ts.OnTimeInvoke, ts.FlashLayer)
+                  End If
+
+               End If
+
+            ElseIf e.Mode = TimerSettings.TimeTriggerEventArgs.enumMode.StopTrigger Then
+
+               If ts.AutoPlayTimer = e.Item.Name Then
+
+                  If ts.AutoPlayMode <> TimerSheet.enumAutoPlayMode.doNothing Then
+
+                     If ts.Server = 0 Then
+
+                        For Each caspar As CasparCG In _Settings.Servers
+                           If caspar.Connected Then
+                              caspar.CG_Stop(ts.Channel, ts.Layer, ts.FlashLayer)
+                           End If
+                        Next
+
+                     Else
+
+                        If ts.Server <= _Settings.Servers.Count Then
+                           Dim caspar As CasparCG = _Settings.Servers(ts.Server - 1)
+                           If caspar.Connected Then
+                              caspar.CG_Stop(ts.Channel, ts.Layer, ts.FlashLayer)
+                           End If
                         End If
+
                      End If
 
                   End If
@@ -2556,7 +2593,11 @@ Public Class ribCasparCG
 
    Private Sub sbtnStartTimer_Click(sender As Object, e As RibbonControlEventArgs) Handles sbtnStartTimer.Click
       If _TimerSettings IsNot Nothing AndAlso _TimerSettings.SelectedItem IsNot Nothing Then
-         _TimerSettings.SelectedItem.StartTimer(TimeSpan.Zero)
+         If _TimerSettings.SelectedItem.CountDown Then
+            _TimerSettings.SelectedItem.StartTimer(_TimerSettings.SelectedItem.Offset)
+         Else
+            _TimerSettings.SelectedItem.StartTimer(TimeSpan.Zero)
+         End If
          togPauseTimer.Checked = False
       End If
    End Sub

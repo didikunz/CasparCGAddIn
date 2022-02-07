@@ -3,6 +3,13 @@
 <Serializable()>
 Public Class TimerSheet
 
+   Public Enum enumAutoPlayMode
+      doNothing
+      AutoPlay
+      AutoStop
+      AutoPlayStop
+   End Enum
+
    Private _Fields As List(Of TimerField) = New List(Of TimerField)
 
    Public Property WorksheetName As String = ""
@@ -15,6 +22,8 @@ Public Class TimerSheet
 
    Public Property OnTimeTimer As String = ""
    Public Property OnTimeInvoke As String = ""
+   Public Property AutoPlayMode As enumAutoPlayMode = enumAutoPlayMode.doNothing
+   Public Property AutoPlayTimer As String = ""
 
    <XmlIgnore()>
    Public Property Server As Integer = 0

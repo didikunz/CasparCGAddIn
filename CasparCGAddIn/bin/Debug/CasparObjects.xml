@@ -8,18 +8,23 @@ CasparObjects
 <members>
 <member name="T:CasparObjects.My.Resources.Resources">
 <summary>
-  Eine stark typisierte Ressourcenklasse zum Suchen von lokalisierten Zeichenfolgen usw.
+  A strongly-typed resource class, for looking up localized strings, etc.
 </summary>
 </member>
 <member name="P:CasparObjects.My.Resources.Resources.ResourceManager">
 <summary>
-  Gibt die zwischengespeicherte ResourceManager-Instanz zurück, die von dieser Klasse verwendet wird.
+  Returns the cached ResourceManager instance used by this class.
 </summary>
 </member>
 <member name="P:CasparObjects.My.Resources.Resources.Culture">
 <summary>
-  Überschreibt die CurrentUICulture-Eigenschaft des aktuellen Threads für alle
-  Ressourcenzuordnungen, die diese stark typisierte Ressourcenklasse verwenden.
+  Overrides the current thread's CurrentUICulture property for all
+  resource lookups using this strongly typed resource class.
+</summary>
+</member>
+<member name="P:CasparObjects.My.Resources.Resources.CasparProxy">
+<summary>
+  Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
 </summary>
 </member>
 <member name="T:CasparObjects.CasparCG">
@@ -160,6 +165,11 @@ CasparObjects
  True to replace backslashes, single and double quotes for HTML.
  </summary>
 </member>
+<member name="P:CasparObjects.CasparCG.DisableWebSecurity">
+ <summary>
+ True to start the server with the DisableWebSecurity flag set.
+ </summary>
+</member>
 <member name="P:CasparObjects.CasparCG.IsLocal">
  <summary>
  If Caspar is on the local machine
@@ -177,6 +187,12 @@ CasparObjects
  Points to a folder were pictres are stored
  </summary>
  <remarks>The path is a network share seen from the client</remarks>
+</member>
+<member name="P:CasparObjects.CasparCG.ChannelFilterList">
+ <summary>
+ Set Channel-filter for the ExecuteFiltered function
+ </summary>
+ <remarks>A space separated list of allowed channels</remarks>
 </member>
 <member name="P:CasparObjects.CasparCG.Connected">
  <summary>
@@ -494,7 +510,6 @@ CasparObjects
  <param name="TemplateData">The Template object to get fields from</param>
  <param name="FlashLayer">Optional, use only when absolutely needed</param>
  <returns>A ReturnInfo object</returns>
- <remarks>The main CG_Play function.</remarks>
 </member>
 <member name="M:CasparObjects.CasparCG.CG_Update(System.Int32,System.Int32,CasparObjects.Template,CasparObjects.CasparCG.Retard,System.Int32)">
  <summary>
@@ -506,7 +521,6 @@ CasparObjects
  <param name="Retard">Delay the execution for this amount of milliseconds</param>
  <param name="FlashLayer">Optional, use only when absolutely needed</param>
  <returns>A ReturnInfo object</returns>
- <remarks>The main CG_Play function.</remarks>
 </member>
 <member name="M:CasparObjects.CasparCG.CG_Update(System.Int32,System.Int32,System.String,System.Int32)">
  <summary>
@@ -1574,6 +1588,14 @@ CasparObjects
  <param name="Retard">Delay the execution for this amount of milliseconds</param>
  <returns>A ReturnInfo object</returns>
 </member>
+<member name="M:CasparObjects.CasparCG.Execute(System.String,System.String)">
+ <summary>
+ Sends a command to Caspar for execution
+ </summary>
+ <param name="Command">The command-string</param>
+ <param name="ChannelFilterList">A space separated list of allowed channels</param>
+ <returns>A ReturnInfo object</returns>
+</member>
 <member name="M:CasparObjects.CasparCG.Execute(System.String,CasparObjects.CasparCG.Retard,System.Boolean)">
  <summary>
  Sends a command to Caspar for execution
@@ -1583,6 +1605,13 @@ CasparObjects
  <param name="useDelay">Use a delay while waiting for a server response (list commands)</param>
  <returns>A ReturnInfo object</returns>
  <remarks>Can be used for any command. See CasparCG's wiki for valid commands</remarks>
+</member>
+<member name="M:CasparObjects.CasparCG.ExecuteFiltered(System.String)">
+ <summary>
+ Excecute a command if the channel is contained in the ChannelFilterList property
+ </summary>
+ <param name="Command"></param>
+ <returns>A ReturnInfo object</returns>
 </member>
 <member name="M:CasparObjects.CasparCG.Connect(System.String)">
  <summary>
@@ -1631,6 +1660,17 @@ CasparObjects
  Disconnects from Caspar
  </summary>
  <remarks>The object can reconnect on version 2.0.7</remarks>
+</member>
+<member name="M:CasparObjects.CasparCG.Shutdown">
+ <summary>
+ Shutdown CasparCG Server
+ </summary>
+</member>
+<member name="M:CasparObjects.CasparCG.Shutdown(System.Boolean)">
+ <summary>
+ Shutdown CasparCG Server
+ </summary>
+ <param name="useKillCommand">When Caspar is not started by the library, use the KILL command to terminate version 2.0.x servers</param>
 </member>
 <member name="M:CasparObjects.CasparCG.SerializeToString">
  <summary>

@@ -62,6 +62,7 @@ Public Class Settings
    Public Property UseDarkTheme As Boolean = False
 
    Public Property VideoResolution As enumVideoResolution = enumVideoResolution.vrHD1080
+   Public Property DefaultCountDownStartTime As TimeSpan = New TimeSpan(0, 10, 0)
 
    Public Property BrowserLocation As System.Drawing.Point = New System.Drawing.Point(10, 10)
    Public Property BrowserSize As System.Drawing.Size = New System.Drawing.Size(1072, 645)

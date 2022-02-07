@@ -246,6 +246,7 @@
     </Compile>
     <Compile Include="LayerRules.vb" />
     <Compile Include="Loader.vb" />
+    <Compile Include="SheetProperties.vb" />
     <Compile Include="Theme.vb" />
     <Compile Include="TimerField.vb" />
     <Compile Include="CustomDocumentProperties.vb" />
@@ -405,7 +406,6 @@
     <None Include="My Project\DataSources\LayerRule.datasource" />
     <None Include="My Project\DataSources\TimerItem.datasource" />
     <None Include="My Project\DataSources\TimerSettings.datasource" />
-    <None Include="packages.config" />
     <None Include="ThisAddIn.Designer.xml">
       <DependentUpon>ThisAddIn.vb</DependentUpon>
     </None>

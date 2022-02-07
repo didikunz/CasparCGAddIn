@@ -15,6 +15,7 @@ Public Class frmLayerRules
    Private Sub frmLayerRules_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
       Loader.Load(Me, _Settings.Theme)
+      lblMode.Left = -200
 
       If LayerRules IsNot Nothing Then
 

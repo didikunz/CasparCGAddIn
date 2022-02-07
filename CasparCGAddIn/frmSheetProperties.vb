@@ -280,7 +280,7 @@ Public Class frmSheetProperties
       Select Case _Settings.VideoResolution
          Case CasparCGAddIn.Settings.enumVideoResolution.vrPAL
             _xRes = 720
-            _yIncr = 1 / 576
+            _yRes = 576
          Case CasparCGAddIn.Settings.enumVideoResolution.vrNTSC
             _xRes = 720
             _yRes = 486
@@ -322,7 +322,8 @@ Public Class frmSheetProperties
             cboTimerItem_6.Items.Add(item.Name)
             cboTimerItem_7.Items.Add(item.Name)
             cboTimerItem_8.Items.Add(item.Name)
-            cboTimerTrigger.Items.Add(item.Name)
+            cboTimerTriggerItem.Items.Add(item.Name)
+            cboAutoStopItem.Items.Add(item.Name)
          Next
 
          If _TimerSheet IsNot Nothing Then
@@ -354,9 +355,18 @@ Public Class frmSheetProperties
 
             txtTimerInvoke.Text = _TimerSheet.OnTimeInvoke
 
-            For c As Integer = 0 To cboTimerTrigger.Items.Count - 1
-               If _TimerSheet.OnTimeTimer = cboTimerTrigger.Items(c) Then
-                  cboTimerTrigger.SelectedIndex = c
+            For c As Integer = 0 To cboTimerTriggerItem.Items.Count - 1
+               If _TimerSheet.OnTimeTimer = cboTimerTriggerItem.Items(c) Then
+                  cboTimerTriggerItem.SelectedIndex = c
+                  Exit For
+               End If
+            Next
+
+            cboAutoPlayMode.SelectedIndex = _TimerSheet.AutoPlayMode
+
+            For c As Integer = 0 To cboAutoStopItem.Items.Count - 1
+               If _TimerSheet.AutoPlayTimer = cboAutoStopItem.Items(c) Then
+                  cboAutoStopItem.SelectedIndex = c
                   Exit For
                End If
             Next
@@ -548,10 +558,17 @@ Public Class frmSheetProperties
 
             _TimerSheet.OnTimeInvoke = txtTimerInvoke.Text
 
-            If cboTimerTrigger.SelectedIndex > -1 Then
-               _TimerSheet.OnTimeTimer = cboTimerTrigger.Items(cboTimerTrigger.SelectedIndex)
+            If cboTimerTriggerItem.SelectedIndex > -1 Then
+               _TimerSheet.OnTimeTimer = cboTimerTriggerItem.Items(cboTimerTriggerItem.SelectedIndex)
             End If
 
+            If cboAutoPlayMode.SelectedIndex > -1 Then
+               _TimerSheet.AutoPlayMode = cboAutoPlayMode.SelectedIndex
+            End If
+
+            If cboAutoStopItem.SelectedIndex > -1 Then
+               _TimerSheet.AutoPlayTimer = cboAutoStopItem.Items(cboAutoStopItem.SelectedIndex)
+            End If
          End If
 
       End If

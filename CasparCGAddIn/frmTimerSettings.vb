@@ -136,6 +136,7 @@ Public Class frmTimerSettings
          cboType.SelectedIndex = _currentItem.PreviewFormat
          chkUseLaps.Checked = _currentItem.UseLaps
          chkCanPause.Checked = _currentItem.CanPause
+         chkCountDown.Checked = _currentItem.CountDown
          chkInhibitQuery.Checked = _currentItem.InhibitQuery
          tseOffset.Value = _currentItem.Offset
 
@@ -169,6 +170,7 @@ Public Class frmTimerSettings
          _currentItem.PreviewFormat = cboType.SelectedIndex
          _currentItem.UseLaps = chkUseLaps.Checked
          _currentItem.CanPause = chkCanPause.Checked
+         _currentItem.CountDown = chkCountDown.Checked
          _currentItem.InhibitQuery = chkInhibitQuery.Checked
          _currentItem.Offset = tseOffset.Value
 
@@ -324,6 +326,14 @@ Public Class frmTimerSettings
 
       End If
 
+   End Sub
+
+   Private Sub chkCountDown_CheckedChanged(sender As Object, e As EventArgs) Handles chkCountDown.CheckedChanged
+      If chkCountDown.Checked Then
+         tseOffset.Value = _Settings.DefaultCountDownStartTime
+      Else
+         tseOffset.Value = TimeSpan.Zero
+      End If
    End Sub
 
 End Class

@@ -471,6 +471,16 @@ CasparCGAddIn
  Fired when OnTimeTime has expired.
  </summary>
 </member>
+<member name="E:CasparCGAddIn.TimerItem.PlayTrigger">
+ <summary>
+ Fired when the Start button is pressed
+ </summary>
+</member>
+<member name="E:CasparCGAddIn.TimerItem.StopTrigger">
+ <summary>
+ Fired when the Stop button is pressed or a countdown timer reaches zero
+ </summary>
+</member>
 <member name="M:CasparCGAddIn.TimerItem.StartTimer(System.TimeSpan)">
  <summary>
  Initialize all variables, start the timer and save the data.

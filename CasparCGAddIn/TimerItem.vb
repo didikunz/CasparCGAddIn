@@ -99,6 +99,7 @@ Public Class TimerItem
 
    Public Property CanPause As Boolean = False
    Public Property UseLaps As Boolean = True
+   Public Property CountDown As Boolean = False
    Public Property InhibitQuery As Boolean = False
    Public Property PreviewFormat As enumTimerFormat = enumTimerFormat.MinSec
 
@@ -224,6 +225,17 @@ Public Class TimerItem
    ''' </summary>
    Public Event TimeTrigger As EventHandler
 
+   ''' <summary>
+   ''' Fired when the Start button is pressed
+   ''' </summary>
+   Public Event PlayTrigger As EventHandler
+
+   ''' <summary>
+   ''' Fired when the Stop button is pressed or a countdown timer reaches zero
+   ''' </summary>
+   Public Event StopTrigger As EventHandler
+
+
 #End Region
 
 #Region "Methods"
@@ -265,7 +277,12 @@ Public Class TimerItem
 
       Me.StartTime = Date.Now
       Me.IsPaused = False
-      _CurrentOffset = TimeSpan.Zero
+
+      If CountDown Then
+         _CurrentOffset = startOffset
+      Else
+         _CurrentOffset = TimeSpan.Zero
+      End If
       _StartOffset = startOffset
       _TimeTriggerHasFired = False
 
@@ -279,6 +296,12 @@ Public Class TimerItem
       Next
 
       RunTimerTrigger(Me.OnStart, startOffset)
+      RaiseEvent PlayTrigger(Me, EventArgs.Empty)
+
+      If CountDown Then
+         Dim trea As TimerRefreshEventArgs = New TimerRefreshEventArgs(_CurrentOffset, True)
+         RaiseEvent TimerRefresh(Me, trea)
+      End If
 
       RaiseEvent SaveTimerData(Me, EventArgs.Empty)
 
@@ -289,6 +312,7 @@ Public Class TimerItem
    ''' </summary>
    Public Sub RunTimer()
       If Not Me.IsPaused Then
+         RaiseEvent PlayTrigger(Me, EventArgs.Empty)
          _timTicker.Interval = 100
          _timTicker.Start()
       End If
@@ -354,6 +378,7 @@ Public Class TimerItem
 
       RunTimerTrigger(Me.OnStop)
 
+      RaiseEvent StopTrigger(Me, EventArgs.Empty)
       RaiseEvent SaveTimerData(Me, EventArgs.Empty)
 
    End Sub
@@ -661,7 +686,11 @@ Public Class TimerItem
 
       If Not IsPaused Then
 
-         _CurrentOffset = (Date.Now - _StartTime) + _StartOffset
+         If CountDown Then
+            _CurrentOffset = _StartOffset - (Date.Now - _StartTime)
+         Else  'Count Up
+            _CurrentOffset = (Date.Now - _StartTime) + _StartOffset
+         End If
 
          If Int(_CurrentOffset.TotalSeconds) <> Int(tsOldOffset.TotalSeconds) Then
 
@@ -669,14 +698,26 @@ Public Class TimerItem
             RaiseEvent TimerRefresh(Me, trea)
 
             If OnTimeTime.Ticks > 0 AndAlso Not _TimeTriggerHasFired Then
-               If _CurrentOffset.Ticks >= OnTimeTime.Ticks Then
-                  RaiseEvent TimeTrigger(Me, EventArgs.Empty)
-                  RunTimerTrigger(Me.OnTime)
-                  _TimeTriggerHasFired = True
+               If CountDown Then
+                  If _CurrentOffset.Ticks <= OnTimeTime.Ticks Then
+                     RaiseEvent TimeTrigger(Me, EventArgs.Empty)
+                     RunTimerTrigger(Me.OnTime)
+                     _TimeTriggerHasFired = True
+                  End If
+               Else
+                  If _CurrentOffset.Ticks >= OnTimeTime.Ticks Then
+                     RaiseEvent TimeTrigger(Me, EventArgs.Empty)
+                     RunTimerTrigger(Me.OnTime)
+                     _TimeTriggerHasFired = True
+                  End If
                End If
             End If
 
             tsOldOffset = _CurrentOffset
+
+            If CountDown And Int(_CurrentOffset.TotalSeconds) = 0 Then
+               StopTimer()
+            End If
 
          End If
 
@@ -721,6 +762,7 @@ Public Class TimerItem
 
       clonedItem.CanPause = Me.CanPause
       clonedItem.UseLaps = Me.UseLaps
+      clonedItem.CountDown = Me.CountDown
       clonedItem.InhibitQuery = Me.InhibitQuery
       clonedItem.PreviewFormat = Me.PreviewFormat
 
