@@ -9,6 +9,6 @@ This programm uses [CasparObjects][3] as a dependency.
 
 Open source, licensed under the Apache License.
 
-[1]: https://www.dropbox.com/s/xblog9c5fq9lgf8/CasparCGAddInSetup.zip?dl=0 "Installer for MS Excel"
+[1]: https://www.dropbox.com/s/wtkdxgto1kls703/CasparCGAddInSetup.zip?dl=0 "Installer for MS Excel"
 [2]: https://www.dropbox.com/s/zm2xc2ulyfrysf8/CasparCG_AddIn.pdf?dl=0 "Documentation"
 [3]: https://github.com/didikunz/CasparObjects "CasparObjects Repository"
